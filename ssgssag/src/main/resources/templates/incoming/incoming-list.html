@@ -358,49 +358,7 @@
       Scripts
   ***********************************-->
   <th:block th:replace="/layout/script :: scriptFragment"></th:block>
-  <script>
-    function fetchIncomingDetails(pkIncomingProductSeq) {
-      $.ajax({
-        url: '/incoming/details/' + pkIncomingProductSeq,
-        type: 'GET',
-        success: function(data) {
-          var detailsTable = $('#detailsTable tbody');
-          detailsTable.empty();
-
-          var totalPrice = data.nincomingProductCnt * data.nincomingProductPrice;
-
-          var newRow = `<tr>
-          <td>${data.vproductCd}</td>
-          <td>${data.vproductNm}</td>
-          <td>${data.vproductStatus || '상태 정보 없음'}</td>
-          <td>${data.nproductPrice || 0}</td>
-          <td>${data.nincomingProductPrice}</td>
-          <td>${data.nincomingProductCnt}</td>
-          <td>${totalPrice}</td>
-          <td>${data.vproductBrand}</td>
-          <td>${data.vproductOrigin}</td>
-          <td>${data.vproductManufactor}</td>
-          <td>${data.dproductManufactorDate}</td>
-        </tr>`;
-
-          detailsTable.append(newRow);
-        },
-        error: function(error) {
-          console.log('Error:', error);
-        }
-      });
-    }
-
-
-    function formatDate(dateString) {
-      if (!dateString) return '';
-      var date = new Date(dateString);
-      var year = date.getFullYear();
-      var month = ('0' + (date.getMonth() + 1)).slice(-2);
-      var day = ('0' + date.getDate()).slice(-2);
-      return year + '-' + month + '-' + day;
-    }
-  </script>
+  <script th:src="@{/js/Incoming.js}"></script>
 </div>
 </body>
 
