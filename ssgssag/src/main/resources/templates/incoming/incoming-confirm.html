@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+  <!-- Favicon icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+  <!-- Custom Stylesheet -->
+  <link href="css/style.css" rel="stylesheet">
+  <link href="./plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+  <!-- Date picker plugins css -->
+  <link href="./plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+  <!-- Daterange picker plugins css -->
+  <link href="./plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+  <link href="./plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!--*******************
+    Preloader start
+********************-->
+<div id="preloader">
+  <div class="loader">
+    <svg class="circular" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+    </svg>
+  </div>
+</div>
+<!--*******************
+    Preloader end
+********************-->
+
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+  <!--**********************************
+      Nav header start
+  ***********************************-->
+  <div class="nav-header">
+    <div class="brand-logo">
+      <a href="index.html">
+        <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
+        <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
+        <span class="brand-title">
+                        <img src="images/logo-text.png" alt="">
+                    </span>
+      </a>
+    </div>
+  </div>
+  <!--**********************************
+      Nav header end
+  ***********************************-->
+
+  <!--**********************************
+      Header start
+  ***********************************-->
+  <div class="header">
+    <div class="header-content clearfix">
+
+      <div class="nav-control">
+        <div class="hamburger">
+          <span class="toggle-icon"><i class="icon-menu"></i></span>
+        </div>
+      </div>
+      <div class="header-left">
+        <div class="input-group icons">
+          <div class="input-group-prepend">
+            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
+          </div>
+          <input type="search" class="form-control" placeholder="Search Dashboard" aria-label="Search Dashboard">
+          <div class="drop-down   d-md-none">
+            <form action="#">
+              <input type="text" class="form-control" placeholder="Search">
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="header-right">
+        <ul class="clearfix">
+          <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+            <i class="mdi mdi-email-outline"></i>
+            <span class="badge gradient-1 badge-pill badge-primary">3</span>
+          </a>
+            <div class="drop-down animated fadeIn dropdown-menu">
+              <div class="dropdown-content-heading d-flex justify-content-between">
+                <span class="">3 New Messages</span>
+
+              </div>
+              <div class="dropdown-content-body">
+                <ul>
+                  <li class="notification-unread">
+                    <a href="javascript:void()">
+                      <img class="float-left mr-3 avatar-img" src="images/avatar/1.jpg" alt="">
+                      <div class="notification-content">
+                        <div class="notification-heading">Saiful Islam</div>
+                        <div class="notification-timestamp">08 Hours ago</div>
+                        <div class="notification-text">Hi Teddy, Just wanted to let you ...</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="notification-unread">
+                    <a href="javascript:void()">
+                      <img class="float-left mr-3 avatar-img" src="images/avatar/2.jpg" alt="">
+                      <div class="notification-content">
+                        <div class="notification-heading">Adam Smith</div>
+                        <div class="notification-timestamp">08 Hours ago</div>
+                        <div class="notification-text">Can you do me a favour?</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void()">
+                      <img class="float-left mr-3 avatar-img" src="images/avatar/3.jpg" alt="">
+                      <div class="notification-content">
+                        <div class="notification-heading">Barak Obama</div>
+                        <div class="notification-timestamp">08 Hours ago</div>
+                        <div class="notification-text">Hi Teddy, Just wanted to let you ...</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void()">
+                      <img class="float-left mr-3 avatar-img" src="images/avatar/4.jpg" alt="">
+                      <div class="notification-content">
+                        <div class="notification-heading">Hilari Clinton</div>
+                        <div class="notification-timestamp">08 Hours ago</div>
+                        <div class="notification-text">Hello</div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+          </li>
+          <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+            <i class="mdi mdi-bell-outline"></i>
+            <span class="badge badge-pill gradient-2 badge-primary">3</span>
+          </a>
+            <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
+              <div class="dropdown-content-heading d-flex justify-content-between">
+                <span class="">2 New Notifications</span>
+
+              </div>
+              <div class="dropdown-content-body">
+                <ul>
+                  <li>
+                    <a href="javascript:void()">
+                      <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
+                      <div class="notification-content">
+                        <h6 class="notification-heading">Events near you</h6>
+                        <span class="notification-text">Within next 5 days</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void()">
+                      <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
+                      <div class="notification-content">
+                        <h6 class="notification-heading">Event Started</h6>
+                        <span class="notification-text">One hour ago</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void()">
+                      <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
+                      <div class="notification-content">
+                        <h6 class="notification-heading">Event Ended Successfully</h6>
+                        <span class="notification-text">One hour ago</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void()">
+                      <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
+                      <div class="notification-content">
+                        <h6 class="notification-heading">Events to Join</h6>
+                        <span class="notification-text">After two days</span>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+          </li>
+<!--          <li class="icons dropdown d-none d-md-flex">-->
+<!--            <a href="javascript:void(0)" class="log-user"  data-toggle="dropdown">-->
+<!--              <span>English</span>  <i class="fa fa-angle-down f-s-14" aria-hidden="true"></i>-->
+<!--            </a>-->
+<!--            <div class="drop-down dropdown-language animated fadeIn  dropdown-menu">-->
+<!--              <div class="dropdown-content-body">-->
+<!--                <ul>-->
+<!--                  <li><a href="javascript:void()">English</a></li>-->
+<!--                  <li><a href="javascript:void()">Dutch</a></li>-->
+<!--                </ul>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </li>-->
+          <li class="icons dropdown">
+            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
+              <span class="activity active"></span>
+              <img src="images/user/1.png" height="40" width="40" alt="">
+            </div>
+            <div class="drop-down dropdown-profile   dropdown-menu">
+              <div class="dropdown-content-body">
+                <ul>
+                  <li>
+                    <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
+                  </li>
+                  <li>
+                    <a href="email-inbox.html"><i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill badge-primary">3</div></a>
+                  </li>
+
+                  <hr class="my-2">
+                  <li>
+                    <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
+                  </li>
+                  <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--**********************************
+      Header end ti-comment-alt
+  ***********************************-->
+
+  <!--**********************************
+      Sidebar start
+  ***********************************-->
+  <div class="nk-sidebar">
+    <div class="nk-nav-scroll">
+      <ul class="metismenu" id="menu">
+        <li class="nav-label">WMS</li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-speedometer menu-icon"></i><span class="nav-text">대시보드</span>
+          </a>
+          <ul aria-expanded="false">
+            <li><a href="./index.html">Home 1</a></li>
+            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
+          </ul>
+        </li>
+        <li class="mega-menu mega-menu-sm">
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-globe-alt menu-icon"></i><span class="nav-text">입고 관리</span>
+          </a>
+          <ul aria-expanded="false">
+            <li><a href="./layout-blank.html">발주입고 등록</a></li>
+            <li><a href="./layout-one-column.html">입고 승인</a></li>
+            <li><a href="./layout-two-column.html">입고 조회</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-envelope menu-icon"></i> <span class="nav-text">발주 관리</span>
+          </a>
+          <ul aria-expanded="false">
+            <li><a href="./email-inbox.html">발주 등록</a></li>
+            <li><a href="./email-read.html">발주 확정</a></li>
+            <li><a href="./email-compose.html">발주 조회</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-screen-tablet menu-icon"></i><span class="nav-text">창고 관리</span>
+          </a>
+          <ul aria-expanded="false">
+            <li><a href="./app-profile.html">창고 조회 및 등록</a></li>
+            <li><a href="./app-profile.html">창고 지도 보기</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-graph menu-icon"></i> <span class="nav-text">재고 관리</span>
+          </a>
+          <ul aria-expanded="false">
+            <li><a href="./chart-flot.html">재고 현황 조회</a></li>
+            <li><a href="./chart-morris.html">재고 조정</a></li>
+            <li><a href="./chart-chartjs.html">재고 이동</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-graph menu-icon"></i> <span class="nav-text">회원 관리</span>
+          </a>
+          <ul aria-expanded="false">
+            <li><a href="./chart-flot.html">회원 정보 수정</a></li>
+            <li><a href="./chart-morris.html">회원 탈퇴</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!--**********************************
+      Sidebar end
+  ***********************************-->
+
+  <!--**********************************
+      Content body start
+  ***********************************-->
+  <div class="content-body">
+
+    <div class="row page-titles mx-0">
+      <div class="col p-md-0">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="javascript:void(0)">입고 관리</a></li>
+          <li class="breadcrumb-item active"><a href="javascript:void(0)">입고 확정</a></li>
+        </ol>
+      </div>
+    </div>
+    <!-- row -->
+
+    <!-- 여기에 각자 맡은 페이지를 넣어서 작업하면 됩니다.-->
+    <div class="container-fluid">
+      <div class="col-lg-12">
+        <h1>입고 확정</h1>
+      </div>
+      <div class="col-lg-12 mb-4 text-right">
+        <div class="general-button">
+          <button type="button" class="btn btn-dark mb-1 btn-primary ">확정</button>
+          <button type="button" class="btn btn-dark mb-1 btn-primary">인쇄</button>
+          <button type="button" class="btn btn-dark mb-1 btn-primary">초기화</button>
+        </div>
+      </div>
+     
+      <div class="col-lg-12">
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title">검색 조건</h4>
+                  <div class="basic-form">
+                      <form>
+                          <div class="form-group row">
+                              <label class="col-sm-1 col-form-label">입고기간</label>
+                              <div class="col-sm-11">
+                                  <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="01/01/2015 - 01/31/2015">
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-sm-1 col-form-label">창고</label>
+                              <div class="col-sm-3">
+                                  <div class="input-group">
+                                      <input type="text" class="form-control input-flat" placeholder="창고 검색" data-toggle="modal" data-target="#warehouseSearchInputBox">
+                                  </div>
+                              </div>
+                               <!-- Modal -->
+                               <div class="modal fade" id="warehouseSearchInputBox">
+                                   <div class="modal-dialog modal-lg" role="document">
+                                       <div class="modal-content">
+                                           <div class="modal-header">
+                                               <h5 class="modal-title">창고</h5>
+                                               <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                               </button>
+                                           </div>
+                                           <div class="modal-body">
+                                            <div class="col-lg-12 mb-4 text-right">
+                                              <div class="general-button">
+                                                <button type="button" class="btn btn-dark mb-2 btn-primary">조회</button>
+                                                <button type="button" class="btn btn-dark mb-2 btn-primary">선택</button>
+                                              </div>
+                                              <div class="row mb-1">
+                                                <label class="col-sm-3 col-form-label text-left">분류</label>
+                                                <div class="col-sm-9">
+                                                  <input type="text" class="form-control input-flat" placeholder="창고 유형을 입력해주세요">
+                                                </div>
+                                              </div>
+                                              <div class="row">
+                                                <label class="col-sm-3 col-form-label text-left">검색 조건</label>
+                                                <div class="col-sm-9">
+                                                  <input type="text" class="form-control input-flat" placeholder="창고명 혹은 창고 코드를 입력해주세요">
+                                                </div>
+                                              </div>
+                                              
+                                            </div>    
+                                            <div class="table-responsive">
+                                              <table class="table table-hover">
+                                                  <thead>
+                                                      <tr>
+                                                          <th>No</th>
+                                                          <th>분류</th>
+                                                          <th>창고코드</th>
+                                                          <th>창고명</th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                    <tr>
+                                                      <td>1</td>
+                                                      <td>식품</td>
+                                                      <td>CW001</td>
+                                                      <td>식품창고 1</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>2</td>
+                                                      <td>의류</td>
+                                                      <td>CW002</td>
+                                                      <td>의류창고 A</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>3</td>
+                                                      <td>가전제품</td>
+                                                      <td>CW003</td>
+                                                      <td>가전창고 1</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>4</td>
+                                                      <td>도서</td>
+                                                      <td>CW004</td>
+                                                      <td>도서창고 B</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>5</td>
+                                                      <td>화장품</td>
+                                                      <td>CW005</td>
+                                                      <td>화장품창고 1</td>
+                                                    </tr>
+                                                  </tbody>
+                                                  <tfoot>
+                                                    <tr>
+                                                      <td></td>
+                                                    </tr>
+                                                  </tfoot>
+                                              </table>
+                                          </div>                                       
+                                        </div>
+                                       </div>
+                                   </div>
+                               </div>
+                              <label class="col-sm-1 col-form-label">매입처</label>
+                              <div class="col-sm-3">
+                                  <div class="input-group">
+                                      <input type="text" class="form-control input-flat" placeholder="매입처 검색" data-toggle="modal" data-target="#purchaserSearchInputBox">
+                                  </div>
+                              </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="purchaserSearchInputBox">
+                                  <div class="modal-dialog modal-lg" role="document">
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                              <h5 class="modal-title">매입 거래처</h5>
+                                              <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                              </button>
+                                          </div>
+                                          <div class="modal-body">
+                                           <div class="col-lg-12 mb-4 text-right">
+                                             <div class="general-button">
+                                               <button type="button" class="btn btn-dark mb-2 btn-primary">조회</button>
+                                               <button type="button" class="btn btn-dark mb-2 btn-primary">선택</button>
+                                             </div>
+                                             <div class="row mb-1">
+                                               <label class="col-sm-3 col-form-label text-left">거래처명</label>
+                                               <div class="col-sm-9">
+                                                 <input type="text" class="form-control input-flat" placeholder="거래처 이름을 입력해주세요">
+                                               </div>
+                                             </div>
+                                             
+                                           </div>    
+                                           <div class="table-responsive">
+                                             <table class="table table-hover">
+                                                 <thead>
+                                                     <tr>
+                                                         <th>No</th>
+                                                         <th>거래처명</th>
+                                                     </tr>
+                                                 </thead>
+                                                 <tbody>
+                                                   <tr>
+                                                     <td>1</td>
+                                                     <td>신세계푸드</td>
+                                                   </tr>
+                                                   <tr>
+                                                     <td>2</td>
+                                                     <td>현대그린푸드</td>
+                                                   </tr>
+                                                   <tr>
+                                                     <td>3</td>
+                                                     <td>테크브루</td>
+                                                   </tr>
+                                                 </tbody>
+                                                 <tfoot>
+                                                   <tr>
+                                                     <td></td>
+                                                   </tr>
+                                                 </tfoot>
+                                             </table>
+                                         </div>                                       
+                                       </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <label class="col-sm-1 col-form-label">입고구분</label>
+                              <div class="col-sm-3">
+                                  <div class="input-group">
+                                      <select id="inputState" class="form-control">
+                                          <option selected="selected">입고구분 선택</option>
+                                          <option>신규</option>
+                                          <option>미입고</option>
+                                      </select>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group row justify-content-center">
+                              <div class="col-sm-10 d-flex justify-content-center">
+                                  <button type="submit" class="btn btn-dark">조회</button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">입고 목록</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>번호</th>
+                            <th>선택</th>
+                            <th>입고 상태</th>
+                            <th>상품 코드</th>
+                            <th>입고 일자</th>
+                            <th>종류</th>
+                            <th>매입처</th>
+                            <th>수량</th>
+                            <th>단가</th>
+                            <th>창고</th>
+                            <th>구역</th>
+                        </tr>
+                    </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>1</td>
+                      <td><div class="checkbox m-t-40"><input id="checkbox1" type="checkbox"></div></td>
+                      <td>완료</td>
+                      <td>PROD001</td>
+                      <td>2024/03/01</td>
+                      <td>의류</td>
+                      <td>패션플러스</td>
+                      <td>50</td>
+                      <td>15,000</td>
+                      <td>서울 센터</td>
+                      <td>B-02</td>
+                  </tr>
+                  <tr>
+                      <td>2</td>
+                      <td>2</td>
+                      <td><div class="checkbox m-t-40"><input id="checkbox2" type="checkbox"></div></td>
+                      <td>대기</td>
+                      <td>PROD002</td>
+                      <td>2024/03/05</td>
+                      <td>전자기기</td>
+                      <td>테크랜드</td>
+                      <td>30</td>
+                      <td>25,000</td>
+                      <td>부산 센터</td>
+                      <td>C-01</td>
+                  </tr>
+                  <tr>
+                      <td>3</td>
+                      <td>3</td>
+                      <td><div class="checkbox m-t-40"><input id="drop-remove" type="checkbox"></div></td>
+                      <td>완료</td>
+                      <td>PROD003</td>
+                      <td>2024/02/28</td>
+                      <td>동물</td>
+                      <td>SSG자바1차</td>
+                      <td>1</td>
+                      <td>200,000,000</td>
+                      <td>서울 동물 창고</td>
+                      <td>A-01</td>
+                  </tr>
+                  <tr>
+                      <td>4</td>
+                      <td>4</td>
+                      <td><div class="checkbox m-t-40"><input id="checkbox3" type="checkbox"></div></td>
+                      <td>대기</td>
+                      <td>PROD004</td>
+                      <td>2024/03/10</td>
+                      <td>전자기기</td>
+                      <td>테크랜드</td>
+                      <td>20</td>
+                      <td>40,000</td>
+                      <td>서울 센터</td>
+                      <td>A-03</td>
+                  </tr>
+                  <tr>
+                      <td>5</td>
+                      <td>5</td>
+                      <td><div class="checkbox m-t-40"><input id="checkbox4" type="checkbox"></div></td>
+                      <td>완료</td>
+                      <td>PROD005</td>
+                      <td>2024/03/12</td>
+                      <td>전자기기</td>
+                      <td>테크랜드</td>
+                      <td>15</td>
+                      <td>30,000</td>
+                      <td>서울 센터</td>
+                      <td>B-05</td>
+                  </tr>
+                  <tr>
+                      <td>6</td>
+                      <td>6</td>
+                      <td><div class="checkbox m-t-40"><input id="checkbox5" type="checkbox"></div></td>
+                      <td>대기</td>
+                      <td>PROD006</td>
+                      <td>2024/03/15</td>
+                      <td>전자기기</td>
+                      <td>테크랜드</td>
+                      <td>25</td>
+                      <td>50,000</td>
+                      <td>부산 센터</td>
+                      <td>A-02</td>
+                  </tr>
+                  <tr>
+                      <td>7</td>
+                      <td>7</td>
+                      <td><div class="checkbox m-t-40"><input id="checkbox6" type="checkbox"></div></td>
+                      <td>대기</td>
+                      <td>PROD007</td>
+                      <td>2024/03/20</td>
+                      <td>전자기기</td>
+                      <td>테크랜드</td>
+                      <td>10</td>
+                      <td>70,000</td>
+                      <td>서울 센터</td>
+                      <td>C-03</td>
+                  </tr>
+                  <tr>
+                      <td>8</td>
+                      <td>8</td>
+                      <td><div class="checkbox m-t-40"><input id="checkbox7" type="checkbox"></div></td>
+                      <td>완료</td>
+                      <td>PROD008</td>
+                      <td>2024/03/25</td>
+                      <td>전자기기</td>
+                      <td>테크랜드</td>
+                      <td>35</td>
+                      <td>20,000</td>
+                      <td>부산 센터</td>
+                      <td>B-01</td>
+                  </tr>
+                  <tr>
+                      <td>9</td>
+                      <td>9</td>
+                      <td><div class="checkbox m-t-40"><input id="checkbox8" type="checkbox"></div></td>
+                      <td>대기</td>
+                      <td>PROD009</td>
+                      <td>2024/03/28</td>
+                      <td>전자기기</td>
+                      <td>테크랜드</td>
+                      <td>40</td>
+                      <td>90,000</td>
+                      <td>서울 센터</td>
+                      <td>A-01</td>
+                  </tr>
+                  <tr>
+                      <td>10</td>
+                      <td>10</td>
+                      <td><div class="checkbox m-t-40"><input id="checkbox9" type="checkbox"></div></td>
+                      <td>대기</td>
+                      <td>PROD010</td>
+                      <td>2024/04/01</td>
+                      <td>전자기기</td>
+                      <td>테크랜드</td>
+                      <td>30</td>
+                      <td>150,000</td>
+                      <td>부산 센터</td>
+                      <td>C-02</td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
+    <div class="col-lg-12">
+      <div class="card">
+          <div class="card-body">
+              <h4 class="card-title">입고 상세</h4>
+              <div class="table-responsive">
+                  <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>단품 코드</th>
+                          <th>단품명</th>
+                          <th>단품 상태</th>
+                          <th>상품 단가</th>
+                          <th>입고 가격</th>
+                          <th>수량</th>
+                          <th>총 가격</th>
+                          <th>브랜드</th>
+                          <th>원산지</th>
+                          <th>생산자</th>
+                          <th>생산일자</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>ABC123</td>
+                          <td>상품A</td>
+                          <td>판매중</td>
+                          <td>5000</td>
+                          <td>4000</td>
+                          <td>10</td>
+                          <td>40000</td>
+                          <td>XYZ 브랜드</td>
+                          <td>한국</td>
+                          <td>ABC 제조사</td>
+                          <td>2023-05-15</td>
+                        </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+    <!-- #/ container -->
+  </div>
+  <!--**********************************
+      Content body end
+  ***********************************-->
+
+
+  <!--**********************************
+      Footer start
+  ***********************************-->
+
+  <!--**********************************
+      Footer end
+  ***********************************-->
+</div>
+<!--**********************************
+    Main wrapper end
+***********************************-->
+
+<!--**********************************
+    Scripts
+***********************************-->
+<script src="plugins/common/common.min.js"></script>
+<script src="js/custom.min.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/gleek.js"></script>
+<script src="js/styleSwitcher.js"></script>
+<script src="./plugins/moment/moment.js"></script>
+<script src="./plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+<!-- Clock Plugin JavaScript -->
+<script src="./plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
+<!-- Color Picker Plugin JavaScript -->
+<script src="./plugins/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
+<script src="./plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
+<script src="./plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
+<!-- Date Picker Plugin JavaScript -->
+<script src="./plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<!-- Date range Plugin JavaScript -->
+<script src="./plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script src="./plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="./js/plugins-init/form-pickers-init.js"></script>
+
+<script src="./plugins/tables/js/jquery.dataTables.min.js"></script>
+<script src="./plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+<script src="./plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+</body>
+
+</html>
