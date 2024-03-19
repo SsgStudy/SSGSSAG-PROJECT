@@ -283,7 +283,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="incoming, iterStat : ${incomingList}">
+                <tr th:each="incoming, iterStat : ${incomingList}"
+                    th:data-pk-incoming-product-seq="${incoming.pkIncomingProductSeq}"
+                    onclick="fetchIncomingDetails(this.getAttribute('data-pk-incoming-product-seq'))">
                   <td th:text="${iterStat.count}">1</td>
                   <td th:text="${incoming.pkIncomingProductSeq}">1</td>
                   <td>
@@ -312,7 +314,7 @@
           <div class="card-body">
             <h4 class="card-title">입고 상세</h4>
             <div class="table-responsive">
-              <table class="table table-hover">
+              <table class="table table-hover" id="detailsTable">
                 <thead>
                 <tr>
                   <th>단품 코드</th>
@@ -330,17 +332,17 @@
                 </thead>
                 <tbody>
                 <tr>
-                  <td>ABC123</td>
-                  <td>상품A</td>
-                  <td>판매중</td>
-                  <td>5000</td>
-                  <td>4000</td>
-                  <td>10</td>
-                  <td>40000</td>
-                  <td>XYZ 브랜드</td>
-                  <td>한국</td>
-                  <td>ABC 제조사</td>
-                  <td>2023-05-15</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
                 </tr>
                 </tbody>
               </table>
@@ -348,7 +350,6 @@
           </div>
         </div>
       </div>
-
       <!-- #/ container -->
     </div>
     <!--**********************************
@@ -363,7 +364,49 @@
       Scripts
   ***********************************-->
   <th:block th:replace="/layout/script :: scriptFragment"></th:block>
+  <script>
+    function fetchIncomingDetails(pkIncomingProductSeq) {
+      $.ajax({
+        url: '/incoming/details/' + pkIncomingProductSeq,
+        type: 'GET',
+        success: function(data) {
+          var detailsTable = $('#detailsTable tbody');
+          detailsTable.empty();
 
+          var totalPrice = data.nincomingProductCnt * data.nincomingProductPrice;
+
+          var newRow = `<tr>
+          <td>${data.vproductCd}</td>
+          <td>${data.vproductNm}</td>
+          <td>${data.vproductStatus || '상태 정보 없음'}</td>
+          <td>${data.nproductPrice || 0}</td>
+          <td>${data.nincomingProductPrice}</td>
+          <td>${data.nincomingProductCnt}</td>
+          <td>${totalPrice}</td>
+          <td>${data.vproductBrand}</td>
+          <td>${data.vproductOrigin}</td>
+          <td>${data.vproductManufactor}</td>
+          <td>${data.dproductManufactorDate}</td>
+        </tr>`;
+
+          detailsTable.append(newRow);
+        },
+        error: function(error) {
+          console.log('Error:', error);
+        }
+      });
+    }
+
+
+    function formatDate(dateString) {
+      if (!dateString) return '';
+      var date = new Date(dateString);
+      var year = date.getFullYear();
+      var month = ('0' + (date.getMonth() + 1)).slice(-2);
+      var day = ('0' + date.getDate()).slice(-2);
+      return year + '-' + month + '-' + day;
+    }
+  </script>
 </div>
 </body>
 
