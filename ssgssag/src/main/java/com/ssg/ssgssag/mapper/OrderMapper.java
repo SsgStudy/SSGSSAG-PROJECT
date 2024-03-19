@@ -20,7 +20,8 @@ public interface OrderMapper {
 
     String selectProductSupplier(@Param("productCd") String productCd); // 매입거래처 내의 상품인지 확인
 
-    int insertOrderAndOrderDetail(Map<String, Object> map);
+    int insertOrder(OrderVO order);
+    int insertOrderDetail(List<OrderDetailVO> orderDetails);
 
 //    int insertOrder(OrderVO order);
 //    int insertOrderDetail(OrderDetailVO orderDetail);

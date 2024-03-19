@@ -1,6 +1,8 @@
 package com.ssg.ssgssag.service;
 
+import com.ssg.ssgssag.domain.OrderDetailVO;
 import com.ssg.ssgssag.domain.OrderProductVO;
+import com.ssg.ssgssag.domain.OrderVO;
 import com.ssg.ssgssag.dto.OrderDetailDTO;
 import com.ssg.ssgssag.dto.OrderProductDTO;
 import com.ssg.ssgssag.mapper.OrderMapper;
@@ -10,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,10 +46,15 @@ public class OrderServiceImpl implements OrderService {
         return modelMapper.map(orderProductVO, OrderProductDTO.class);
     }
 
-//    @Override
-//    public int registerOrder(OrderProductDTO orderProduct) {
-//        return 0;
-//    }
+    @Override
+    @Transactional
+    public int registerOrder(OrderVO order, List<OrderDetailVO> orderDetails) {
+
+        orderMapper.insertOrder(order);
+        orderMapper.insertOrderDetail(orderDetails);
+
+        return 1;
+    }
 //
 //    @Override
 //    public List<OrderDetailDTO> getOrderDetailList(OrderDetailDTO orderDetail) {

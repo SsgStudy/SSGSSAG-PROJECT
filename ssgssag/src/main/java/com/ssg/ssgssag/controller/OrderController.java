@@ -4,6 +4,7 @@ import com.ssg.ssgssag.domain.OrderDetailVO;
 import com.ssg.ssgssag.domain.OrderProductVO;
 import com.ssg.ssgssag.domain.OrderVO;
 import com.ssg.ssgssag.dto.OrderProductDTO;
+import com.ssg.ssgssag.dto.OrderRequestDTO;
 import com.ssg.ssgssag.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -45,11 +46,11 @@ public class OrderController {
     }
 
     @PostMapping("/register")
-    public String registerOrderAndOrderDetail(@ModelAttribute OrderVO order
-            , @ModelAttribute List<OrderDetailVO> orderDetails) {
-
-
-        return "order/orderRegister";
+    @ResponseBody
+    public String registerOrderAndOrderDetail(@RequestBody OrderRequestDTO orderRequest) {
+        orderService.registerOrder(orderRequest.getOrder(), orderRequest.getOrderDetails());
+        return "ok";
+//        return "order/orderRegister";
     }
 
 }

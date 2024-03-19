@@ -1,6 +1,7 @@
 package com.ssg.ssgssag.service;
 
 
+import com.ssg.ssgssag.domain.OrderDetailVO;
 import com.ssg.ssgssag.domain.OrderVO;
 import com.ssg.ssgssag.domain.ProductVO;
 import com.ssg.ssgssag.dto.OrderDetailDTO;
@@ -15,7 +16,7 @@ public interface OrderService {
 
     Long createOrderSeq(); // 발주번호 생성
     OrderProductDTO createOrderDetail(OrderProductDTO orderProduct);  // 발주상세 입력
-//    int registerOrder(OrderProductDTO orderProduct); // 발주 등록
+    int registerOrder(OrderVO order, List<OrderDetailVO> orderDetail); // 발주 등록
 //    List<OrderDetailDTO> getOrderDetailList(OrderDetailDTO orderDetail); // 발주 상세 조회
 
 //    List<OrderVO> getAllOrdersWithDetails();
