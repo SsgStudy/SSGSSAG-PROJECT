@@ -1,15 +1,19 @@
 package com.ssg.ssgssag.controller;
 
+import com.ssg.ssgssag.domain.OrderDetailVO;
+import com.ssg.ssgssag.domain.OrderProductVO;
+import com.ssg.ssgssag.domain.OrderVO;
+import com.ssg.ssgssag.dto.OrderProductDTO;
 import com.ssg.ssgssag.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -22,7 +26,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @ResponseBody
-    @GetMapping("/order-seq")
+    @GetMapping("/register/order-seq")
     public Map<String, Long> getOrderSeq() {
         Long orderSeq = orderService.createOrderSeq();
         Map<String, Long> res = new HashMap<>();
@@ -32,7 +36,20 @@ public class OrderController {
         return res;
     }
 
-//    @GetMapping("/register/detail?productCd={productCd}")
-//    public String getOrderDetail() {
-//    }
+    @PostMapping("/register/detail")
+    @ResponseBody
+    public ResponseEntity<OrderProductDTO> createOrderDetailForm(@ModelAttribute OrderProductDTO orderProduct) {
+        OrderProductDTO createdOrderProduct = orderService.createOrderDetail(orderProduct);
+
+        return ResponseEntity.ok(createdOrderProduct);
+    }
+
+    @PostMapping("/register")
+    public String registerOrderAndOrderDetail(@ModelAttribute OrderVO order
+            , @ModelAttribute List<OrderDetailVO> orderDetails) {
+
+
+        return "order/orderRegister";
+    }
+
 }

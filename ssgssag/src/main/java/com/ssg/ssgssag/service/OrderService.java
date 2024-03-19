@@ -14,7 +14,7 @@ import java.util.List;
 public interface OrderService {
 
     Long createOrderSeq(); // 발주번호 생성
-    OrderProductDTO getOrderDetail(@Param("productCd") String productCd, @Param("warehouseCd") String warehouseCd);  // 발주상세 입력
+    OrderProductDTO createOrderDetail(OrderProductDTO orderProduct);  // 발주상세 입력
 //    int registerOrder(OrderProductDTO orderProduct); // 발주 등록
 //    List<OrderDetailDTO> getOrderDetailList(OrderDetailDTO orderDetail); // 발주 상세 조회
 
