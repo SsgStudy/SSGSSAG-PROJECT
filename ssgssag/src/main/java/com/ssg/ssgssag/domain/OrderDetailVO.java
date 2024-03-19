@@ -2,6 +2,8 @@ package com.ssg.ssgssag.domain;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @ToString
@@ -14,4 +16,5 @@ public class OrderDetailVO {
     private String vOrderStatus;
     private String vProductCd;
     private String vWarehouseCd;
+    private LocalDateTime dtOrderFinishedDate;
 }

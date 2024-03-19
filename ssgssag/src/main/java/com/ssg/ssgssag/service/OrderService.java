@@ -1,18 +1,26 @@
 package com.ssg.ssgssag.service;
 
 
-import com.ssg.ssgssag.mapper.OrderMapper;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ssg.ssgssag.domain.OrderVO;
+import com.ssg.ssgssag.domain.ProductVO;
+import com.ssg.ssgssag.dto.OrderDetailDTO;
+import com.ssg.ssgssag.dto.OrderProductDTO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
-public class OrderService {
+import java.time.LocalDate;
+import java.util.List;
 
-    private final OrderMapper orderMapper;
-    public void selectOne() {
-        System.out.println(orderMapper.selectOne());
-    }
+public interface OrderService {
 
+    Long createOrderSeq(); // 발주번호 생성
+    OrderProductDTO getOrderDetail(@Param("productCd") String productCd, @Param("warehouseCd") String warehouseCd);  // 발주상세 입력
+//    int registerOrder(OrderProductDTO orderProduct); // 발주 등록
+//    List<OrderDetailDTO> getOrderDetailList(OrderDetailDTO orderDetail); // 발주 상세 조회
+
+//    List<OrderVO> getAllOrdersWithDetails();
+//    List<OrderVO> getAllOrdersStatusProgress();
+//    List<ProductVO> getProductInventoryList();
+//    OrderVO getOneOrderInformation(Long orderSeq);
+//    int updateOrderStauts(Long orderSeq);
 }
