@@ -14,9 +14,9 @@ public class ProductVO {
     private String vProductNm;
     private int nProductPrice;
     private String vProductBrand;
-    private String vProductOrign;
-    private String vManufactor;
-    private String vPrductStatus;
-    private Date dProductManufactorsDate;
-    private String vCategoryCode;
+    private String vProductOrigin;
+    private String vProductManufactor;
+    private String vProductStatus;
+    private Date dProductManufactorDate;
+    private String vCategoryCd;
 }

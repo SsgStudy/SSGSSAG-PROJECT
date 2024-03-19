@@ -14,6 +14,7 @@ public class OrderVO {
     private String vOrderStatus;
     private String vIncomingProductSupplierNm;
     private String vOrderType;
+    private LocalDateTime dtOrderCreatedDate;
     private LocalDateTime dtDeliveryDate;
     private LocalDateTime dtOrderCompletionDate;
 }
