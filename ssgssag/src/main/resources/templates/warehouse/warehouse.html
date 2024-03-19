@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <title>창고 관리</title>
+</head>
+
+<body>
+<!--*******************
+    Preloader start
+********************-->
+<th:block th:replace="/layout/preloader :: preloaderFragment"></th:block>
+<!--*******************
+    Preloader end
+********************-->
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+  <!--**********************************
+      Nav header start
+  ***********************************-->
+  <th:block th:replace="/layout/nav :: navFragment"></th:block>
+
+  <!--**********************************
+      Header end ti-comment-alt
+  ***********************************-->
+
+  <!--**********************************
+      Sidebar start
+  ***********************************-->
+  <th:block th:replace="/layout/sidebar :: sidebarFragment"></th:block>
+  <!--**********************************
+      Sidebar end
+  ***********************************-->
+
+  <!--**********************************
+      Content body start
+  ***********************************-->
+  <div class="content-body">
+    <div class="container-fluid mt-3">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">창고 조회</h4>
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn mb-3 btn-primary btn-warehouse" data-toggle="modal"
+                      data-target="#warehouseAdd">창고 등록
+              </button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="warehouseAdd">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">창고등록</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="col-lg-12 mb-4 text-right">
+                      <div class="general-button">
+                        <button type="button" class="btn btn-dark mb-2 btn-primary">등록</button>
+                      </div>
+                      <div class="row mb-1">
+                        <label class="col-sm-3 col-form-label text-left">코드</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control input-flat"
+                                 placeholder="창고 코드를 입력해주세요">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <label class="col-sm-3 col-form-label text-left">이름</label>
+                        <div class="col-sm-9 mb-1">
+                          <input type="text" class="form-control input-flat"
+                                 placeholder="창고 이름을 입력해주세요">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <label class="col-sm-3 col-form-label text-left">소재지</label>
+                        <div class="col-sm-9 mb-1">
+                          <input type="text" class="form-control input-flat"
+                                 placeholder="창고 소재지를 입력해주세요">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <label class="col-sm-3 col-form-label text-left">종류</label>
+                        <div class="col-sm-9 mb-1">
+                          <input type="text" class="form-control input-flat"
+                                 placeholder="창고 종류를 입력해주세요">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <label class="col-sm-3 col-form-label text-left">관리자코드</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control input-flat"
+                                 placeholder="창고 관리자 코드를 입력해주세요">
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="basic-form">
+              <form>
+                <div class="form-group row">
+                  <label class="col-sm-1 col-form-label">이름</label>
+                  <div class="col-sm-11">
+                    <input class="form-control input-daterange-datepicker" type="text"
+                           name="daterange" value="창고 이름">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-1 col-form-label">소재지</label>
+                  <div class="col-sm-5">
+                    <select class="custom-select" style="height: 45px;">
+                      <option selected="selected">창고소재지</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                  <label class="col-sm-1 col-form-label">종류</label>
+                  <div class="col-sm-5">
+                    <select class="custom-select" style="height: 45px;">
+                      <option selected="selected">창고 종류</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row justify-content-center mb-5">
+                  <div class="col-sm-10 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-dark mr-3">조회</button>
+                    <button type="reset" class="btn btn-dark ">초기화</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th>번호</th>
+                  <th>창고코드</th>
+                  <th>창고이름</th>
+                  <th>창고종류</th>
+                  <th>창고소재지</th>
+                  <th>관리자코드</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>1</td>
+                  <td data-toggle="modal" data-target="#warehouseDetail">WH001</td>
+                  <td>중앙창고</td>
+                  <td>일반</td>
+                  <td>서울시 강남구</td>
+                  <td>MGR001</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>WH002</td>
+                  <td>동부창고</td>
+                  <td>냉장</td>
+                  <td>서울시 송파구</td>
+                  <td>MGR002</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>WH003</td>
+                  <td>서부창고</td>
+                  <td>냉동</td>
+                  <td>인천시 남동구</td>
+                  <td>MGR003</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>WH004</td>
+                  <td>남부창고</td>
+                  <td>위험물</td>
+                  <td>부산시 해운대구</td>
+                  <td>MGR004</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>WH005</td>
+                  <td>북부창고</td>
+                  <td>일반</td>
+                  <td>대전시 동구</td>
+                  <td>MGR005</td>
+                </tr>
+                </tbody>
+
+              </table>
+              <!-- Modal -->
+              <div class="modal fade" id="warehouseDetail">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">창고구역</h5>
+                      <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="col-lg-12 mb-4 text-right">
+                        <div class="row mb-1">
+                          <label class="col-sm-3 col-form-label text-left">코드</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control-plaintext input-flat"
+                                   placeholder="WH001" readonly>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <label class="col-sm-3 col-form-label text-left">이름</label>
+                          <div class="col-sm-9 mb-1">
+                            <input type="text" class="form-control-plaintext input-flat"
+                                   placeholder="중앙창고" readonly>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <label class="col-sm-3 col-form-label text-left">종류</label>
+                          <div class="col-sm-9 mb-1">
+                            <input type="text" class="form-control-plaintext input-flat"
+                                   placeholder="일반" readonly>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <label class="col-sm-3 col-form-label text-left">소재지</label>
+                          <div class="col-sm-9 mb-1">
+                            <input type="text" class="form-control-plaintext input-flat"
+                                   placeholder="서울시 강남구" readonly>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <label class="col-sm-3 col-form-label text-left">관리자코드</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control-plaintext input-flat"
+                                   placeholder="MGR001" readonly>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <label class="col-sm-3 col-form-label text-left">구역 코드</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control input-flat"
+                                   placeholder="창고구역코드를 입력해주세요.">
+                          </div>
+                          <div class="general-button">
+                            <button type="button" class="btn btn-dark mb-2 btn-primary">추가</button>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="table-responsive">
+                        <table class="table table-hover">
+                          <thead>
+                          <tr>
+                            <th>번호</th>
+                            <th>구역 코드</th>
+                            <th>구역 이름</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>A-01</td>
+                            <td>A-1구역</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>A-02</td>
+                            <td>A-2구역</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>B-01</td>
+                            <td>B-1구역</td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>B-02</td>
+                            <td>B-2구역</td>
+                          </tr>
+                          <tr>
+                            <td>5</td>
+                            <td>B-03</td>
+                            <td>B-3구역</td>
+                          </tr>
+                          </tbody>
+
+                        </table>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /# card -->
+            </div>
+          </div>
+        </div>
+        <!-- #/ container -->
+      </div>
+    </div>
+    <!--**********************************
+        Content body end
+    ***********************************-->
+
+
+    <!--**********************************
+        Footer start
+    ***********************************-->
+    <div class="footer">
+      <div class="copyright">
+        <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a>
+          2018</p>
+      </div>
+    </div>
+    <!--**********************************
+        Footer end
+    ***********************************-->
+  </div>
+  <!--**********************************
+      Main wrapper end
+  ***********************************-->
+
+  <!--**********************************
+      Scripts
+  ***********************************-->
+  <th:block th:replace="/layout/script :: scriptFragment"></th:block>
+</div>
+</body>
+</html>

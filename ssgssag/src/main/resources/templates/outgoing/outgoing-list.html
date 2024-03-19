@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <title>출고 조회</title>
+</head>
+<body>
+<!--*******************
+    Preloader start
+********************-->
+<th:block th:replace="/layout/preloader :: preloaderFragment"></th:block>
+<!--*******************
+    Preloader end
+********************-->
+
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+  <!--**********************************
+      Nav header start
+  ***********************************-->
+  <th:block th:replace="/layout/nav :: navFragment"></th:block>
+  <!--**********************************
+      Header end ti-comment-alt
+  ***********************************-->
+
+  <!--**********************************
+      Sidebar start
+  ***********************************-->
+  <th:block th:replace="/layout/sidebar :: sidebarFragment"></th:block>
+  <!--**********************************
+      Sidebar end
+  ***********************************-->
+
+  <!--**********************************
+      Content body start
+  ***********************************-->
+  <div class="content-body">
+    <div class="row page-titles mx-0">
+      <div class="col p-md-0">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="javascript:void(0)">출고 관리</a></li>
+          <li class="breadcrumb-item active"><a href="javascript:void(0)">출고 조회</a></li>
+        </ol>
+      </div>
+    </div>
+    <!-- row -->
+    <div class="container-fluid mt-3">
+      <div class="col-lg-12">
+        <h1>출고 조회</h1>
+      </div>
+      <div class="col-lg-12 mb-4 text-right">
+        <div class="general-button">
+          <button type="button" class="btn btn-dark mb-1 btn-primary">조회</button>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">출고 조회</h4>
+  
+  
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>상태</th>
+                  <th>출고일</th>
+                  <th>수량</th>
+                  <th>상품코드</th>
+                  <th>창고코드</th>
+                  <th>구역코드</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>PROGRESS</td>
+                  <td>2024-03-15</td>
+                  <td>100</td>
+                  <td>001-002-001</td>
+                  <td>WH001</td>
+                  <td>ZONE01</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>COMPLETE</td>
+                  <td>2024-03-14</td>
+                  <td>200</td>
+                  <td>002-003-001</td>
+                  <td>WH002</td>
+                  <td>ZONE02</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>WAIT</td>
+                  <td>2024-03-16</td>
+                  <td>150</td>
+                  <td>003-001-001</td>
+                  <td>WH003</td>
+                  <td>ZONE03</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>PROGRESS</td>
+                  <td>2024-03-15</td>
+                  <td>50</td>
+                  <td>001-002-003</td>
+                  <td>WH004</td>
+                  <td>ZONE04</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>WAIT</td>
+                  <td>2024-03-13</td>
+                  <td>75</td>
+                  <td>001-002-001</td>
+                  <td>WH005</td>
+                  <td>ZONE05</td>
+                </tr>
+                </tbody>
+              </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /# card -->
+          </div>
+        </div>
+<!--**********************************
+    Main wrapper end
+***********************************-->
+
+<!--**********************************
+    Scripts
+***********************************-->
+<!--**********************************
+    Scripts
+***********************************-->
+<th:block th:replace="/layout/script :: scriptFragment"></th:block>
+</div>
+</body>
+
+</html>

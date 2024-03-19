@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <title>about</title>
+</head>
+
+
+<body>
+
+<!--*******************
+    Preloader start
+********************-->
+<th:block th:replace="/layout/preloader :: preloaderFragment"></th:block>
+<!--*******************
+    Preloader end
+********************-->
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+  <!--**********************************
+      Nav header start
+  ***********************************-->
+  <th:block th:replace="/layout/nav :: navFragment"></th:block>
+  <!--**********************************
+      Header end ti-comment-alt
+  ***********************************-->
+
+  <!--**********************************
+      Sidebar start
+  ***********************************-->
+  <th:block th:replace="/layout/sidebar :: sidebarFragment"></th:block>
+  <!--**********************************
+      Sidebar end
+  ***********************************-->
+
+  <!--**********************************
+      Content body start
+  ***********************************-->
+  <div class="content-body">
+
+    <div class="row page-titles mx-0">
+      <div class="col p-md-0">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+          <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+        </ol>
+      </div>
+    </div>
+    <!-- row -->
+
+    <!-- 여기에 각자 맡은 페이지를 넣어서 작업하면 됩니다.-->
+    <div class="container-fluid">
+      <!-- page1. 재고 현황 조회 -->
+      <h2>About</h2>
+
+      <!-- 필터링  -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title"> 로고 </h4>
+              <div class="form-basic">
+                <!-- 옵션 1 -->
+                <div class="form-group">
+                  이미지
+                </div>
+              </div>
+              <h4 class="card-title"> 의미 </h4>
+              <div class="form-basic">
+                <!-- 옵션 1 -->
+                <div class="form-group">
+                  샬롸샬롸
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- #/ container -->
+      <!--**********************************
+        Content body end
+    ***********************************-->
+
+
+      <!--**********************************
+        Footer start
+    ***********************************-->
+      <div class="footer">
+        <div class="copyright">
+          <p>Copyright &copy; Designed & Developed by <a
+              href="https://themeforest.net/user/quixlab">Quixlab</a> 2018
+          </p>
+        </div>
+      </div>
+      <!--**********************************
+        Footer end
+    ***********************************-->
+    </div>
+    <!--**********************************
+      Main wrapper end
+  ***********************************-->
+
+    <!--**********************************
+    Scripts
+***********************************-->
+    <th:block th:replace="/layout/script :: scriptFragment"></th:block>
+  </div>
+</div>
+</body>
+</html>

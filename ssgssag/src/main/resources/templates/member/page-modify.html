@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="h-100" lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <title>회원 관리</title>
+</head>
+
+<body class="h-100">
+<!--*******************
+    Preloader start
+********************-->
+<th:block th:replace="/layout/preloader :: preloaderFragment"></th:block>
+<!--*******************
+    Preloader end
+********************-->
+
+<div class="login-form-bg h-100">
+  <div class="container h-100">
+    <div class="row justify-content-center h-100">
+      <div class="col-xl-6">
+        <div class="form-input-content">
+          <div class="card login-form mb-0">
+            <div class="card-body pt-5">
+              <a class="text-center" href="index.html"> <h4><b>회원 정보 수정</b></h4></a>
+              <form class="mt-5 mb-5 login-input">
+                <div class="d-flex justify-content-center">
+                  <div class="text-center">
+                    <img src="${pageContext.request.contextPath}/../../theme/images/imgs/user.png" class="profile" width="100" height="100">
+                    <p class="text-center">
+                      <input type="file" id="file" accept="image/gif, image/png, image/jpeg">
+                    </p>
+                  </div>
+                </div>
+
+                <div class="form-group d-flex justify-content-between">
+                  <input type="text" class="form-control w-75" placeholder="이름" required>
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                  <input type="text" class="form-control w-75" placeholder="아이디" required readonly>
+                </div>
+
+                <div class="passwordEye">
+                  <div class="form-group d-flex justify-content-between w-75">
+                    <input type="password" name="pwd" class="form-control" placeholder="비밀번호" required>
+                    <i class="fa fa-eye-slash fa-lg"></i>
+                  </div>
+                  <div class="form-group d-flex justify-content-between w-75">
+                    <input type="password" name="pwdCheck" class="form-control" placeholder="비밀번호 확인" required>
+                    <i class="fa fa-eye-slash fa-lg"></i>
+                  </div>
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                  <input type="email" name="email" class="form-control w-75" placeholder="이메일" required>
+                </div>
+                <form class="mt-5 mb-5 login-input">
+                  <button class="btn login-form__btn submit w-100">수정하기</button>
+                </form>
+
+                <div class="text-right" data-toggle="modal" data-target="#customs" id="alertButton">회원 탈퇴</div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="customs" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalLabel">회원 탈퇴</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          탈퇴하시겠습니까?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+          <button type="button" class="btn btn-primary" onclick="location.href='index.html'">확인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--**********************************
+    Scripts
+***********************************-->
+<th:block th:replace="/layout/script :: scriptFragment"></th:block>
+
+<script>
+  $(function() {
+    $('.passwordEye i').on('click', function() {
+      $('input').toggleClass('active');
+
+      if ($('input').hasClass('active')) {
+        $(this).attr('class', "fa fa-eye fa-lg")
+        .prev('input').attr('type', "text");
+      } else {
+        $(this).attr('class', "fa fa-eye-slash fa-lg")
+        .prev('input').attr('type', 'password');
+      }
+    });
+  });
+</script>
+
+</body>
+
+</html>

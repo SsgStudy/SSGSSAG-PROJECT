@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html class="h-100" lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <title>회원 가입</title>
+</head>
+
+<body class="h-100">
+<!--*******************
+    Preloader start
+********************-->
+<th:block th:replace="/layout/preloader :: preloaderFragment"></th:block>
+<!--*******************
+    Preloader end
+********************-->
+
+<div class="login-form-bg h-100">
+  <div class="container h-100">
+    <div class="row justify-content-center h-100">
+      <div class="col-xl-6">
+        <div class="form-input-content">
+          <div class="card login-form mb-0">
+            <div class="card-body pt-5">
+              <a class="text-center" href="index.html"><h4><b>회원가입</b></h4></a>
+              <form class="mt-5 mb-5 login-input">
+                <div class="form-group d-flex justify-content-between">
+                  <input type="text" class="form-control w-75" placeholder="이름" required>
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                  <input type="text" class="form-control w-75" placeholder="아이디" required>
+                  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                          data-target="#customAlert" id="alertButton">중복확인
+                  </button>
+
+                </div>
+                <div class="passwordEye">
+                  <div class="form-group d-flex justify-content-between w-75S">
+                    <input type="password" name="pwd" class="form-control" placeholder="비밀번호"
+                           required>
+                    <i class="fa fa-eye-slash fa-lg"></i>
+                  </div>
+                  <div class="form-group d-flex justify-content-between w-75">
+                    <input type="password" name="pwdCheck" class="form-control"
+                           placeholder="비밀번호 확인" required>
+                    <i class="fa fa-eye-slash fa-lg"></i>
+                  </div>
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                  <input type="email" name="email" class="form-control w-75" placeholder="이메일"
+                         required>
+                </div>
+                <button class="btn login-form__btn submit w-100">가입하기</button>
+              </form>
+              <p class="mt-5 login-form__footer">기존 회원이신가요? <a href="page-login.html"
+                                                               class="text-primary">로그인</a></p>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--**********************************
+    Scripts
+***********************************-->
+<th:block th:replace="/layout/script :: scriptFragment"></th:block>
+
+
+<script>
+  $(function () {
+    $('.passwordEye i').on('click', function () {
+      $('input').toggleClass('active');
+
+      if ($('input').hasClass('active')) {
+        $(this).attr('class', "fa fa-eye fa-lg")
+        .prev('input').attr('type', "text");
+      } else {
+        $(this).attr('class', "fa fa-eye-slash fa-lg")
+        .prev('input').attr('type', 'password');
+      }
+    });
+  });
+
+  //아이디 중복 확인 버튼 클릭 시 alert창 생성
+  $(document).ready(function () {
+    $("#alertButton").click(function () {
+      alert("중복된 아이디입니다.\n다른 아이디를 입력해주세요");
+    });
+  });
+</script>
+</body>
+</html>
+
+
+
+
+

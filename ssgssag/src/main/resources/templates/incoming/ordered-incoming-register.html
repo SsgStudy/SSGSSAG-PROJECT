@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <title>발주 입고 등록</title>
+</head>
+
+<body>
+
+<!--*******************
+    Preloader start
+********************-->
+<th:block th:replace="/layout/preloader :: preloaderFragment"></th:block>
+<!--*******************
+    Preloader end
+********************-->
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+  <!--**********************************
+      Nav header start
+  ***********************************-->
+  <th:block th:replace="/layout/nav :: navFragment"></th:block>
+
+  <!--**********************************
+      Header end ti-comment-alt
+  ***********************************-->
+
+  <!--**********************************
+      Sidebar start
+  ***********************************-->
+  <th:block th:replace="/layout/sidebar :: sidebarFragment"></th:block>
+  <!--**********************************
+      Sidebar end
+  ***********************************-->
+
+  <!--**********************************
+      Content body start
+  ***********************************-->
+  <div class="content-body">
+
+    <div class="row page-titles mx-0">
+      <div class="col p-md-0">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="javascript:void(0)">입고 관리</a></li>
+          <li class="breadcrumb-item active"><a href="javascript:void(0)">발주 입고 등록</a></li>
+        </ol>
+      </div>
+    </div>
+    <!-- row -->
+
+    <!-- 여기에 각자 맡은 페이지를 넣어서 작업하면 됩니다.-->
+    <div class="container-fluid">
+      <div class="col-lg-12">
+        <h1>발주 입고 등록</h1>
+      </div>
+      <div class="col-lg-12 mb-4 text-right">
+        <div class="general-button">
+          <button type="button" class="btn btn-dark mb-1 btn-primary" data-toggle="modal" data-target="#basicModal">등록</button>
+          <button type="button" class="btn btn-dark mb-1 btn-primary">초기화</button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="basicModal">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">입고 등록 확인</h5>
+                      <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body text-left">저장하시겠습니까?</div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-light btn-secondary" data-dismiss="modal">취소</button>
+                      <button type="button" class="btn btn-dark btn-primary">확인</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      </div>
+     
+      <div class="col-lg-12">
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title">검색 조건</h4>
+                  <div class="basic-form">
+                      <form>
+                          <div class="form-group row">
+                              <label class="col-sm-1 col-form-label">입고기간</label>
+                              <div class="col-sm-11">
+                                  <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="01/01/2015 - 01/31/2015">
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-sm-1 col-form-label">창고</label>
+                              <div class="col-sm-11">
+                                  <div class="input-group">
+                                      <input type="text" class="form-control input-flat" placeholder="창고 검색" data-toggle="modal" data-target="#warehouseSearchInputBox">
+                                  </div>
+                              </div>
+                               <!-- Modal -->
+                               <div class="modal fade" id="warehouseSearchInputBox">
+                                   <div class="modal-dialog modal-lg" role="document">
+                                       <div class="modal-content">
+                                           <div class="modal-header">
+                                               <h5 class="modal-title">창고</h5>
+                                               <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                               </button>
+                                           </div>
+                                           <div class="modal-body">
+                                            <div class="col-lg-12 mb-4 text-right">
+                                              <div class="general-button">
+                                                <button type="button" class="btn btn-dark mb-2 btn-primary">조회</button>
+                                                <button type="button" class="btn btn-dark mb-2 btn-primary">선택</button>
+                                              </div>
+                                              <div class="row mb-1">
+                                                <label class="col-sm-3 col-form-label text-left">분류</label>
+                                                <div class="col-sm-9">
+                                                  <input type="text" class="form-control input-flat" placeholder="창고 유형을 입력해주세요">
+                                                </div>
+                                              </div>
+                                              <div class="row">
+                                                <label class="col-sm-3 col-form-label text-left">검색 조건</label>
+                                                <div class="col-sm-9">
+                                                  <input type="text" class="form-control input-flat" placeholder="창고명 혹은 창고 코드를 입력해주세요">
+                                                </div>
+                                              </div>
+                                              
+                                            </div>    
+                                            <div class="table-responsive">
+                                              <table class="table table-hover">
+                                                  <thead>
+                                                      <tr>
+                                                          <th>No</th>
+                                                          <th>분류</th>
+                                                          <th>창고코드</th>
+                                                          <th>창고명</th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                    <tr>
+                                                      <td>1</td>
+                                                      <td>식품</td>
+                                                      <td>CW001</td>
+                                                      <td>식품창고 1</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>2</td>
+                                                      <td>의류</td>
+                                                      <td>CW002</td>
+                                                      <td>의류창고 A</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>3</td>
+                                                      <td>가전제품</td>
+                                                      <td>CW003</td>
+                                                      <td>가전창고 1</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>4</td>
+                                                      <td>도서</td>
+                                                      <td>CW004</td>
+                                                      <td>도서창고 B</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>5</td>
+                                                      <td>화장품</td>
+                                                      <td>CW005</td>
+                                                      <td>화장품창고 1</td>
+                                                    </tr>
+                                                  </tbody>
+                                                  <tfoot>
+                                                    <tr>
+                                                      <td></td>
+                                                    </tr>
+                                                  </tfoot>
+                                              </table>
+                                          </div>                                       
+                                        </div>
+                                       </div>
+                                   </div>
+                               </div>
+                              
+                              
+                          </div>
+                          <div class="form-group row justify-content-center">
+                              <div class="col-sm-10 d-flex justify-content-center">
+                                  <button type="submit" class="btn btn-dark">조회</button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">입고 등록 대기 발주 목록</h4>
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>선택</th>
+                            <th>발주 일련번호</th>
+                            <th>거래처</th>
+                            <th>납기 일자</th>
+                            <th>발주 구분</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><input type="checkbox"></td>
+                            <td data-toggle="modal" data-target="#incomigDetailModal-1">2024001</td>
+                            <td>ABC Trading Co.</td>
+                            <td>2024-03-20</td>
+                            <td>정기 발주</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><input type="checkbox"></td>
+                            <td>2024002</td>
+                            <td>XYZ Supplies</td>
+                            <td>2024-03-25</td>
+                            <td>긴급 발주</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><input type="checkbox"></td>
+                            <td>2024003</td>
+                            <td>DEF Corporation</td>
+                            <td>2024-04-02</td>
+                            <td>일반 발주</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><input type="checkbox"></td>
+                            <td>2024004</td>
+                            <td>GHI Trading</td>
+                            <td>2024-03-22</td>
+                            <td>정기 발주</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td><input type="checkbox"></td>
+                            <td>2024005</td>
+                            <td>JKL Imports</td>
+                            <td>2024-04-01</td>
+                            <td>긴급 발주</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td><input type="checkbox"></td>
+                            <td>2024006</td>
+                            <td>MNO Exports</td>
+                            <td>2024-03-28</td>
+                            <td>일반 발주</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td><input type="checkbox"></td>
+                            <td>2024007</td>
+                            <td>PQR Trading Co.</td>
+                            <td>2024-03-23</td>
+                            <td>정기 발주</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td><input type="checkbox"></td>
+                            <td>2024008</td>
+                            <td>STU Supplies</td>
+                            <td>2024-03-30</td>
+                            <td>긴급 발주</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td><input type="checkbox"></td>
+                            <td>2024009</td>
+                            <td>VWX Corporation</td>
+                            <td>2024-04-05</td>
+                            <td>일반 발주</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td><input type="checkbox"></td>
+                            <td>2024010</td>
+                            <td>YZ Imports</td>
+                            <td>2024-03-26</td>
+                            <td>정기 발주</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Modal -->
+                <div class="modal fade" id="incomigDetailModal-1">
+                  <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title">발주 상세 정보</h5>
+                              <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                           <div class="table-responsive">
+                             <table class="table table-hover">
+                              <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>발주 상세 일련번호</th>
+                                    <th>발주 일련번호</th>
+                                    <th>발주 수량</th>
+                                    <th>상품 일련번호</th>
+                                    <th>상품명</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>2024001-1</td>
+                                    <td>2024001</td>
+                                    <td>100</td>
+                                    <td>1001</td>
+                                    <td>티셔츠</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>2024001-2</td>
+                                    <td>2024001</td>
+                                    <td>50</td>
+                                    <td>1002</td>
+                                    <td>청바지</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>2024002-1</td>
+                                    <td>2024002</td>
+                                    <td>80</td>
+                                    <td>1003</td>
+                                    <td>셔츠</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>2024003-1</td>
+                                    <td>2024003</td>
+                                    <td>120</td>
+                                    <td>1004</td>
+                                    <td>스커트</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>2024003-2</td>
+                                    <td>2024003</td>
+                                    <td>70</td>
+                                    <td>1005</td>
+                                    <td>원피스</td>
+                                </tr>
+                            </tbody>
+                                 <tfoot>
+                                   <tr>
+                                     <td></td>
+                                   </tr>
+                                 </tfoot>
+                             </table>
+                         </div>                                       
+                       </div>
+                      </div>
+                  </div>
+              </div>
+                
+          </div>
+      </div>
+  </div>
+</div>
+   
+  
+    <!-- #/ container -->
+  </div>
+  <!--**********************************
+      Content body end
+  ***********************************-->
+
+
+  <!--**********************************
+      Footer start
+  ***********************************-->
+
+  <!--**********************************
+      Footer end
+  ***********************************-->
+</div>
+<!--**********************************
+    Main wrapper end
+***********************************-->
+
+<!--**********************************
+    Scripts
+***********************************-->
+  <th:block th:replace="/layout/script :: scriptFragment"></th:block>
+</div>
+</body>
+
+</html>
