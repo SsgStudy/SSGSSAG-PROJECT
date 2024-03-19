@@ -34,4 +34,11 @@ public class IncomingServiceImpl implements IncomingService {
         return incomingMapper.selectIncomingDetailByCode(pkIncomingProductSeq);
     }
 
+    @Override
+    public void confirmIncomingProducts(List<String> pkIncomingProductSeqs) {
+        for (String pk : pkIncomingProductSeqs) {
+            incomingMapper.updateIncomingProductStatusToComplete(pk);
+        }
+    }
+
 }

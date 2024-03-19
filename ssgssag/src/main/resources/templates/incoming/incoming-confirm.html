@@ -59,7 +59,7 @@
       </div>
       <div class="col-lg-12 mb-4 text-right">
         <div class="general-button">
-          <button type="button" class="btn btn-dark mb-1 btn-primary ">확정</button>
+          <button type="button" class="btn btn-dark mb-1 btn-primary" onclick="confirmSelectedProducts()">확정</button>
           <button type="button" class="btn btn-dark mb-1 btn-primary">인쇄</button>
           <button type="button" class="btn btn-dark mb-1 btn-primary">초기화</button>
         </div>
@@ -280,7 +280,7 @@
                   <td th:text="${incoming.pkIncomingProductSeq}">1</td>
                   <td>
                     <div class="checkbox m-t-40">
-                      <input type="checkbox" th:id="'checkbox' + ${iterStat.count}">
+                      <input type="checkbox" th:id="'checkbox' + ${iterStat.count}" th:data-pk-incoming-product-seq="${incoming.pkIncomingProductSeq}">
                     </div>
                   </td>
                   <td th:text="${incoming.vIncomingProductStatus}">완료</td>
@@ -363,12 +363,12 @@
         url: '/incoming/details/' + pkIncomingProductSeq,
         type: 'GET',
         success: function(data) {
-          var detailsTable = $('#detailsTable tbody');
+          let detailsTable = $('#detailsTable tbody');
           detailsTable.empty();
 
-          var totalPrice = data.nincomingProductCnt * data.nincomingProductPrice;
+          let totalPrice = data.nincomingProductCnt * data.nincomingProductPrice;
 
-          var newRow = `<tr>
+          let newRow = `<tr>
           <td>${data.vproductCd}</td>
           <td>${data.vproductNm}</td>
           <td>${data.vproductStatus || '상태 정보 없음'}</td>
@@ -390,13 +390,33 @@
       });
     }
 
+    function confirmSelectedProducts() {
+      let selectedProductIds = [];
+      $('input[type="checkbox"]:checked').each(function() {
+        selectedProductIds.push($(this).data('pk-incoming-product-seq'));
+      });
+      console.log(selectedProductIds);
+      $.ajax({
+        url: '/incoming/confirm',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(selectedProductIds),
+        success: function(response) {
+          alert('입고 목록이 확정되었습니다.');
+          window.location.reload();
+        },
+        error: function(xhr, status, error) {
+          alert('오류 발생: ' + error);
+        }
+      });
+    }
 
     function formatDate(dateString) {
       if (!dateString) return '';
-      var date = new Date(dateString);
-      var year = date.getFullYear();
-      var month = ('0' + (date.getMonth() + 1)).slice(-2);
-      var day = ('0' + date.getDate()).slice(-2);
+      let date = new Date(dateString);
+      let year = date.getFullYear();
+      let month = ('0' + (date.getMonth() + 1)).slice(-2);
+      let day = ('0' + date.getDate()).slice(-2);
       return year + '-' + month + '-' + day;
     }
   </script>

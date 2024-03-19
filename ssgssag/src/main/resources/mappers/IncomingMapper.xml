@@ -20,5 +20,10 @@
     WHERE ip.PK_INCOMING_PRODUCT_SEQ = #{pkIncomingProductSeq}
   </select>
 
+  <update id="updateIncomingProductStatusToComplete">
+    UPDATE TB_INCOMING_PRODUCT
+    SET V_INCOMING_PRODUCT_STATUS = 'COMPLETE'
+    WHERE PK_INCOMING_PRODUCT_SEQ = #{pkIncomingProductSeq}
+  </update>
 
 </mapper>

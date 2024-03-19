@@ -270,7 +270,6 @@
                 <tr>
                   <th>No</th>
                   <th>번호</th>
-                  <th>선택</th>
                   <th>입고 상태</th>
                   <th>상품 코드</th>
                   <th>입고 일자</th>
@@ -288,11 +287,6 @@
                     onclick="fetchIncomingDetails(this.getAttribute('data-pk-incoming-product-seq'))">
                   <td th:text="${iterStat.count}">1</td>
                   <td th:text="${incoming.pkIncomingProductSeq}">1</td>
-                  <td>
-                    <div class="checkbox m-t-40">
-                      <input type="checkbox" th:id="'checkbox' + ${iterStat.count}">
-                    </div>
-                  </td>
                   <td th:text="${incoming.vIncomingProductStatus}">완료</td>
                   <td th:text="${incoming.vProductCd}">PROD001</td>
                   <td th:text="${#temporals.format(incoming.dtIncomingProductDate, 'yyyy/MM/dd')}">2024/03/01</td>

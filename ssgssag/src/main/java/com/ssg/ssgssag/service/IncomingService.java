@@ -13,4 +13,6 @@ public interface IncomingService {
 
     IncomingDetailDTO getIncomingDetailByCode(String pkIncomingProductSeq);
 
+    void confirmIncomingProducts(List<String> pkIncomingProductSeqs);
+
 }

@@ -20,4 +20,7 @@ public interface IncomingMapper {
     //입고 상세(상품 정보) 조회
     IncomingDetailDTO selectIncomingDetailByCode(@Param("pkIncomingProductSeq") String pkIncomingProductSeq);
 
+    //입고 승인
+    void updateIncomingProductStatusToComplete(@Param("pkIncomingProductSeq") String pkIncomingProductSeq);
+
 }
