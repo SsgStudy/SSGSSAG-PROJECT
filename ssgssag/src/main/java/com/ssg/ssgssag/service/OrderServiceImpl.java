@@ -50,10 +50,13 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public int registerOrder(OrderVO order, List<OrderDetailVO> orderDetails) {
 
-        orderMapper.insertOrder(order);
-        orderMapper.insertOrderDetail(orderDetails);
-
-        return 1;
+        try {
+            orderMapper.insertOrder(order); // 주문 정보
+            orderMapper.insertOrderDetail(orderDetails); // 주문 상세 정보
+            return 1;
+        } catch (RuntimeException e) {
+            return 0;
+        }
     }
 //
 //    @Override
