@@ -10,4 +10,6 @@ public interface IncomingMapper {
 
     //발주 입고 리스트 전체 조회
     List<IncomingDTO> selectAllIncomingProductsWithDetails();
+
+
 }
