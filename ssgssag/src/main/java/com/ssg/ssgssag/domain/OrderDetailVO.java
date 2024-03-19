@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class OrderDetailVO {
     private Long pkOrderDetailSeq;
-    private Long pkOrderSqe;
+    private Long pkOrderSeq;
     private int nOrderCnt;
     private String vOrderStatus;
     private String vProductCd;
