@@ -12,9 +12,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/incoming")
 public class IncomingController {
     @GetMapping("/list")
-    public String selectOne() {
+    public String showIncomingListPage() {
         log.info("incoming controller test");
 
         return "incoming/incoming-list";
+    }
+    @GetMapping("/register")
+    public String showOrderedIncomingRegisterPage() {
+        log.info("incoming controller test");
+
+        return "incoming/ordered-incoming-register";
+    }
+    @GetMapping("/confirm")
+    public String showIncomingConfirmPage() {
+        log.info("incoming controller test");
+
+        return "incoming/incoming-confirm";
     }
 }
