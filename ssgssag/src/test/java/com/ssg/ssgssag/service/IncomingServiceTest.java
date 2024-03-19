@@ -24,4 +24,8 @@ public class IncomingServiceTest {
         List<IncomingDTO> incomingDTOList = incomingService.getAllIncomingProductsWithDetails();
         log.info(incomingDTOList);
     }
+
+    @Test
+    void getIncomingDetailByCode() {
+    }
 }

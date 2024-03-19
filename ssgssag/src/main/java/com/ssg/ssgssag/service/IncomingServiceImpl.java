@@ -1,6 +1,8 @@
 package com.ssg.ssgssag.service;
 
 import com.ssg.ssgssag.dto.IncomingDTO;
+import com.ssg.ssgssag.dto.IncomingDetailDTO;
+import com.ssg.ssgssag.dto.ProductDTO;
 import com.ssg.ssgssag.mapper.IncomingMapper;
 import java.util.List;
 import lombok.NoArgsConstructor;
@@ -21,4 +23,15 @@ public class IncomingServiceImpl implements IncomingService {
     public List<IncomingDTO> getAllIncomingProductsWithDetails() {
         return incomingMapper.selectAllIncomingProductsWithDetails();
     }
+
+    @Override
+    public List<IncomingDTO> getAllIncomingProgressProductsWithDetails() {
+        return incomingMapper.selectAllIncomingProgressProductsWithDetails();
+    }
+
+    @Override
+    public IncomingDetailDTO getIncomingDetailByCode(String pkIncomingProductSeq) {
+        return incomingMapper.selectIncomingDetailByCode(pkIncomingProductSeq);
+    }
+
 }
