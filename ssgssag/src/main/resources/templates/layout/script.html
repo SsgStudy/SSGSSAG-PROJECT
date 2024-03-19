@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!-- 공통으로 쓰이는 script 파일을 넣는다. -->
+<th:block th:fragment="scriptFragment">
+  <script th:src="@{/plugins/common/common.min.js}"></script>
+  <script th:src="@{/js/custom.min.js}"></script>
+  <script th:src="@{/js/settings.js}"></script>
+  <script th:src="@{/js/gleek.js}"></script>
+  <script th:src="@{/js/styleSwitcher.js}"></script>
+  <script th:src="@{/plugins/moment/moment.js}"></script>
+  <script th:src="@{/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js}"></script>
+
+  <!-- Clock Plugin JavaScript -->
+  <script th:src="@{/plugins/clockpicker/dist/jquery-clockpicker.min.js}"></script>
+  <!-- Color Picker Plugin JavaScript -->
+  <script th:src="@{/plugins/jquery-asColorPicker-master/libs/jquery-asColor.js}"></script>
+  <script th:src="@{/plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js}"></script>
+  <script th:src="@{/plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js}"></script>
+  <!-- Date Picker Plugin JavaScript -->
+  <script th:src="@{/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js}"></script>
+  <!-- Date range Plugin JavaScript -->
+  <script th:src="@{/plugins/timepicker/bootstrap-timepicker.min.js}"></script>
+  <script th:src="@{/plugins/bootstrap-daterangepicker/daterangepicker.js}"></script>
+  <script th:src="@{/js/plugins-init/form-pickers-init.js}"></script>
+
+  <script th:src="@{/plugins/tables/js/jquery.dataTables.min.js}"></script>
+  <script th:src="@{/plugins/tables/js/datatable/dataTables.bootstrap4.min.js}"></script>
+  <script th:src="@{/plugins/tables/js/datatable-init/datatable-basic.min.js}"></script>
+
+</th:block>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="sidebarFragment">
+  <div class="nk-sidebar">
+    <div class="nk-nav-scroll">
+      <ul class="metismenu" id="menu">
+        <li class="nav-label">WMS</li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-speedometer menu-icon"></i><span class="nav-text">대시보드</span>
+          </a>
+          <ul aria-expanded="false">
+            <li><a href="./index.html">Home 1</a></li>
+            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
+          </ul>
+        </li>
+        <li class="mega-menu mega-menu-sm">
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-globe-alt menu-icon"></i><span class="nav-text">입고 관리</span>
+          </a>
+          <ul aria-expanded="false">
+            <li><a href="./layout-blank.html">발주입고 등록</a></li>
+            <li><a href="./layout-one-column.html">입고 승인</a></li>
+            <li><a href="./layout-two-column.html">입고 조회</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-envelope menu-icon"></i> <span class="nav-text">발주 관리</span>
+          </a>
+          <ul aria-expanded="false">
+            <li><a href="./email-inbox.html">발주 등록</a></li>
+            <li><a href="./email-read.html">발주 확정</a></li>
+            <li><a href="./email-compose.html">발주 조회</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-screen-tablet menu-icon"></i><span class="nav-text">창고 관리</span>
+          </a>
+          <ul aria-expanded="false">
+            <li><a href="./app-profile.html">창고 조회 및 등록</a></li>
+            <li><a href="./app-profile.html">창고 지도 보기</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-graph menu-icon"></i> <span class="nav-text">재고 관리</span>
+          </a>
+          <ul aria-expanded="false">
+            <li><a href="./chart-flot.html">재고 현황 조회</a></li>
+            <li><a href="./chart-morris.html">재고 조정</a></li>
+            <li><a href="./chart-chartjs.html">재고 이동</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-graph menu-icon"></i> <span class="nav-text">회원 관리</span>
+          </a>
+          <ul aria-expanded="false">
+            <li><a href="./chart-flot.html">회원 정보 수정</a></li>
+            <li><a href="./chart-morris.html">회원 탈퇴</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</th:block>
