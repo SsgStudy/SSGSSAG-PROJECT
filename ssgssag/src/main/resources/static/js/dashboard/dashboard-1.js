@@ -86,12 +86,11 @@
             popupOnHover: !1, 
             highlightOnHover: !1, 
             borderColor: "transparent", 
-            borderWidth: 1, 
-            highlightBorderWidth: 3, 
+            highlightBorderWidth: 3,
             highlightFillColor: "rgba(0,123,255,0.5)", 
             highlightBorderColor: "transparent", 
             borderWidth: 1
-        }, 
+        },
         bubblesConfig: {
             popupTemplate: function (e, i) {
                 return '<div class="datamap-sales-hover-tooltip">' + i.country + '<span class="ml-2"></span>' + i.sold + "</div>"
