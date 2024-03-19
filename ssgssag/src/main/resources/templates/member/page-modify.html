@@ -1,148 +1,113 @@
 <!DOCTYPE html>
-<html class="h-100" lang="en">
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <link href="css/style.css" rel="stylesheet">
-    <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <title>회원 관리</title>
 </head>
 
 <body class="h-100">
-    <!--*******************
-        Preloader start
-    ********************-->
-    <div id="preloader">
-        <div class="loader">
-            <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
-            </svg>
-        </div>
-    </div>
-    <!--*******************
-        Preloader end
-    ********************-->
+<!--*******************
+    Preloader start
+********************-->
+<th:block th:replace="/layout/preloader :: preloaderFragment"></th:block>
+<!--*******************
+    Preloader end
+********************-->
 
-    <div class="login-form-bg h-100">
-        <div class="container h-100">
-            <div class="row justify-content-center h-100">
-                <div class="col-xl-6">
-                    <div class="form-input-content">
-                        <div class="card login-form mb-0">
-                            <div class="card-body pt-5">
-                                    <a class="text-center" href="index.html"> <h4><b>회원 정보 수정</b></h4></a>
-                                <form class="mt-5 mb-5 login-input">
-
-                                        <div class="d-flex justify-content-center">
-                                          <div class = "text-center">
-                                          <img src = "${pageContext.request.contextPath}/../../theme/images/imgs/user.png" class = "profile" width = "100" height = "100">
-                                          <p class = "text-center">
-                                              <input type = "file" id = "file" accept = "image/gif, image/png, image/jpeg">
-                                          </p>
-                                            </div>
-                                        </div>
-
-                                    <div class="form-group d-flex justify-content-between">
-                                      <input type="text" class="form-control w-75"  placeholder="이름" required>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-between">
-                                      <input type="text" class="form-control w-75"  placeholder="아이디" required readonly>
-                                    </div>
-
-
-                                  <div class="passwordEye">
-                                    <div class="form-group d-flex justify-content-between w-75">
-                                      <input type="password" name = "pwd" class="form-control" placeholder="비밀번호" required>
-                                      <i class="fa fa-eye-slash fa-lg"></i>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-between w-75">
-                                      <input type="password" name= "pwdCheck" class="form-control" placeholder="비밀번호 확인" required>
-                                        <i class="fa fa-eye-slash fa-lg"></i>
-                                    </div>
-                                  </div>
-                                  <div class="form-group d-flex justify-content-between">
-                                        <input type="email" name = "email" class="form-control w-75" placeholder="이메일" required>
-                                  </div>
-                                  <form class="mt-5 mb-5 login-input" action="index.html">
-                                    <button class="btn login-form__btn submit w-100">수정하기</button>
-                                  </form>
-
-                                  <div class="text-right" href="index.html" data-toggle="modal" data-target="#customs" id="alertButton">회원 탈퇴</div>
-                                </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<div class="login-form-bg h-100">
+  <div class="container h-100">
+    <div class="row justify-content-center h-100">
+      <div class="col-xl-6">
+        <div class="form-input-content">
+          <div class="card login-form mb-0">
+            <div class="card-body pt-5">
+              <a class="text-center" href="index.html"> <h4><b>회원 정보 수정</b></h4></a>
+              <form class="mt-5 mb-5 login-input">
+                <div class="d-flex justify-content-center">
+                  <div class="text-center">
+                    <img src="${pageContext.request.contextPath}/../../theme/images/imgs/user.png" class="profile" width="100" height="100">
+                    <p class="text-center">
+                      <input type="file" id="file" accept="image/gif, image/png, image/jpeg">
+                    </p>
+                  </div>
                 </div>
-            </div>
-        </div>
 
-    <div class="modal fade" id="customs" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="ModalLabel">회원 탈퇴</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            탈퇴하시겠습니까?
-          </div>
-          <div class="modal-footer">
-            <form action="page-modify.html">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-            </form>
-            <form action="index.html">
-              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.location.href='index.html'">확인</button>
-            </form>
+                <div class="form-group d-flex justify-content-between">
+                  <input type="text" class="form-control w-75" placeholder="이름" required>
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                  <input type="text" class="form-control w-75" placeholder="아이디" required readonly>
+                </div>
+
+                <div class="passwordEye">
+                  <div class="form-group d-flex justify-content-between w-75">
+                    <input type="password" name="pwd" class="form-control" placeholder="비밀번호" required>
+                    <i class="fa fa-eye-slash fa-lg"></i>
+                  </div>
+                  <div class="form-group d-flex justify-content-between w-75">
+                    <input type="password" name="pwdCheck" class="form-control" placeholder="비밀번호 확인" required>
+                    <i class="fa fa-eye-slash fa-lg"></i>
+                  </div>
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                  <input type="email" name="email" class="form-control w-75" placeholder="이메일" required>
+                </div>
+                <form class="mt-5 mb-5 login-input">
+                  <button class="btn login-form__btn submit w-100">수정하기</button>
+                </form>
+
+                <div class="text-right" data-toggle="modal" data-target="#customs" id="alertButton">회원 탈퇴</div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="modal fade" id="customs" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalLabel">회원 탈퇴</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          탈퇴하시겠습니까?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+          <button type="button" class="btn btn-primary" onclick="location.href='index.html'">확인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
+<!--**********************************
+    Scripts
+***********************************-->
+<th:block th:replace="/layout/script :: scriptFragment"></th:block>
 
+<script>
+  $(function() {
+    $('.passwordEye i').on('click', function() {
+      $('input').toggleClass('active');
 
-
-
-
-    <!--**********************************
-        Scripts
-    ***********************************-->
-    <script src="plugins/common/common.min.js"></script>
-    <script src="js/custom.min.js"></script>
-    <script src="js/settings.js"></script>
-    <script src="js/gleek.js"></script>
-    <script src="js/styleSwitcher.js"></script>
-
-    <script>
-      $(function () {
-        $('.passwordEye i').on('click', function () {
-          $('input').toggleClass('active');
-
-          if ($('input').hasClass('active')) {
-            $(this).attr('class', "fa fa-eye fa-lg")
-              .prev('input').attr('type', "text");
-          } else {
-            $(this).attr('class', "fa fa-eye-slash fa-lg")
-              .prev('input').attr('type', 'password');
-          }
-        });
-      });
-
-    </script>
-
+      if ($('input').hasClass('active')) {
+        $(this).attr('class', "fa fa-eye fa-lg")
+        .prev('input').attr('type', "text");
+      } else {
+        $(this).attr('class', "fa fa-eye-slash fa-lg")
+        .prev('input').attr('type', 'password');
+      }
+    });
+  });
+</script>
 
 </body>
+
 </html>
-
-
-
-
-

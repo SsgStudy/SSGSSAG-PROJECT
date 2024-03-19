@@ -1,17 +1,8 @@
-
 <!DOCTYPE html>
-<html class="h-100" lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
-  <!-- Favicon icon -->
-  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
-  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
-  <link href="css/style.css" rel="stylesheet">
-
+  <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <title>로그인</title>
 </head>
 
 <body class="h-100">
@@ -19,20 +10,10 @@
 <!--*******************
     Preloader start
 ********************-->
-<div id="preloader">
-  <div class="loader">
-    <svg class="circular" viewBox="25 25 50 50">
-      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
-    </svg>
-  </div>
-</div>
+<th:block th:replace="/layout/preloader :: preloaderFragment"></th:block>
 <!--*******************
     Preloader end
 ********************-->
-
-
-
-
 
 <div class="login-form-bg h-100">
   <div class="container h-100">
@@ -56,17 +37,14 @@
               </form>
 
               <div class="text-center">
-                <a href="https://kauth.kakao.com/oauth/authorize"
-                   th:href="@{https://kauth.kakao.com/oauth/authorize(client_id=${kakaoApiKey}, redirect_uri=${redirectUri}, response_type='code')}">
-                  <img src="/../../theme/images/imgs/kakao_login_medium_wide.png">
+                <a th:href="@{https://kauth.kakao.com/oauth/authorize(client_id=${kakaoApiKey}, redirect_uri=${redirectUri}, response_type='code')}" target="_blank">
+                  <img th:src="@{/static/images/imgs/kakao_login_medium_wide.png}" alt="kakao login btn"/>
                 </a>
               </div>
 
-<!--              <div id="kakao-login-btn"></div>-->
-              <p class="mt-5 login-form__footer text-right"><a href="page-register.html" class="text-primary">비밀번호 찾기</a></p>
               <p class="mt-5 login-form__footer text-right"><a href="page-register.html" class="text-primary">비밀번호 찾기</a></p>
               <p class="mt-5 login-form__footer"><a href="page-register.html" class="text-primary">회원가입</a></p>
-              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -74,22 +52,14 @@
   </div>
 </div>
 
-
-
-
 <!--**********************************
     Scripts
 ***********************************-->
-<script src="plugins/common/common.min.js"></script>
-<script src="js/custom.min.js"></script>
-<script src="js/settings.js"></script>
-<script src="js/gleek.js"></script>
-<script src="js/styleSwitcher.js"></script>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-
+<th:block th:replace="/layout/script :: scriptFragment"></th:block>
+<script th:src="@{https://developers.kakao.com/sdk/js/kakao.js}"></script>
 <script>
   // 카카오 로그인 버튼 생성
-  Kakao.init('YOUR_KAKAO_APP_KEY'); // 여기에 카카오 앱 키를 입력하세요.
+  Kakao.init('${kakaoApiKey}');
 
   Kakao.Auth.createLoginButton({
     container: '#kakao-login-btn',
@@ -102,11 +72,5 @@
   });
 </script>
 
-
 </body>
 </html>
-
-
-
-
-
