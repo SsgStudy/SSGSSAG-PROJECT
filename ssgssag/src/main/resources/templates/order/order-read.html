@@ -41,8 +41,8 @@
         <div class="row page-titles mx-0">
             <div class="col p-md-0">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">발주확정</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">발주관리</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">발주조회</a></li>
                 </ol>
             </div>
         </div>
@@ -51,32 +51,10 @@
         <div class="row page-titles mx-0">
             <div class="col p-md-0">
                 <h2 class="header-content">발주 조회</h2>
-                
                 <div class="header-right">
                     <div class="btn mb-1">
-                        <button type="button" class="btn mb-1 btn-info" data-toggle="modal" data-target="#registerConfirmModal">확정</button>
-                        <div class="modal fade" id="registerConfirmModal" style="display: none;" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content  d-flex justify-content-center">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Confirm</h5>
-                                        <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body center">
-                                        <p>확정하시겠습니까?</p>
-                                    </div>
-                                    <div class="modal-footer d-flex justify-content-center">
-                                        <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                        <button type="button" id="order-register-confirm-ok-btn" class="btn close" data-dismiss="modal">확인</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="btn mb-1">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenterDelete">초기화</button>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenterDelete">초기화</button>
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModalCenterDelete" style="display: none;" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -91,20 +69,17 @@
                                     </div>
                                     <div class="modal-footer d-flex justify-content-center">
                                         <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                        <button type="button" id="order-register-remove-ok-btn" class="btn close" data-dismiss="modal">확인</button>
+                                        <button type="button" class="btn" onclick="orderReadPageReset()" data-dismiss="modal">확인</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
                 </div>
-                
             </div>
         </div>
         <!-- row -->
-    
-        <!-- 여기에 각자 맡은 페이지를 넣어서 작업하면 됩니다.-->
+
         <div class="container-fluid">
           <div class="col-lg-12">
             <h3>검색조건</h3>
@@ -113,103 +88,48 @@
               <div class="card">
                   <div class="card-body">
                       <div class="basic-form"  id="order-register-form">
-                          <form>
+                          <form id="order-read-search-form">
                               <div class="form-group row">
                                   <label class="col-sm-1 col-form-label">발주기간</label>
                                   <div class="col-sm-11">
-                                      <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="01/01/2015 - 01/31/2015">
+                                      <input class="form-control input-daterange-datepicker" id="order-read-date" type="text" name="daterange" value="01/01/2024 - 03/21/2024">
                                   </div>
                               </div>
                               <div class="form-group row">
-                                  <label class="col-sm-1 col-form-label">매입거래처</label>
+                                  <label class="col-sm-1 col-form-label">매입처</label>
                                   <div class="col-sm-3">
                                       <div class="input-group">
-                                          <input type="text" class="form-control input-flat" placeholder="">
+                                          <input type="text" class="form-control input-flat" id="incoming-product-supplier-nm" placeholder="">
                                       </div>
                                   </div>
                                   <label class="col-sm-1 col-form-label">창고</label>
                                   <div class="col-sm-3">
                                       <div class="input-group">
-                                          <input type="text" class="form-control input-flat" placeholder="창고 검색">
+                                          <input type="text" class="form-control input-flat" id="warehouse-cd" placeholder="창고 검색">
                                       </div>
                                   </div>
                                   <label class="col-sm-1 col-form-label">발주구분</label>
                                   <div class="col-sm-3">
                                       <div class="input-group">
-                                          <select id="inputState" class="form-control">
+                                          <select id="order-status" class="form-control">
                                               <option selected="selected">선택</option>
-                                              <option>신규</option>
+                                              <option>미확정</option>
                                               <option>발주확정</option>
                                           </select>
                                       </div>
                                   </div>
                               </div>
                               <div class="row d-flex justify-content-center">
-                                <button type="button" class="btn mb-1 btn-info" id="order-read-btn">조회</button>
+                                <button type="button" class="btn mb-1 btn-info" id="order-read-btn" onclick="readOrder()">조회</button>
                             </div>
                           </form>
                       </div>
                   </div>
               </div>
           </div>
-    
+
         <div class="col-lg-12">
-        <h3>발주목록</h3>
-        </div>
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title">
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th><input type="checkbox"></th>
-                                    <th>발주일자</th>
-                                    <th>발주번호</th>
-                                    <th>발주확정</th>
-                                    <th>발주구분</th>
-                                    <th>발주유형</th>
-                                    <th>매입거래처</th>
-                                    <th>매입처상태</th>
-                                    <th>창고</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>1</th>
-                                    <td><input type="checkbox"/></td>
-                                    <td>2024-03-15</td>
-                                    <td>550132465789</td>
-                                    <td>확정</td>
-                                    <td>-</td>
-                                    <td>국내발주</td>
-                                    <td>ssg</td>
-                                    <td>good</td>
-                                    <td>서울중앙창고</td>
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td><input type="checkbox"/></td>
-                                    <td>2024-03-15</td>
-                                    <td>550132465779</td>
-                                    <td>확정</td>
-                                    <td>-</td>
-                                    <td>국내발주</td>
-                                    <td>ssg</td>
-                                    <td>good</td>
-                                    <td>대전센터창고</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <h3>발주상세</h3>
+            <h3>발주목록</h3>
             </div>
             <div class="col-12">
                 <div class="card">
@@ -221,54 +141,17 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th><input type="checkbox"></th>
-                                        <th>단품코드</th>
-                                        <th>단품명</th>
-                                        <th>단품상태</th>
-                                        <th>재고관리여부</th>
-                                        <th>창고현재고</th>
-                                        <th>발주수량</th>
-                                        <th>발주단가</th>
-                                        <th>발주금액</th>
+                                        <th>발주일자</th>
+                                        <th>발주번호</th>
+                                        <th>발주유형</th>
+                                        <th>매입처</th>
+                                        <th>창고</th>
+                                        <th>납품예정일자</th>
+                                        <th>발주확정</th>
+                                        <th>발주확정일시</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>1</th>
-                                        <td><input type="checkbox"/></td>
-                                        <td>550132465789</td>
-                                        <td>다이제</td>
-                                        <td>good</td>
-                                        <td>good</td>
-                                        <td>10</td>
-                                        <td>50</td>
-                                        <td>5,000</td>
-                                        <td>250,000</td>
-                                    </tr>
-                                    <tr>
-                                        <th>2</th>
-                                        <td><input type="checkbox"/></td>
-                                        <td>550132465000</td>
-                                        <td>초코파이</td>
-                                        <td>good</td>
-                                        <td>good</td>
-                                        <td>50</td>
-                                        <td>30</td>
-                                        <td>5,000</td>
-                                        <td>150,000</td>
-                                    </tr>
-                                    <tr>
-                                        <th>3</th>
-                                        <td><input type="checkbox"/></td>
-                                        <td>550132465777</td>
-                                        <td>바나나우유</td>
-                                        <td>good</td>
-                                        <td>good</td>
-                                        <td>50</td>
-                                        <td>50</td>
-                                        <td>2,000</td>
-                                        <td>100,000</td>
-                                    </tr>
+                                <tbody class="order-single-tbody">
                                 </tbody>
                             </table>
                         </div>
@@ -284,6 +167,7 @@
   <!--**********************************
     Main wrapper end
 ***********************************-->
+    <script th:src="@{/js/orderRead.js}"></script>
 
   <!--**********************************
       Scripts

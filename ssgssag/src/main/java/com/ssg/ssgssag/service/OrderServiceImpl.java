@@ -5,6 +5,7 @@ import com.ssg.ssgssag.domain.OrderProductVO;
 import com.ssg.ssgssag.domain.OrderVO;
 import com.ssg.ssgssag.dto.OrderDetailDTO;
 import com.ssg.ssgssag.dto.OrderProductDTO;
+import com.ssg.ssgssag.dto.OrderReadSearchDTO;
 import com.ssg.ssgssag.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -59,6 +60,11 @@ public class OrderServiceImpl implements OrderService {
             log.info("발주 등록 실패");
             return 0;
         }
+    }
+
+    @Override
+    public List<OrderProductDTO> getOrderList(OrderReadSearchDTO orderReadSearch) {
+        return orderMapper.selectOrderDetailByDateOrString(orderReadSearch);
     }
 //
 //    @Override

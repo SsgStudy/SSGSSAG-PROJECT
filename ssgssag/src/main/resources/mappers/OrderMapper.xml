@@ -3,6 +3,7 @@
 
 <mapper namespace="com.ssg.ssgssag.mapper.OrderMapper">
 
+<!-- 발주 등록   -->
     <select id="selectLastOrderSeq" resultType="Long">
         select max(pk_order_seq) from TB_ORDER;
     </select>
@@ -38,6 +39,31 @@
             (#{detail.pkOrderSeq}, #{detail.nOrderCnt}, #{detail.vOrderStatus}, #{detail.vProductCd}, #{detail.vWarehouseCd})
         </foreach>
     </insert>
+
+<!--  발주 조회  -->
+    <select id="selectOrderDetailByDateOrString" parameterType="com.ssg.ssgssag.dto.OrderReadSearchDTO" resultType="com.ssg.ssgssag.dto.OrderProductDTO">
+        SELECT
+            o.DT_ORDER_CREATED_DATE,
+            o.PK_ORDER_SEQ,
+            o.V_ORDER_TYPE,
+            o.V_INCOMING_PRODUCT_SUPPLIER_NM,
+            od.V_WAREHOUSE_CD,
+            o.V_ORDER_STATUS,
+            o.DT_ORDER_COMPLETION_DATE
+        FROM TB_ORDER o
+        JOIN TB_ORDER_DETAIL od ON o.PK_ORDER_SEQ = od.PK_ORDER_SEQ
+        WHERE o.DT_ORDER_CREATED_DATE BETWEEN #{startDate} AND #{endDate}
+        <if test="vIncomingProductSupplierNm!=null and !vIncomingProductSupplierNm.equals('')">
+            AND o.V_INCOMING_PRODUCT_SUPPLIER_NM LIKE #{vIncomingProductSupplierNm}
+        </if>
+        <if test="vWarehouseCd!=null and !vWarehouseCd.equals('')">
+            AND od.V_WAREHOUSE_CD LIKE #{vWarehouseCd}
+        </if>
+        <if test="vOrderStatus!=null and !vOrderStatus.equals('')">
+           AND o.V_ORDER_STATUS LIKE #{vOrderStatus}
+       </if>
+    </select>
+
 
 <!--    <select id="selectOrderProductByProductCd" parameterType="string" resultType="OrderProductVO">-->
 <!--        SELECT o.PK_ORDER_SEQ, o.V_ORDER_STATUS, o.V_INCOMING_PRODUCT_SUPPLIER_NM, o.DT_DELIVERY_DATE, o.DT_ORDER_COMPLETION_DATE, " +-->

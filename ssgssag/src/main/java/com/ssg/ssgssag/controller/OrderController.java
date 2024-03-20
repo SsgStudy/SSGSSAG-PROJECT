@@ -1,7 +1,7 @@
 package com.ssg.ssgssag.controller;
 
-import com.ssg.ssgssag.dto.OrderDetailSearchDTO;
 import com.ssg.ssgssag.dto.OrderProductDTO;
+import com.ssg.ssgssag.dto.OrderReadSearchDTO;
 import com.ssg.ssgssag.dto.OrderRequestDTO;
 import com.ssg.ssgssag.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -78,7 +79,6 @@ public class OrderController {
     @GetMapping("/confirm/{orderSeq}")
     @ResponseBody
     public String orderConfirmation(@RequestParam String orderSeq) {
-
         Map<String, Long> map = new HashMap<>();
 //        map.put("orderStatus", );
 
@@ -86,4 +86,13 @@ public class OrderController {
         return null;
     }
 
+    @PostMapping("/read")
+    @ResponseBody
+    public List<OrderProductDTO> getOrderList(@RequestBody OrderReadSearchDTO orderReadSearch) {
+        log.info("orderReadSearch {}", orderReadSearch);
+        List<OrderProductDTO> dto = orderService.getOrderList(orderReadSearch);
+
+        log.info("orderList {}", dto);
+        return dto;
+    }
 }
