@@ -153,6 +153,34 @@ $(document).ready(function () {
       this.reset();
     });
   });
+
+  $("#purchaserSearchInputBoxTrigger").click(function() {
+    $.ajax({
+      url: '/incoming/supplier',
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) {
+        let tableBody = $("#purchaserSearchInputBox .table-responsive tbody");
+        tableBody.empty();
+        $.each(data, function(index, item) {
+          let row = "<tr>" +
+              "<td>" + (index + 1) + "</td>" +
+              "<td>" + item.vincomingProductSupplierNm + "</td>" +
+              "</tr>";
+          tableBody.append(row);
+        });
+      },
+      error: function(xhr, status, error) {
+        alert("An error occurred: " + error);
+      }
+    });
+  });
+
+  $("#purchaserSearchInputBox .table-responsive tbody").on('click', 'tr', function() {
+    let supplierName = $(this).find('td:nth-child(2)').text();
+    $('#purchaserSearchInputBoxTrigger').val(supplierName);
+    $('#purchaserSearchInputBox').modal('hide');
+  });
 });
 
 function fetchIncomingDetails(pkIncomingProductSeq) {
