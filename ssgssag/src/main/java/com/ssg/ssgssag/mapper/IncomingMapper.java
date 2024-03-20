@@ -24,8 +24,18 @@ public interface IncomingMapper {
         @Param("status") String status
     );
 
+    //미승인 입고 리스트 조회
+    List<IncomingDTO> selectAllUnconfirmIncomingProductsWithDetailsByOption(
+        @Param("startDate") Date startDate,
+        @Param("endDate") Date endDate,
+        @Param("warehouseCd") String warehouseCd,
+        @Param("supplierNm") String supplierNm,
+        @Param("status") String status
+    );
+
     //입고 승인 리스트 조회
     List<IncomingDTO> selectAllIncomingProgressProductsWithDetails();
+
 
     //입고 상세(상품 정보) 조회
     IncomingDetailDTO selectIncomingDetailByCode(

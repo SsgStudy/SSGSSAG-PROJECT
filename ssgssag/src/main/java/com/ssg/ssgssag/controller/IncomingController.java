@@ -57,6 +57,24 @@ public class IncomingController {
 
         return ResponseEntity.ok(filteredList);
     }
+    //입고 미승인 리스트 동적 필터링 조회
+    @PostMapping("/list/unconfirm-filter")
+    @ResponseBody
+    public ResponseEntity<List<IncomingDTO>> getUnconfirmIncomingListWithFilters(
+        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+        @RequestParam String warehouseCd,
+        @RequestParam String supplierNm,
+        @RequestParam String status) {
+
+        log.info("Filtering incoming list with startDate: {}, endDate: {}, warehouseCd: {}, supplierNm: {}, status: {}",
+            startDate, endDate, warehouseCd, supplierNm, status);
+
+        List<IncomingDTO> filteredList = incomingService.getAllUnconfirmIncomingProductsWithDetailsByOption(
+            startDate, endDate, warehouseCd, supplierNm, status);
+
+        return ResponseEntity.ok(filteredList);
+    }
 
     //발주 입고 등록
     @GetMapping("/register")

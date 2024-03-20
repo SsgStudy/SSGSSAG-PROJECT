@@ -19,6 +19,8 @@ public interface IncomingService {
 
     List<IncomingDTO> getAllIncomingProductsWithDetailsByOption(Date startDate, Date endDate,
         String warehouseCd, String supplierNm, String status);
+    List<IncomingDTO> getAllUnconfirmIncomingProductsWithDetailsByOption(Date startDate, Date endDate,
+        String warehouseCd, String supplierNm, String status);
 
 
 }

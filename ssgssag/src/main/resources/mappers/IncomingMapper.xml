@@ -35,5 +35,14 @@
       #{status, jdbcType=VARCHAR, mode=IN}
           )}
   </select>
+  <select id="selectAllUnconfirmIncomingProductsWithDetailsByOption" resultType="com.ssg.ssgssag.dto.IncomingDTO" statementType="CALLABLE">
+    {CALL GetUnconfirmIncomingProducts(
+      #{startDate, jdbcType=DATE, mode=IN},
+      #{endDate, jdbcType=DATE, mode=IN},
+      #{warehouseCd, jdbcType=VARCHAR, mode=IN},
+      #{supplierNm, jdbcType=VARCHAR, mode=IN},
+      #{status, jdbcType=VARCHAR, mode=IN}
+          )}
+  </select>
 
 </mapper>
