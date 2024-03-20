@@ -2,6 +2,7 @@ package com.ssg.ssgssag.controller;
 
 import com.ssg.ssgssag.dto.WareHouseDTO;
 import com.ssg.ssgssag.service.WareHouseService;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -23,6 +24,7 @@ public class WareHouseController {
   private final WareHouseService wareHouseService;
 
   @GetMapping()
+  @Operation(summary = "창고 목록 조회", description = "모든 창고의 목록을 조회합니다.")
   public String showWareHouseListPage(Model model) {
 
     log.info("WareHouse controller test");
@@ -39,6 +41,7 @@ public class WareHouseController {
   }
 
   @PostMapping("/search")
+  @Operation(summary = "창고 목록 검색", description = "이름,소재지,종류 각 조건별로 창고를 검색합니다.")
   @ResponseBody
   public ResponseEntity<List<WareHouseDTO>> search(@RequestParam(value = "type", required = false) String type,
       @RequestParam(value = "location", required = false) String location,
