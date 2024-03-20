@@ -121,6 +121,13 @@ $(document).ready(function () {
           });
           row.append($('<td>').text(index + 1)); // No
           row.append($('<td>').text(item.pkIncomingProductSeq)); // 번호
+          let checkbox = $('<input>').attr({
+            type: 'checkbox',
+            id: 'checkbox' + index,
+            'data-pk-incoming-product-seq': item.pkIncomingProductSeq
+          });
+          let checkboxContainer = $('<div>').addClass('checkbox m-t-40').append(checkbox);
+          row.append($('<td>').append(checkboxContainer));
           row.append($('<td>').text(item.vincomingProductStatus)); // 입고 상태
           row.append($('<td>').text(item.vproductCd)); // 상품 코드
           const dateOnly = item.dtIncomingProductDate.split('T')[0];
