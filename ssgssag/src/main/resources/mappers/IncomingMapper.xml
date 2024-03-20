@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ssg.ssgssag.mapper.IncomingMapper">
+
+  <select id="selectAllIncomingProductsWithDetails" resultType="com.ssg.ssgssag.dto.IncomingDTO">
+    SELECT * FROM TB_INCOMING_PRODUCT
+  </select>
+
+  <select id="selectAllIncomingProgressProductsWithDetails" resultType="com.ssg.ssgssag.dto.IncomingDTO">
+    SELECT * FROM TB_INCOMING_PRODUCT WHERE V_INCOMING_PRODUCT_STATUS = 'PROGRESS'
+  </select>
+
+  <select id="selectIncomingDetailByCode" resultType="com.ssg.ssgssag.dto.IncomingDetailDTO">
+    SELECT ip.*, p.V_PRODUCT_NM, p.N_PRODUCT_PRICE, p.V_PRODUCT_BRAND, p.V_PRODUCT_ORIGIN,
+           p.V_PRODUCT_MANUFACTOR, p.V_PRODUCT_STATUS, p.D_PRODUCT_MANUFACTOR_DATE, p.V_CATEGORY_CD
+    FROM TB_INCOMING_PRODUCT ip
+           JOIN TB_PRODUCT p ON ip.V_PRODUCT_CD = p.V_PRODUCT_CD
+    WHERE ip.PK_INCOMING_PRODUCT_SEQ = #{pkIncomingProductSeq}
+  </select>
+
+  <update id="updateIncomingProductStatusToComplete">
+    UPDATE TB_INCOMING_PRODUCT
+    SET V_INCOMING_PRODUCT_STATUS = 'COMPLETE'
+    WHERE PK_INCOMING_PRODUCT_SEQ = #{pkIncomingProductSeq}
+  </update>
+
+</mapper>
