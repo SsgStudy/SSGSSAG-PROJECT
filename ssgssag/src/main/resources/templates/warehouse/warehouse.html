@@ -110,7 +110,7 @@
                 <div class="form-group row">
                   <label class="col-sm-1 col-form-label">이름</label>
                   <div class="col-sm-11">
-                    <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="창고 이름">
+                    <input class="form-control" name="name" type="text" placeholder="창고 이름">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -118,21 +118,14 @@
                   <div class="col-sm-5">
                     <select class="custom-select" name="location" style="height: 45px;">
                       <option value="">창고소재지</option>
-                      <option value="부산, 대한민국">부산, 대한민국</option>
-                      <option value="제주, 대한민국">제주, 대한민국</option>
-                      <option value="인천, 대한민국">인천, 대한민국</option>
-                      <option value="수원, 대한민국">수원, 대한민국</option>
+                      <option th:each="location : ${locations}" th:value="${location}" th:text="${location}"></option>
                     </select>
                   </div>
                   <label class="col-sm-1 col-form-label">종류</label>
                   <div class="col-sm-5">
                     <select class="custom-select" name="type" style="height: 45px;">
                       <option value="">창고종류</option>
-                      <option value="제조">제조</option>
-                      <option value="소매">소매</option>
-                      <option value="전자제품">전자제품</option>
-                      <option value="일반">일반</option>
-                      <option value="패션">패션</option>
+                      <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
                     </select>
                   </div>
                 </div>
@@ -286,12 +279,7 @@
     <!--**********************************
         Footer start
     ***********************************-->
-    <div class="footer">
-      <div class="copyright">
-        <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a>
-          2018</p>
-      </div>
-    </div>
+
     <!--**********************************
         Footer end
     ***********************************-->

@@ -19,59 +19,63 @@ public class WareHouseController {
 
   private final WareHouseService wareHouseService;
 
-  @GetMapping("/warehouse")
-  public String showWareHousListPage(Model model){
+  @GetMapping()
+  public String showWareHouseListPage(Model model) {
 
     log.info("WareHouse controller test");
 
     List<WareHouseDTO> warehouselist = wareHouseService.getAllWareHouse();
 
     log.info(warehouselist);
-    model.addAttribute("warehouselist",warehouselist);
+    model.addAttribute("warehouselist", warehouselist);
+    model.addAttribute("locations", wareHouseService.findAllWarehouseLocations());
+    model.addAttribute("types", wareHouseService.findAllWarehouseType());
 
     return "warehouse/warehouse";
 
   }
 
-//  @GetMapping("/search")
-//  public String searchByType(@RequestParam(value = "type", required = false) String type,
-//      @RequestParam(value = "location", required = false) String location, Model model) {
-//    List<WareHouseDTO> warehouselist = wareHouseService.findByWarehouseType(type);
-//    model.addAttribute("warehouselist", warehouselist);
-//    return "warehouse/warehouse";
-//  }
-
-
   @GetMapping("/search")
   public String search(@RequestParam(value = "type", required = false) String type,
-      @RequestParam(value = "location", required = false) String location, Model model) {
+      @RequestParam(value = "location", required = false) String location,
+      @RequestParam(value = "name", required = false) String name, Model model) {
+
     List<WareHouseDTO> warehouselist;
 
-    if("창고종류".equals(type)){
+    if ("창고종류".equals(type)) {
       type = null;
     }
 
-    if("창고소재지".equals(location)){
-      location=null;
+    if ("창고소재지".equals(location)) {
+      location = null;
     }
 
-    if (type != null && !type.isEmpty() && location != null && !location.isEmpty()) {
-      warehouselist = wareHouseService.findByTypeAndLocation(type, location);
+    if (name != null && !name.isEmpty()) {
+      warehouselist = wareHouseService.findByWarehouseName(name);
     }
-    // type만 있는 경우
-    else if (type != null && !type.isEmpty()) {
-      warehouselist = wareHouseService.findByWarehouseType(type);
+    else{
+      if (type != null && !type.isEmpty() && location != null && !location.isEmpty()) {
+        warehouselist = wareHouseService.findByTypeAndLocation(type, location);
+      }
+      // type만 있는 경우
+      else if (type != null && !type.isEmpty()) {
+        warehouselist = wareHouseService.findByWarehouseType(type);
+      }
+      // location만 있는 경우
+      else if (location != null && !location.isEmpty()) {
+        warehouselist = wareHouseService.findByWarehouseLocation(location);
+      }
+      // 둘 다 없는 경우
+      else {
+        warehouselist = wareHouseService.getAllWareHouse();
+      }
     }
-    // location만 있는 경우
-    else if (location != null && !location.isEmpty()) {
-      warehouselist = wareHouseService.findByWarehouseLocation(location);
-    }
-    // 둘 다 없는 경우
-    else {
-      warehouselist = wareHouseService.getAllWareHouse();
-    }
+
+
 
     model.addAttribute("warehouselist", warehouselist);
+    model.addAttribute("locations", wareHouseService.findAllWarehouseLocations());
+    model.addAttribute("types", wareHouseService.findAllWarehouseType());
     return "warehouse/warehouse";
 
   }

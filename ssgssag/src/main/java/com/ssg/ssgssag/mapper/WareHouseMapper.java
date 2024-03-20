@@ -18,4 +18,8 @@ public interface WareHouseMapper {
 
     List<WareHouseDTO> findByTypeAndLocation(@Param("type") String type, @Param("location") String location);
 
+    List<WareHouseDTO> findByWarehouseName(String name);
+    List<String> findAllWarehouseLocations();
+
+    List<String> findAllWarehouseType();
 }

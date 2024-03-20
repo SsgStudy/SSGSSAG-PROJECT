@@ -36,4 +36,22 @@ public class WareHouseServiceImpl implements WareHouseService {
     return wareHouseMapper.findByTypeAndLocation(type,location);
   }
 
+  @Override
+  public List<WareHouseDTO> findByWarehouseName(String name) {
+    return wareHouseMapper.findByWarehouseName(name);
+  }
+
+  @Override
+  public List<String> findAllWarehouseLocations() {
+
+    return wareHouseMapper.findAllWarehouseLocations();
+  }
+
+  @Override
+  public List<String> findAllWarehouseType(){
+    List<String> types = wareHouseMapper.findAllWarehouseType();
+    return types;
+
+  }
+
 }

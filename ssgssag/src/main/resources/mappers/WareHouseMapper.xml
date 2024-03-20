@@ -22,4 +22,17 @@
     WHERE S_WAREHOUSE_TYPE = #{type} AND V_WAREHOUSE_LOC = #{location}
   </select>
 
+  <select id="findByWarehouseName" resultType="com.ssg.ssgssag.dto.WareHouseDTO">
+    SELECT * FROM TB_WAREHOUSE WHERE V_WAREHOUSE_NM LIKE CONCAT('%', #{name}, '%')
+  </select>
+
+
+  <select id="findAllWarehouseLocations" resultType="String">
+    SELECT DISTINCT V_WAREHOUSE_LOC FROM TB_WAREHOUSE;
+  </select>
+
+  <select id="findAllWarehouseType" resultType="String">
+    SELECT DISTINCT S_WAREHOUSE_TYPE FROM TB_WAREHOUSE;
+  </select>
+
 </mapper>

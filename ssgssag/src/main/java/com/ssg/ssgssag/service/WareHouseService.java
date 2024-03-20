@@ -14,4 +14,10 @@ public interface WareHouseService {
 
   List<WareHouseDTO> findByTypeAndLocation (String type, String location);
 
+  List<WareHouseDTO> findByWarehouseName(String name);
+
+  List<String> findAllWarehouseLocations();
+
+  List<String> findAllWarehouseType();
+
 }

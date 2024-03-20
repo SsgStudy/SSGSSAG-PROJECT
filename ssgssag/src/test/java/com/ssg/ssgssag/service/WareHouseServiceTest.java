@@ -36,5 +36,15 @@ public class WareHouseServiceTest {
     log.info(results);
   }
 
+  @Test
+  public void findByWareHouseNameTest(){
+    String name="서울 중앙 창고";
+    List<WareHouseDTO> results = wareHouseService.findByWarehouseName(name);
+
+    log.info(results);
+  }
+
+
+
 
 }
