@@ -1,6 +1,7 @@
 package com.ssg.ssgssag.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,4 +31,45 @@ public class OrderProductDTO {  // 발주 등록 DTO
     private String vProductStatus;
     private int nInventoryCnt;
     private int nOrderCnt;
+
+
+    public String getvIncomingProductSupplierNm() {
+        return vIncomingProductSupplierNm;
+    }
+
+    public String getvOrderStatus() {
+        return vOrderStatus;
+    }
+
+    public String getvWarehouseCd() {
+        return vWarehouseCd;
+    }
+
+    public String getvOrderType() {
+        return vOrderType;
+    }
+
+    public String getvProductCd() {
+        return vProductCd;
+    }
+
+    public String getvProductNm() {
+        return vProductNm;
+    }
+
+    public int getnProductPrice() {
+        return nProductPrice;
+    }
+
+    public String getvProductStatus() {
+        return vProductStatus;
+    }
+
+    public int getnInventoryCnt() {
+        return nInventoryCnt;
+    }
+
+    public int getnOrderCnt() {
+        return nOrderCnt;
+    }
 }

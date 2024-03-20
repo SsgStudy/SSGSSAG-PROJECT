@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import lombok.*;
@@ -14,7 +15,7 @@ public class OrderVO {
     private String vOrderStatus;
     private String vIncomingProductSupplierNm;
     private String vOrderType;
-    private LocalDateTime dtOrderCreatedDate;
+    private LocalDate dtOrderCreatedDate;
     private LocalDateTime dtDeliveryDate;
     private LocalDateTime dtOrderCompletionDate;
 

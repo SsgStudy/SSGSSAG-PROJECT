@@ -27,8 +27,8 @@
     </select>
 
     <insert id="insertOrder" parameterType="OrderVO">
-        INSERT INTO TB_ORDER (V_ORDER_STATUS, V_INCOMING_PRODUCT_SUPPLIER_NM, DT_DELIVERY_DATE, DT_ORDER_CREATED_DATE)
-        VALUES (#{vOrderStatus}, #{vIncomingProductSupplierNm}, #{dtDeliveryDate}, #{dtOrderCreatedDate});
+        INSERT INTO TB_ORDER (V_ORDER_STATUS, V_INCOMING_PRODUCT_SUPPLIER_NM, V_ORDER_TYPE, DT_DELIVERY_DATE, DT_ORDER_CREATED_DATE)
+        VALUES (#{vOrderStatus}, #{vIncomingProductSupplierNm}, #{vOrderType},#{dtDeliveryDate}, #{dtOrderCreatedDate});
     </insert>
 
     <insert id="insertOrderDetail" parameterType="java.util.List">
