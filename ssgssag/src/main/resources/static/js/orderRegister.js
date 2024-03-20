@@ -1,3 +1,5 @@
+
+
 var orderSearch = {
     "pkoOrderSeq": null,
     "vOrderStatus": null,
@@ -9,6 +11,11 @@ var orderSearch = {
     "vWarehouseCd": "KR-SEO-02",
     "vProductCd": "880-5678-0523"
 };
+
+var saveStatus = {
+    "order" : false,
+    "orderDetail" : false
+}
 
 $("#order-register-remove-btn").click(function () {
     swal(
@@ -47,6 +54,7 @@ $("#order-register-save-ok-btn").off('click').click(function () {
             $("#order-seq").val(orderSeq);
             $("#order-status").val("미확정");
             saveOrderForm();
+            saveStatus.order = true;
         },
         error: function (error) {
             console.log('Error:', error);
@@ -61,7 +69,6 @@ $("#order-register-remove-ok-btn").click(function () {
 });
 
 // 발주 상세 내역 추가
-
 function createOrderDetailForm() {
     console.log("click");
     $.ajax({
@@ -118,6 +125,17 @@ $("#order-read-btn").click(function () {
 // 기간에 해당하는 발주 리스트 조회
 });
 
+$('body').on('input', '[id^=order-tr-order-cnt-]', function() {
+    let currentIndex = this.id.match(/\d+$/)[0];
+    let totalPrice = calculateOrderTotalPrice(currentIndex);
+    console.log(totalPrice)
+    // 계산된 totalPrice를 해당 ID 번호를 사용하여 업데이트
+    $("#order-tr-total-price-" + currentIndex).val(totalPrice);
+});
+
+
+
+
 
 function checkEmptyOrderForm() {
     if ($("#order-created-date").val() === "") {
@@ -161,7 +179,7 @@ function dateFormatting(dateString) {
 }
 
 function calculateOrderTotalPrice(currentIndex) {
-    let price = $("order-tr-product-price-"+currentIndex).val();
-    let cnt = $("order-tr-order-cnt-"+currentIndex).val();
+    let cnt = +$(`#order-tr-order-cnt-${currentIndex}`).val();
+    let price = +$(`#order-tr-product-price-${currentIndex}`).text();
     return price * cnt;
 }
