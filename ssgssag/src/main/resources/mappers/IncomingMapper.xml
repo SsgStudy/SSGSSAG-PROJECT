@@ -26,4 +26,14 @@
     WHERE PK_INCOMING_PRODUCT_SEQ = #{pkIncomingProductSeq}
   </update>
 
+  <select id="selectAllIncomingProductsWithDetailsByOption" resultType="com.ssg.ssgssag.dto.IncomingDTO" statementType="CALLABLE">
+    {CALL GetIncomingProducts(
+      #{startDate, jdbcType=DATE, mode=IN},
+      #{endDate, jdbcType=DATE, mode=IN},
+      #{warehouseCd, jdbcType=VARCHAR, mode=IN},
+      #{supplierNm, jdbcType=VARCHAR, mode=IN},
+      #{status, jdbcType=VARCHAR, mode=IN}
+          )}
+  </select>
+
 </mapper>

@@ -4,6 +4,7 @@ import com.ssg.ssgssag.dto.IncomingDTO;
 import com.ssg.ssgssag.dto.IncomingDetailDTO;
 import com.ssg.ssgssag.dto.ProductDTO;
 import com.ssg.ssgssag.mapper.IncomingMapper;
+import java.util.Date;
 import java.util.List;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,13 @@ public class IncomingServiceImpl implements IncomingService {
         for (String pk : pkIncomingProductSeqs) {
             incomingMapper.updateIncomingProductStatusToComplete(pk);
         }
+    }
+
+    @Override
+    public List<IncomingDTO> getAllIncomingProductsWithDetailsByOption(Date startDate, Date endDate,
+        String warehouseCd, String supplierNm, String status) {
+        return incomingMapper.selectAllIncomingProductsWithDetailsByOption(startDate, endDate,
+            warehouseCd, supplierNm, status);
     }
 
 }

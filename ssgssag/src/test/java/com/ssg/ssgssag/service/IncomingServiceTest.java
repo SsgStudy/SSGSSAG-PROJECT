@@ -1,6 +1,7 @@
 package com.ssg.ssgssag.service;
 
 import com.ssg.ssgssag.dto.IncomingDTO;
+import com.ssg.ssgssag.dto.IncomingDetailDTO;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,9 @@ public class IncomingServiceTest {
     }
 
     @Test
-    void getIncomingDetailByCode() {
+    public void getIncomingDetailByCodeTest() {
+        String pkIncomingProductSeq = "1";
+        IncomingDetailDTO detail = incomingService.getIncomingDetailByCode(pkIncomingProductSeq);
+        log.info(detail);
     }
 }
