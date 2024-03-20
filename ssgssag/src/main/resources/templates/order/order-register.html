@@ -154,7 +154,7 @@
                                                 </div>
                                                 <div class="modal-footer d-flex justify-content-center">
                                                     <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                    <button type="button" id="order-register-save-ok-btn" class="btn" data-dismiss="modal">확인</button>
+                                                    <button type="button" id="order-register-save-ok-btn" class="btn" onclick="orderRegisterSave()" data-dismiss="modal">확인</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -244,9 +244,9 @@
                             <div class="row d-flex justify-content-center">
                                 <div class="bootstrap-modal">
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#orderDetailSaveBtn">저장</button>
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#order-detail-pre-save-btn">저장</button>
                                     <!-- Modal -->
-                                    <div class="modal fade" id="orderDetailSaveBtn" style="display: none;" aria-hidden="true">
+                                    <div class="modal fade" id="order-detail-pre-save-btn" style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content  d-flex justify-content-center">
                                                 <div class="modal-header">
@@ -259,7 +259,8 @@
                                                 </div>
                                                 <div class="modal-footer d-flex justify-content-center">
                                                     <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                    <button type="button" class="btn" data-dismiss="modal">확인</button>
+                                                    <button type="button" class="btn" id="order-detail-save-btn" data-dismiss="modal"
+                                                            onclick="insertOrderAndOrderDetail()">확인</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -309,7 +310,7 @@
   <!--**********************************
       Main wrapper end
   ***********************************-->
-    <script th:src="@{/js/orderRegister.js}"></script>
+<script th:src="@{/js/orderRegister.js}"></script>
   <!--**********************************
       Scripts
   ***********************************-->

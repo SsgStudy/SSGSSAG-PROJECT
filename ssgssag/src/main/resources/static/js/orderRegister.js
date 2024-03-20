@@ -1,22 +1,91 @@
-
-
+// 전역 변수
 var orderSearch = {
-    "pkoOrderSeq": null,
-    "vOrderStatus": null,
     "vIncomingProductSupplierNm": "Samsung Electronics",
-    "vOrderType": null,
-    "dtOrderCreatedDate": null,
-    "dtDeliveryDate": null,
-    "dtOrderCompletionDate": null,
     "vWarehouseCd": "KR-SEO-02",
     "vProductCd": "880-5678-0523"
 };
+
+var order = {
+    "pkOrderSeq": null,
+    "vOrderStatus": null,
+    "vIncomingProductSupplierNm": null,
+    "vOrderType": null,
+    "dtOrderCreatedDate": null,
+    "dtDeliveryDate": "2024-03-21T10:00:00",
+};
+
+var orderDetails= []
 
 var saveStatus = {
     "order" : false,
     "orderDetail" : false
 }
 
+// 신규
+$("#order-register-new-btn").click(function () {
+
+});
+
+// 확정취소
+
+
+// 확정
+
+
+// 발주 - 저장
+function orderRegisterSave() {
+    if (!checkEmptyOrderForm()) {
+        console.log("입력되지 않은 값이 있습니다.")
+        return;
+    }
+
+    $.ajax({
+        url: '/order/register/order-seq',
+        type: 'GET',
+        success: function (data) {
+            let orderSeq = data.orderSeq;
+            $("#order-seq").val(orderSeq);
+            $("#order-status").val("신규");
+            saveOrderForm();
+            saveStatus.order = true;
+        },
+        error: function (error) {
+            console.log('Error:', error);
+        }
+    });
+}
+
+function checkEmptyOrderForm() {
+    if ($("#order-created-date").val() === "") {
+        console.log("날짜 입력하세요");
+        return false;
+    }
+
+    if ($("#incoming-product-supplier-nm").val() === "") {
+        console.log("매입거래처를 선택하세요");
+        return false;
+    }
+
+    if ($("#warehouse-cd").val() === "") {
+        console.log("창고를 선택하세요");
+        return false;
+    }
+    return true;
+}
+
+
+function saveOrderForm() {
+    order.dtOrderCreatedDate = dateFormatting($("#order-created-date").val());
+    order.pkOrderSeq = $("#order-seq").val();
+    order.vIncomingProductSupplierNm = $("#incoming-product-supplier-nm").val();
+    order.vOrderStatus = $("#order-status").val();
+    order.vWarehouseCd = $("#warehouse-cd").val();
+    order.vOrderType = $("#order-type").val();
+
+    console.log(order);
+}
+
+// 발주 - 삭제
 $("#order-register-remove-btn").click(function () {
     swal(
         {
@@ -35,40 +104,12 @@ $("#order-register-remove-btn").click(function () {
     );
 });
 
-$("#order-register-new-btn").click(function () {
-
-});
-
-$("#order-register-save-ok-btn").off('click').click(function () {
-
-    if (!checkEmptyOrderForm()) {
-        console.log("입력되지 않은 값이 있습니다.")
-        return;
-    }
-
-    $.ajax({
-        url: '/order/register/order-seq',
-        type: 'GET',
-        success: function (data) {
-            let orderSeq = data.orderSeq;
-            $("#order-seq").val(orderSeq);
-            $("#order-status").val("미확정");
-            saveOrderForm();
-            saveStatus.order = true;
-        },
-        error: function (error) {
-            console.log('Error:', error);
-        }
-    });
-});
-
-
 $("#order-register-remove-ok-btn").click(function () {
     console.log('초기화')
     $("#order-register-form").find("input[type=text], select").val("");
 });
 
-// 발주 상세 내역 추가
+// 발주 상세 - 추가
 function createOrderDetailForm() {
     console.log("click");
     $.ajax({
@@ -83,7 +124,6 @@ function createOrderDetailForm() {
                 currentIndex = 1;
             currentIndex = $(".order-detail-tbody tr").length + 1;
 
-            // 새로운 행을 테이블에 추가
             $(".order-detail-tbody").append(
                 `<tr>
                     <th>${currentIndex}</th>
@@ -115,68 +155,92 @@ function createOrderDetailForm() {
     });
 }
 
-$("#order-register-confirm-ok-btn").click(function () {
-// ajax
-// 발주 DB 삽입
-});
-
-$("#order-read-btn").click(function () {
-// ajax
-// 기간에 해당하는 발주 리스트 조회
-});
-
 $('body').on('input', '[id^=order-tr-order-cnt-]', function() {
     let currentIndex = this.id.match(/\d+$/)[0];
     let totalPrice = calculateOrderTotalPrice(currentIndex);
     console.log(totalPrice)
-    // 계산된 totalPrice를 해당 ID 번호를 사용하여 업데이트
+
     $("#order-tr-total-price-" + currentIndex).val(totalPrice);
 });
 
+// 발주 상세 - 저장
+function insertOrderAndOrderDetail() {
+    saveOrderDetailForm();
 
+    console.log(saveStatus);
+    if (saveStatus.order && saveStatus.orderDetail) {
+        console.log(order);
+        console.log(orderDetails);
 
-
-
-function checkEmptyOrderForm() {
-    if ($("#order-created-date").val() === "") {
-        console.log("날짜 입력하세요");
-        return false;
+        $.ajax({
+            url: '/order/register',
+            type: 'POST',
+            contentType: 'application/json', // 요청의 컨텐츠 타입
+            data: JSON.stringify({order: order, orderDetails: orderDetails}), // 데이터를 JSON 문자열로 변환
+            success: function (resp) {
+                // 성공 시 로직
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
     }
-
-    if ($("#incoming-product-supplier-nm").val() === "") {
-        console.log("매입거래처를 선택하세요");
-        return false;
+    else {
+        console.log("발주 or 발주 상세 값이 비었습니다.");
     }
-
-    if ($("#warehouse-cd").val() === "") {
-        console.log("창고를 선택하세요");
-        return false;
-    }
-    return true;
 }
 
-function saveOrderForm() {
-    orderSearch.dtOrderCreatedDate = dateFormatting($("#order-created-date").val());
-    orderSearch.pkoOrderSeq = $("#order-seq").val();
-    orderSearch.vIncomingProductSupplierNm = $("#incoming-product-supplier-nm").val();
-    orderSearch.vOrderStatus = $("#order-status").val();
-    orderSearch.vWarehouseCd = $("#warehouse-cd").val();
-    orderSearch.vOrderType = $("#order-type").val();
+function saveOrderDetailForm() {
+    $('.order-detail-tbody input[type="checkbox"]:checked').each(function() {
+        var index = this.id.match(/\d+$/)[0];
+        var productCd = $(`#order-tr-product-cd-${index}`).text();
+        var orderCnt = +$(`#order-tr-order-cnt-${index}`).val();
 
-    console.log(orderSearch);
+        console.log("orderCnt " + orderCnt);
+
+        if (orderCnt.isEmpty || orderCnt===0) {
+            console.log("발주 수량 입력");
+            saveStatus.orderDetail = false;
+            return
+        }
+
+        var orderDetail = {
+            nOrderCnt: orderCnt,
+            vOrderStatus: "미입고",
+            vProductCd: productCd,
+            pkOrderSeq: order.pkOrderSeq,
+            vWarehouseCd: order.vWarehouseCd
+        }
+        orderDetails.push(orderDetail);
+        console.log(orderDetail);
+    });
+
+    if (orderDetails.length < 1)
+        saveStatus.orderDetail = false;
+
+    else
+        saveStatus.orderDetail = true;
 }
 
+// 발주 삭제 - 삭제
+
+
+
+
+
+// 기타
 function dateFormatting(dateString) {
     var date = new Date(dateString);
 
-    var formattedDate = new Intl.DateTimeFormat('en-CA', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-    }).format(date);
+    // 한국 시간대(KST, UTC+9) 설정
+    var kstOffset = 9 * 60;
+    var localDate = new Date(date.getTime() + kstOffset * 60000);
+
+    var formattedDate = localDate.toISOString().replace('Z', '+09:00').substring(0, 19);
 
     return formattedDate;
 }
+
 
 function calculateOrderTotalPrice(currentIndex) {
     let cnt = +$(`#order-tr-order-cnt-${currentIndex}`).val();

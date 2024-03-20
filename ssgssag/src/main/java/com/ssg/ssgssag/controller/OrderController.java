@@ -69,6 +69,7 @@ public class OrderController {
     @PostMapping("/register")
     @ResponseBody
     public String registerOrderAndOrderDetail(@RequestBody OrderRequestDTO orderRequest) {
+        log.info("order register {}", orderRequest);
         orderService.registerOrder(orderRequest.getOrder(), orderRequest.getOrderDetails());
         return "ok";
 //        return "order/orderRegister";
