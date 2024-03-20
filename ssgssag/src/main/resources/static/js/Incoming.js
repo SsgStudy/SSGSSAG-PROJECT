@@ -183,11 +183,50 @@ $(document).ready(function () {
   });
 
   $("#supplierSearchInput").on("input", function() {
-    var searchValue = $(this).val().toLowerCase();
+    let searchValue = $(this).val().toLowerCase();
 
     $("#purchaserSearchInputBox .table-responsive tbody tr").filter(function() {
       $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
     });
+  });
+
+
+  // 체크박스 클릭 이벤트 핸들러
+  $('.checkbox input').change(function() {
+    // 모달을 표시하기 전에, 이벤트가 발생한 행을 식별합니다.
+    var selectedRow = $(this).closest('tr');
+    var incomingDate = selectedRow.find('td:nth-child(6)').text(); // '입고 일자' 열
+    var warehouseZone = selectedRow.find('td:last-child').text(); // '구역' 열
+
+    // 모달에 현재 값을 설정합니다.
+    $('#incomingDateInput').val(incomingDate); // 입력 필드에 입고 일자 설정
+    $('#warehouseZoneSelect').val(warehouseZone); // 선택박스에 구역 설정
+
+    // 모달에서 '확인' 버튼 클릭 시, 변경 사항을 해당 행에 반영합니다.
+    $('#confirmButton').off('click').on('click', function() {
+      if (!selectedRow.find('.checkbox input').is(':checked')) {
+        // 체크박스가 체크 해제되었다면, 모달에서 변경된 값을 반영하지 않습니다.
+        return;
+      }
+
+      var updatedDate = $('#incomingDateInput').val();
+      var updatedZone = $('#warehouseZoneSelect').val();
+
+      // 선택된 행의 '입고 일자'와 '구역' 열을 업데이트합니다.
+      selectedRow.find('td:nth-child(6)').text(updatedDate);
+      selectedRow.find('td:last-child').text(updatedZone);
+
+      // 모달 숨기기
+      $('#incomingDateInputBox').modal('hide');
+    });
+
+    // 체크박스 상태에 따라 모달 표시
+    if ($(this).is(':checked')) {
+      $('#incomingDateInputBox').modal('show');
+    } else {
+      // 체크가 해제된 경우, 모달을 표시하지 않고 기본 동작만 수행합니다.
+      $('#incomingDateInputBox').modal('hide');
+    }
   });
 });
 
