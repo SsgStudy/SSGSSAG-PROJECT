@@ -8,6 +8,12 @@
     SELECT * FROM TB_INCOMING_PRODUCT
   </select>
 
+  <select id="selectAllOrderSupplierName" resultType="com.ssg.ssgssag.dto.OrderSupplierDTO">
+    SELECT DISTINCT(V_INCOMING_PRODUCT_SUPPLIER_NM)
+    FROM TB_ORDER
+    ORDER BY 1
+  </select>
+
   <select id="selectAllIncomingProgressProductsWithDetails" resultType="com.ssg.ssgssag.dto.IncomingDTO">
     SELECT * FROM TB_INCOMING_PRODUCT WHERE V_INCOMING_PRODUCT_STATUS = 'PROGRESS'
   </select>

@@ -3,6 +3,7 @@ package com.ssg.ssgssag.mapper;
 import com.ssg.ssgssag.domain.IncomingVO;
 import com.ssg.ssgssag.dto.IncomingDTO;
 import com.ssg.ssgssag.dto.IncomingDetailDTO;
+import com.ssg.ssgssag.dto.OrderSupplierDTO;
 import com.ssg.ssgssag.dto.ProductDTO;
 import java.util.Date;
 import java.util.List;
@@ -44,5 +45,8 @@ public interface IncomingMapper {
     //입고 승인
     void updateIncomingProductStatusToComplete(
         @Param("pkIncomingProductSeq") String pkIncomingProductSeq);
+
+    //매입 거래처 목록 조회
+    List<OrderSupplierDTO> selectAllOrderSupplierName();
 
 }
