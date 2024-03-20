@@ -42,13 +42,13 @@ $(document).ready(function () {
       contentType: 'application/x-www-form-urlencoded',
       data: $.param(payload),
       success: function (data) {
-        var tableBody = $('.zero-configuration tbody');
+        let tableBody = $('.zero-configuration tbody');
         tableBody.empty();
         console.log("테이블 바디 초기화 시도함");
         console.log(tableBody)
 
         $.each(data, function (index, item) {
-          var row = $('<tr>').click(function () {
+          let row = $('<tr>').click(function () {
             fetchIncomingDetails(item.pkIncomingProductSeq);
           });
           row.append($('<td>').text(index + 1)); // No
@@ -69,6 +69,13 @@ $(document).ready(function () {
       error: function (xhr, status, error) {
         console.error('Error:', error);
       }
+    });
+  });
+
+
+  $('.reset-button').click(function() {
+    $('#filter-form').each(function(){
+      this.reset();
     });
   });
 });
