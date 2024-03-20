@@ -136,31 +136,30 @@
             <div class="card-body">
               <h4 class="card-title"> 재고 목록 </h4>
               <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-striped table-bordered zero-configuration">
                   <thead>
                   <tr>
                     <!-- <th>#</th> -->
-                    <th>No</th>
+<!--                    <th>No</th>-->
                     <th>재고 번호</th>
                     <th>전표 일자</th>
                     <th>상품 코드</th>
                     <th>재고 수량</th>
                     <th>창고 코드</th>
-                    <th>창고 구역 코드</th>
+                    <th>구역 코드</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>1</td>
-                    <!-- 재고 번호에 맞는 이력 모달로 불러오기 -->
+                  <tr th:each="inventory : ${inventoryList}">
+<!--                    <td th:text="${index.index + 1}"></td>-->
                     <td data-toggle="modal" data-target="#inventoryhisotry">
-                      2403160103
+                      <span th:text="${inventory.pkInventorySeq}"></span>
                     </td>
-                    <td>2024-02-15</td>
-                    <td>880-5678-0523</td>
-                    <td>100</td>
-                    <td>A-01</td>
-                    <td>KR-SEO-02</td>
+                    <td th:text="${#temporals.format(inventory.dtInventorySlipDate, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${inventory.vProductCd}"></td>
+                    <td th:text="${inventory.nInventoryCnt}"></td>
+                    <td th:text="${inventory.vWarehouseCd}"></td>
+                    <td th:text="${inventory.vZoneCd}"></td>
                   </tr>
                 </table>
                 <!-- Modal -->

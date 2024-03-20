@@ -1,0 +1,24 @@
+package com.ssg.ssgssag.service;
+
+import com.ssg.ssgssag.domain.InventoryVO;
+import com.ssg.ssgssag.mapper.InventoryMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@Log4j2
+@RequiredArgsConstructor
+public class InventoryServiceImpl implements InventoryService{
+
+    @Autowired(required = false)
+    private final InventoryMapper inventoryMapper;
+
+    @Override
+    public List<InventoryVO> selectAllInventory() {
+        return inventoryMapper.selectAllInventory();
+    }
+}
