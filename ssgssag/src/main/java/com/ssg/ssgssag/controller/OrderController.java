@@ -1,8 +1,5 @@
 package com.ssg.ssgssag.controller;
 
-import com.ssg.ssgssag.domain.OrderDetailVO;
-import com.ssg.ssgssag.domain.OrderProductVO;
-import com.ssg.ssgssag.domain.OrderVO;
 import com.ssg.ssgssag.dto.OrderProductDTO;
 import com.ssg.ssgssag.dto.OrderRequestDTO;
 import com.ssg.ssgssag.service.OrderService;
@@ -14,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -25,6 +21,28 @@ public class OrderController {
 
     @Autowired
     private final OrderService orderService;
+
+
+    @GetMapping("/register")
+    public String showOrderRegisterPage() {
+        log.info("발주 등록 페이지");
+
+        return "order/order-register";
+    }
+
+    @GetMapping("/read")
+    public String showOrderReadPage() {
+        log.info("발주 조회 페이지");
+
+        return "order/order-read";
+    }
+
+    @GetMapping("/confirm")
+    public String showOrderConfirmPage() {
+        log.info("발주 확정 페이지");
+
+        return "order/order-confirm";
+    }
 
     @ResponseBody
     @GetMapping("/register/order-seq")
@@ -51,6 +69,17 @@ public class OrderController {
         orderService.registerOrder(orderRequest.getOrder(), orderRequest.getOrderDetails());
         return "ok";
 //        return "order/orderRegister";
+    }
+
+    @GetMapping("/confirm/{orderSeq}")
+    @ResponseBody
+    public String orderConfirmation(@RequestParam String orderSeq) {
+
+        Map<String, Long> map = new HashMap<>();
+//        map.put("orderStatus", );
+
+//        return map;
+        return null;
     }
 
 }
