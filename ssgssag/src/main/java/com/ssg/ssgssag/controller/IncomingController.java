@@ -36,7 +36,6 @@ public class IncomingController {
         List<IncomingDTO> incomingList = incomingService.getAllIncomingProductsWithDetails();
         model.addAttribute("incomingList", incomingList);
 
-
         return "incoming/incoming-list";
     }
 
