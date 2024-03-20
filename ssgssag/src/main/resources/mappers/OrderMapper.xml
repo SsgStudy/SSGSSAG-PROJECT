@@ -7,28 +7,42 @@
         select max(pk_order_seq) from TB_ORDER;
     </select>
 
-<!--    <select id="selectProductInventory" parameterType="hashmap" resultType="OrderProductDTO">-->
-<!--        <![CDATA[-->
-<!--            select i.N_INVENTORY_CNT, p.V_PRODUCT_CD, p.V_PRODUCT_NM, p.N_PRODUCT_PRICE-->
-<!--            from TB_PRODUCT p join TB_INVENTORY i-->
-<!--            ON p.V_PRODUCT_CD=i.V_PRODUCT_CD-->
-<!--            WHERE i.V_WAREHOUSE_CD = #{warehouseCd} AND p.V_PRODUCT_CD = #{productCd}-->
-<!--        ]]>-->
-<!--    </select>-->
+    <select id="selectProductSupplier" parameterType="string" resultType="string">
+        SELECT V_PRODUCT_MANUFACTOR FROM TB_PRODUCT WHERE V_PRODUCT_CD = #{productCd}
+    </select>
 
-<!--    <insert id="insertOrder" parameterType="OrderVO">-->
-<!--        INSERT INTO TB_ORDER (V_ORDER_STATUS, V_INCOMING_PRODUCT_SUPPLIER_NM, DT_DELIVERY_DATE, DT_ORDER_CREATED_DATE)-->
-<!--        VALUES (#{vOrderStatus}, #{vIncomingProductSupplierNm}, #{dtDeliveryDate}, #{dtOrderCreatedDate})-->
-<!--    </insert>-->
+    <select id="selectProductInventory" parameterType="hashmap" resultType="OrderProductVO">
+        <![CDATA[
+            SELECT
+                COALESCE(i.N_INVENTORY_CNT, 0) AS N_INVENTORY_CNT,
+                p.V_PRODUCT_CD,
+                p.V_PRODUCT_NM,
+                p.N_PRODUCT_PRICE
+            FROM TB_PRODUCT p
+                     LEFT JOIN TB_INVENTORY i ON p.V_PRODUCT_CD = i.V_PRODUCT_CD
+                AND i.V_WAREHOUSE_CD LIKE #{warehouseCd}
+            WHERE p.V_PRODUCT_CD LIKE #{productCd};
 
-<!--    <insert id="insertOrderDetail" parameterType="OrderDetailVO">-->
-<!--        INSERT INTO TB_ORDER_DETAIL (PK_ORDER_SEQ, N_ORDER_CNT, V_ORDER_STATUS, V_PRODUCT_CD, V_WAREHOUSE_CD, V_ZONE_CD)-->
-<!--        VALUES (#{pkOrderSeq}, #{nOrderCnt}, #{vOrderStatus}, #{vProductCd}, #{vWarehouseCd}, #{vZoneCd})-->
-<!--    </insert>-->
+        ]]>
+    </select>
+
+    <insert id="insertOrder" parameterType="OrderVO">
+        INSERT INTO TB_ORDER (V_ORDER_STATUS, V_INCOMING_PRODUCT_SUPPLIER_NM, DT_DELIVERY_DATE, DT_ORDER_CREATED_DATE)
+        VALUES (#{vOrderStatus}, #{vIncomingProductSupplierNm}, #{dtDeliveryDate}, #{dtOrderCreatedDate});
+    </insert>
+
+    <insert id="insertOrderDetail" parameterType="java.util.List">
+        INSERT INTO TB_ORDER_DETAIL (PK_ORDER_SEQ, N_ORDER_CNT, V_ORDER_STATUS, V_PRODUCT_CD, V_WAREHOUSE_CD)
+        VALUES
+        <foreach collection="list" item="detail" separator=",">
+            (#{detail.pkOrderSeq}, #{detail.nOrderCnt}, #{detail.vOrderStatus}, #{detail.vProductCd}, #{detail.vWarehouseCd})
+        </foreach>
+    </insert>
 
 <!--    <select id="selectOrderProductByProductCd" parameterType="string" resultType="OrderProductVO">-->
 <!--        SELECT o.PK_ORDER_SEQ, o.V_ORDER_STATUS, o.V_INCOMING_PRODUCT_SUPPLIER_NM, o.DT_DELIVERY_DATE, o.DT_ORDER_COMPLETION_DATE, " +-->
 <!--                d.PK_ORDER_DETAIL_SEQ, d.N_ORDER_CNT, d.V_ORDER_STATUS AS V_ORDER_DETAIL_STATUS, d.V_PRODUCT_CD, d.V_WAREHOUSE_CD " +-->
 <!--                FROM TB_ORDER o JOIN TB_ORDER_DETAIL d ON o.PK_ORDER_SEQ = d.PK_ORDER_SEQ WHERE o.PK_ORDER_SEQ = ?-->
 <!--    </select>-->
+    
 </mapper>

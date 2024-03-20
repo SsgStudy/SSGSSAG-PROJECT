@@ -27,11 +27,15 @@ class OrderServiceTest {
         log.info("orderSeq {}", orderSeq);
     }
 
-//    @Test
-//    public void getOrderDetailInputTest() {
-//        String productCd = "880-5678-052";
-//        String warehouseCd = "KR_SEO_02";
-//        OrderProductDTO orderProductDTO = orderService.getOrderDetail(productCd, warehouseCd);
-//        log.info("getOrderDetailInputTest {}", orderProductDTO);
-//    }
+    @Test
+    public void getOrderDetailInputTest() {
+        OrderProductDTO orderProductDTO = OrderProductDTO.builder()
+                .vProductCd("880-5678-0523")
+                .vIncomingProductSupplierNm("Samsung Electronics")
+                .vWarehouseCd("KR_SEO_02")
+                .build();
+        OrderProductDTO orderProduct
+                = orderService.createOrderDetail(orderProductDTO);
+        log.info("getOrderDetailInputTest {}", orderProduct);
+    }
 }
