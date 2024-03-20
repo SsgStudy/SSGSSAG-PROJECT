@@ -36,11 +36,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderProductDTO createOrderDetail(OrderProductDTO orderProduct) {
         Map<String, Object> map = new HashMap<>();
-        map.put("productCd", orderProduct.getVProductCd());
-        map.put("warehouseCd", orderProduct.getVWarehouseCd());
+        map.put("productCd", orderProduct.getvProductCd());
+        map.put("warehouseCd", orderProduct.getvWarehouseCd());
 
-        String manufactor = orderMapper.selectProductSupplier(orderProduct.getVProductCd());
-        if (!manufactor.equals(orderProduct.getVIncomingProductSupplierNm())) return null;
+        String manufactor = orderMapper.selectProductSupplier(orderProduct.getvProductCd());
+        if (!manufactor.equals(orderProduct.getvIncomingProductSupplierNm())) return null;
         OrderProductVO orderProductVO = orderMapper.selectProductInventory(map);
 
         return modelMapper.map(orderProductVO, OrderProductDTO.class);
@@ -53,8 +53,10 @@ public class OrderServiceImpl implements OrderService {
         try {
             orderMapper.insertOrder(order); // 주문 정보
             orderMapper.insertOrderDetail(orderDetails); // 주문 상세 정보
+            log.info("발주 등록 성공");
             return 1;
         } catch (RuntimeException e) {
+            log.info("발주 등록 실패");
             return 0;
         }
     }
