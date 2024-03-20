@@ -2,6 +2,7 @@ package com.ssg.ssgssag.controller;
 
 import com.ssg.ssgssag.dto.IncomingDTO;
 import com.ssg.ssgssag.dto.IncomingDetailDTO;
+import com.ssg.ssgssag.dto.OrderSupplierDTO;
 import com.ssg.ssgssag.service.IncomingService;
 import java.util.Date;
 import java.util.List;
@@ -108,5 +109,12 @@ public class IncomingController {
     public ResponseEntity<?> confirmIncomingProducts(@RequestBody List<String> pkIncomingProductSeqs) {
         incomingService.confirmIncomingProducts(pkIncomingProductSeqs);
         return ResponseEntity.ok().build();
+    }
+
+    //매입 거래처 리스트 조회
+    @GetMapping("/supplier")
+    @ResponseBody
+    public List<OrderSupplierDTO> getAllOrderSupplierName() {
+        return incomingService.getAllOrderSupplierName();
     }
 }
