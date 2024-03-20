@@ -36,11 +36,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderProductDTO createOrderDetail(OrderProductDTO orderProduct) {
         Map<String, Object> map = new HashMap<>();
-        map.put("productCd", orderProduct.getVProductCd());
-        map.put("warehouseCd", orderProduct.getVWarehouseCd());
+        map.put("productCd", orderProduct.getvProductCd());
+        map.put("warehouseCd", orderProduct.getvWarehouseCd());
 
-        String manufactor = orderMapper.selectProductSupplier(orderProduct.getVProductCd());
-        if (!manufactor.equals(orderProduct.getVIncomingProductSupplierNm())) return null;
+        String manufactor = orderMapper.selectProductSupplier(orderProduct.getvProductCd());
+        if (!manufactor.equals(orderProduct.getvIncomingProductSupplierNm())) return null;
         OrderProductVO orderProductVO = orderMapper.selectProductInventory(map);
 
         return modelMapper.map(orderProductVO, OrderProductDTO.class);

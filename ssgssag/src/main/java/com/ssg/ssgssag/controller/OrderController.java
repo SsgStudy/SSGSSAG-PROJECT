@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.controller;
 
+import com.ssg.ssgssag.dto.OrderDetailSearchDTO;
 import com.ssg.ssgssag.dto.OrderProductDTO;
 import com.ssg.ssgssag.dto.OrderRequestDTO;
 import com.ssg.ssgssag.service.OrderService;
@@ -57,8 +58,10 @@ public class OrderController {
 
     @PostMapping("/register/detail")
     @ResponseBody
-    public ResponseEntity<OrderProductDTO> createOrderDetailForm(@ModelAttribute OrderProductDTO orderProduct) {
-        OrderProductDTO createdOrderProduct = orderService.createOrderDetail(orderProduct);
+    public ResponseEntity<OrderProductDTO> createOrderDetailForm(@RequestBody OrderProductDTO order) {
+
+        log.info("order {}", order);
+        OrderProductDTO createdOrderProduct = orderService.createOrderDetail(order);
 
         return ResponseEntity.ok(createdOrderProduct);
     }
