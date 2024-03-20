@@ -1,11 +1,14 @@
 package com.ssg.ssgssag.service;
 
 import com.ssg.ssgssag.dto.OrderProductDTO;
+import com.ssg.ssgssag.dto.OrderReadSearchDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,5 +40,42 @@ class OrderServiceTest {
         OrderProductDTO orderProduct
                 = orderService.createOrderDetail(orderProductDTO);
         log.info("getOrderDetailInputTest {}", orderProduct);
+    }
+
+    @Test
+    public void getOrderList() {
+        OrderReadSearchDTO dto1 = OrderReadSearchDTO.builder()
+                .startDate("2024-01-01")
+                .endDate("2024-04-01")
+                .build();
+        System.out.println("조건 1");
+        orderService.getOrderList(dto1).forEach(System.out::println);
+
+        OrderReadSearchDTO dto2 = OrderReadSearchDTO.builder()
+                .startDate("2024-01-01")
+                .endDate("2024-04-01")
+                .vIncomingProductSupplierNm("Samsung Electronics")
+                .build();
+
+        System.out.println("조건 2");
+        orderService.getOrderList(dto2).forEach(System.out::println);
+
+        OrderReadSearchDTO dto3 = OrderReadSearchDTO.builder()
+                .startDate("2024-01-01")
+                .endDate("2024-04-01")
+                .vWarehouseCd("KR-SEO-02")
+                .build();
+
+        System.out.println("조건 3");
+        orderService.getOrderList(dto3).forEach(System.out::println);
+
+        OrderReadSearchDTO dto4 = OrderReadSearchDTO.builder()
+                .startDate("2024-01-01")
+                .endDate("2024-04-01")
+                .vOrderStatus("미확정")
+                .build();
+
+        System.out.println("조건 4");
+        orderService.getOrderList(dto4).forEach(System.out::println);
     }
 }
