@@ -10,8 +10,17 @@ $(document).ready(function () {
     let endDate = dateRange.split(' - ')[1];
     let warehouseCd = $('[data-target="#warehouseSearchInputBox"]').val();
     let supplierNm = $('[data-target="#purchaserSearchInputBox"]').val();
-    let status = $('#inputState').val() !== '입고구분 선택' ? $('#inputState').val()
-        : null;
+    let status;
+    switch($('#inputState').val()) {
+      case '신규':
+        status = 'NEW_INVENTORY';
+        break;
+      case '미입고':
+        status = 'UN_INVENTORIED';
+        break;
+      default:
+        status = null;
+    }
 
     startDate = startDate ? inputFormatDate(startDate) : null;
     endDate = endDate ? inputFormatDate(endDate) : null;
@@ -33,8 +42,29 @@ $(document).ready(function () {
       contentType: 'application/x-www-form-urlencoded',
       data: $.param(payload),
       success: function (data) {
-        console.log(data);
-        // 데이터 바인딩 로직
+        var tableBody = $('.zero-configuration tbody');
+        tableBody.empty();
+        console.log("테이블 바디 초기화 시도함");
+        console.log(tableBody)
+
+        $.each(data, function (index, item) {
+          var row = $('<tr>').click(function () {
+            fetchIncomingDetails(item.pkIncomingProductSeq);
+          });
+          row.append($('<td>').text(index + 1)); // No
+          row.append($('<td>').text(item.pkIncomingProductSeq)); // 번호
+          row.append($('<td>').text(item.vincomingProductStatus)); // 입고 상태
+          row.append($('<td>').text(item.vproductCd)); // 상품 코드
+          row.append($('<td>').text(item.dtIncomingProductDate)); // 입고 일자
+          row.append($('<td>').text(item.vincomingProductType)); // 종류
+          row.append($('<td>').text(item.vincomingProductSupplierNm)); // 매입처
+          row.append($('<td>').text(item.nincomingProductCnt)); // 수량
+          row.append($('<td>').text(item.nincomingProductPrice)); // 단가
+          row.append($('<td>').text(item.vwarehouseCd)); // 창고
+          row.append($('<td>').text(item.vzoneCd)); // 구역
+
+          tableBody.append(row);
+        });
       },
       error: function (xhr, status, error) {
         console.error('Error:', error);
@@ -113,7 +143,11 @@ function printPage() {
 
 function inputFormatDate(input) {
   let datePart = input.match(/\d+/g),
-      year = datePart[2], // get only two digits
+      year = datePart[2],
       month = datePart[0], day = datePart[1];
+  if(year.length === 2) {
+    year = "20" + year;
+  }
+
   return [year, month, day].join('-');
 }
