@@ -106,47 +106,42 @@
               </div>
             </div>
             <div class="basic-form">
-              <form>
+              <form th:action="@{/warehouse/search}" method="post">
                 <div class="form-group row">
                   <label class="col-sm-1 col-form-label">이름</label>
                   <div class="col-sm-11">
-                    <input class="form-control input-daterange-datepicker" type="text"
-                           name="daterange" value="창고 이름">
+                    <input class="form-control" name="name" type="text" placeholder="창고 이름">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-1 col-form-label">소재지</label>
                   <div class="col-sm-5">
-                    <select class="custom-select" style="height: 45px;">
-                      <option selected="selected">창고소재지</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                    <select class="custom-select" name="location" style="height: 45px;">
+                      <option value="">창고소재지</option>
+                      <option th:each="location : ${locations}" th:value="${location}" th:text="${location}"></option>
                     </select>
                   </div>
                   <label class="col-sm-1 col-form-label">종류</label>
                   <div class="col-sm-5">
-                    <select class="custom-select" style="height: 45px;">
-                      <option selected="selected">창고 종류</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                    <select class="custom-select" name="type" style="height: 45px;">
+                      <option value="">창고종류</option>
+                      <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
                     </select>
                   </div>
                 </div>
-                <div class="form-group row justify-content-center mb-5">
+                <div class="form-group row justify-content-center mb-2">
                   <div class="col-sm-10 d-flex justify-content-center">
                     <button type="submit" class="btn btn-dark mr-3">조회</button>
                     <button type="reset" class="btn btn-dark ">초기화</button>
                   </div>
                 </div>
               </form>
+
             </div>
             <div class="table-responsive">
-              <table class="table table-hover">
+              <table class="table table-hover zero-configuration">
                 <thead>
                 <tr>
-                  <th>번호</th>
                   <th>창고코드</th>
                   <th>창고이름</th>
                   <th>창고종류</th>
@@ -154,46 +149,14 @@
                   <th>관리자코드</th>
                 </tr>
                 </thead>
+
                 <tbody>
-                <tr>
-                  <td>1</td>
-                  <td data-toggle="modal" data-target="#warehouseDetail">WH001</td>
-                  <td>중앙창고</td>
-                  <td>일반</td>
-                  <td>서울시 강남구</td>
-                  <td>MGR001</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>WH002</td>
-                  <td>동부창고</td>
-                  <td>냉장</td>
-                  <td>서울시 송파구</td>
-                  <td>MGR002</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>WH003</td>
-                  <td>서부창고</td>
-                  <td>냉동</td>
-                  <td>인천시 남동구</td>
-                  <td>MGR003</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>WH004</td>
-                  <td>남부창고</td>
-                  <td>위험물</td>
-                  <td>부산시 해운대구</td>
-                  <td>MGR004</td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>WH005</td>
-                  <td>북부창고</td>
-                  <td>일반</td>
-                  <td>대전시 동구</td>
-                  <td>MGR005</td>
+                <tr th:each="warehouse, iterStat : ${warehouselist}">
+                  <td th:text="${warehouse.vWarehouseCd}">창고코드</td>
+                  <td th:text="${warehouse.vWarehouseNm}">창고이름</td>
+                  <td th:text="${warehouse.sWarehouseType}">창고종류</td>
+                  <td th:text="${warehouse.vWarehouseLoc}">창고소재지</td>
+                  <td th:text="${warehouse.pkMemberSeq}">관리자코드</td>
                 </tr>
                 </tbody>
 
@@ -316,12 +279,7 @@
     <!--**********************************
         Footer start
     ***********************************-->
-    <div class="footer">
-      <div class="copyright">
-        <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a>
-          2018</p>
-      </div>
-    </div>
+
     <!--**********************************
         Footer end
     ***********************************-->
@@ -334,6 +292,7 @@
       Scripts
   ***********************************-->
   <th:block th:replace="/layout/script :: scriptFragment"></th:block>
+  <script th:src="@{/js/Warehouse.js}"></script>
 </div>
 </body>
 </html>
