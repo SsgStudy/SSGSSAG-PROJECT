@@ -2,6 +2,7 @@ package com.ssg.ssgssag.service;
 
 import com.ssg.ssgssag.dto.IncomingDTO;
 import com.ssg.ssgssag.dto.IncomingDetailDTO;
+import com.ssg.ssgssag.dto.OrderSupplierDTO;
 import com.ssg.ssgssag.dto.ProductDTO;
 import com.ssg.ssgssag.mapper.IncomingMapper;
 import java.util.Date;
@@ -47,6 +48,17 @@ public class IncomingServiceImpl implements IncomingService {
         String warehouseCd, String supplierNm, String status) {
         return incomingMapper.selectAllIncomingProductsWithDetailsByOption(startDate, endDate,
             warehouseCd, supplierNm, status);
+    }
+    @Override
+    public List<IncomingDTO> getAllUnconfirmIncomingProductsWithDetailsByOption(Date startDate, Date endDate,
+        String warehouseCd, String supplierNm, String status) {
+        return incomingMapper.selectAllUnconfirmIncomingProductsWithDetailsByOption(startDate, endDate,
+            warehouseCd, supplierNm, status);
+    }
+
+    @Override
+    public List<OrderSupplierDTO> getAllOrderSupplierName() {
+        return incomingMapper.selectAllOrderSupplierName();
     }
 
 }

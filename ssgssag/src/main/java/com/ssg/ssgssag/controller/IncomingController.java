@@ -2,6 +2,7 @@ package com.ssg.ssgssag.controller;
 
 import com.ssg.ssgssag.dto.IncomingDTO;
 import com.ssg.ssgssag.dto.IncomingDetailDTO;
+import com.ssg.ssgssag.dto.OrderSupplierDTO;
 import com.ssg.ssgssag.service.IncomingService;
 import java.util.Date;
 import java.util.List;
@@ -57,6 +58,24 @@ public class IncomingController {
 
         return ResponseEntity.ok(filteredList);
     }
+    //입고 미승인 리스트 동적 필터링 조회
+    @PostMapping("/list/unconfirm-filter")
+    @ResponseBody
+    public ResponseEntity<List<IncomingDTO>> getUnconfirmIncomingListWithFilters(
+        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+        @RequestParam String warehouseCd,
+        @RequestParam String supplierNm,
+        @RequestParam String status) {
+
+        log.info("Filtering incoming list with startDate: {}, endDate: {}, warehouseCd: {}, supplierNm: {}, status: {}",
+            startDate, endDate, warehouseCd, supplierNm, status);
+
+        List<IncomingDTO> filteredList = incomingService.getAllUnconfirmIncomingProductsWithDetailsByOption(
+            startDate, endDate, warehouseCd, supplierNm, status);
+
+        return ResponseEntity.ok(filteredList);
+    }
 
     //발주 입고 등록
     @GetMapping("/register")
@@ -90,5 +109,12 @@ public class IncomingController {
     public ResponseEntity<?> confirmIncomingProducts(@RequestBody List<String> pkIncomingProductSeqs) {
         incomingService.confirmIncomingProducts(pkIncomingProductSeqs);
         return ResponseEntity.ok().build();
+    }
+
+    //매입 거래처 리스트 조회
+    @GetMapping("/supplier")
+    @ResponseBody
+    public List<OrderSupplierDTO> getAllOrderSupplierName() {
+        return incomingService.getAllOrderSupplierName();
     }
 }

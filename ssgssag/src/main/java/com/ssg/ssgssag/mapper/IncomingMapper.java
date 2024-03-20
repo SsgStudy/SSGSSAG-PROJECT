@@ -3,6 +3,7 @@ package com.ssg.ssgssag.mapper;
 import com.ssg.ssgssag.domain.IncomingVO;
 import com.ssg.ssgssag.dto.IncomingDTO;
 import com.ssg.ssgssag.dto.IncomingDetailDTO;
+import com.ssg.ssgssag.dto.OrderSupplierDTO;
 import com.ssg.ssgssag.dto.ProductDTO;
 import java.util.Date;
 import java.util.List;
@@ -24,8 +25,18 @@ public interface IncomingMapper {
         @Param("status") String status
     );
 
+    //미승인 입고 리스트 조회
+    List<IncomingDTO> selectAllUnconfirmIncomingProductsWithDetailsByOption(
+        @Param("startDate") Date startDate,
+        @Param("endDate") Date endDate,
+        @Param("warehouseCd") String warehouseCd,
+        @Param("supplierNm") String supplierNm,
+        @Param("status") String status
+    );
+
     //입고 승인 리스트 조회
     List<IncomingDTO> selectAllIncomingProgressProductsWithDetails();
+
 
     //입고 상세(상품 정보) 조회
     IncomingDetailDTO selectIncomingDetailByCode(
@@ -34,5 +45,8 @@ public interface IncomingMapper {
     //입고 승인
     void updateIncomingProductStatusToComplete(
         @Param("pkIncomingProductSeq") String pkIncomingProductSeq);
+
+    //매입 거래처 목록 조회
+    List<OrderSupplierDTO> selectAllOrderSupplierName();
 
 }
