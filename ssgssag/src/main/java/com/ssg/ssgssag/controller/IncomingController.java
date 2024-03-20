@@ -82,6 +82,9 @@ public class IncomingController {
     public String showOrderedIncomingRegisterPage(Model model) {
         log.info("incoming controller test");
 
+        List<IncomingDTO> incomingList = incomingService.getAllIncomingProgressProductsWithDetails();
+        model.addAttribute("incomingList", incomingList);
+
         return "incoming/ordered-incoming-register";
     }
 
