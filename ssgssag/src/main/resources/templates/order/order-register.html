@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <title>발주 등록</title>
+</head>
+<body>
+<!--*******************
+    Preloader start
+********************-->
+<th:block th:replace="/layout/preloader :: preloaderFragment"></th:block>
+<!--*******************
+    Preloader end
+********************-->
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+  <!--**********************************
+      Nav header start
+  ***********************************-->
+  <th:block th:replace="/layout/nav :: navFragment"></th:block>
+
+  <!--**********************************
+      Header end ti-comment-alt
+  ***********************************-->
+
+  <!--**********************************
+      Sidebar start
+  ***********************************-->
+  <th:block th:replace="/layout/sidebar :: sidebarFragment"></th:block>
+  <!--**********************************
+      Sidebar end
+  ***********************************-->
+
+  <!--**********************************
+      Content body start
+  ***********************************-->
+    <div class="content-body" style="min-height: 876px;">
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">발주등록</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <h3 class="header-content">발주 등록</h3>
+
+                <div class="header-right">
+                    <button type="button" id="order-register-new-btn" class="btn mb-1 btn-info">신규</button>
+                    <button type="button" class="btn mb-1 btn-light">확정취소</button>
+                    <div class="btn mb-1">
+                        <button type="button" class="btn mb-1 btn-light" data-toggle="modal" data-target="#registerModal">확정</button>
+                        <div class="modal fade" id="registerModal" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content  d-flex justify-content-center">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Confirm</h5>
+                                        <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body center">
+                                        <p>확정하시겠습니까?</p>
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-center">
+                                        <button type="button" class="btn" data-dismiss="modal">취소</button>
+                                        <button type="button" id="order-register-confirm-ok-btn" class="btn close" data-dismiss="modal">확인</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div>
+                <h4>발주</h4>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body" id="order-register-form">
+                            <div class="form-group row">
+                                <label class="col-sm-1 col-form-label">발주일자</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="mm/dd/yyyy"> <span class="input-group-append"><span class="input-group-text"><i class="mdi mdi-calendar-check"></i></span></span>
+                                    </div>
+                                </div>
+
+                                <label class="col-sm-1 col-form-label">발주번호</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="text"  id="order-register-orderseq-txt" class="form-control input-flat">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-1 col-form-label">매입거래처</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-flat">
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">매입거래처상태</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-flat">
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">발주확정</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-flat">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-1 col-form-label">창고</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-flat" placeholder="창고 검색">
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">발주유형</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <select id="order-register-order-type-select" class="form-control">
+                                            <option selected="selected">선택</option>
+                                            <option>국내발주</option>
+                                            <option>국외발주</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="bootstrap-modal">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">저장</button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalCenter" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content  d-flex justify-content-center">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Confirm</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body center">
+                                                    <p>저장하시겠습니까?</p>
+                                                </div>
+                                                <div class="modal-footer d-flex justify-content-center">
+                                                    <button type="button" class="btn" data-dismiss="modal">취소</button>
+                                                    <button type="button" id="order-register-save-ok-btn" class="btn close" data-dismiss="modal">확인</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bootstrap-modal">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterDelete">삭제</button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalCenterDelete" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content  d-flex justify-content-center">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Confirm</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body center">
+                                                    <p>삭제하시겠습니까?</p>
+                                                </div>
+                                                <div class="modal-footer d-flex justify-content-center">
+                                                    <button type="button" class="btn" data-dismiss="modal">취소</button>
+                                                    <button type="button" id="order-register-remove-ok-btn" class="btn close" data-dismiss="modal">확인</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <button type="button" class="btn mb-1 btn-light" id="order-register-remove-btn" background-color="#0575E6">삭제</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>발주상세</h4>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-sm-2 col-form-label">단품바코드</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <select id="inputState" class="form-control">
+                                            <option selected="selected">단품</option>
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th><input type="checkbox"></th>
+                                        <th>단품코드</th>
+                                        <th>단품명</th>
+                                        <th>단품상태</th>
+                                        <th>재고관리여부</th>
+                                        <th>창고현재고</th>
+                                        <th>발주수량</th>
+                                        <th>발주단가</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th>1</th>
+                                        <td><input type="checkbox"/></td>
+                                        <td>550132465789</td>
+                                        <td>다이제</td>
+                                        <td class="color-primary">good</td>
+                                        <td class="color-primary">good</td>
+                                        <td class="color-primary">10</td>
+                                        <td class="color-primary">50</td>
+                                        <td class="color-primary">5,000</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th>2</th>
+                                        <td><input type="checkbox"/></td>
+                                        <td>550132465000</td>
+                                        <td>초코파이</td>
+                                        <td class="color-primary">good</td>
+                                        <td class="color-primary">good</td>
+                                        <td class="color-primary">80</td>
+                                        <td class="color-primary">100</td>
+                                        <td class="color-primary">10,000</td>
+                                    </tr>
+                                    <tr>
+                                        <th>3</th>
+                                        <td><input type="checkbox"/></td>
+                                        <td>550132465777</td>
+                                        <td>바나나우유</td>
+                                        <td class="color-primary">good</td>
+                                        <td class="color-primary">good</td>
+                                        <td class="color-primary">0</td>
+                                        <td class="color-primary">5000</td>
+                                        <td class="color-primary">2,000</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+
+                <!-- /# card -->
+            </div>
+        </div>
+        <!-- #/ container -->
+    </div>
+  <!--**********************************
+      Main wrapper end
+  ***********************************-->
+
+    <script src="plugins/common/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/gleek.js"></script>
+    <script src="js/styleSwitcher.js"></script>
+    <script src="plugins/common/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/gleek.js"></script>
+    <script src="js/styleSwitcher.js"></script>
+
+
+    <script src="./plugins/moment/moment.js"></script>
+    <script src="./plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <!-- Clock Plugin JavaScript -->
+    <script src="./plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
+    <!-- Color Picker Plugin JavaScript -->
+    <script src="./plugins/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
+    <script src="./plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
+    <script src="./plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
+    <!-- Date Picker Plugin JavaScript -->
+    <script src="./plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <!-- Date range Plugin JavaScript -->
+    <script src="./plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="./plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <script src="./js/plugins-init/form-pickers-init.js"></script>
+
+    <script src="./plugins/sweetalert/js/sweetalert.min.js"></script>
+    <script src="./ConfirmModal.js"></script>
+  <!--**********************************
+      Scripts
+  ***********************************-->
+  <th:block th:replace="/layout/script :: scriptFragment"></th:block>
+</div>
+</body>
+</html>
