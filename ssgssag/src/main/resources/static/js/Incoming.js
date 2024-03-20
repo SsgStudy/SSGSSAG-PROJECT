@@ -181,6 +181,14 @@ $(document).ready(function () {
     $('#purchaserSearchInputBoxTrigger').val(supplierName);
     $('#purchaserSearchInputBox').modal('hide');
   });
+
+  $("#supplierSearchInput").on("input", function() {
+    var searchValue = $(this).val().toLowerCase();
+
+    $("#purchaserSearchInputBox .table-responsive tbody tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+    });
+  });
 });
 
 function fetchIncomingDetails(pkIncomingProductSeq) {
