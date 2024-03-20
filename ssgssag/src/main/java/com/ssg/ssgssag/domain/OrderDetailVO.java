@@ -17,4 +17,20 @@ public class OrderDetailVO {
     private String vProductCd;
     private String vWarehouseCd;
     private LocalDateTime dtOrderFinishedDate;
+
+    public int getnOrderCnt() {
+        return nOrderCnt;
+    }
+
+    public String getvOrderStatus() {
+        return vOrderStatus;
+    }
+
+    public String getvProductCd() {
+        return vProductCd;
+    }
+
+    public String getvWarehouseCd() {
+        return vWarehouseCd;
+    }
 }

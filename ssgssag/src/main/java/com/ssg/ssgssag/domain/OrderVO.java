@@ -17,4 +17,16 @@ public class OrderVO {
     private LocalDateTime dtOrderCreatedDate;
     private LocalDateTime dtDeliveryDate;
     private LocalDateTime dtOrderCompletionDate;
+
+    public String getvOrderStatus() {
+        return vOrderStatus;
+    }
+
+    public String getvIncomingProductSupplierNm() {
+        return vIncomingProductSupplierNm;
+    }
+
+    public String getvOrderType() {
+        return vOrderType;
+    }
 }
