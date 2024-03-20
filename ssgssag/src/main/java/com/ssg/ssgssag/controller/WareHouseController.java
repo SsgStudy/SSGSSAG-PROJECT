@@ -5,11 +5,14 @@ import com.ssg.ssgssag.service.WareHouseService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Log4j2
 @Controller
@@ -35,8 +38,9 @@ public class WareHouseController {
 
   }
 
-  @GetMapping("/search")
-  public String search(@RequestParam(value = "type", required = false) String type,
+  @PostMapping("/search")
+  @ResponseBody
+  public ResponseEntity<List<WareHouseDTO>> search(@RequestParam(value = "type", required = false) String type,
       @RequestParam(value = "location", required = false) String location,
       @RequestParam(value = "name", required = false) String name, Model model) {
 
@@ -71,12 +75,11 @@ public class WareHouseController {
       }
     }
 
-
-
     model.addAttribute("warehouselist", warehouselist);
     model.addAttribute("locations", wareHouseService.findAllWarehouseLocations());
     model.addAttribute("types", wareHouseService.findAllWarehouseType());
-    return "warehouse/warehouse";
+
+    return ResponseEntity.ok(warehouselist);
 
   }
 
