@@ -95,7 +95,9 @@ $(document).ready(function () {
     endDate = endDate ? inputFormatDate(endDate) : null;
 
     warehouseCd = warehouseCd.trim() ? warehouseCd : null;
-    supplierNm = supplierNm.trim() ? supplierNm : null;
+    if(supplierNm != null){
+      supplierNm = supplierNm.trim() ? supplierNm : null;
+    }
 
     const payload = {
       startDate: startDate,
