@@ -49,11 +49,12 @@
         </div>
         <!-- row -->
 
-        <div class="row page-titles mx-0">
-            <div class="col p-md-0">
-                <h3 class="header-content">발주 등록</h3>
-
-                <div class="header-right">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1>발주 등록</h1>
+            </div>
+            <div class="col-lg-12 mb-4 text-right">
+                <div class="general-button">
                     <button type="button" id="order-register-new-btn" class="btn mb-1 btn-info">신규</button>
                     <button type="button" class="btn mb-1 btn-light">확정취소</button>
                     <button type="button" class="btn mb-1 btn-light" data-toggle="modal" data-target="#registerModal">확정</button>
@@ -76,24 +77,23 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-        </div>
-
-        <div class="container-fluid">
-            <div>
-                <h4>발주</h4>
             </div>
 
-            <div class="row">
-                <div class="col-12">
+
+            <div class="col-12">
                     <div class="card">
                         <div class="card-body" id="order-register-form">
+                            <h3 class="card-title">발주</h3>
                             <div class="form-group row">
                                 <label class="col-sm-1 col-form-label">발주일자</label>
                                 <div class="col-sm-2">
                                     <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" id="order-created-date" placeholder="mm/dd/yyyy"> <span class="input-group-append"><span class="input-group-text"><i class="mdi mdi-calendar-check"></i></span></span>
+                                        <input type="text" class="form-control mydatepicker" id="order-created-date" placeholder="mm/dd/yyyy">
+                                        <span class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="mdi mdi-calendar-check"></i>
+                                            </span>
+                                        </span>
                                     </div>
                                 </div>
 
@@ -103,22 +103,21 @@
                                         <input type="text"  id="order-seq" class="form-control input-flat" readonly>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-1 col-form-label">매입거래처</label>
-                                <div class="col-sm-2">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control input-flat" id="incoming-product-supplier-nm">
-                                    </div>
-                                </div>
                                 <label class="col-sm-1 col-form-label">발주확정</label>
                                 <div class="col-sm-2">
                                     <div class="input-group">
                                         <input type="text" class="form-control input-flat" id="order-status" readonly>
                                     </div>
                                 </div>
+
                             </div>
                             <div class="form-group row">
+                                <label class="col-sm-1 col-form-label">매입처</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-flat" id="incoming-product-supplier-nm" placeholder="매입처 검색">
+                                    </div>
+                                </div>
                                 <label class="col-sm-1 col-form-label">창고</label>
                                 <div class="col-sm-2">
                                     <div class="input-group">
@@ -136,6 +135,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row d-flex justify-content-center">
                                 <div class="bootstrap-modal">
                                     <!-- Button trigger modal -->
@@ -162,9 +162,9 @@
                                 </div>
                                 <div class="bootstrap-modal">
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenterDelete">삭제</button>
+                                    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#order-register-remove">삭제</button>
                                     <!-- Modal -->
-                                    <div class="modal fade" id="exampleModalCenterDelete" style="display: none;" aria-hidden="true">
+                                    <div class="modal fade" id="order-register-remove" style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content  d-flex justify-content-center">
                                                 <div class="modal-header">
@@ -177,7 +177,7 @@
                                                 </div>
                                                 <div class="modal-footer d-flex justify-content-center">
                                                     <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                    <button type="button" id="order-register-remove-ok-btn" class="btn" data-dismiss="modal">확인</button>
+                                                    <button type="button" class="btn" onclick="orderRegisterDelete()" data-dismiss="modal">확인</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -188,121 +188,111 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <h4>발주상세</h4>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <label class="col-sm-2 col-form-label">단품바코드</label>
-                                <div class="col-sm-2">
-                                    <div class="input-group">
-                                        <select id="inputState" class="form-control">
-                                            <option selected="selected">단품</option>
-                                            <option></option>
-                                        </select>
-                                    </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label">단품바코드</label>
+                            <div class="col-sm-2">
+                                <div class="input-group">
+                                    <select id="inputState" class="form-control">
+                                        <option selected="selected">단품</option>
+                                        <option></option>
+                                    </select>
                                 </div>
-                                <div class="col-sm-3">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="input-product-cd">
-                                    </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="input-product-cd">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-title">
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th><input type="checkbox"></th>
-                                        <th>단품코드</th>
-                                        <th>단품명</th>
-                                        <th>단품상태</th>
-                                        <th>재고관리여부</th>
-                                        <th>창고현재고</th>
-                                        <th>발주수량</th>
-                                        <th>발주단가</th>
-                                        <th>발주금액</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody class="order-detail-tbody">
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="row d-flex justify-content-center">
-                                <div class="bootstrap-modal">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#order-detail-pre-save-btn">저장</button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="order-detail-pre-save-btn" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content  d-flex justify-content-center">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Confirm</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body center">
-                                                    <p>저장하시겠습니까?</p>
-                                                </div>
-                                                <div class="modal-footer d-flex justify-content-center">
-                                                    <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                    <button type="button" class="btn" id="order-detail-save-btn" data-dismiss="modal"
-                                                            onclick="insertOrderAndOrderDetail()">확인</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bootstrap-modal">
-                                    <button type="button" class="btn btn-light" id="order-detail-add-btn" onclick="createOrderDetailForm()">추가</button>
-                                </div>
 
-                                <div class="bootstrap-modal">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#order-detail-delete-btn">삭제</button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="order-detail-delete-btn" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content  d-flex justify-content-center">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Confirm</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body center">
-                                                    <p>삭제하시겠습니까?</p>
-                                                </div>
-                                                <div class="modal-footer d-flex justify-content-center">
-                                                    <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                    <button type="button" class="btn" data-dismiss="modal">확인</button>
-                                                </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">발주상세</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th><input type="checkbox"></th>
+                                    <th>단품코드</th>
+                                    <th>단품명</th>
+                                    <th>단품상태</th>
+                                    <th>재고관리여부</th>
+                                    <th>창고현재고</th>
+                                    <th>발주수량</th>
+                                    <th>발주단가</th>
+                                    <th>발주금액</th>
+                                </tr>
+                                </thead>
+                                <tbody class="order-detail-tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row" style="height:5rem;"></div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="bootstrap-modal">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#order-detail-pre-save-btn">저장</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="order-detail-pre-save-btn" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content  d-flex justify-content-center">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Confirm</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body center">
+                                                <p>저장하시겠습니까?</p>
+                                            </div>
+                                            <div class="modal-footer d-flex justify-content-center">
+                                                <button type="button" class="btn" data-dismiss="modal">취소</button>
+                                                <button type="button" class="btn" id="order-detail-save-btn" data-dismiss="modal"
+                                                        onclick="insertOrderAndOrderDetail()">확인</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <button type="button" class="btn mb-1 btn-light" id="order-register-remove-btn" background-color="#0575E6">삭제</button> -->
                             </div>
+                            <div class="bootstrap-modal">
+                                <button type="button" class="btn btn-light" id="order-detail-add-btn" onclick="createOrderDetailForm()">추가</button>
+                            </div>
+
+                            <div class="bootstrap-modal">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#order-detail-delete-btn">삭제</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="order-detail-delete-btn" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content  d-flex justify-content-center">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Confirm</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body center">
+                                                <p>삭제하시겠습니까?</p>
+                                            </div>
+                                            <div class="modal-footer d-flex justify-content-center">
+                                                <button type="button" class="btn" data-dismiss="modal">취소</button>
+                                                <button type="button" class="btn" data-dismiss="modal">확인</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <button type="button" class="btn mb-1 btn-light" id="order-register-remove-btn" background-color="#0575E6">삭제</button> -->
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-lg-6">
-
-                <!-- /# card -->
             </div>
         </div>
         <!-- #/ container -->

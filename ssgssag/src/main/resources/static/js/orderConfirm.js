@@ -1,8 +1,3 @@
-$(document).ready(function() {
-    getNowDate();
-
-});
-
 // 전역 변수
 var orderSearchForm = {
     "vIncomingProductSupplierNm": null,
@@ -20,8 +15,6 @@ function orderConfirm() {
     $('.order-master-tbody input[type="checkbox"]:checked').each(function() {
         let index = this.id.match(/\d+$/)[0];
 
-        console.log("idx ", index);
-
         if ($(`#order-td-order-status-${index}`) !== '확정') {
             orderSeq.push(+$(`#order-td-order-seq-${index}`).text());
         }
@@ -31,19 +24,15 @@ function orderConfirm() {
         orderSeq: orderSeq
     };
 
-    console.log(JSON.stringify(dataToSend));
-
     $.ajax({
-        url: '/order/confirm', // 서버 엔드포인트 URL
+        url: '/order/confirm',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify(dataToSend), // 데이터를 JSON 문자열로 변환
+        data: JSON.stringify(dataToSend),
         success: function(response) {
-            // 요청 성공 시 처리
             console.log('Success:', response);
         },
         error: function(error) {
-            // 요청 실패 시 처리
             console.log('Error:', error);
         }
     });
