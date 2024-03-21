@@ -19,13 +19,23 @@ let ready = $(document).ready(function() {
         tableBody.empty();
 
         $.each(data, function (i, warehouse) {
-          var row = "<tr>" +
-              "<td>" + warehouse.vwarehouseCd + "</td>" +
-              "<td>" + warehouse.vwarehouseNm + "</td>" +
-              "<td>" + warehouse.swarehouseType + "</td>" +
-              "<td>" + warehouse.vwarehouseLoc + "</td>" +
-              "<td>" + warehouse.pkMemberSeq + "</td>" +
-              "</tr>";
+          var row = `<tr>
+                        <td>${warehouse.vwarehouseCd}</td>
+                        <td>${warehouse.vwarehouseNm}</td>
+                        <td>${warehouse.swarehouseType}</td>
+                        <td>${warehouse.vwarehouseLoc}</td>
+                        <td>${warehouse.pkMemberSeq}</td>
+                        <td>
+                            <button type="button" class="btn btn-info btn-sm open-modal"
+                                    data-warehouse-cd="${warehouse.vwarehouseCd}"
+                                    data-warehouse-nm="${warehouse.vwarehouseNm}"
+                                    data-warehouse-type="${warehouse.swarehouseType}"
+                                    data-warehouse-loc="${warehouse.vwarehouseLoc}"
+                                    data-pk-member-seq="${warehouse.pkMemberSeq}">
+                                구역 보기
+                            </button>
+                        </td>
+                    </tr>`;
           tableBody.append(row);
         });
       }, error: function (error) {
@@ -33,7 +43,14 @@ let ready = $(document).ready(function() {
       }
     });
   });
-})
+
+  $(document).on('click', '.open-modal', function() {
+    var button = $(this); // 클릭된 버튼의 jQuery 객체
+    var warehouseCd = button.data('warehouse-cd');
+    // 여기서 openWarehouseModal 함수를 호출하고 필요한 데이터를 전달합니다.
+    openWarehouseModal(button[0], warehouseCd); // button[0]을 통해 DOM 요소 전달
+  });
+});
 
 function openWarehouseModal(button,warehouseCd) {
   var warehouseNm = button.dataset.warehouseNm;
