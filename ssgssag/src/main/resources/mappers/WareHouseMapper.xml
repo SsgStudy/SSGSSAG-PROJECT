@@ -43,4 +43,5 @@
     SELECT * FROM TB_ZONE WHERE V_WAREHOUSE_CD = #{vWarehouseCd};
   </select>
 
+
 </mapper>

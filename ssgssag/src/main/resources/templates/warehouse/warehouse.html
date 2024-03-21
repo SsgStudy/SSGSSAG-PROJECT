@@ -55,7 +55,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="warehouseAddLabel">창고등록</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
@@ -165,8 +165,13 @@
                             class="btn btn-info btn-sm"
                             data-toggle="modal"
                             th:data-warehouse-cd="${warehouse.vWarehouseCd}"
+                            th:data-warehouse-nm="${warehouse.vWarehouseNm}"
+                            th:data-warehouse-type="${warehouse.sWarehouseType}"
+                            th:data-warehouse-loc="${warehouse.vWarehouseLoc}"
+                            th:data-pk-member-seq="${warehouse.pkMemberSeq}"
                             th:attr="data-target='#warehouseDetail' + ${warehouse.vWarehouseCd}"
-                            onclick="openWarehouseModal(this.dataset.warehouseCd)">
+
+                            onclick="openWarehouseModal(this, this.dataset.warehouseCd)">
                       구역 보기
                     </button>
                   </td>
@@ -175,13 +180,13 @@
 
               </table>
               <!-- Modal -->
-              <div class="modal fade" id="warehouseDetail" tabindex="-1" role="dialog" aria-labelledby="warehouseDetailLabel" aria-hidden="true">
+              <div class="modal fade" id="warehouseDetail" tabindex="-1" role="dialog" aria-labelledby="warehouseDetailLabel" >
                 <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="warehouseDetailLabel">창고구역</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span>
-                        <span aria-hidden="true">&times;</span>
+
                       </button>
                     </div>
                     <div class="modal-body" id="warehousezone">
@@ -190,7 +195,7 @@
                           <label class="col-sm-3 col-form-label text-left">코드</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control-plaintext input-flat"
-                                   placeholder="WH001" readonly>
+                                   placeholder="${vWarehouseCd}" readonly>
                           </div>
                         </div>
                         <div class="row">

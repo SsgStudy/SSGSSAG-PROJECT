@@ -98,29 +98,12 @@ public class WareHouseController {
     return "redirect:/warehouse";
   }
 
-//  @PostMapping("/zone")
-//  @Operation(summary = "창고 구역 조회", description = "각 창고별 창고 구역을 조회합니다.")
-////  @ResponseBody
-//  public List<WareHouseZoneVO> zoneSearch(@RequestParam(value = "vWarehouseCd", required = false)
-//  String vWarehouseCd, Model model){
-//
-//    List<WareHouseZoneVO> wareHouseZoneList;
-//
-//    wareHouseService.getWareHouseZones(vWarehouseCd);
-//    model.addAttribute("vWarehouseCd", wareHouseService.getWareHouseZones(vWarehouseCd));
-//
-//    return "redirect:/warehouse";
-//
-//  }
-
   @GetMapping("/{vWarehouseCd}/zones")
   @Operation(summary = "창고 구역 조회", description = "창고 구역 조회.")
   @ResponseBody
   public List<WareHouseZoneVO> getWareHouseZones(@PathVariable String vWarehouseCd) {
     return wareHouseService.getWareHouseZones(vWarehouseCd);
   }
-
-
 
 
 }

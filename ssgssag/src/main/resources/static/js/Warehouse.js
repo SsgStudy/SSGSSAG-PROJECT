@@ -35,21 +35,27 @@ let ready = $(document).ready(function() {
   });
 })
 
+function openWarehouseModal(button,warehouseCd) {
+  var warehouseNm = button.dataset.warehouseNm;
+  var warehouseType = button.dataset.warehouseType;
+  var warehouseLoc = button.dataset.warehouseLoc;
+  var pkMemberSeq = button.dataset.pkMemberSeq;
 
+  // 모달 내의 입력 필드에 값을 설정
+  $('#warehouseDetail .modal-body input[placeholder="${vWarehouseCd}"]').val(warehouseCd);
+  $('#warehouseDetail .modal-body input[placeholder="중앙창고"]').val(warehouseNm);
+  $('#warehouseDetail .modal-body input[placeholder="일반"]').val(warehouseType);
+  $('#warehouseDetail .modal-body input[placeholder="서울시 강남구"]').val(warehouseLoc);
+  $('#warehouseDetail .modal-body input[placeholder="MGR001"]').val(pkMemberSeq);
 
-function openWarehouseModal(warehouseCd) {
-  let code = warehouseCd
+  // 구역 정보 조회 및 표시
   $.ajax({
-    url: '/warehouse/' + code + '/zones',
+    url: '/warehouse/' + warehouseCd + '/zones',
     type: 'GET',
-
     success: function(data) {
-      console.log(this.url);
-      console.log(data); // 서버로부터 받은 데이터 확인
-      let modalBody = $('#warehouseDetail .modal-body');
-      let tbody = modalBody.find('table tbody');
+      var modalBody = $('#warehouseDetail .modal-body');
+      var tbody = modalBody.find('table tbody');
       tbody.empty(); // 기존 행 초기화
-      console.log(typeof(data));
       if (data && data.length > 0) {
         $.each(data, function(index, zone) {
           let row = `<tr>
@@ -58,12 +64,10 @@ function openWarehouseModal(warehouseCd) {
               <td>${zone.vzoneNm}</td>
             </tr>`;
           tbody.append(row);
-
         });
       } else {
         tbody.append('<tr><td colspan="3">해당 창고에 구역 정보가 없습니다.</td></tr>');
       }
-
       $('#warehouseDetail').modal('show');
     },
     error: function(error) {

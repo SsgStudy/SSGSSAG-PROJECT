@@ -27,4 +27,5 @@ public interface WareHouseMapper {
     void insertWarehouse(WareHouseDTO wareHouseDTO);
 
     List<WareHouseZoneVO> selectWareHouseZone(@Param("vWarehouseCd") String vWarehouseCd);
+
 }
