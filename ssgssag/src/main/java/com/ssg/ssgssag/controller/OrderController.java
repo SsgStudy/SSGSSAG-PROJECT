@@ -83,16 +83,18 @@ public class OrderController {
         return dto;
     }
 
-    @GetMapping("/confirm/{orderSeq}")
-    @ResponseBody
-    public String orderConfirmation(@RequestParam String orderSeq) {
-        Map<String, Long> map = new HashMap<>();
-        return null;
-    }
-
     @GetMapping("/single")
     @ResponseBody
     public List<OrderProductDTO> getMasterOrderList(@RequestParam("order-seq") Long orderSeq) {
         return orderService.getOrderSigleList(orderSeq);
+    }
+
+    @PostMapping("/confirm")
+    @ResponseBody
+    public String orderConfirmation(@RequestBody Map<String, List<Long>> param) {
+        log.info("orderSeq {}", param);
+        orderService.updateOrderStatusConfirmed(param.get("orderSeq"));
+
+        return "ok";
     }
 }

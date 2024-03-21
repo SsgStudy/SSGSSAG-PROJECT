@@ -76,5 +76,13 @@
         WHERE od.PK_ORDER_SEQ=#{orderSeq}
         ORDER BY od.PK_ORDER_DETAIL_SEQ
     </select>
-    
+
+    <update id="updateOrderStatusByOrderSeq" parameterType="java.util.List">
+        UPDATE TB_ORDER
+        SET V_ORDER_STATUS = '확정', DT_ORDER_COMPLETION_DATE = NOW()
+        WHERE PK_ORDER_SEQ IN
+        <foreach collection="pkOrderSeq" item="pkOrderSeq" separator="," open="(" close=")">
+            #{pkOrderSeq}
+        </foreach>
+    </update>
 </mapper>

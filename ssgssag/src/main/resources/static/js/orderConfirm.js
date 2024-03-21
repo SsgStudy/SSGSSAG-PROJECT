@@ -14,6 +14,40 @@ var orderSearchForm = {
 
 
 // 확정
+function orderConfirm() {
+    let orderSeq = [];
+
+    $('.order-master-tbody input[type="checkbox"]:checked').each(function() {
+        let index = this.id.match(/\d+$/)[0];
+
+        console.log("idx ", index);
+
+        if ($(`#order-td-order-status-${index}`) !== '확정') {
+            orderSeq.push(+$(`#order-td-order-seq-${index}`).text());
+        }
+    });
+
+    let dataToSend = {
+        orderSeq: orderSeq
+    };
+
+    console.log(JSON.stringify(dataToSend));
+
+    $.ajax({
+        url: '/order/confirm', // 서버 엔드포인트 URL
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(dataToSend), // 데이터를 JSON 문자열로 변환
+        success: function(response) {
+            // 요청 성공 시 처리
+            console.log('Success:', response);
+        },
+        error: function(error) {
+            // 요청 실패 시 처리
+            console.log('Error:', error);
+        }
+    });
+}
 
 
 // 초기화
@@ -35,8 +69,6 @@ function searchForm() {
     let orderStatus = $("#order-status").val();
     if (orderStatus !== "선택")
         orderSearchForm.vOrderStatus = orderStatus;
-
-    console.log("검색 폼 " + JSON.stringify(orderSearchForm));
 }
 
 function getMasterOrderList() {
@@ -84,7 +116,6 @@ function getOrderSingleList(orderSeq) {
         success: function (resp) {
             $('.order-single-tbody').empty();
             $.each(resp, function (idx, orderSingle) {
-                console.log(JSON.stringify(orderSingle));
                 $('.order-single-tbody').append(
                     `<tr>
                         <th>${idx+1}</th>

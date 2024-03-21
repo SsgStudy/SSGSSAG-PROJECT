@@ -29,6 +29,7 @@ public interface OrderMapper {
 
 
 // 발주 확정
+        int updateOrderStatusByOrderSeq(@Param("pkOrderSeq") List<Long> orderSeq);
 
 //    int insertOrder(OrderVO order);
 //    int insertOrderDetail(OrderDetailVO orderDetail);
@@ -40,6 +41,6 @@ public interface OrderMapper {
 //    List<OrderVO> getAllOrdersStatusProgress();
 //    List<ProductVO> getAllProductQuantity();
 //    OrderDetailVO getOneOrderInformation(Long orderSeq);
-//    int updateOrderStatus(Long orderSeq);
+
 
 }
