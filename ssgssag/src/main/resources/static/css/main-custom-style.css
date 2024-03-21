@@ -1,0 +1,30 @@
+.scrollable-row-wrapper {
+  flex-wrap: nowrap!important;
+  overflow-y: auto;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.scrollable-row-item {
+  display: inline-block;
+  white-space: normal;
+  vertical-align: top;
+}
+
+.fixed-height {
+  height: 200px;
+}
+
+.scrollable-row-wrapper .col-lg-3,
+.scrollable-row-wrapper .col-sm-6 {
+  flex: 0 0 22%!important;
+  max-width: 22%!important;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+body, body * {
+  cursor: url('/images/logo.png'), auto;
+}
