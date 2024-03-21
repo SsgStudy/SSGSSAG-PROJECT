@@ -62,6 +62,7 @@
           <button type="button" class="btn btn-dark mb-1 btn-primary" data-toggle="modal"
                   data-target="#basicModal">등록
           </button>
+          <button type="button" class="btn btn-dark mb-1 btn-primary" onclick="printPage()">인쇄</button>
           <button type="button" class="btn btn-dark mb-1 btn-primary reset-button">초기화</button>
         </div>
         <!-- Modal -->
@@ -89,19 +90,19 @@
           <div class="card-body">
             <h4 class="card-title">검색 조건</h4>
             <div class="basic-form">
-              <form>
+              <form class="confirm-form" id="filter-form" autocomplete="off">
                 <div class="form-group row">
                   <label class="col-sm-1 col-form-label">입고기간</label>
                   <div class="col-sm-11">
                     <input class="form-control input-daterange-datepicker" type="text"
-                           name="daterange" value="01/01/2015 - 01/31/2015">
+                           name="daterange" value="01/01/2023 - 12/31/2024">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-1 col-form-label">창고</label>
                   <div class="col-sm-11">
                     <div class="input-group">
-                      <input type="text" class="form-control input-flat" placeholder="창고 검색"
+                      <input type="text" class="form-control input-flat input-whsearch" placeholder="창고 검색"
                              data-toggle="modal" data-target="#warehouseSearchInputBox">
                     </div>
                   </div>
@@ -116,29 +117,6 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <div class="col-lg-12 mb-4 text-right">
-                            <div class="general-button">
-                              <button type="button" class="btn btn-dark mb-2 btn-primary">조회
-                              </button>
-                              <button type="button" class="btn btn-dark mb-2 btn-primary">선택
-                              </button>
-                            </div>
-                            <div class="row mb-1">
-                              <label class="col-sm-3 col-form-label text-left">분류</label>
-                              <div class="col-sm-9">
-                                <input type="text" class="form-control input-flat"
-                                       placeholder="창고 유형을 입력해주세요">
-                              </div>
-                            </div>
-                            <div class="row">
-                              <label class="col-sm-3 col-form-label text-left">검색 조건</label>
-                              <div class="col-sm-9">
-                                <input type="text" class="form-control input-flat"
-                                       placeholder="창고명 혹은 창고 코드를 입력해주세요">
-                              </div>
-                            </div>
-
-                          </div>
                           <div class="table-responsive">
                             <table class="table table-hover">
                               <thead>
@@ -155,30 +133,6 @@
                                 <td>식품</td>
                                 <td>CW001</td>
                                 <td>식품창고 1</td>
-                              </tr>
-                              <tr>
-                                <td>2</td>
-                                <td>의류</td>
-                                <td>CW002</td>
-                                <td>의류창고 A</td>
-                              </tr>
-                              <tr>
-                                <td>3</td>
-                                <td>가전제품</td>
-                                <td>CW003</td>
-                                <td>가전창고 1</td>
-                              </tr>
-                              <tr>
-                                <td>4</td>
-                                <td>도서</td>
-                                <td>CW004</td>
-                                <td>도서창고 B</td>
-                              </tr>
-                              <tr>
-                                <td>5</td>
-                                <td>화장품</td>
-                                <td>CW005</td>
-                                <td>화장품창고 1</td>
                               </tr>
                               </tbody>
                               <tfoot>
@@ -255,6 +209,9 @@
                 </tr>
                 </tbody>
               </table>
+            </div>
+            <div class="general-button col-lg-12 text-center">
+              <button type="button" class="btn btn-dark mb-1 btn-primary" onclick="exportTableToExcel('입고등록대기목록')">엑셀로 내보내기</button>
             </div>
           </div>
         </div>

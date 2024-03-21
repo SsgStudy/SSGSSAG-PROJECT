@@ -95,7 +95,9 @@ $(document).ready(function () {
     endDate = endDate ? inputFormatDate(endDate) : null;
 
     warehouseCd = warehouseCd.trim() ? warehouseCd : null;
-    supplierNm = supplierNm.trim() ? supplierNm : null;
+    if(supplierNm != null){
+      supplierNm = supplierNm.trim() ? supplierNm : null;
+    }
 
     const payload = {
       startDate: startDate,
@@ -255,6 +257,42 @@ $(document).ready(function () {
     }
   });
 
+  $('.input-whsearch').click(function() {
+    let formData = {
+      name: $("#warehouseNameInput").val(),
+      location: $("#warehouseLocationSelect").val(),
+      type: $("#warehouseTypeSelect").val()
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "/warehouse/search",
+      data: $.param(formData),
+      contentType: 'application/x-www-form-urlencoded',
+      success: function(data) {
+        let tableBody = $('#warehouseSearchInputBox .table-responsive tbody');
+        tableBody.empty();
+        $.each(data, function(i, warehouse) {
+          let row = "<tr>" +
+              "<td>" + (i + 1) + "</td>" +
+              "<td>" + warehouse.swarehouseType + "</td>" +
+              "<td>" + warehouse.vwarehouseCd + "</td>" +
+              "<td>" + warehouse.vwarehouseNm + "</td>" +
+              "</tr>";
+          tableBody.append(row);
+        });
+      },
+      error: function(error) {
+        console.error("Error: ", error);
+      }
+    });
+  });
+
+  $('#warehouseSearchInputBox .table-responsive tbody').on('click', 'tr', function() {
+    let warehouseCode = $(this).find('td:nth-child(3)').text();
+    $('.input-whsearch').val(warehouseCode);
+    $('#warehouseSearchInputBox').modal('hide');
+  });
 
 });
 
@@ -335,4 +373,27 @@ function inputFormatDate(input) {
   }
 
   return [year, month, day].join('-');
+}
+function exportTableToExcel(fileName) {
+  let table = document.querySelector('.zero-configuration');
+  let workbook = XLSX.utils.table_to_book(table, {sheet: "Sheet 1"});
+  let wbout = XLSX.write(workbook, {bookType:'xlsx', type: 'binary'});
+  let blob = new Blob([s2ab(wbout)], {type: "application/octet-stream"});
+  let url = URL.createObjectURL(blob);
+
+  let a = document.createElement("a");
+  document.body.appendChild(a);
+  a.style = "display: none";
+  a.href = url;
+  a.download = fileName + '.xlsx';
+  a.click();
+  document.body.removeChild(a);
+  window.URL.revokeObjectURL(url);
+}
+
+function s2ab(s) {
+  let buf = new ArrayBuffer(s.length);
+  let view = new Uint8Array(buf);
+  for (let i=0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+  return buf;
 }
