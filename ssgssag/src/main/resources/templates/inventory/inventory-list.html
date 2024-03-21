@@ -104,13 +104,10 @@
                 <div class="row">
                   <!-- 옵션 3 -->
                   <label class="col-sm-1 col-form-label">창고</label>
-                  <select class="custom-select mr-2 col-sm-2">
+                  <select class="custom-select mr-2 col-sm-2" id="select-warehouse">
                     <option selected="selected">창고</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
                   </select>
-                  <select class="custom-select mr-2 col-sm-2">
+                  <select class="custom-select mr-2 col-sm-2" id="select-zone">
                     <option selected="selected">구역</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
@@ -217,6 +214,7 @@
       <!--**********************************
           Main wrapper end
       ***********************************-->
+      <script th:src="@{/js/Inventory.js}"></script>
 
       <!--**********************************
           Scripts

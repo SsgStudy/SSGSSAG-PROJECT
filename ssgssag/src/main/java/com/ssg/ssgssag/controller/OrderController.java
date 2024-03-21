@@ -1,6 +1,5 @@
 package com.ssg.ssgssag.controller;
 
-import com.ssg.ssgssag.dto.OrderDetailSearchDTO;
 import com.ssg.ssgssag.dto.OrderProductDTO;
 import com.ssg.ssgssag.dto.OrderRequestDTO;
 import com.ssg.ssgssag.service.OrderService;

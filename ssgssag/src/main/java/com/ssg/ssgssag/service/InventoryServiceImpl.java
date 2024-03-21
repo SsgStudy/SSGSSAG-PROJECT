@@ -1,6 +1,7 @@
 package com.ssg.ssgssag.service;
 
 import com.ssg.ssgssag.domain.InventoryVO;
+import com.ssg.ssgssag.dto.WareHouseZoneDTO;
 import com.ssg.ssgssag.mapper.InventoryMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -14,11 +15,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InventoryServiceImpl implements InventoryService{
 
-    @Autowired(required = false)
+    @Autowired
     private final InventoryMapper inventoryMapper;
 
     @Override
     public List<InventoryVO> selectAllInventory() {
         return inventoryMapper.selectAllInventory();
     }
+
+    @Override
+    public List<WareHouseZoneDTO> selectAllWareHouseZone() {
+        return inventoryMapper.selectAllWareHouseZone();
+    }
+
 }

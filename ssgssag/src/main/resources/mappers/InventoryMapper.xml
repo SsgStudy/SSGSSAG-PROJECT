@@ -4,8 +4,38 @@
 
 <mapper namespace="com.ssg.ssgssag.mapper.InventoryMapper">
 
-    <select id="selectAllInventory" resultType="com.ssg.ssgssag.domain.InventoryVO">
+    <select id="selectAllInventory" resultType="InventoryVO">
         SELECT * FROM TB_INVENTORY
     </select>
+
+    <select id="selectAllWareHouseZone" resultType="com.ssg.ssgssag.dto.WareHouseZoneDTO">
+        SELECT W.V_WAREHOUSE_NM, V_ZONE_NM
+        FROM TB_WAREHOUSE W JOIN TB_ZONE Z
+        ON Z.V_WAREHOUSE_CD = W.V_WAREHOUSE_CD
+        ORDER BY W.V_WAREHOUSE_NM, V_ZONE_NM;
+    </select>
+
+<!--    <select id="selectMainCategories" resultType="com.ssg.ssgssag.dto.CategoryDTO">-->
+<!--        SELECT V_CATEGORY_NM-->
+<!--        FROM TB_CATEGORY-->
+<!--        WHERE V_CATEGORY_PARENT_CD IS NULL;-->
+<!--    </select>-->
+
+<!--    <select id="selectSubCategories" parameterType="string" resultType="com.ssg.ssgssag.dto.CategoryDTO">-->
+<!--        SELECT V_CATEGORY_NM-->
+<!--        FROM TB_CATEGORY-->
+<!--        WHERE SUBSTR(V_CATEGORY_CD, 1, 3) = #{mainCategoryCode}-->
+<!--    </select>-->
+
+
+
+
+<!--    <select id="selectDetailCategories" parameterType="string" resultType="com.ssg.ssgssag.dto.CategoryDTO">-->
+<!--        SELECT V_CATEGORY_NM-->
+<!--        FROM TB_CATEGORY-->
+<!--        WHERE V_CATEGORY_PARENT_CD = #{vSubCategoryNm};-->
+<!--    </select>-->
+
+
 
 </mapper>
