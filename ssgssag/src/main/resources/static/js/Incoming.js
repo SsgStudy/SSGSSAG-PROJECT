@@ -183,12 +183,79 @@ $(document).ready(function () {
   });
 
   $("#supplierSearchInput").on("input", function() {
-    var searchValue = $(this).val().toLowerCase();
+    let searchValue = $(this).val().toLowerCase();
 
     $("#purchaserSearchInputBox .table-responsive tbody tr").filter(function() {
       $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
     });
   });
+
+
+  $('.checkbox input').change(function() {
+    let selectedRow = $(this).closest('tr');
+    let incomingDate = selectedRow.find('td:nth-child(6)').text();
+    let warehouseZone = selectedRow.find('td:last-child').text();
+
+    $('#incomingDateInput').val(incomingDate);
+    $('#warehouseZoneSelect').val(warehouseZone);
+
+    $('#confirmButton').off('click').on('click', function() {
+      if (!selectedRow.find('.checkbox input').is(':checked')) {
+        return;
+      }
+
+      let updatedDate = $('#incomingDateInput').val();
+      let updatedZone = $('#warehouseZoneSelect').val();
+
+      selectedRow.find('td:nth-child(6)').text(updatedDate);
+      selectedRow.find('td:last-child').text(updatedZone);
+
+      $('#incomingDateInputBox').modal('hide');
+    });
+
+    if ($(this).is(':checked')) {
+      $('#incomingDateInputBox').modal('show');
+    } else {
+      $('#incomingDateInputBox').modal('hide');
+    }
+  });
+
+  $('.confirmButton').click(function() {
+    let selectedProducts = [];
+
+    $('input[type="checkbox"]:checked').each(function() {
+      let $row = $(this).closest('tr');
+      let pkIncomingProductSeq = $(this).data('pk-incoming-product-seq');
+      let incomingDate = $row.find('td:nth-child(6)').text().trim();
+      let warehouseZone = $row.find('td:last-child').text().trim();
+
+      selectedProducts.push({
+        pkIncomingProductSeq: pkIncomingProductSeq,
+        dtIncomingProductDate: incomingDate,
+        vzoneCd: warehouseZone
+      });
+    });
+
+    if (selectedProducts.length > 0) {
+      $.ajax({
+        url: '/incoming/update-status-for-register',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(selectedProducts),
+        success: function(response) {
+          $('.register-modal').modal('hide');
+          alert('입고 상태가 업데이트되었습니다.');
+        },
+        error: function(xhr, status, error) {
+          alert('오류 발생: ' + error);
+        }
+      });
+    } else {
+      alert('선택된 항목이 없습니다.');
+    }
+  });
+
+
 });
 
 function fetchIncomingDetails(pkIncomingProductSeq) {
