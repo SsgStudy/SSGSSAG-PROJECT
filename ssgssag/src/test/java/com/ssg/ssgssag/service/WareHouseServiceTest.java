@@ -44,6 +44,16 @@ public class WareHouseServiceTest {
     log.info(results);
   }
 
+  @Test
+  public void addWareHouseTest(){
+    WareHouseDTO wareHouseDTO = WareHouseDTO.builder()
+        .vWarehouseCd("1").vWarehouseNm("테스트창고").vWarehouseLoc("서울, 대한민국")
+        .sWarehouseType("소매").pkMemberSeq(1L).build();
+
+    wareHouseService.addWarehouse(wareHouseDTO);
+    log.info(wareHouseDTO);
+  }
+
 
 
 

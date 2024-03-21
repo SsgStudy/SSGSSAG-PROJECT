@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -84,6 +85,15 @@ public class WareHouseController {
 
     return ResponseEntity.ok(warehouselist);
 
+  }
+
+  @PostMapping("/add")
+  @Operation(summary = "창고 등록", description = "창고를 등록합니다.")
+  public String addWarehouse(@ModelAttribute WareHouseDTO wareHouseDTO) {
+    log.info("창고등록 시작");
+    wareHouseService.addWarehouse(wareHouseDTO);
+    log.info(wareHouseDTO);
+    return "redirect:/warehouse";
   }
 
 

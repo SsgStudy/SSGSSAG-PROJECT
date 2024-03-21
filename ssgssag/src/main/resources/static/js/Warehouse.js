@@ -1,6 +1,6 @@
 let ready = $(document).ready(function() {
 
-  $("form").submit(function (event) {
+  $('#searchForm').submit(function (event) {
     event.preventDefault();
 
     var formData = {

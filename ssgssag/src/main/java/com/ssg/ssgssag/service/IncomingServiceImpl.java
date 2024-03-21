@@ -59,6 +59,7 @@ public class IncomingServiceImpl implements IncomingService {
     @Override
     public List<OrderSupplierDTO> getAllOrderSupplierName() {
         return incomingMapper.selectAllOrderSupplierName();
+
     }
 
 }

@@ -22,4 +22,6 @@ public interface WareHouseMapper {
     List<String> findAllWarehouseLocations();
 
     List<String> findAllWarehouseType();
+
+    void insertWarehouse(WareHouseDTO wareHouseDTO);
 }

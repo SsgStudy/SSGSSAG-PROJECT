@@ -54,4 +54,10 @@ public class WareHouseServiceImpl implements WareHouseService {
 
   }
 
+  @Override
+  public void addWarehouse(WareHouseDTO wareHouseDTO) {
+    wareHouseMapper.insertWarehouse(wareHouseDTO);
+    log.info(wareHouseDTO);
+  }
+
 }

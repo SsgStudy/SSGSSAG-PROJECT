@@ -50,63 +50,65 @@
               </button>
             </div>
             <!-- Modal -->
-            <div class="modal fade" id="warehouseAdd">
+            <div class="modal fade" id="warehouseAdd" tabindex="-1" role="dialog" aria-labelledby="warehouseAddLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title">창고등록</h5>
-                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                    <h5 class="modal-title" id="warehouseAddLabel">창고등록</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
+                  <form action="/warehouse/add" method="post">
                   <div class="modal-body">
                     <div class="col-lg-12 mb-4 text-right">
                       <div class="general-button">
-                        <button type="button" class="btn btn-dark mb-2 btn-primary">등록</button>
+                        <button type="submit" name="warehouseregister"class="btn btn-dark mb-2 btn-primary">등록</button>
                       </div>
                       <div class="row mb-1">
                         <label class="col-sm-3 col-form-label text-left">코드</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control input-flat"
+                          <input type="text" class="form-control input-flat" name="vWarehouseCd"
                                  placeholder="창고 코드를 입력해주세요">
                         </div>
                       </div>
                       <div class="row">
                         <label class="col-sm-3 col-form-label text-left">이름</label>
                         <div class="col-sm-9 mb-1">
-                          <input type="text" class="form-control input-flat"
+                          <input type="text" class="form-control input-flat"  name="vWarehouseNm"
                                  placeholder="창고 이름을 입력해주세요">
                         </div>
                       </div>
                       <div class="row">
                         <label class="col-sm-3 col-form-label text-left">소재지</label>
                         <div class="col-sm-9 mb-1">
-                          <input type="text" class="form-control input-flat"
+                          <input type="text" class="form-control input-flat" name="vWarehouseLoc"
                                  placeholder="창고 소재지를 입력해주세요">
                         </div>
                       </div>
                       <div class="row">
                         <label class="col-sm-3 col-form-label text-left">종류</label>
                         <div class="col-sm-9 mb-1">
-                          <input type="text" class="form-control input-flat"
+                          <input type="text" class="form-control input-flat" name="sWarehouseType"
                                  placeholder="창고 종류를 입력해주세요">
                         </div>
                       </div>
                       <div class="row">
                         <label class="col-sm-3 col-form-label text-left">관리자코드</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control input-flat"
+                          <input type="text" class="form-control input-flat" name="pkMemberSeq"
                                  placeholder="창고 관리자 코드를 입력해주세요">
                         </div>
                       </div>
 
                     </div>
-
                   </div>
+                  </form>
                 </div>
               </div>
             </div>
             <div class="basic-form">
-              <form th:action="@{/warehouse/search}" method="post">
+              <form th:action="@{/warehouse/search}" method="post" id="searchForm">
                 <div class="form-group row">
                   <label class="col-sm-1 col-form-label">이름</label>
                   <div class="col-sm-11">

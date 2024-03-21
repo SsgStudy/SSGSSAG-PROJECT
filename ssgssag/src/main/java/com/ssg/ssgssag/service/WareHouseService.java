@@ -20,4 +20,6 @@ public interface WareHouseService {
 
   List<String> findAllWarehouseType();
 
+  void addWarehouse(WareHouseDTO wareHouseDTO);
+
 }
