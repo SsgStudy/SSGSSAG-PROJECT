@@ -1,6 +1,6 @@
 .scrollable-row-wrapper {
   flex-wrap: nowrap!important;
-  overflow-y: auto;
+  overflow-x: hidden;
   white-space: nowrap;
   width: 100%;
 }
@@ -21,10 +21,6 @@
   max-width: 22%!important;
 }
 
-.scroll::-webkit-scrollbar {
+.scrollable-row-wrapper::-webkit-scrollbar {
   display: none;
-}
-
-body, body * {
-  cursor: url('/images/logo.png'), auto;
 }
