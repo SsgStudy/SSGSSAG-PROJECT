@@ -257,7 +257,36 @@ $(document).ready(function () {
     }
   });
 
+  $('.input-whsearch').click(function() {
+    let formData = {
+      name: $("#warehouseNameInput").val(),
+      location: $("#warehouseLocationSelect").val(),
+      type: $("#warehouseTypeSelect").val()
+    };
 
+    $.ajax({
+      type: "POST",
+      url: "/warehouse/search",
+      data: $.param(formData),
+      contentType: 'application/x-www-form-urlencoded',
+      success: function(data) {
+        let tableBody = $('#warehouseSearchInputBox .table-responsive tbody');
+        tableBody.empty();
+        $.each(data, function(i, warehouse) {
+          let row = "<tr>" +
+              "<td>" + (i + 1) + "</td>" +
+              "<td>" + warehouse.swarehouseType + "</td>" +
+              "<td>" + warehouse.vwarehouseCd + "</td>" +
+              "<td>" + warehouse.vwarehouseNm + "</td>" +
+              "</tr>";
+          tableBody.append(row);
+        });
+      },
+      error: function(error) {
+        console.error("Error: ", error);
+      }
+    });
+  });
 });
 
 function fetchIncomingDetails(pkIncomingProductSeq) {
