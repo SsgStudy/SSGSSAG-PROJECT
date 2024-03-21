@@ -14704,3 +14704,19 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 body, body * {
   cursor: url(cursor.cur) 2 2, auto;
 }
+
+.search-container {
+  text-align: center;
+}
+
+.searchable-input {
+  width: 200px;
+  transition: width 0.5s ease-in-out;
+  margin: auto;
+  display: inline-block;
+}
+
+.searchable-input:focus {
+  width: 600px;
+  background-color: lightgrey;
+}
