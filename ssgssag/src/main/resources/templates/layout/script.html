@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<!-- 공통으로 쓰이는 script 파일을 넣는다. -->
 <th:block th:fragment="scriptFragment">
   <script th:src="@{/plugins/common/common.min.js}"></script>
   <script th:src="@{/js/custom.min.js}"></script>
@@ -48,6 +47,13 @@
   <script th:src="@{/js/dashboard/dashboard-1.js}"></script>
 
   <script th:src="@{/js/orderRegister.js}"></script>
+  <script th:src="@{https://unpkg.com/xlsx/dist/xlsx.full.min.js}"></script>
+  <!--flot chart-->
+  <script th:src="@{/plugins/flot/js/jquery.flot.min.js}"></script>
+  <script th:src="@{/plugins/flot/js/jquery.flot.pie.js}"></script>
+  <script th:src="@{/plugins/flot/js/jquery.flot.resize.js}"></script>
+  <script th:src="@{/plugins/flot/js/jquery.flot.spline.js}"></script>
+  <script th:src="@{/plugins/flot/js/jquery.flot.init.js}"></script>
 
 </th:block>
 </html>

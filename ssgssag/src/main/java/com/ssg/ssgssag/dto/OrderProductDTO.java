@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -18,11 +19,14 @@ public class OrderProductDTO {  // 발주 등록 DTO
 
     // 발주
     private LocalDateTime dtDeliveryDate;
-    private Long pkoOrderSeq;
+    private Long pkOrderSeq;
     private String vIncomingProductSupplierNm;
     private String vOrderStatus;
     private String vWarehouseCd;
     private String vOrderType;
+    private LocalDate dtOrderCreatedDate;
+    private LocalDateTime dtOrderCompletionDate;
+
 
     // 발주 상세
     private String vProductCd;

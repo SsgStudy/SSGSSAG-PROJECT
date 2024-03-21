@@ -49,16 +49,26 @@ public class IncomingServiceImpl implements IncomingService {
         return incomingMapper.selectAllIncomingProductsWithDetailsByOption(startDate, endDate,
             warehouseCd, supplierNm, status);
     }
+
     @Override
-    public List<IncomingDTO> getAllUnconfirmIncomingProductsWithDetailsByOption(Date startDate, Date endDate,
+    public List<IncomingDTO> getAllUnconfirmIncomingProductsWithDetailsByOption(Date startDate,
+        Date endDate,
         String warehouseCd, String supplierNm, String status) {
-        return incomingMapper.selectAllUnconfirmIncomingProductsWithDetailsByOption(startDate, endDate,
+        return incomingMapper.selectAllUnconfirmIncomingProductsWithDetailsByOption(startDate,
+            endDate,
             warehouseCd, supplierNm, status);
     }
 
     @Override
     public List<OrderSupplierDTO> getAllOrderSupplierName() {
         return incomingMapper.selectAllOrderSupplierName();
+    }
+
+    @Override
+    public void fetchIncomingProductStatusForRegister(String pkIncomingProductSeq, String vzoneCd,
+        String dtIncomingProductDate) {
+        incomingMapper.updateIncomingProductStatusForRegister(pkIncomingProductSeq, vzoneCd,
+            dtIncomingProductDate);
     }
 
 }
