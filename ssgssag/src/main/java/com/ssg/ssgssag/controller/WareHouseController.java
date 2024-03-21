@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -103,6 +104,24 @@ public class WareHouseController {
   @ResponseBody
   public List<WareHouseZoneVO> getWareHouseZones(@PathVariable String vWarehouseCd) {
     return wareHouseService.getWareHouseZones(vWarehouseCd);
+  }
+
+  @PostMapping("/addZone")
+  @ResponseBody
+  public ResponseEntity<?> addWarehouseZone(
+      @RequestParam("vZoneCd") String vZoneCd,
+      @RequestParam("vWarehouseCd") String vWarehouseCd,
+      @RequestParam("vZoneNm") String vZoneNm) {
+
+    WareHouseZoneVO wareHouseZoneVO = WareHouseZoneVO.builder()
+        .vZoneCd(vZoneCd)
+        .vWarehouseCd(vWarehouseCd)
+        .vZoneNm(vZoneNm)
+        .build();
+
+    log.info("Received zone data: {}", wareHouseZoneVO);
+    wareHouseService.addWarehouseZone(wareHouseZoneVO);
+    return ResponseEntity.ok().build();
   }
 
 

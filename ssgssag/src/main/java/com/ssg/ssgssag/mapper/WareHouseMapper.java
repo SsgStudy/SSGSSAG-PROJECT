@@ -28,4 +28,6 @@ public interface WareHouseMapper {
 
     List<WareHouseZoneVO> selectWareHouseZone(@Param("vWarehouseCd") String vWarehouseCd);
 
+    void insertWarehouseZone(WareHouseZoneVO wareHouseZoneVO);
+
 }

@@ -39,9 +39,16 @@
     VALUES (#{vWarehouseCd}, #{vWarehouseNm}, #{vWarehouseLoc}, #{sWarehouseType}, #{pkMemberSeq})
   </insert>
 
-  <select id="selectWareHouseZone" resultType="com.ssg.ssgssag.domain.WareHouseZoneVO">
+  <select id="selectWareHouseZone" resultType="WareHouseZoneVO">
     SELECT * FROM TB_ZONE WHERE V_WAREHOUSE_CD = #{vWarehouseCd};
   </select>
+
+  <insert id="insertWarehouseZone" parameterType="WareHouseZoneVO">
+    INSERT INTO TB_ZONE (V_ZONE_CD, V_WAREHOUSE_CD, V_ZONE_NM )
+    VALUES (#{vZoneCd}, #{vWarehouseCd}, #{vZoneNm})
+  </insert>
+
+
 
 
 </mapper>

@@ -66,7 +66,10 @@ public class WareHouseServiceImpl implements WareHouseService {
     return wareHouseMapper.selectWareHouseZone(vWarehouseCd);
   }
 
-
+  @Override
+  public void addWarehouseZone(WareHouseZoneVO wareHouseZoneVO) {
+    wareHouseMapper.insertWarehouseZone(wareHouseZoneVO);
+  }
 
 
 }

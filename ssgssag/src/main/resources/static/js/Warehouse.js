@@ -59,12 +59,12 @@ function openWarehouseModal(button,warehouseCd) {
   var pkMemberSeq = button.dataset.pkMemberSeq;
 
   // 모달 내의 입력 필드에 값을 설정
-  $('#warehouseDetail .modal-body input[placeholder="${vWarehouseCd}"]').val(warehouseCd);
-  $('#warehouseDetail .modal-body input[placeholder="중앙창고"]').val(warehouseNm);
-  $('#warehouseDetail .modal-body input[placeholder="일반"]').val(warehouseType);
-  $('#warehouseDetail .modal-body input[placeholder="서울시 강남구"]').val(warehouseLoc);
-  $('#warehouseDetail .modal-body input[placeholder="MGR001"]').val(pkMemberSeq);
-
+  $('#warehouseDetail .modal-body input[id="WarehouseCd"]').val(warehouseCd);
+  $('#warehouseDetail .modal-body input[id="WarehouseNm"]').val(warehouseNm);
+  $('#warehouseDetail .modal-body input[id="WarehouseType"]').val(warehouseType);
+  $('#warehouseDetail .modal-body input[id="WarehouseLoc"]').val(warehouseLoc);
+  $('#warehouseDetail .modal-body input[id="MemberSeq"]').val(pkMemberSeq);
+  document.getElementById('hiddenWarehouseCd').value = warehouseCd;
   // 구역 정보 조회 및 표시
   $.ajax({
     url: '/warehouse/' + warehouseCd + '/zones',
@@ -89,6 +89,36 @@ function openWarehouseModal(button,warehouseCd) {
     },
     error: function(error) {
       console.error("Error fetching warehouse zones:", error);
+    }
+  });
+}
+
+function addZone() {
+
+  const zoneCode = document.getElementById('zoneCode').value;
+  const warehouseCd = document.getElementById('hiddenWarehouseCd').value; // 창고 코드 필요시
+  const zoneName = document.getElementById('zoneName').value;
+
+  const data = {
+    vZoneCd: zoneCode,
+    vWarehouseCd: warehouseCd,
+    vZoneNm: zoneName
+  };
+
+  console.log("zoneCode:", zoneCode);
+  console.log("warehouseCd:", warehouseCd);
+  console.log("zoneName:", zoneName);
+
+  $.ajax({
+    type: "POST",
+    url: "/warehouse/addZone",
+    data: data,
+    success: function(response) {
+      console.log("Zone added successfully");
+      $('#warehouseDetail').modal('hide'); // 모달 닫기
+    },
+    error: function(error) {
+      console.log("Error adding zone", error);
     }
   });
 }

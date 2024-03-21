@@ -25,5 +25,6 @@ public interface WareHouseService {
 
   List<WareHouseZoneVO> getWareHouseZones(String vWarehouseCd);
 
+  void addWarehouseZone(WareHouseZoneVO wareHouseZoneVO);
 
 }

@@ -61,7 +61,15 @@ public class WareHouseServiceTest {
     List<WareHouseZoneVO> results = wareHouseService.getWareHouseZones(code);
     log.info(results);
 
+  }
 
+  @Test
+  public void addWareHouseZoneTest(){
+    WareHouseZoneVO wareHouseZoneVO = WareHouseZoneVO.builder()
+        .vWarehouseCd("KR-BUS-01").vZoneCd("G-01").vZoneNm("갯벌 1구역").build();
+
+    wareHouseService.addWarehouseZone(wareHouseZoneVO);
+    log.info(wareHouseZoneVO);
 
   }
 

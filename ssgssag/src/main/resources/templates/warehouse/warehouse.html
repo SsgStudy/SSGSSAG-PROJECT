@@ -195,49 +195,57 @@
                           <label class="col-sm-3 col-form-label text-left">코드</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control-plaintext input-flat"
-                                   placeholder="${vWarehouseCd}" readonly>
+                                   id="WarehouseCd" readonly>
                           </div>
                         </div>
                         <div class="row">
                           <label class="col-sm-3 col-form-label text-left">이름</label>
                           <div class="col-sm-9 mb-1">
                             <input type="text" class="form-control-plaintext input-flat"
-                                   placeholder="중앙창고" readonly>
+                                   id="WarehouseNm" readonly>
                           </div>
                         </div>
                         <div class="row">
                           <label class="col-sm-3 col-form-label text-left">종류</label>
                           <div class="col-sm-9 mb-1">
                             <input type="text" class="form-control-plaintext input-flat"
-                                   placeholder="일반" readonly>
+                                   id="WarehouseType" readonly>
                           </div>
                         </div>
                         <div class="row">
                           <label class="col-sm-3 col-form-label text-left">소재지</label>
                           <div class="col-sm-9 mb-1">
                             <input type="text" class="form-control-plaintext input-flat"
-                                   placeholder="서울시 강남구" readonly>
+                                   id="WarehouseLoc" readonly>
                           </div>
                         </div>
                         <div class="row">
                           <label class="col-sm-3 col-form-label text-left">관리자코드</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control-plaintext input-flat"
-                                   placeholder="MGR001" readonly>
+                                   id="MemberSeq" readonly>
                           </div>
                         </div>
                         <div class="row">
                           <label class="col-sm-3 col-form-label text-left">구역 코드</label>
-                          <div class="col-sm-7">
-                            <input type="text" class="form-control input-flat"
+                          <div class="col-sm-7 mb-2">
+                            <input type="text" class="form-control input-flat" id="zoneCode"
                                    placeholder="창고구역코드를 입력해주세요.">
                           </div>
-                          <div class="general-button">
-                            <button type="button" class="btn btn-dark mb-2 btn-primary">추가</button>
+                        </div>
+                        <input type="hidden" id="hiddenWarehouseCd">
+                          <div class="row">
+                            <label class="col-sm-3 col-form-label text-left">구역 이름</label>
+                            <div class="col-sm-7 mb-2">
+
+                              <input type="text" class="form-control input-flat" id="zoneName"
+                                     placeholder="창고구역이름을 입력해주세요.">
+                            </div>
+                          </div>
+                          <div class="col-sm-12 general-button text-center">
+                            <button type="button" class="btn btn-dark mb-2 btn-primary" onclick="addZone()">추가</button>
                           </div>
                         </div>
-
-                      </div>
 
                       <div class="table-responsive">
                         <table class="table table-hover">
