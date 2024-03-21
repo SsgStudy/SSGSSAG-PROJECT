@@ -12,30 +12,20 @@
         SELECT W.V_WAREHOUSE_NM, V_ZONE_NM
         FROM TB_WAREHOUSE W JOIN TB_ZONE Z
         ON Z.V_WAREHOUSE_CD = W.V_WAREHOUSE_CD
-        ORDER BY W.V_WAREHOUSE_NM, V_ZONE_NM;
+        ORDER BY W.V_WAREHOUSE_NM, V_ZONE_NM
     </select>
 
-<!--    <select id="selectMainCategories" resultType="com.ssg.ssgssag.dto.CategoryDTO">-->
-<!--        SELECT V_CATEGORY_NM-->
-<!--        FROM TB_CATEGORY-->
-<!--        WHERE V_CATEGORY_PARENT_CD IS NULL;-->
-<!--    </select>-->
-
-<!--    <select id="selectSubCategories" parameterType="string" resultType="com.ssg.ssgssag.dto.CategoryDTO">-->
-<!--        SELECT V_CATEGORY_NM-->
-<!--        FROM TB_CATEGORY-->
-<!--        WHERE SUBSTR(V_CATEGORY_CD, 1, 3) = #{mainCategoryCode}-->
-<!--    </select>-->
-
-
-
-
-<!--    <select id="selectDetailCategories" parameterType="string" resultType="com.ssg.ssgssag.dto.CategoryDTO">-->
-<!--        SELECT V_CATEGORY_NM-->
-<!--        FROM TB_CATEGORY-->
-<!--        WHERE V_CATEGORY_PARENT_CD = #{vSubCategoryNm};-->
-<!--    </select>-->
-
-
+    <select id="selectCategoryHierarchy" resultType="com.ssg.ssgssag.dto.CategoryFilterDTO">
+        SELECT
+            main.V_CATEGORY_NM AS V_MAIN_CATEGORY_NM,
+            sub.V_CATEGORY_NM AS V_SUB_CATEGORY_NM,
+            detail.V_CATEGORY_NM AS V_DETAIL_CATEGORY_NM
+        FROM
+            TB_CATEGORY AS main
+                INNER JOIN
+            TB_CATEGORY AS sub ON sub.V_CATEGORY_PARENT_CD = main.V_CATEGORY_CD
+                INNER JOIN
+            TB_CATEGORY AS detail ON detail.V_CATEGORY_PARENT_CD = sub.V_CATEGORY_CD
+    </select>
 
 </mapper>

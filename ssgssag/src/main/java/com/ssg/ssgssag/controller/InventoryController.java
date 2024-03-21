@@ -1,6 +1,7 @@
 package com.ssg.ssgssag.controller;
 
 import com.ssg.ssgssag.domain.InventoryVO;
+import com.ssg.ssgssag.dto.CategoryFilterDTO;
 import com.ssg.ssgssag.dto.WareHouseZoneDTO;
 import com.ssg.ssgssag.service.InventoryService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class InventoryController {
         model.addAttribute("inventoryList", inventoryList);
 
 //       창고 이름만 가져오기
-        List<WareHouseZoneDTO> wareHouseZoneList = inventoryService.selectAllWareHouseZone();
+//        List<WareHouseZoneDTO> wareHouseZoneList = inventoryService.selectAllWareHouseZone();
 
 //        Map<String, Object> map = new HashMap<>();
 //        map.put("inventoryList", inventoryList);
@@ -42,7 +43,7 @@ public class InventoryController {
 //            uniqueWareHouseNames.add(wareHouseZone.getVWarehouseNm());
 //        }
 //        model.addAttribute("uniqueWareHouseNames", uniqueWareHouseNames);
-        model.addAttribute("wareHouseZoneList", wareHouseZoneList);
+//        model.addAttribute("wareHouseZoneList", wareHouseZoneList);
 
         return "/inventory/inventory-list";
     }
@@ -53,6 +54,13 @@ public class InventoryController {
         List<WareHouseZoneDTO> wareHouseZoneList = inventoryService.selectAllWareHouseZone();
 
         return wareHouseZoneList;
+    }
+
+    @GetMapping("/category")
+    @ResponseBody
+    public List<CategoryFilterDTO> getCategoryHierarchy() {
+        List<CategoryFilterDTO> categoryList = inventoryService.selectCategoryHierarchy();
+        return categoryList;
     }
 
 }

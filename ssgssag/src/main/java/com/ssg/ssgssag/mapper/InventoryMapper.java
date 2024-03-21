@@ -13,9 +13,5 @@ public interface InventoryMapper {
 
     List<WareHouseZoneDTO> selectAllWareHouseZone();
 
-//    List<CategoryFilterDTO> selectMainCategories();
-//
-//    List<CategoryFilterDTO> selectSubCategories(String mainCategoryNm);
-//
-//    List<CategoryFilterDTO> selectDetailCategories(String subCategoryNm);
+    List<CategoryFilterDTO> selectCategoryHierarchy();
 }
