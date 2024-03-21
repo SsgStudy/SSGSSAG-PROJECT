@@ -80,97 +80,29 @@
                     <th>회원 이름</th>
                     <th>회원 아이디</th>
                     <th>회원 이메일</th>
-                    <th>역할</th>
+                    <th>권한</th>
                     <th>수정</th>
                     <th>삭제</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>강감찬</td>
-                    <td>Gang123</td>
-                    <td>gang@naver.com</td>
-                    <td>일반 회원</td>
-                    <td>
-                      <form>
-                        <button class="btn btn-primary">수정</button>
-                      </form>
-                    </td>
-                    <td>
-                      <form>
-                        <button class="btn btn-primary">삭제</button>
-                      </form>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>홍길동</td>
-                    <td>honggildong</td>
-                    <td>gildong123@gmail.com</td>
-                    <td>일반 회원</td>
-                    <td>
-                      <form>
-                        <button class="btn btn-primary">수정</button>
-                      </form>
-                    </td>
-                    <td>
-                      <form>
-                        <button class="btn btn-primary">삭제</button>
-                      </form>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>김철수</td>
-                    <td>kakaoeyJh~~</td>
-                    <td>chul@naver.com</td>
-                    <td>일반회원</td>
-                    <td>
-                      <form>
-                        <button class="btn btn-primary">수정</button>
-                      </form>
-                    </td>
-                    <td>
-                      <form>
-                        <button class="btn btn-primary">삭제</button>
-                      </form>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>이지영</td>
-                    <td>navertoken~@</td>
-                    <td>le@naver.com</td>
-                    <td>창고 관리자</td>
-                    <td>
-                      <form>
-                        <button class="btn btn-primary">수정</button>
-                      </form>
-                    </td>
-                    <td>
-                      <form>
-                        <button class="btn btn-primary">삭제</button>
-                      </form>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td>최소원</td>
-                    <td>sowon</td>
-                    <td>sowon901@naver.com</td>
-                    <td>총관리자</td>
-                    <td>
-                      <form>
-                        <button class="btn btn-primary">수정</button>
-                      </form>
-                    </td>
-                    <td>
-                      <form>
-                        <button class="btn btn-primary">삭제</button>
-                      </form>
-                    </td>
-                  </tr>
+                    <tr th:each="member, iterStat : ${memberList}">
+                      <td th:text="${member.pkMemberSeq}">번호</td>
+                      <td th:text="${member.vMemberNm}">회원 이름</td>
+                      <td th:text="${member.vMemberId}">회원 아이디</td>
+                      <td th:text="${member.vEmail}">회원 이메일</td>
+                      <td th:text="${member.vMemberAuth}">권한</td>
+                      <td>
+                        <form>
+                          <button class="btn btn-primary">수정</button>
+                        </form>
+                      </td>
+                      <td>
+                        <form>
+                          <button class="btn btn-primary">삭제</button>
+                        </form>
+                      </td>
+                    </tr>
                   </tbody>
 
                 </table>

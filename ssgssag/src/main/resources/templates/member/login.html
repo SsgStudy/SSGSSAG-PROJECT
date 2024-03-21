@@ -35,15 +35,8 @@
                   <button class="btn login-form__btn submit align-content-center" style="width: 300px; height: 45px;">로그인</button>
                 </div>
               </form>
-
-              <div class="text-center">
-                <a th:href="@{https://kauth.kakao.com/oauth/authorize(client_id=${kakaoApiKey}, redirect_uri=${redirectUri}, response_type='code')}" target="_blank">
-                  <img th:src="@{/static/images/imgs/kakao_login_medium_wide.png}" alt="kakao login btn"/>
-                </a>
-              </div>
-
-              <p class="mt-5 login-form__footer text-right"><a href="page-register.html" class="text-primary">비밀번호 찾기</a></p>
-              <p class="mt-5 login-form__footer"><a href="page-register.html" class="text-primary">회원가입</a></p>
+              <p class="mt-5 login-form__footer text-right"><a href="signup.html" class="text-primary">비밀번호 찾기</a></p>
+              <p class="mt-5 login-form__footer"><a href="signup.html" class="text-primary">회원가입</a></p>
             </div>
           </div>
         </div>
@@ -56,21 +49,6 @@
     Scripts
 ***********************************-->
 <th:block th:replace="/layout/script :: scriptFragment"></th:block>
-<script th:src="@{https://developers.kakao.com/sdk/js/kakao.js}"></script>
-<script>
-  // 카카오 로그인 버튼 생성
-  Kakao.init('${kakaoApiKey}');
-
-  Kakao.Auth.createLoginButton({
-    container: '#kakao-login-btn',
-    success: function(authObj) {
-      alert(JSON.stringify(authObj));
-    },
-    fail: function(err) {
-      alert(JSON.stringify(err));
-    }
-  });
-</script>
 
 </body>
 </html>
