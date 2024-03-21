@@ -287,6 +287,13 @@ $(document).ready(function () {
       }
     });
   });
+
+  $('#warehouseSearchInputBox .table-responsive tbody').on('click', 'tr', function() {
+    let warehouseCode = $(this).find('td:nth-child(3)').text();
+    $('.input-whsearch').val(warehouseCode);
+    $('#warehouseSearchInputBox').modal('hide');
+  });
+
 });
 
 function fetchIncomingDetails(pkIncomingProductSeq) {
