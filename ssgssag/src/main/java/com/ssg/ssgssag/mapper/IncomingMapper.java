@@ -45,6 +45,11 @@ public interface IncomingMapper {
     //입고 승인
     void updateIncomingProductStatusToComplete(
         @Param("pkIncomingProductSeq") String pkIncomingProductSeq);
+    void updateIncomingProductStatusForRegister(
+        @Param("pkIncomingProductSeq") String pkIncomingProductSeq,
+        @Param("vzoneCd") String vzoneCd,
+        @Param("dtIncomingProductDate") String dtIncomingProductDate);
+
 
     //매입 거래처 목록 조회
     List<OrderSupplierDTO> selectAllOrderSupplierName();

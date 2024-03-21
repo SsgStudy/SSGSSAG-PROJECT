@@ -2,6 +2,7 @@ package com.ssg.ssgssag.controller;
 
 import com.ssg.ssgssag.dto.IncomingDTO;
 import com.ssg.ssgssag.dto.IncomingDetailDTO;
+import com.ssg.ssgssag.dto.IncomingProductUpdateRequestDTO;
 import com.ssg.ssgssag.dto.OrderSupplierDTO;
 import com.ssg.ssgssag.service.IncomingService;
 import java.util.Date;
@@ -119,5 +120,20 @@ public class IncomingController {
     @ResponseBody
     public List<OrderSupplierDTO> getAllOrderSupplierName() {
         return incomingService.getAllOrderSupplierName();
+    }
+    @PostMapping("/update-status-for-register")
+    public ResponseEntity<?> updateIncomingProductStatusForRegister(@RequestBody List<IncomingProductUpdateRequestDTO> updateRequests) {
+        try {
+            for (IncomingProductUpdateRequestDTO request : updateRequests) {
+                incomingService.fetchIncomingProductStatusForRegister(
+                    request.getPkIncomingProductSeq(),
+                    request.getVzoneCd(),
+                    request.getDtIncomingProductDate()
+                );
+            }
+            return ResponseEntity.ok().body("입고 상태가 성공적으로 업데이트되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("입고 상태 업데이트 중 오류가 발생했습니다: " + e.getMessage());
+        }
     }
 }
