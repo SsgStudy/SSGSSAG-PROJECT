@@ -66,7 +66,7 @@
               <div class="form-basic">
                 <!-- 옵션 1 -->
                 <div class="form-group">
-                  <label class="col-form-label mr-3">카테고리</label>
+                  <label class="col-form-label mr-3 mt-3">카테고리</label>
                   <!-- <h6 class="mr-3">카테고리별 분류</h6> -->
                   <select class="custom-select mr-2 col-sm-2" id="select-main-category">
                     <option selected="selected">대분류</option>
@@ -79,22 +79,8 @@
                   </select>
                 </div>
                 <div class="row">
-                  <!-- 옵션 2 -->
-                  <label class="col-sm-1 col-form-label">상품</label>
-                  <select class="custom-select mr-2 col-sm-2">
-                    <option selected="selected">선택</option>
-                    <option value="1">상품코드</option>
-                    <option value="2">상품이름</option>
-                  </select>
-                  <div class="form-group">
-                    <div class="col-sm-10">
-                      <input class="form-control form-control-sm" type="text">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
                   <!-- 옵션 3 -->
-                  <label class="col-sm-1 col-form-label">창고</label>
+                  <label class="col-sm-1 col-form-label mr-3">창고</label>
                   <select class="custom-select mr-2 col-sm-2" id="select-warehouse">
                     <option selected="selected">창고</option>
                   </select>
@@ -129,21 +115,24 @@
                     <th>재고 번호</th>
                     <th>전표 일자</th>
                     <th>상품 코드</th>
+                    <th>상품 이름</th>
                     <th>재고 수량</th>
                     <th>창고 코드</th>
+                    <th>창고 이름</th>
                     <th>구역 코드</th>
                   </tr>
                   </thead>
                   <tbody>
                   <tr th:each="inventory : ${inventoryList}">
-<!--                    <td th:text="${index.index + 1}"></td>-->
                     <td data-toggle="modal" data-target="#inventoryhisotry">
                       <span th:text="${inventory.pkInventorySeq}"></span>
                     </td>
                     <td th:text="${#temporals.format(inventory.dtInventorySlipDate, 'yyyy-MM-dd')}"></td>
                     <td th:text="${inventory.vProductCd}"></td>
+                    <td th:text="${inventory.vProductNm}"></td>
                     <td th:text="${inventory.nInventoryCnt}"></td>
                     <td th:text="${inventory.vWarehouseCd}"></td>
+                    <td th:text="${inventory.vWarehouseNm}"></td>
                     <td th:text="${inventory.vZoneCd}"></td>
                   </tr>
                 </table>

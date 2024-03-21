@@ -2,6 +2,7 @@ package com.ssg.ssgssag.service;
 
 import com.ssg.ssgssag.domain.InventoryVO;
 import com.ssg.ssgssag.dto.CategoryFilterDTO;
+import com.ssg.ssgssag.dto.InventoryListDTO;
 import com.ssg.ssgssag.dto.WareHouseZoneDTO;
 import com.ssg.ssgssag.mapper.InventoryMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class InventoryServiceImpl implements InventoryService{
     private final InventoryMapper inventoryMapper;
 
     @Override
-    public List<InventoryVO> selectAllInventory() {
+    public List<InventoryListDTO> selectAllInventory() {
         return inventoryMapper.selectAllInventory();
     }
 

@@ -4,8 +4,10 @@
 
 <mapper namespace="com.ssg.ssgssag.mapper.InventoryMapper">
 
-    <select id="selectAllInventory" resultType="InventoryVO">
-        SELECT * FROM TB_INVENTORY
+    <select id="selectAllInventory" resultType="com.ssg.ssgssag.dto.InventoryListDTO">
+        SELECT PK_INVENTORY_SEQ, DT_INVENTORY_SLIP_DATE, N_INVENTORY_CNT, V_ZONE_CD, I.V_WAREHOUSE_CD, I.V_PRODUCT_CD, P.V_PRODUCT_NM, W.V_WAREHOUSE_NM
+        FROM TB_INVENTORY I LEFT JOIN TB_PRODUCT P ON I.V_PRODUCT_CD  = P.V_PRODUCT_CD
+        LEFT JOIN TB_WAREHOUSE W ON I.V_WAREHOUSE_CD = W.V_WAREHOUSE_CD
     </select>
 
     <select id="selectAllWareHouseZone" resultType="com.ssg.ssgssag.dto.WareHouseZoneDTO">

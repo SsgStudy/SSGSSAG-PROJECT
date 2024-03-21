@@ -2,6 +2,7 @@ package com.ssg.ssgssag.controller;
 
 import com.ssg.ssgssag.domain.InventoryVO;
 import com.ssg.ssgssag.dto.CategoryFilterDTO;
+import com.ssg.ssgssag.dto.InventoryListDTO;
 import com.ssg.ssgssag.dto.WareHouseZoneDTO;
 import com.ssg.ssgssag.service.InventoryService;
 import lombok.RequiredArgsConstructor;
@@ -27,25 +28,11 @@ public class InventoryController {
         log.info("[controller] inventory all list");
 
 //        모든 재고 리스트 가져오기
-        List<InventoryVO> inventoryList = inventoryService.selectAllInventory();
+        List<InventoryListDTO> inventoryList = inventoryService.selectAllInventory();
         model.addAttribute("inventoryList", inventoryList);
 
-//       창고 이름만 가져오기
-//        List<WareHouseZoneDTO> wareHouseZoneList = inventoryService.selectAllWareHouseZone();
 
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("inventoryList", inventoryList);
-//        map.put("wareHouseZoneList",wareHouseZoneList);
-//        return map;
-
-//        Set<String> uniqueWareHouseNames = new HashSet<>();
-//        for (WareHouseZoneDTO wareHouseZone : wareHouseZoneList) {
-//            uniqueWareHouseNames.add(wareHouseZone.getVWarehouseNm());
-//        }
-//        model.addAttribute("uniqueWareHouseNames", uniqueWareHouseNames);
-//        model.addAttribute("wareHouseZoneList", wareHouseZoneList);
-
-        return "/inventory/inventory-list";
+        return "inventory/inventory-list";
     }
 
     @GetMapping("/warehouse")
