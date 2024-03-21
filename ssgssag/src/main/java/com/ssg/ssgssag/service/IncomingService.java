@@ -26,4 +26,7 @@ public interface IncomingService {
         String warehouseCd, String supplierNm, String status);
 
     List<OrderSupplierDTO> getAllOrderSupplierName();
+
+    void fetchIncomingProductStatusForRegister(String pkIncomingProductSeq, String vzoneCd, String dtIncomingProductDate);
+
 }

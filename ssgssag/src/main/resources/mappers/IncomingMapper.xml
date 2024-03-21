@@ -32,6 +32,13 @@
     WHERE PK_INCOMING_PRODUCT_SEQ = #{pkIncomingProductSeq}
   </update>
 
+  <update id="updateIncomingProductStatusForRegister">
+    UPDATE TB_INCOMING_PRODUCT
+    SET DT_INCOMING_PRODUCT_DATE = #{dtIncomingProductDate},
+        V_ZONE_CD = #{vzoneCd}
+    WHERE PK_INCOMING_PRODUCT_SEQ = #{pkIncomingProductSeq}
+  </update>
+
   <select id="selectAllIncomingProductsWithDetailsByOption" resultType="com.ssg.ssgssag.dto.IncomingDTO" statementType="CALLABLE">
     {CALL GetIncomingProducts(
       #{startDate, jdbcType=DATE, mode=IN},
