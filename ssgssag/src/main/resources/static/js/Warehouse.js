@@ -34,3 +34,40 @@ let ready = $(document).ready(function() {
     });
   });
 })
+
+
+
+function openWarehouseModal(warehouseCd) {
+  let code = warehouseCd
+  $.ajax({
+    url: '/warehouse/' + code + '/zones',
+    type: 'GET',
+
+    success: function(data) {
+      console.log(this.url);
+      console.log(data); // 서버로부터 받은 데이터 확인
+      let modalBody = $('#warehouseDetail .modal-body');
+      let tbody = modalBody.find('table tbody');
+      tbody.empty(); // 기존 행 초기화
+      console.log(typeof(data));
+      if (data && data.length > 0) {
+        $.each(data, function(index, zone) {
+          let row = `<tr>
+              <td>${index + 1}</td>
+              <td>${zone.vzoneCd}</td>
+              <td>${zone.vzoneNm}</td>
+            </tr>`;
+          tbody.append(row);
+
+        });
+      } else {
+        tbody.append('<tr><td colspan="3">해당 창고에 구역 정보가 없습니다.</td></tr>');
+      }
+
+      $('#warehouseDetail').modal('show');
+    },
+    error: function(error) {
+      console.error("Error fetching warehouse zones:", error);
+    }
+  });
+}

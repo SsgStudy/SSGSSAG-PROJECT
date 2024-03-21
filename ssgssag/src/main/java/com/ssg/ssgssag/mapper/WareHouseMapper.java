@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.mapper;
 
+import com.ssg.ssgssag.domain.WareHouseZoneVO;
 import com.ssg.ssgssag.dto.IncomingDTO;
 import com.ssg.ssgssag.dto.WareHouseDTO;
 
@@ -24,4 +25,6 @@ public interface WareHouseMapper {
     List<String> findAllWarehouseType();
 
     void insertWarehouse(WareHouseDTO wareHouseDTO);
+
+    List<WareHouseZoneVO> selectWareHouseZone(@Param("vWarehouseCd") String vWarehouseCd);
 }

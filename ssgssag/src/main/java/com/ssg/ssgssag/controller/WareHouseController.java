@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.controller;
 
+import com.ssg.ssgssag.domain.WareHouseZoneVO;
 import com.ssg.ssgssag.dto.WareHouseDTO;
 import com.ssg.ssgssag.service.WareHouseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -95,6 +97,30 @@ public class WareHouseController {
     log.info(wareHouseDTO);
     return "redirect:/warehouse";
   }
+
+//  @PostMapping("/zone")
+//  @Operation(summary = "창고 구역 조회", description = "각 창고별 창고 구역을 조회합니다.")
+////  @ResponseBody
+//  public List<WareHouseZoneVO> zoneSearch(@RequestParam(value = "vWarehouseCd", required = false)
+//  String vWarehouseCd, Model model){
+//
+//    List<WareHouseZoneVO> wareHouseZoneList;
+//
+//    wareHouseService.getWareHouseZones(vWarehouseCd);
+//    model.addAttribute("vWarehouseCd", wareHouseService.getWareHouseZones(vWarehouseCd));
+//
+//    return "redirect:/warehouse";
+//
+//  }
+
+  @GetMapping("/{vWarehouseCd}/zones")
+  @Operation(summary = "창고 구역 조회", description = "창고 구역 조회.")
+  @ResponseBody
+  public List<WareHouseZoneVO> getWareHouseZones(@PathVariable String vWarehouseCd) {
+    return wareHouseService.getWareHouseZones(vWarehouseCd);
+  }
+
+
 
 
 }

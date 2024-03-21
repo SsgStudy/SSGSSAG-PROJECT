@@ -39,4 +39,8 @@
     VALUES (#{vWarehouseCd}, #{vWarehouseNm}, #{vWarehouseLoc}, #{sWarehouseType}, #{pkMemberSeq})
   </insert>
 
+  <select id="selectWareHouseZone" resultType="com.ssg.ssgssag.domain.WareHouseZoneVO">
+    SELECT * FROM TB_ZONE WHERE V_WAREHOUSE_CD = #{vWarehouseCd};
+  </select>
+
 </mapper>

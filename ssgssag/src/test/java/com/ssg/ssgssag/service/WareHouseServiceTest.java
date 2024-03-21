@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.service;
 
+import com.ssg.ssgssag.domain.WareHouseZoneVO;
 import com.ssg.ssgssag.dto.IncomingDTO;
 import com.ssg.ssgssag.dto.WareHouseDTO;
 import java.util.List;
@@ -52,6 +53,16 @@ public class WareHouseServiceTest {
 
     wareHouseService.addWarehouse(wareHouseDTO);
     log.info(wareHouseDTO);
+  }
+
+  @Test
+  public void getAllWareHouseZoneTest(){
+    String code="KR-BUS-01";
+    List<WareHouseZoneVO> results = wareHouseService.getWareHouseZones(code);
+    log.info(results);
+
+
+
   }
 
 
