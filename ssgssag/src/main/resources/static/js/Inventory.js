@@ -130,11 +130,14 @@ function renderDetailCategory(mainCategory, subCategory) {
 // 창고 입력폼
 
 $('#select-warehouse').change(function() {
-    $('#select-zone').empty();
-    $('#select-zone').append(
+    let $zone = $('#select-zone');
+    $zone.empty();
+    $zone.append(
         `<option value="구역">구역</option>`
     );
     let warehouse = $('#select-warehouse').val(); // 선택된 창고 이름을 가져옴
+    if (warehouse==="창고")
+        return
     renderWarehouseZone(warehouse);
 });
 
@@ -203,3 +206,5 @@ function renderWarehouseZone(warehouseNm) {
     });
 
 }
+
+// 여기서 함수를 선언하고 조히 버튼에서 onclick으로 달아준다
