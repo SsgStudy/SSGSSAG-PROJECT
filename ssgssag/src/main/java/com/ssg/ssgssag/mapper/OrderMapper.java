@@ -25,6 +25,10 @@ public interface OrderMapper {
 
 // 발주 조회
     List<OrderProductDTO> selectOrderDetailByDateOrString(OrderReadSearchDTO orderReadSearch);
+    List<OrderProductDTO> selectOrderDetailByOrderSeq(Long orderSeq);
+
+
+// 발주 확정
 
 //    int insertOrder(OrderVO order);
 //    int insertOrderDetail(OrderDetailVO orderDetail);

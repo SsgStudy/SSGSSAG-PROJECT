@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,5 +78,11 @@ class OrderServiceTest {
 
         System.out.println("조건 4");
         orderService.getOrderList(dto4).forEach(System.out::println);
+    }
+
+    @Test
+    public void getOrderDetail() {
+        log.info("상세 발주 조회");
+        orderService.getOrderSigleList(3L).forEach(System.out::println);
     }
 }

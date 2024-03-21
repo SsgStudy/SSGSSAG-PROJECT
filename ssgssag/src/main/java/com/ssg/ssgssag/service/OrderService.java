@@ -20,7 +20,7 @@ public interface OrderService {
     int registerOrder(OrderVO order, List<OrderDetailVO> orderDetail); // 발주 등록
 
     List<OrderProductDTO> getOrderList(OrderReadSearchDTO orderReadSearch);
-//    List<OrderDetailDTO> getOrderDetailList(OrderDetailDTO orderDetail); // 발주 상세 조회
+    List<OrderProductDTO> getOrderSigleList(Long orderSeq); // 발주 상세 조회
 //    List<OrderVO> getAllOrdersWithDetails();
 //    List<OrderVO> getAllOrdersStatusProgress();
 //    List<ProductVO> getProductInventoryList();

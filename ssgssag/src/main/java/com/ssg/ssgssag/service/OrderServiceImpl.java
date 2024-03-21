@@ -66,6 +66,11 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderProductDTO> getOrderList(OrderReadSearchDTO orderReadSearch) {
         return orderMapper.selectOrderDetailByDateOrString(orderReadSearch);
     }
+
+    @Override
+    public List<OrderProductDTO> getOrderSigleList(Long orderSeq) {
+        return orderMapper.selectOrderDetailByOrderSeq(orderSeq);
+    }
 //
 //    @Override
 //    public List<OrderDetailDTO> getOrderDetailList(OrderDetailDTO orderDetail) {

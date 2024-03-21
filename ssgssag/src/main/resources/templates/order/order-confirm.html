@@ -72,9 +72,9 @@
                         </div>
                     </div>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenterDelete">초기화</button>
+                    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#order-confirm-page-remove">초기화</button>
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModalCenterDelete" style="display: none;" aria-hidden="true">
+                    <div class="modal fade" id="order-confirm-page-remove" style="display: none;" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content  d-flex justify-content-center">
                                 <div class="modal-header">
@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="modal-footer d-flex justify-content-center">
                                     <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                    <button type="button" id="order-register-remove-ok-btn" class="btn" data-dismiss="modal">확인</button>
+                                    <button type="button" class="btn" onclick="orderReadPageReset()" data-dismiss="modal">확인</button>
                                 </div>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
               <div class="card">
                   <div class="card-body">
                       <div class="basic-form"  id="order-register-form">
-                          <form>
+                          <form id="order-confirm-search-form">
                               <div class="form-group row">
                                   <label class="col-sm-1 col-form-label">발주기간</label>
                                   <div class="col-sm-11">
@@ -112,31 +112,31 @@
                                   </div>
                               </div>
                               <div class="form-group row">
-                                  <label class="col-sm-1 col-form-label">매입거래처</label>
+                                  <label class="col-sm-1 col-form-label">매입처</label>
                                   <div class="col-sm-3">
                                       <div class="input-group">
-                                          <input type="text" class="form-control input-flat" placeholder="">
+                                          <input type="text" class="form-control input-flat" id="incoming-product-supplier-nm" placeholder="">
                                       </div>
                                   </div>
                                   <label class="col-sm-1 col-form-label">창고</label>
                                   <div class="col-sm-3">
                                       <div class="input-group">
-                                          <input type="text" class="form-control input-flat" placeholder="창고 검색">
+                                          <input type="text" class="form-control input-flat" id="warehouse-cd" placeholder="창고 검색">
                                       </div>
                                   </div>
                                   <label class="col-sm-1 col-form-label">발주구분</label>
                                   <div class="col-sm-3">
                                       <div class="input-group">
-                                          <select id="inputState" class="form-control">
+                                          <select id="order-status" class="form-control">
                                               <option selected="selected">선택</option>
-                                              <option>미확정</option>
                                               <option>확정</option>
+                                              <option>미확정</option>
                                           </select>
                                       </div>
                                   </div>
                               </div>
                               <div class="row d-flex justify-content-center">
-                                <button type="button" class="btn mb-1 btn-info" id="order-read-btn">조회</button>
+                                <button type="button" class="btn mb-1 btn-info" id="order-read-btn" onclick="getMasterOrderList()">조회</button>
                             </div>
                           </form>
                       </div>
@@ -153,7 +153,7 @@
                     <div class="card-title">
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-striped table-bordered zero-configuration dataTable">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -161,38 +161,12 @@
                                     <th>발주일자</th>
                                     <th>발주번호</th>
                                     <th>발주확정</th>
-                                    <th>발주구분</th>
                                     <th>발주유형</th>
-                                    <th>매입거래처</th>
-                                    <th>매입처상태</th>
+                                    <th>매입처</th>
                                     <th>창고</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <th>1</th>
-                                    <td><input type="checkbox"/></td>
-                                    <td>2024-03-15</td>
-                                    <td>550132465789</td>
-                                    <td>확정</td>
-                                    <td>-</td>
-                                    <td>국내발주</td>
-                                    <td>ssg</td>
-                                    <td>good</td>
-                                    <td>서울중앙창고</td>
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td><input type="checkbox"/></td>
-                                    <td>2024-03-15</td>
-                                    <td>550132465779</td>
-                                    <td>확정</td>
-                                    <td>-</td>
-                                    <td>국내발주</td>
-                                    <td>ssg</td>
-                                    <td>good</td>
-                                    <td>대전센터창고</td>
-                                </tr>
+                            <tbody class="order-master-tbody">
                             </tbody>
                         </table>
                     </div>
@@ -212,54 +186,15 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th><input type="checkbox"></th>
                                         <th>단품코드</th>
                                         <th>단품명</th>
-                                        <th>단품상태</th>
-                                        <th>재고관리여부</th>
                                         <th>창고현재고</th>
                                         <th>발주수량</th>
                                         <th>발주단가</th>
                                         <th>발주금액</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>1</th>
-                                        <td><input type="checkbox"/></td>
-                                        <td>550132465789</td>
-                                        <td>다이제</td>
-                                        <td>good</td>
-                                        <td>good</td>
-                                        <td>10</td>
-                                        <td>50</td>
-                                        <td>5,000</td>
-                                        <td>250,000</td>
-                                    </tr>
-                                    <tr>
-                                        <th>2</th>
-                                        <td><input type="checkbox"/></td>
-                                        <td>550132465000</td>
-                                        <td>초코파이</td>
-                                        <td>good</td>
-                                        <td>good</td>
-                                        <td>50</td>
-                                        <td>30</td>
-                                        <td>5,000</td>
-                                        <td>150,000</td>
-                                    </tr>
-                                    <tr>
-                                        <th>3</th>
-                                        <td><input type="checkbox"/></td>
-                                        <td>550132465777</td>
-                                        <td>바나나우유</td>
-                                        <td>good</td>
-                                        <td>good</td>
-                                        <td>50</td>
-                                        <td>50</td>
-                                        <td>2,000</td>
-                                        <td>100,000</td>
-                                    </tr>
+                                <tbody class="order-single-tbody">
                                 </tbody>
                             </table>
                         </div>

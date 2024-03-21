@@ -42,16 +42,18 @@
 
 <!--  발주 조회  -->
     <select id="selectOrderDetailByDateOrString" parameterType="com.ssg.ssgssag.dto.OrderReadSearchDTO" resultType="com.ssg.ssgssag.dto.OrderProductDTO">
-        SELECT
+        SELECT DISTINCT
             o.DT_ORDER_CREATED_DATE,
             o.PK_ORDER_SEQ,
             o.V_ORDER_TYPE,
             o.V_INCOMING_PRODUCT_SUPPLIER_NM,
             od.V_WAREHOUSE_CD,
+            w.V_WAREHOUSE_NM,
             o.V_ORDER_STATUS,
             o.DT_ORDER_COMPLETION_DATE
         FROM TB_ORDER o
         JOIN TB_ORDER_DETAIL od ON o.PK_ORDER_SEQ = od.PK_ORDER_SEQ
+        JOIN TB_WAREHOUSE w ON od.V_WAREHOUSE_CD=w.V_WAREHOUSE_CD
         WHERE o.DT_ORDER_CREATED_DATE BETWEEN #{startDate} AND #{endDate}
         <if test="vIncomingProductSupplierNm!=null and !vIncomingProductSupplierNm.equals('')">
             AND o.V_INCOMING_PRODUCT_SUPPLIER_NM LIKE #{vIncomingProductSupplierNm}
@@ -62,13 +64,17 @@
         <if test="vOrderStatus!=null and !vOrderStatus.equals('')">
            AND o.V_ORDER_STATUS LIKE #{vOrderStatus}
        </if>
+        ORDER BY o.PK_ORDER_SEQ
     </select>
 
-
-<!--    <select id="selectOrderProductByProductCd" parameterType="string" resultType="OrderProductVO">-->
-<!--        SELECT o.PK_ORDER_SEQ, o.V_ORDER_STATUS, o.V_INCOMING_PRODUCT_SUPPLIER_NM, o.DT_DELIVERY_DATE, o.DT_ORDER_COMPLETION_DATE, " +-->
-<!--                d.PK_ORDER_DETAIL_SEQ, d.N_ORDER_CNT, d.V_ORDER_STATUS AS V_ORDER_DETAIL_STATUS, d.V_PRODUCT_CD, d.V_WAREHOUSE_CD " +-->
-<!--                FROM TB_ORDER o JOIN TB_ORDER_DETAIL d ON o.PK_ORDER_SEQ = d.PK_ORDER_SEQ WHERE o.PK_ORDER_SEQ = ?-->
-<!--    </select>-->
+    <select id="selectOrderDetailByOrderSeq" parameterType="long" resultType="com.ssg.ssgssag.dto.OrderProductDTO">
+        SELECT p.V_PRODUCT_CD, p.V_PRODUCT_NM, COALESCE(i.N_INVENTORY_CNT, 0) AS N_INVENTORY_CNT
+             , od.N_ORDER_CNT, p.N_PRODUCT_PRICE, od.N_ORDER_CNT * p.N_PRODUCT_PRICE AS ORDER_TOTAL_PRICE
+        FROM TB_ORDER_DETAIL od JOIN TB_ORDER o ON od.PK_ORDER_SEQ = o.PK_ORDER_SEQ
+                                JOIN TB_PRODUCT p ON p.V_PRODUCT_CD=od.V_PRODUCT_CD
+                                LEFT JOIN TB_INVENTORY i ON i.V_PRODUCT_CD=p.V_PRODUCT_CD AND i.V_WAREHOUSE_CD=od.V_WAREHOUSE_CD
+        WHERE od.PK_ORDER_SEQ=#{orderSeq}
+        ORDER BY od.PK_ORDER_DETAIL_SEQ
+    </select>
     
 </mapper>
