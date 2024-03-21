@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main-custom-style.css}">
+  <title>SSGSSAG</title>
+</head>
+
+<body>
+
+<!--*******************
+    Preloader start
+********************-->
+<th:block th:replace="/layout/preloader :: preloaderFragment"></th:block>
+<!--*******************
+    Preloader end
+********************-->
+
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+  <!--**********************************
+      Nav header start
+  ***********************************-->
+  <th:block th:replace="/layout/nav :: navFragment"></th:block>
+  <!--**********************************
+      Header end ti-comment-alt
+  ***********************************-->
+
+  <!--**********************************
+      Sidebar start
+  ***********************************-->
+  <th:block th:replace="/layout/sidebar :: sidebarFragment"></th:block>
+  <!--**********************************
+      Sidebar end
+  ***********************************-->
+
+  <!--**********************************
+      Content body start
+  ***********************************-->
+  <div class="content-body">
+    <div class="container-fluid mt-3">
+      <div class="row scrollable-row-wrapper fixed-height">
+        <div class="col-lg-3 col-sm-6 scrollable-row-item">
+          <div class="card gradient-1">
+            <div class="card-body">
+              <h3 class="card-title text-white">신규 입고</h3>
+              <div class="d-inline-block">
+                <h2 class="text-white">7</h2>
+                <p class="text-white mb-0">건 대기 중</p>
+              </div>
+              <span class="float-right display-5 opacity-5"><i
+                  class="fa fa-shopping-cart"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 scrollable-row-item">
+          <div class="card gradient-2">
+            <div class="card-body">
+              <h3 class="card-title text-white">신규 출고</h3>
+              <div class="d-inline-block">
+                <h2 class="text-white">23</h2>
+                <p class="text-white mb-0">건 대기 중</p>
+              </div>
+              <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 scrollable-row-item">
+          <div class="card gradient-3">
+            <div class="card-body">
+              <h3 class="card-title text-white">신규 주문</h3>
+              <div class="d-inline-block">
+                <h2 class="text-white">3</h2>
+                <p class="text-white mb-0">건 접수</p>
+              </div>
+              <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 scrollable-row-item">
+          <div class="card gradient-4">
+            <div class="card-body">
+              <h3 class="card-title text-white">신규 발주</h3>
+              <div class="d-inline-block">
+                <h2 class="text-white">17</h2>
+                <p class="text-white mb-0">건 미확정</p>
+              </div>
+              <span class="float-right display-5 opacity-5"><i class="fa fa-heart"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 scrollable-row-item">
+          <div class="card gradient-1">
+            <div class="card-body">
+              <h3 class="card-title text-white">재고</h3>
+              <div class="d-inline-block">
+                <h2 class="text-white">2</h2>
+                <p class="text-white mb-0">건 재고 부족 위험</p>
+              </div>
+              <span class="float-right display-5 opacity-5"><i
+                  class="fa fa-shopping-cart"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 scrollable-row-item">
+          <div class="card gradient-3">
+            <div class="card-body">
+              <h3 class="card-title text-white">창고</h3>
+              <div class="d-inline-block">
+                <h2 class="text-white">9</h2>
+                <p class="text-white mb-0">개 관리 중</p>
+              </div>
+              <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Line Chart</h4>
+              <div id="flotLine1" class="flot-chart"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 table-responsive">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Line Chart</h4>
+              <table class="table table-xs mb-0">
+                <thead>
+                <tr>
+                  <th>순위</th>
+                  <th>인기 상품 명</th>
+                  <th>보유 재고</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>iPhone16</td>
+                  <td>5,603</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>더벤티아아</td>
+                  <td>13</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>스벅아아</td>
+                  <td>130</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>스벅아아</td>
+                  <td>130</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>스벅아아</td>
+                  <td>130</td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>스벅아아</td>
+                  <td>130</td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>스벅아아</td>
+                  <td>130</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Pie Chart</h4>
+              <div id="flotPie1" class="flot-chart"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Pie Chart</h4>
+              <div id="flotPie2" class="flot-chart"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--**********************************
+        Content body end
+    ***********************************-->
+  </div>
+  <!--**********************************
+      Main wrapper end
+  ***********************************-->
+
+  <!--**********************************
+      Scripts
+  ***********************************-->
+  <th:block th:replace="/layout/script :: scriptFragment"></th:block>
+  <script th:src="@{/js/Main.js}"></script>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+.scrollable-row-wrapper {
+  flex-wrap: nowrap!important;
+  overflow-x: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.scrollable-row-item {
+  display: inline-block;
+  white-space: normal;
+  vertical-align: top;
+}
+
+.fixed-height {
+  height: 200px;
+}
+
+.scrollable-row-wrapper .col-lg-3,
+.scrollable-row-wrapper .col-sm-6 {
+  flex: 0 0 22%!important;
+  max-width: 22%!important;
+}
+
+.scrollable-row-wrapper::-webkit-scrollbar {
+  display: none;
+}
