@@ -39,21 +39,24 @@ function readOrder() {
         data:
             JSON.stringify(orderSearchForm),
         success: function (resp) {
-            $.each(resp, function(index, order) {
-                var currentIndex = $(".order-single-tbody tr").length + 1;
+            let tableBody = $('.zero-configuration tbody');
+            tableBody.empty();
 
-                $(".order-single-tbody").append(
-                    `<tr>
-                    <th>${currentIndex}</th>
-                    <td id="order-single-tr-order-created-date-${currentIndex}">${order.dtOrderCreatedDate}</td>
-                    <td id="order-single-tr-order-seq-${currentIndex}">${order.pkOrderSeq}</td>
-                    <td id="order-single-tr-order-type-${currentIndex}">${order.vOrderType}</td>
-                    <td id="order-single-tr-product-supplier-nm-${currentIndex}">${order.vIncomingProductSupplierNm}</td>
-                    <td id="order-single-tr-warehouse-cd-${currentIndex}">${order.vWarehouseCd}</td>
-                    <td id="order-single-tr-delivery-date-${currentIndex}">${order.dtDeliveryDate}</td>
-                    <td id="order-single-tr-order-status-${currentIndex}">${order.vOrderStatus}</td>
-                    <td id="order-single-tr-order-complete-date-${currentIndex}">${order.dtOrderCompletionDate}</td>
-                </tr>`
+            $.each(resp, function(index, order) {
+                var currentIndex = index + 1;
+
+                tableBody.append(
+                    `<tr id="order-single-tr-${currentIndex}">
+                        <th>${currentIndex}</th>
+                        <td>${order.dtOrderCreatedDate}</td>
+                        <td>${order.pkOrderSeq}</td>
+                        <td>${order.vOrderType}</td>
+                        <td>${order.vIncomingProductSupplierNm}</td>
+                        <td>${order.vWarehouseCd}</td>
+                        <td>${order.dtDeliveryDate}</td>
+                        <td>${order.vOrderStatus}</td>
+                        <td>${order.dtOrderCompletionDate}</td>
+                    </tr>`
                 );
             });
         },
