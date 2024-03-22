@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <th:block th:replace="/layout/head :: headFragment"></th:block>
-  <script th:src="@{//dapi.kakao.com/v2/maps/sdk.js?appkey=77943d8a8f8b653c1f0843d4b37047e9}"></script>
+  <script th:src="@{//dapi.kakao.com/v2/maps/sdk.js?appkey=77943d8a8f8b653c1f0843d4b37047e9&libraries=services}"></script>
 
   <title>창고 관리</title>
 </head>
@@ -148,7 +148,7 @@
 
             </div>
             <div class="table-responsive">
-              <table class="table table-hover zero-configuration">
+              <table class="table table-hover zero-configuration warehouseTable">
                 <thead>
                 <tr>
                   <th>창고코드</th>
