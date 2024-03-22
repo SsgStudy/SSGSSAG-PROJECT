@@ -8,7 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -77,5 +81,18 @@ class OrderServiceTest {
 
         System.out.println("조건 4");
         orderService.getOrderList(dto4).forEach(System.out::println);
+    }
+
+    @Test
+    public void getOrderDetail() {
+        log.info("상세 발주 조회");
+        orderService.getOrderSigleList(3L).forEach(System.out::println);
+    }
+
+    @Test
+    public void updateOrderStatusConfirmed() {
+        log.info("발주 확정");
+        List<Long> pkOrderSeq = Arrays.asList(7L, 8L);
+        orderService.updateOrderStatusConfirmed(pkOrderSeq);
     }
 }
