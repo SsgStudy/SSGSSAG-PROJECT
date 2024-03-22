@@ -95,4 +95,15 @@ class OrderServiceTest {
         List<Long> pkOrderSeq = Arrays.asList(7L, 8L);
         orderService.updateOrderStatusConfirmed(pkOrderSeq);
     }
+
+    @Test
+    public void invalidateProductTest() {
+        OrderProductDTO orderProduct = OrderProductDTO.builder()
+                .vProductCd("752-5696-0523")
+                .vIncomingProductSupplierNm("Ikea Group")
+                .vWarehouseCd("KR-GYE1").build();
+
+        OrderProductDTO dto = orderService.createOrderDetail(orderProduct);
+        log.info("result? {}", dto);
+    }
 }
