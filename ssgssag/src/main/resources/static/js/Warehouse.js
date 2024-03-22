@@ -19,7 +19,7 @@ let ready = $(document).ready(function() {
         tableBody.empty();
 
         $.each(data, function (i, warehouse) {
-          var row = `<tr>
+          let row = `<tr>
                         <td>${warehouse.vwarehouseCd}</td>
                         <td>${warehouse.vwarehouseNm}</td>
                         <td>${warehouse.swarehouseType}</td>
@@ -45,34 +45,33 @@ let ready = $(document).ready(function() {
   });
 
   $(document).on('click', '.open-modal', function() {
-    var button = $(this); // 클릭된 버튼의 jQuery 객체
-    var warehouseCd = button.data('warehouse-cd');
-    // 여기서 openWarehouseModal 함수를 호출하고 필요한 데이터를 전달합니다.
-    openWarehouseModal(button[0], warehouseCd); // button[0]을 통해 DOM 요소 전달
+    let button = $(this);
+    let warehouseCd = button.data('warehouse-cd');
+    openWarehouseModal(button[0], warehouseCd);
   });
 });
 
 function openWarehouseModal(button,warehouseCd) {
-  var warehouseNm = button.dataset.warehouseNm;
-  var warehouseType = button.dataset.warehouseType;
-  var warehouseLoc = button.dataset.warehouseLoc;
-  var pkMemberSeq = button.dataset.pkMemberSeq;
+  let warehouseNm = button.dataset.warehouseNm;
+  let warehouseType = button.dataset.warehouseType;
+  let warehouseLoc = button.dataset.warehouseLoc;
+  let pkMemberSeq = button.dataset.pkMemberSeq;
 
-  // 모달 내의 입력 필드에 값을 설정
+
   $('#warehouseDetail .modal-body input[id="WarehouseCd"]').val(warehouseCd);
   $('#warehouseDetail .modal-body input[id="WarehouseNm"]').val(warehouseNm);
   $('#warehouseDetail .modal-body input[id="WarehouseType"]').val(warehouseType);
   $('#warehouseDetail .modal-body input[id="WarehouseLoc"]').val(warehouseLoc);
   $('#warehouseDetail .modal-body input[id="MemberSeq"]').val(pkMemberSeq);
   document.getElementById('hiddenWarehouseCd').value = warehouseCd;
-  // 구역 정보 조회 및 표시
+
   $.ajax({
     url: '/warehouse/' + warehouseCd + '/zones',
     type: 'GET',
     success: function(data) {
-      var modalBody = $('#warehouseDetail .modal-body');
-      var tbody = modalBody.find('table tbody');
-      tbody.empty(); // 기존 행 초기화
+      let modalBody = $('#warehouseDetail .modal-body');
+      let tbody = modalBody.find('table tbody');
+      tbody.empty();
       if (data && data.length > 0) {
         $.each(data, function(index, zone) {
           let row = `<tr>
@@ -96,7 +95,7 @@ function openWarehouseModal(button,warehouseCd) {
 function addZone() {
 
   const zoneCode = document.getElementById('zoneCode').value;
-  const warehouseCd = document.getElementById('hiddenWarehouseCd').value; // 창고 코드 필요시
+  const warehouseCd = document.getElementById('hiddenWarehouseCd').value;
   const zoneName = document.getElementById('zoneName').value;
 
   const data = {
@@ -115,7 +114,7 @@ function addZone() {
     data: data,
     success: function(response) {
       console.log("Zone added successfully");
-      $('#warehouseDetail').modal('hide'); // 모달 닫기
+      $('#warehouseDetail').modal('hide');
     },
     error: function(error) {
       console.log("Error adding zone", error);

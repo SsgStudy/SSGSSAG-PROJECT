@@ -68,15 +68,15 @@ public class WareHouseController {
       if (type != null && !type.isEmpty() && location != null && !location.isEmpty()) {
         warehouselist = wareHouseService.findByTypeAndLocation(type, location);
       }
-      // type만 있는 경우
+
       else if (type != null && !type.isEmpty()) {
         warehouselist = wareHouseService.findByWarehouseType(type);
       }
-      // location만 있는 경우
+
       else if (location != null && !location.isEmpty()) {
         warehouselist = wareHouseService.findByWarehouseLocation(location);
       }
-      // 둘 다 없는 경우
+
       else {
         warehouselist = wareHouseService.getAllWareHouse();
       }
