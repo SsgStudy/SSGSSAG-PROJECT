@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.controller;
 
+import com.ssg.ssgssag.dto.BestProductDTO;
 import com.ssg.ssgssag.dto.IncomingDTO;
 import com.ssg.ssgssag.dto.StatusCountDTO;
 import com.ssg.ssgssag.service.DashboardService;
@@ -24,6 +25,7 @@ public class DashboardController {
         log.info("Load dashboard page");
 
         List<StatusCountDTO> statusCountDTOList = dashboardService.getAllStatusCount();
+        List<BestProductDTO> bestProductDTOList = dashboardService.getBestProducts();
 
         model.addAttribute("incoming", statusCountDTOList.get(0).getCnt());
         model.addAttribute("outgoing", statusCountDTOList.get(1).getCnt());
@@ -31,6 +33,8 @@ public class DashboardController {
         model.addAttribute("order", statusCountDTOList.get(3).getCnt());
         model.addAttribute("inventory", statusCountDTOList.get(4).getCnt());
         model.addAttribute("warehouse", statusCountDTOList.get(5).getCnt());
+
+        model.addAttribute("bestProducts", bestProductDTOList);
 
         return "main/main";
     }

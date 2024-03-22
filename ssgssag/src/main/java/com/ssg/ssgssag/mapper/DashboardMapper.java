@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.mapper;
 
+import com.ssg.ssgssag.dto.BestProductDTO;
 import com.ssg.ssgssag.dto.StatusCountDTO;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,5 +12,6 @@ public interface DashboardMapper {
     //입고, 출고, 주문, 발주, 재고, 창고 수준 조회
     List<StatusCountDTO> selectAllStatusCount();
 
+    List<BestProductDTO> selectBestProducts();
 
 }

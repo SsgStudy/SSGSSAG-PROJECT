@@ -81,7 +81,7 @@ $(document).ready(function () {
     let supplierNm = $('[data-target="#purchaserSearchInputBox"]').val();
     let status;
     switch ($('#inputState').val()) {
-      case '신규':
+      case '입고':
         status = 'NEW_INVENTORY';
         break;
       case '미입고':

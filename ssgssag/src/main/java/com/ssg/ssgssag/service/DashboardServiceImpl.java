@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.service;
 
+import com.ssg.ssgssag.dto.BestProductDTO;
 import com.ssg.ssgssag.dto.StatusCountDTO;
 import com.ssg.ssgssag.mapper.DashboardMapper;
 import java.util.List;
@@ -19,5 +20,10 @@ public class DashboardServiceImpl implements DashboardService {
     @Override
     public List<StatusCountDTO> getAllStatusCount() {
         return dashboardMapper.selectAllStatusCount();
+    }
+
+    @Override
+    public List<BestProductDTO> getBestProducts() {
+        return dashboardMapper.selectBestProducts();
     }
 }

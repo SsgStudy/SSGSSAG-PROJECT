@@ -2,7 +2,7 @@
   flex-wrap: nowrap !important;
   overflow-x: hidden;
   white-space: nowrap;
-  width: 100%;
+  width: calc(100% + 15px);
 }
 
 .scrollable-row-item {
@@ -23,6 +23,10 @@
 
 .scrollable-row-wrapper::-webkit-scrollbar {
   display: none;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
 }
 
 .hover-card-body:hover {
@@ -32,4 +36,12 @@
 
 .hover-card-body {
   transition: 0.2s ease-in-out;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
 }
+
+.card a:link{text-decoration: none; color:#fff !important}
+.card a:visited{text-decoration: none; color:#fff !important}
+.card a:hover{text-decoration: none; color:#fff !important}
