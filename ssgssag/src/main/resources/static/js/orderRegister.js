@@ -153,17 +153,24 @@ function clickOrderMasterSave() {
     }
     else {
         $('#order-master-save-btn').attr('data-target','#exampleModalCenter');
+        saveStatus.order = true;
     }
 }
 function orderRegisterSave() {
-    if (!checkEmptyOrderForm()) {
-        console.log("입력되지 않은 값이 있습니다.")
-        saveStatus.order = false;
-        return;
-    }
+    console.log("저장 됐나?");
+    $('.alert-success a').text('발주 마스터가 저장되었습니다.');
+    $('.alert-success').show();
+    $('.alert-success').delay(2000).fadeOut();
+
     saveOrderForm();
-    saveStatus.order = true;
+    activateOrderSingleForm();
 }
+
+function activateOrderSingleForm() {
+    $('#order-register-order-single-btn-wrap button, #order-register-order-single-btn-wrap button input')
+        .prop('disabled', false);
+}
+
 
 function checkEmptyOrderForm() {
     if ($("#order-created-date").val() === "") {
@@ -268,7 +275,10 @@ function orderObjectDelete() {
 
 // 발주 상세 - 추가
 function createOrderDetailForm() {
-    console.log("click");
+    orderSearch.vIncomingProductSupplierNm = order.vIncomingProductSupplierNm;
+    orderSearch.vProductCd = $("#input-product-cd").val();
+    orderSearch.vWarehouseCd = order.vWarehouseCd;
+
     $.ajax({
         url: '/order/register/detail',
         type: 'POST',
@@ -276,30 +286,27 @@ function createOrderDetailForm() {
         data:
             JSON.stringify(orderSearch),
         success: function (resp) {
-            var currentIndex;
-            if ($(".order-detail-tbody tr").isEmpty)
-                currentIndex = 1;
-            currentIndex = $(".order-detail-tbody tr").length + 1;
+            $("#default-tr").remove();
+
+            let idx = $(".order-detail-tbody tr").length + 1;
 
             $(".order-detail-tbody").append(
                 `<tr>
-                    <th>${currentIndex}</th>
-                    <td><input type="checkbox" id="order-tr-checked-${currentIndex}" /></td>
-                    <td id="order-tr-product-cd-${currentIndex}">${resp.vProductCd}</td>
-                    <td id="order-tr-product-nm-${currentIndex}">${resp.vProductNm}</td>
-                    <td>Y</td>
-                    <td>Y</td>
-                    <td id="order-tr-inventory-cnt-${currentIndex}">${resp.nInventoryCnt}</td>
+                    <th>${idx}</th>
+                    <td><input type="checkbox" id="order-tr-checked-${idx}" /></td>
+                    <td id="order-tr-product-cd-${idx}">${resp.vProductCd}</td>
+                    <td id="order-tr-product-nm-${idx}">${resp.vProductNm}</td>
+                    <td id="order-tr-inventory-cnt-${idx}">${resp.nInventoryCnt}</td>
                     <td><div class="col-sm-3">
                             <div class="input-group">
-                                    <input type="number" id="order-tr-order-cnt-${currentIndex}"">
+                                    <input type="number" id="order-tr-order-cnt-${idx}"">
                             </div>
                         </div>
                     </td>
-                    <td id="order-tr-product-price-${currentIndex}">${resp.nProductPrice}</td>
+                    <td id="order-tr-product-price-${idx}">${resp.nProductPrice}</td>
                     <td><div class="col-sm-3">
                             <div class="input-group">
-                                    <input type="number" id="order-tr-total-price-${currentIndex}">
+                                    <input type="number" id="order-tr-total-price-${idx}">
                             </div>
                         </div>
                     </td>
@@ -311,6 +318,7 @@ function createOrderDetailForm() {
         }
     });
 }
+
 
 $('body').on('input', '[id^=order-tr-order-cnt-]', function() {
     let currentIndex = this.id.match(/\d+$/)[0];
