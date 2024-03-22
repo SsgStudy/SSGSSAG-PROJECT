@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.service;
 
+import com.ssg.ssgssag.domain.WareHouseZoneVO;
 import com.ssg.ssgssag.dto.IncomingDTO;
 import com.ssg.ssgssag.dto.WareHouseDTO;
 import java.util.List;
@@ -19,5 +20,11 @@ public interface WareHouseService {
   List<String> findAllWarehouseLocations();
 
   List<String> findAllWarehouseType();
+
+  void addWarehouse(WareHouseDTO wareHouseDTO);
+
+  List<WareHouseZoneVO> getWareHouseZones(String vWarehouseCd);
+
+  void addWarehouseZone(WareHouseZoneVO wareHouseZoneVO);
 
 }

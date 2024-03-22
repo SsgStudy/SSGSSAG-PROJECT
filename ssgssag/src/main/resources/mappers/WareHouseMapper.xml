@@ -6,7 +6,7 @@
 
 
   <select id="selectAllWareHouse" resultType="com.ssg.ssgssag.dto.WareHouseDTO">
-    SELECT * FROM TB_WAREHOUSE;
+    SELECT * FROM TB_WAREHOUSE
   </select>
 
   <select id="findByWarehouseType" resultType="com.ssg.ssgssag.dto.WareHouseDTO">
@@ -26,13 +26,26 @@
     SELECT * FROM TB_WAREHOUSE WHERE V_WAREHOUSE_NM LIKE CONCAT('%', #{name}, '%')
   </select>
 
-
   <select id="findAllWarehouseLocations" resultType="String">
-    SELECT DISTINCT V_WAREHOUSE_LOC FROM TB_WAREHOUSE;
+    SELECT DISTINCT V_WAREHOUSE_LOC FROM TB_WAREHOUSE
   </select>
 
   <select id="findAllWarehouseType" resultType="String">
-    SELECT DISTINCT S_WAREHOUSE_TYPE FROM TB_WAREHOUSE;
+    SELECT DISTINCT S_WAREHOUSE_TYPE FROM TB_WAREHOUSE
   </select>
+
+  <insert id="insertWarehouse" parameterType="com.ssg.ssgssag.dto.WareHouseDTO">
+    INSERT INTO TB_WAREHOUSE (V_WAREHOUSE_CD, V_WAREHOUSE_NM, V_WAREHOUSE_LOC, S_WAREHOUSE_TYPE, PK_MEMBER_SEQ)
+    VALUES (#{vWarehouseCd}, #{vWarehouseNm}, #{vWarehouseLoc}, #{sWarehouseType}, #{pkMemberSeq})
+  </insert>
+
+  <select id="selectWareHouseZone" resultType="WareHouseZoneVO">
+    SELECT * FROM TB_ZONE WHERE V_WAREHOUSE_CD = #{vWarehouseCd}
+  </select>
+
+  <insert id="insertWarehouseZone" parameterType="WareHouseZoneVO">
+    INSERT INTO TB_ZONE (V_ZONE_CD, V_WAREHOUSE_CD, V_ZONE_NM )
+    VALUES (#{vZoneCd}, #{vWarehouseCd}, #{vZoneNm})
+  </insert>
 
 </mapper>
