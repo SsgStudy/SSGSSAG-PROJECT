@@ -1,7 +1,6 @@
 package com.ssg.ssgssag.service;
 
 import com.ssg.ssgssag.domain.InventoryHistoryVO;
-import com.ssg.ssgssag.domain.InventoryVO;
 import com.ssg.ssgssag.dto.*;
 import com.ssg.ssgssag.mapper.InventoryMapper;
 import lombok.RequiredArgsConstructor;

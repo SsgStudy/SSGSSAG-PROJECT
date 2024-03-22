@@ -1,5 +1,5 @@
-$(document).ready(function() {
-    $("#search-button").click(function() {
+$(document).ready(function () {
+    $("#search-button").click(function () {
         readInventory();
     });
 });
@@ -14,39 +14,29 @@ var InventorySearchForm = {
 
 function inventoryReadPageReset() {
     console.log('초기화')
-    // $("#inventory-list-search-form").find("select").val("seleted");
-    //
-    // $(".inventory-list-table-body").show();
-
     location.reload()
 }
-//
-// function inventoryReadPageReset() {
-//     console.log('초기화')
-//     $("#order-read-search-form").find("input[type=text], select").val("");
-//     $(".order-single-tbody").empty();
-// }
 
 function searchForm() {
 
     let mainCategory = $("#select-main-category").val();
-    if (mainCategory!=='대분류')
+    if (mainCategory !== '대분류')
         InventorySearchForm.vMainCategoryNm = mainCategory;
 
     let subCategory = $("#select-sub-category").val();
-    if (subCategory!=='중분류')
+    if (subCategory !== '중분류')
         InventorySearchForm.vSubCategoryNm = subCategory;
 
     let detailCategory = $("#select-detail-category").val();
-    if(detailCategory!=='소분류')
+    if (detailCategory !== '소분류')
         InventorySearchForm.vDetailCategoryNm = detailCategory;
 
     let wareHouse = $("#select-warehouse").val();
-    if(wareHouse!=='창고')
+    if (wareHouse !== '창고')
         InventorySearchForm.vWarehouseNm = wareHouse;
 
     let zone = $("#select-zone").val();
-    if(zone!=='구역')
+    if (zone !== '구역')
         InventorySearchForm.vZoneNm = zone;
 
     console.log("검색 폼 " + JSON.stringify(InventorySearchForm));
@@ -100,11 +90,11 @@ function readInventory() {
                                 <td>${inventory.vzoneCd}</td>
                             </tr>`;
                 newTableBody.append(row);
-                cnt = index+1;
+                cnt = index + 1;
                 console.log(row, cnt);
             });
 
-// 클릭한 재고 번호를 통해 모달을 열도록 처리
+            // 모달 열기
             $('.inventory-detail-link').on('click', function () {
                 var inventoryId = $(this).attr('data-inventory-id');
                 handleInventoryDetailLinkClick(inventoryId);
@@ -113,7 +103,7 @@ function readInventory() {
 
             //페이징 처리
             $('#DataTables_Table_0_info').text(`Showing 1 to 10 of ${cnt} entries`);
-            $('.pagination').find('.paginate_button').not('#DataTables_Table_0_previous, #DataTables_Table_0_next').remove(); // 이전(pre)과 다음(next)을 제외한 리스트들을 모두 지웁니다.
+            $('.pagination').find('.paginate_button').not('#DataTables_Table_0_previous, #DataTables_Table_0_next').remove(); // 이전(pre)과 다음(next)을 제외한 리스트들을 모두 지운다.
 
             let show = +$('.form-control.form-control-sm').val();
             let page = +Math.max(Math.ceil(cnt / show), 1);
@@ -143,7 +133,7 @@ function readInventory() {
 }
 
 
-function formatDate(dateString){
+function formatDate(dateString) {
     if (!dateString) {
         return '';
     }

@@ -1,11 +1,10 @@
-// 페이지가 로드될 때 실행되는 함수
-$(document).ready(function() {
+$(document).ready(function () {
     console.log("실행");
     getWarehouseAndZone();
     getCategoryHierarchy();
 });
 
-// 모달 불러오기
+// 재고 이력 모달창
 function handleInventoryDetailLinkClick(key) {
     console.log("handleInventoryDetailLinkClick 호출");
 
@@ -14,11 +13,9 @@ function handleInventoryDetailLinkClick(key) {
         url: '/inventory/list/detail/' + key,
         type: 'GET',
         dataType: 'json',
-        success: function(data) {
+        success: function (data) {
 
             console.log(data)
-
-            // let newTableBody = {};
 
             // 기존의 행들을 모두 제거
             $('#inventory-history-modal-body').empty();
@@ -27,15 +24,17 @@ function handleInventoryDetailLinkClick(key) {
             let formattedDate = formatDate(data.dtInventoryChangeDate);
 
             let changeType;
-            switch (data.vinventoryChanegeType){
-                case 'CHANGE_CNT_INBOUND' : changeType = '입고 수량 조절';
+            switch (data.vinventoryChanegeType) {
+                case 'CHANGE_CNT_INBOUND' :
+                    changeType = '입고 수량 조절';
                     break;
-                case 'CHANGE_CNT_OUTBOUND' : changeType = '출고 수량 조절';
+                case 'CHANGE_CNT_OUTBOUND' :
+                    changeType = '출고 수량 조절';
                     break;
-                case 'MOVE' : changeType = '창고 이동';
+                case 'MOVE' :
+                    changeType = '창고 이동';
                     break;
             }
-
 
             let row = `<tr role="row" class="odd">
                     <td>${data.pkInventorySeq}</td>
@@ -47,10 +46,11 @@ function handleInventoryDetailLinkClick(key) {
                     <td>${data.vzoneCd2}</td>
                     <td>${data.vwarehouseCd2}</td>
                 </tr>`;
+
             $('#inventory-history-modal-body').append(row);
         },
 
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             // 데이터를 받아오지 못했을 때 실행되는 함수
             console.error('Error fetching data:', error);
 
@@ -60,7 +60,7 @@ function handleInventoryDetailLinkClick(key) {
 }
 
 // 카테고리 입력폼
-$('#select-main-category').change(function() {
+$('#select-main-category').change(function () {
     let $subCategory = $('#select-sub-category');
     $subCategory.empty();
     $subCategory.append(
@@ -72,14 +72,14 @@ $('#select-main-category').change(function() {
        <option value="소분류">소분류</option>`
     );
 
-    if ($('#select-main-category').val()==="대분류")
+    if ($('#select-main-category').val() === "대분류")
         return;
 
-    let mainCategory = $('#select-main-category').val(); // 선택된 창고 이름을 가져옴
+    let mainCategory = $('#select-main-category').val();
     renderSubCategory(mainCategory);
 });
 
-$('#select-sub-category').change(function() {
+$('#select-sub-category').change(function () {
     let $detailCategory = $('#select-detail-category');
     $detailCategory.empty();
     $detailCategory.append(
@@ -88,7 +88,7 @@ $('#select-sub-category').change(function() {
     let mainCategory = $('#select-main-category').val();
     let subCategory = $('#select-sub-category').val();
 
-    if (subCategory==="중분류")
+    if (subCategory === "중분류")
         return
     renderDetailCategory(mainCategory, subCategory);
 });
@@ -102,11 +102,9 @@ function getCategoryHierarchy() {
         url: '/inventory/category',
         type: 'GET',
         dataType: 'json',
-        success: function(data) {
-            // Warehouse 이름을 key로, Zone 이름들의 배열을 value로 하는 객체
-            let categoryHierarchy = {};
+        success: function (data) {
 
-            data.forEach(function(item) {
+            data.forEach(function (item) {
                 let mainCategory = item.vmainCategoryNm;
                 let subCategory = item.vsubCategoryNm;
                 let detailCategory = item.vdetailCategoryNm;
@@ -129,7 +127,7 @@ function getCategoryHierarchy() {
             renderMainCategory();
 
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error('Error fetching data:', error);
         }
     });
@@ -138,11 +136,10 @@ function getCategoryHierarchy() {
 
 function renderMainCategory() {
     console.log("render 호출")
-    // warehouseMap의 키를 가져옴
+
     let keys = Array.from(categoryMap.keys());
 
-    // 각 창고명을 select 요소에 옵션으로 추가
-    keys.forEach(function(category) {
+    keys.forEach(function (category) {
         $('#select-main-category').append(
             `<option value="${category}">${category}</option>`
         );
@@ -155,8 +152,7 @@ function renderSubCategory(mainCategory) {
     let mainCategoryMap = categoryMap.get(mainCategory);
     let keys = Array.from(mainCategoryMap.keys());
 
-    // 각 창고명을 select 요소에 옵션으로 추가
-    keys.forEach(function(category) {
+    keys.forEach(function (category) {
         $('#select-sub-category').append(
             `<option value="${category}">${category}</option>`
         );
@@ -171,9 +167,7 @@ function renderDetailCategory(mainCategory, subCategory) {
     console.log(subCategoryMap);
     let keys = Array.from(subCategoryMap);
 
-
-    // 각 창고명을 select 요소에 옵션으로 추가
-    keys.forEach(function(category) {
+    keys.forEach(function (category) {
         $('#select-detail-category').append(
             `<option value="${category}">${category}</option>`
         );
@@ -182,15 +176,14 @@ function renderDetailCategory(mainCategory, subCategory) {
 
 
 // 창고 입력폼
-
-$('#select-warehouse').change(function() {
+$('#select-warehouse').change(function () {
     let $zone = $('#select-zone');
     $zone.empty();
     $zone.append(
         `<option value="구역">구역</option>`
     );
-    let warehouse = $('#select-warehouse').val(); // 선택된 창고 이름을 가져옴
-    if (warehouse==="창고")
+    let warehouse = $('#select-warehouse').val();
+    if (warehouse === "창고")
         return
     renderWarehouseZone(warehouse);
 });
@@ -204,22 +197,18 @@ function getWarehouseAndZone() {
         url: '/inventory/warehouse',
         type: 'GET',
         dataType: 'json',
-        success: function(data) {
-            // Warehouse 이름을 key로, Zone 이름들의 배열을 value로 하는 객체
+        success: function (data) {
             let warehouseZones = {};
 
-            // 데이터를 처리하여 Map 객체와 객체를 채움
             $.each(data, function (idx, ware) {
                 let warehouseName = ware.vwarehouseNm;
                 let zoneName = ware.vzoneNm;
 
-                // Map 객체에 데이터 추가
                 if (!warehouseMap.has(warehouseName)) {
                     warehouseMap.set(warehouseName, []);
                 }
                 warehouseMap.get(warehouseName).push(zoneName);
 
-                // 객체에 데이터 추가
                 if (!warehouseZones[warehouseName]) {
                     warehouseZones[warehouseName] = [];
                 }
@@ -230,7 +219,7 @@ function getWarehouseAndZone() {
 
             renderWarehouseNm();
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error('Error fetching data:', error);
         }
     });
@@ -238,11 +227,9 @@ function getWarehouseAndZone() {
 
 
 function renderWarehouseNm() {
-    // warehouseMap의 키를 가져옴
     let keys = Array.from(warehouseMap.keys());
 
-    // 각 창고명을 select 요소에 옵션으로 추가
-    keys.forEach(function(warehouse) {
+    keys.forEach(function (warehouse) {
         $('#select-warehouse').append(
             `<option value="${warehouse}">${warehouse}</option>`
         );
@@ -253,7 +240,7 @@ function renderWarehouseNm() {
 function renderWarehouseZone(warehouseNm) {
     let zoneList = warehouseMap.get(warehouseNm);
 
-    zoneList.forEach(function(zone) {
+    zoneList.forEach(function (zone) {
         $('#select-zone').append(
             `<option value="${zone}">${zone}</option>`
         );

@@ -3,18 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.ssg.ssgssag.mapper.InventoryMapper">
-
-<!--    <resultMap id="inventoryResultMap" type="com.ssg.ssgssag.domain.InventoryHistoryVO">-->
-<!--        <result property="pkInventorySeq" column="PK_INVENTORY_SEQ" />-->
-<!--        <result property="nInventoryShippingCnt" column="N_INVENTORY_SHIPPING_CNT" />-->
-<!--        <result property="dtInventoryChangeDate" column="DT_INVENTORY_CHANGE_DATE" />-->
-<!--        <result property="vInventoryChangeType" column="V_INVENTORY_CHANEGE_TYPE" />-->
-<!--        <result property="vZoneCd" column="V_ZONE_CD" />-->
-<!--        <result property="vZoneCd2" column="V_ZONE_CD2" />-->
-<!--        <result property="vWarehouseCd" column="V_WAREHOUSE_CD" />-->
-<!--        <result property="vWarehouseCd2" column="V_WAREHOUSE_CD2" />-->
-<!--    </resultMap>-->
-
     <select id="selectAllInventory" resultType="com.ssg.ssgssag.dto.InventoryListDTO">
         SELECT PK_INVENTORY_SEQ, DT_INVENTORY_SLIP_DATE, N_INVENTORY_CNT, V_ZONE_CD, I.V_WAREHOUSE_CD, I.V_PRODUCT_CD, P.V_PRODUCT_NM, W.V_WAREHOUSE_NM
         FROM TB_INVENTORY I LEFT JOIN TB_PRODUCT P ON I.V_PRODUCT_CD  = P.V_PRODUCT_CD
@@ -45,10 +33,9 @@
     <select id="searchInventoryByCategoryAndWarehouse" parameterType="com.ssg.ssgssag.dto.InventorySearchDTO" resultType="com.ssg.ssgssag.dto.InventoryListDTO">
         SELECT PK_INVENTORY_SEQ, DT_INVENTORY_SLIP_DATE, N_INVENTORY_CNT, V_ZONE_CD, I.V_WAREHOUSE_CD, I.V_PRODUCT_CD, P.V_PRODUCT_NM, W.V_WAREHOUSE_NM
         FROM TB_INVENTORY I
-        LEFT JOIN TB_PRODUCT P ON I.V_PRODUCT_CD  = P.V_PRODUCT_CD
+        LEFT JOIN TB_PRODUCT P ON I.V_PRODUCT_CD = P.V_PRODUCT_CD
         LEFT JOIN TB_WAREHOUSE W ON I.V_WAREHOUSE_CD = W.V_WAREHOUSE_CD
         WHERE 1=1
-
         <if test="vMainCategoryNm != null and !vMainCategoryNm.equals('')">
             AND P.V_PRODUCT_CD IN (
                 SELECT P.V_PRODUCT_CD
@@ -57,12 +44,11 @@
                     SELECT V_CATEGORY_CD
                     FROM TB_CATEGORY
                     WHERE V_CATEGORY_NM = #{vMainCategoryNm}
-                    OR V_CATEGORY_CD LIKE CONCAT((SELECT V_CATEGORY_CD FROM TB_CATEGORY WHERE V_CATEGORY_NM = #{vMainCategoryNm}), '-%-%')
+                    OR V_CATEGORY_CD LIKE CONCAT((SELECT V_CATEGORY_CD FROM TB_CATEGORY WHERE V_CATEGORY_NM =
+                    #{vMainCategoryNm}), '-%-%')
                 )
             )
         </if>
-
-
         <if test="vMainCategoryNm != null and vSubCategoryNm != null and !vMainCategoryNm.equals('') and !vSubCategoryNm.equals('') ">
             AND P.V_PRODUCT_CD IN (
                 SELECT P.V_PRODUCT_CD
@@ -71,11 +57,11 @@
                     SELECT V_CATEGORY_CD
                     FROM TB_CATEGORY
                     WHERE V_CATEGORY_NM = #{vMainCategoryNm}
-                    OR V_CATEGORY_CD LIKE CONCAT((SELECT V_CATEGORY_CD FROM TB_CATEGORY WHERE V_CATEGORY_NM = #{vSubCategoryNm}), '-%')
+                    OR V_CATEGORY_CD LIKE CONCAT((SELECT V_CATEGORY_CD FROM TB_CATEGORY WHERE V_CATEGORY_NM =
+                    #{vSubCategoryNm}), '-%')
                 )
             )
         </if>
-
         <if test="vMainCategoryNm != null and vSubCategoryNm != null and vDetailCategoryNm != null and !vMainCategoryNm.equals('') and !vSubCategoryNm.equals('') and !vDetailCategoryNm.equals('')">
             AND P.V_PRODUCT_CD IN (
                 SELECT P.V_PRODUCT_CD
@@ -83,11 +69,10 @@
                 WHERE P.V_CATEGORY_CD IN (
                     SELECT V_CATEGORY_CD
                     FROM TB_CATEGORY
-                    WHERE V_CATEGORY_NM =  #{vDetailCategoryNm}
+                    WHERE V_CATEGORY_NM = #{vDetailCategoryNm}
                 )
             )
         </if>
-
         <if test="vWarehouseNm != null and !vWarehouseNm.equals('')">
             AND V_WAREHOUSE_NM = #{vWarehouseNm}
         </if>
@@ -95,9 +80,9 @@
         <if test="vWarehouseNm != null and vZoneNm != null and !vWarehouseNm.equals('') and !vZoneNm.equals('')">
             AND V_WAREHOUSE_NM = #{vWarehouseNm}
             AND I.V_ZONE_CD IN (
-            SELECT V_ZONE_CD
-            FROM TB_ZONE
-            WHERE V_ZONE_NM = #{vZoneNm}
+                SELECT V_ZONE_CD
+                FROM TB_ZONE
+                WHERE V_ZONE_NM = #{vZoneNm}
             )
         </if>
     </select>

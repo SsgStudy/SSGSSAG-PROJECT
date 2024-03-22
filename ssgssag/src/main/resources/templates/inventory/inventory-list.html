@@ -67,7 +67,6 @@
                 <!-- 옵션 1 -->
                 <div class="form-group">
                   <label class="col-form-label mr-3 mt-3">카테고리</label>
-                  <!-- <h6 class="mr-3">카테고리별 분류</h6> -->
                   <select class="custom-select mr-2 col-sm-2" id="select-main-category">
                     <option selected="selected">대분류</option>
                   </select>
@@ -126,11 +125,6 @@
                   <tbody class="inventory-list-table-body">
                     <tr th:each="inventory : ${inventoryList}">
                       <td data-toggle="modal" data-target="#inventory-history-modal">
-<!--                        <span th:text="${inventory.pkInventorySeq}"></span>-->
-<!--                      <td data-toggle="modal" data-target="#inventory-history-modal">-->
-<!--                        <a href="#" th:href="@{/inventory/list/detail/{pkInventorySeq}(pkInventorySeq=${inventory.pkInventorySeq})}">-->
-<!--                          <span th:text="${inventory.pkInventorySeq}"></span>-->
-<!--                        </a>-->
                         <a class="inventory-detail-link" th:attr="data-inventory-id=${inventory.pkInventorySeq}">
                           <span th:text="${inventory.pkInventorySeq}" th:onclick="'handleInventoryDetailLinkClick(' + ${inventory.pkInventorySeq} + ')'"></span>
                         </a>
@@ -172,16 +166,6 @@
                             </tr>
                             </thead>
                             <tbody id="inventory-history-modal-body">
-<!--                            <tr>-->
-<!--                              <td th:text="${inventoryHistory.pkInventorySeq}"></td>-->
-<!--                              <td th:text="${inventoryHistory.nInventoryShippingCnt}"></td>-->
-<!--                              <td th:text="${#temporals.format(inventoryHistory.dtInventoryChangeDate, 'yyyy-MM-dd')}"></td>-->
-<!--                              <td th:text="${inventoryHistory.vInventoryChangeType}"></td>-->
-<!--                              <td th:text="${inventoryHistory.vZondCd}"></td>-->
-<!--                              <td th:text="${inventoryHistory.vWarehouseCd}"></td>-->
-<!--                              <td th:text="${inventoryHistory.vZondCd2}"></td>-->
-<!--                              <td th:text="${inventoryHistory.vWarehouseCd2}"></td>-->
-<!--                            </tr>-->
                             </tbody>
                           </table>
                         </div>

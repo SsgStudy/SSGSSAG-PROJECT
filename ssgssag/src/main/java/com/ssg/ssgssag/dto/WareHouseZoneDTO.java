@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WareHouseZoneDTO {
-
-    //창고
     private String vWarehouseNm;
     private String vZoneNm;
 }

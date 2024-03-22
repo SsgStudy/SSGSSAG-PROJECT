@@ -1,7 +1,6 @@
 package com.ssg.ssgssag.mapper;
 
 import com.ssg.ssgssag.domain.InventoryHistoryVO;
-import com.ssg.ssgssag.domain.InventoryVO;
 import com.ssg.ssgssag.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
