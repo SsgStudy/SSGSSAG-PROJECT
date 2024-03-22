@@ -100,13 +100,14 @@ public class WareHouseController {
   }
 
   @GetMapping("/{vWarehouseCd}/zones")
-  @Operation(summary = "창고 구역 조회", description = "창고 구역 조회.")
+  @Operation(summary = "창고 구역 조회", description = "창고 구역 조회합니다.")
   @ResponseBody
   public List<WareHouseZoneVO> getWareHouseZones(@PathVariable String vWarehouseCd) {
     return wareHouseService.getWareHouseZones(vWarehouseCd);
   }
 
   @PostMapping("/addZone")
+  @Operation(summary = "창고 구역 추가", description = "창고 구역을 추가합니다.")
   @ResponseBody
   public ResponseEntity<?> addWarehouseZone(
       @RequestParam("vZoneCd") String vZoneCd,
