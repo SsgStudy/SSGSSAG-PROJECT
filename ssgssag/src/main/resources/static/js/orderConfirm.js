@@ -1,3 +1,7 @@
+$(document).ready(function() {
+    getNowDate();
+});
+
 // 전역 변수
 var orderSearchForm = {
     "vIncomingProductSupplierNm": null,
