@@ -8,8 +8,17 @@
         select max(pk_order_seq) from TB_ORDER;
     </select>
 
-    <select id="selectProductSupplier" parameterType="string" resultType="string">
-        SELECT V_PRODUCT_MANUFACTOR FROM TB_PRODUCT WHERE V_PRODUCT_CD = #{productCd}
+    <select id="selectProductSupplier" parameterType="com.ssg.ssgssag.dto.OrderProductDTO" resultType="string">
+        SELECT CASE
+                   WHEN NOT EXISTS (SELECT 1 FROM TB_PRODUCT WHERE V_PRODUCT_CD = #{vProductCd}) THEN 'INVALID'
+                   WHEN EXISTS (
+                       SELECT 1
+                       FROM TB_PRODUCT
+                       WHERE V_PRODUCT_CD = #{vProductCd} AND V_PRODUCT_MANUFACTOR = #{vIncomingProductSupplierNm}
+                   ) THEN 'VALID'
+                   ELSE 'UNLISTED'
+                   END AS result;
+
     </select>
 
     <select id="selectProductInventory" parameterType="hashmap" resultType="OrderProductVO">
@@ -77,6 +86,7 @@
         ORDER BY od.PK_ORDER_DETAIL_SEQ
     </select>
 
+<!--  발주 확정  -->
     <update id="updateOrderStatusByOrderSeq" parameterType="java.util.List">
         UPDATE TB_ORDER
         SET V_ORDER_STATUS = '확정', DT_ORDER_COMPLETION_DATE = NOW()

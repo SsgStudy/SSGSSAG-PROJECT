@@ -157,7 +157,6 @@ function clickOrderMasterSave() {
     }
 }
 function orderRegisterSave() {
-    console.log("저장 됐나?");
     $('.alert-success a').text('발주 마스터가 저장되었습니다.');
     $('.alert-success').show();
     $('.alert-success').delay(2000).fadeOut();
@@ -313,8 +312,11 @@ function createOrderDetailForm() {
                 </tr>`
             );
         },
-        error: function (error) {
-            console.log('Error:', error);
+        error: function (xhr, status, error) {
+            if (xhr.status === 422) {
+                console.log(xhr.responseText);
+                showAlertDanger(xhr.responseText);
+            }
         }
     });
 }
@@ -417,4 +419,10 @@ function getCurrentDateFormatted() {
     var yyyy = today.getFullYear();
 
     return mm + '/' + dd + '/' + yyyy;
+}
+
+function showAlertDanger(text) {
+    $('.alert-danger a').text(text);
+    $('.alert-danger').show();
+    $('.alert-danger').delay(2000).fadeOut();
 }
