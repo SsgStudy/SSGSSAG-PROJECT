@@ -55,9 +55,8 @@
             </div>
             <div class="col-lg-12 mb-4 text-right">
                 <div class="general-button">
-                    <button type="button" id="order-register-new-btn" class="btn mb-1 btn-info">신규</button>
-                    <button type="button" class="btn mb-1 btn-light">확정취소</button>
-                    <button type="button" class="btn mb-1 btn-light" data-toggle="modal" data-target="#registerModal">확정</button>
+                    <button type="button" id="order-register-new-btn" class="btn mb-1 btn-info" onclick="clickNewBtn()">신규</button>
+                    <button type="button" class="btn mb-1 btn-light" id="order-register-reset-btn" data-toggle="modal" data-target="#registerModal">초기화</button>
                     <div class="modal fade" id="registerModal" style="display: none;" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content  d-flex justify-content-center">
@@ -67,11 +66,12 @@
                                     </button>
                                 </div>
                                 <div class="modal-body center">
-                                    <p>확정하시겠습니까?</p>
+                                    <p>초기화 하시겠습니까?</p>
                                 </div>
                                 <div class="modal-footer d-flex justify-content-center">
-                                    <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                    <button type="button" id="order-register-confirm-ok-btn" class="btn close" data-dismiss="modal">확인</button>
+                                    <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+                                    <button type="button" id="order-register-reset-ok-btn" class="btn btn-info"
+                                            onclick="orderRegisterReset()" data-dismiss="modal">확인</button>
                                 </div>
                             </div>
                         </div>
@@ -79,11 +79,20 @@
                 </div>
             </div>
 
-
             <div class="col-12">
-                    <div class="card">
-                        <div class="card-body" id="order-register-form">
-                            <h3 class="card-title">발주</h3>
+                <div class="alert-wrap">
+                    <div class="alert alert-danger">
+                        <a href="#" class="alert-link"></a>
+                    </div>
+                    <div class="alert alert-success">
+                        <a href="#" class="alert-link"></a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body" id="order-register-form">
+                        <h3 class="card-title">발주</h3>
+                        <form class="order-master-form">
                             <div class="form-group row">
                                 <label class="col-sm-1 col-form-label">발주일자</label>
                                 <div class="col-sm-2">
@@ -134,7 +143,7 @@
                                                     <div class="row mb-1">
                                                         <label class="col-sm-3 col-form-label text-left">거래처명</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" class="form-control input-flat" id="supplierSearchInput" placeholder="거래처 이름을 입력해주세요">
+                                                            <input type="text" class="form-control input-flat input-supplier" id="supplierSearchInput" placeholder="거래처 이름을 입력해주세요">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -212,59 +221,59 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="row d-flex justify-content-center">
-                                <div class="bootstrap-modal">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">저장</button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModalCenter" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content  d-flex justify-content-center">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Confirm</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body center">
-                                                    <p>저장하시겠습니까?</p>
-                                                </div>
-                                                <div class="modal-footer d-flex justify-content-center">
-                                                    <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                    <button type="button" id="order-register-save-ok-btn" class="btn" onclick="orderRegisterSave()" data-dismiss="modal">확인</button>
-                                                </div>
+                        </form>
+                        <div class="row d-flex justify-content-center">
+                            <div class="bootstrap-modal">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-info" id="order-master-save-btn" data-toggle="modal"
+                                        onclick="clickOrderMasterSave()">저장</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalCenter" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content  d-flex justify-content-center">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Confirm</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body center">
+                                                <p>저장하시겠습니까?</p>
+                                            </div>
+                                            <div class="modal-footer d-flex justify-content-center">
+                                                <button type="button" class="btn" data-dismiss="modal">취소</button>
+                                                <button type="button" id="order-register-save-ok-btn" class="btn" onclick="orderRegisterSave()" data-dismiss="modal">확인</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="bootstrap-modal">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#order-register-remove">삭제</button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="order-register-remove" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content  d-flex justify-content-center">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Confirm</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body center">
-                                                    <p>삭제하시겠습니까?</p>
-                                                </div>
-                                                <div class="modal-footer d-flex justify-content-center">
-                                                    <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                    <button type="button" class="btn" onclick="orderRegisterDelete()" data-dismiss="modal">확인</button>
-                                                </div>
+                            </div>
+                            <div class="bootstrap-modal">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#order-register-remove">삭제</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="order-register-remove" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content  d-flex justify-content-center">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Confirm</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body center">
+                                                <p>삭제하시겠습니까?</p>
+                                            </div>
+                                            <div class="modal-footer d-flex justify-content-center">
+                                                <button type="button" class="btn" data-dismiss="modal">취소</button>
+                                                <button type="button" class="btn" onclick="orderRegisterDelete()" data-dismiss="modal">확인</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <button type="button" class="btn mb-1 btn-light" id="order-register-remove-btn" background-color="#0575E6">삭제</button> -->
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
             <div class="col-12">
                 <div class="card">
@@ -301,8 +310,6 @@
                                     <th><input type="checkbox"></th>
                                     <th>단품코드</th>
                                     <th>단품명</th>
-                                    <th>단품상태</th>
-                                    <th>재고관리여부</th>
                                     <th>창고현재고</th>
                                     <th>발주수량</th>
                                     <th>발주단가</th>
@@ -310,10 +317,20 @@
                                 </tr>
                                 </thead>
                                 <tbody class="order-detail-tbody">
+                                    <tr>
+                                        <th>-</th>
+                                        <th>-</th>
+                                        <th>-</th>
+                                        <th>-</th>
+                                        <th>-</th>
+                                        <th>-</th>
+                                        <th>-</th>
+                                        <th>-</th>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="row" style="height:5rem;"></div>
+                        <div class="row" style="height:3rem;"></div>
                         <div class="row d-flex justify-content-center">
                             <div class="bootstrap-modal">
                                 <!-- Button trigger modal -->

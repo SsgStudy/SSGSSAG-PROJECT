@@ -1,6 +1,5 @@
 $(document).ready(function() {
-    $('.container-fluid button, .container-fluid input, .container-fluid select')
-        .not('#order-register-new-btn').prop('disabled', true);
+    allDeactivateForm();
     $('.alert').hide();
 });
 
@@ -29,14 +28,15 @@ var saveStatus = {
 
 // 신규
 function clickNewBtn() {
+    $('#order-register-reset-btn').prop('disabled', false);
+    $('.general-button button').prop('disabled', false);
+
     newOrderForm();
     createOrderSeq();
     activateMasterForm();
 }
 
 function createOrderSeq() {
-    console.log("실행 테스트");
-
     $.ajax({
         url: '/order/register/order-seq',
         type: 'GET',
@@ -65,10 +65,11 @@ function activateMasterForm() {
         .prop('disabled', false);
 }
 
-// 확정취소
-
-
-// 확정
+// 초기화
+function allDeactivateForm() {
+    $('.container-fluid button, .container-fluid input, .container-fluid select')
+        .not('#order-register-new-btn, .modal button').prop('disabled', true);
+}
 
 
 // 등록 폼
@@ -147,7 +148,7 @@ function clickOrderMasterSave() {
         $('#order-master-save-btn').removeAttr('data-target');
         $('.alert-danger a').text('입력되지 않은 값이 있습니다.');
         $('.alert-danger').show();
-        $('.alert-danger').delay(3000).fadeOut();
+        $('.alert-danger').delay(2000).fadeOut();
         // $('.alert-danger a').text('');
     }
     else {
@@ -229,7 +230,7 @@ $("#order-register-remove-btn").click(function () {
 });
 
 
-function orderRegisterDelete() {
+function orderRegisterReset() {
     $("#order-created-date").val('dd/mm/yyyy');
     $("#order-seq").val('');
     $("#incoming-product-supplier-nm").val('');
@@ -248,7 +249,21 @@ function orderRegisterDelete() {
             <th>-</th>
         </tr>
     `)
+    $('#input-product-cd').val('');
+    allDeactivateForm();
+}
 
+function orderObjectDelete() {
+    order = {
+        "pkOrderSeq": null,
+        "vOrderStatus": null,
+        "vIncomingProductSupplierNm": null,
+        "vOrderType": null,
+        "dtOrderCreatedDate": null,
+        "dtDeliveryDate": null,
+    }
+
+    orderDetails= [];
 }
 
 // 발주 상세 - 추가
