@@ -5,6 +5,48 @@ $(document).ready(function() {
     getCategoryHierarchy();
 });
 
+// 모달 불러오기
+function handleInventoryDetailLinkClick(key) {
+    console.log("handleInventoryDetailLinkClick 호출");
+
+    // AJAX 요청
+    $.ajax({
+        url: '/inventory/list/detail/' + key,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+
+            console.log(data)
+
+            // let newTableBody = {};
+
+            // 기존의 행들을 모두 제거
+            $('#inventory-history-modal-body').empty();
+
+            // 새로운 행을 생성하여 tbody에 추가
+            let formattedDate = formatDate(data.dtInventoryChangeDate);
+            let row = `<tr role="row" class="odd">
+                    <td>${data.pkInventorySeq}</td>
+                    <td>${data.ninventoryShippingCnt}</td>
+                    <td>${formattedDate}</td>
+                    <td>${data.vinventoryChanegeType}</td>
+                    <td>${data.vzoneCd}</td>
+                    <td>${data.vwarehouseCd}</td>
+                    <td>${data.vzoneCd2}</td>
+                    <td>${data.vwarehouseCd2}</td>
+                </tr>`;
+            $('#inventory-history-modal-body').append(row);
+        },
+
+        error: function(xhr, status, error) {
+            // 데이터를 받아오지 못했을 때 실행되는 함수
+            console.error('Error fetching data:', error);
+
+            $('#inventory-history-modal-body').empty();
+        }
+    });
+}
+
 // 카테고리 입력폼
 $('#select-main-category').change(function() {
     let $subCategory = $('#select-sub-category');
@@ -206,5 +248,3 @@ function renderWarehouseZone(warehouseNm) {
     });
 
 }
-
-// 여기서 함수를 선언하고 조히 버튼에서 onclick으로 달아준다

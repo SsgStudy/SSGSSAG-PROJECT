@@ -4,10 +4,22 @@
 
 <mapper namespace="com.ssg.ssgssag.mapper.InventoryMapper">
 
+<!--    <resultMap id="inventoryResultMap" type="com.ssg.ssgssag.domain.InventoryHistoryVO">-->
+<!--        <result property="pkInventorySeq" column="PK_INVENTORY_SEQ" />-->
+<!--        <result property="nInventoryShippingCnt" column="N_INVENTORY_SHIPPING_CNT" />-->
+<!--        <result property="dtInventoryChangeDate" column="DT_INVENTORY_CHANGE_DATE" />-->
+<!--        <result property="vInventoryChangeType" column="V_INVENTORY_CHANEGE_TYPE" />-->
+<!--        <result property="vZoneCd" column="V_ZONE_CD" />-->
+<!--        <result property="vZoneCd2" column="V_ZONE_CD2" />-->
+<!--        <result property="vWarehouseCd" column="V_WAREHOUSE_CD" />-->
+<!--        <result property="vWarehouseCd2" column="V_WAREHOUSE_CD2" />-->
+<!--    </resultMap>-->
+
     <select id="selectAllInventory" resultType="com.ssg.ssgssag.dto.InventoryListDTO">
         SELECT PK_INVENTORY_SEQ, DT_INVENTORY_SLIP_DATE, N_INVENTORY_CNT, V_ZONE_CD, I.V_WAREHOUSE_CD, I.V_PRODUCT_CD, P.V_PRODUCT_NM, W.V_WAREHOUSE_NM
         FROM TB_INVENTORY I LEFT JOIN TB_PRODUCT P ON I.V_PRODUCT_CD  = P.V_PRODUCT_CD
         LEFT JOIN TB_WAREHOUSE W ON I.V_WAREHOUSE_CD = W.V_WAREHOUSE_CD
+        ORDER BY PK_INVENTORY_SEQ
     </select>
 
     <select id="selectAllWareHouseZone" resultType="com.ssg.ssgssag.dto.WareHouseZoneDTO">
@@ -88,6 +100,20 @@
             WHERE V_ZONE_NM = #{vZoneNm}
             )
         </if>
+    </select>
+
+
+    <select id="selectInventoryHistoryBySeq" parameterType="java.lang.Integer" resultType="InventoryHistoryVO">
+        SELECT PK_INVENTORY_SEQ
+             , COALESCE(N_INVENTORY_SHIPPING_CNT, '') AS N_INVENTORY_SHIPPING_CNT
+             , DT_INVENTORY_CHANGE_DATE
+             , COALESCE(V_INVENTORY_CHANEGE_TYPE, '') AS V_INVENTORY_CHANEGE_TYPE
+             , COALESCE(V_ZONE_CD, '')                AS V_ZONE_CD
+             , COALESCE(V_WAREHOUSE_CD, '')           AS V_WAREHOUSE_CD
+             , COALESCE(V_ZONE_CD2, '')               AS V_ZONE_CD2
+             , COALESCE(V_WAREHOUSE_CD2, '')          AS V_WAREHOUSE_CD2
+        FROM TB_INVENTORY_HISTORY
+        WHERE PK_INVENTORY_SEQ = #{pkInventorySeq}
     </select>
 
 </mapper>

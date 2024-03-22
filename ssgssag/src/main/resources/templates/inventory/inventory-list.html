@@ -80,7 +80,7 @@
                 </div>
                 <div class="row">
                   <!-- 옵션 3 -->
-                  <label class="col-sm-1 col-form-label mr-1">창고</label>
+                  <label class=" col-form-label mr-5 ml-3">창고</label>
                   <select class="custom-select mr-2 col-sm-2" id="select-warehouse">
                     <option selected="selected">창고</option>
                   </select>
@@ -125,8 +125,16 @@
                   </thead>
                   <tbody class="inventory-list-table-body">
                     <tr th:each="inventory : ${inventoryList}">
-                      <td data-toggle="modal" data-target="#inventoryhisotry">
-                        <span th:text="${inventory.pkInventorySeq}"></span>
+                      <td data-toggle="modal" data-target="#inventory-history-modal">
+<!--                        <span th:text="${inventory.pkInventorySeq}"></span>-->
+<!--                      <td data-toggle="modal" data-target="#inventory-history-modal">-->
+<!--                        <a href="#" th:href="@{/inventory/list/detail/{pkInventorySeq}(pkInventorySeq=${inventory.pkInventorySeq})}">-->
+<!--                          <span th:text="${inventory.pkInventorySeq}"></span>-->
+<!--                        </a>-->
+                        <a class="inventory-detail-link" th:attr="data-inventory-id=${inventory.pkInventorySeq}">
+                          <span th:text="${inventory.pkInventorySeq}" th:onclick="'handleInventoryDetailLinkClick(' + ${inventory.pkInventorySeq} + ')'"></span>
+                        </a>
+
                       </td>
                       <td th:text="${#temporals.format(inventory.dtInventorySlipDate, 'yyyy-MM-dd')}"></td>
                       <td th:text="${inventory.vProductCd}"></td>
@@ -139,12 +147,12 @@
                   </tbody>
                 </table>
                 <!-- Modal -->
-                <div class="modal fade" id="inventoryhisotry">
+                <div class="modal fade" id="inventory-history-modal" tabindex="-1" role="dialog" aria-labelledby="inventory-history-modal-label">
                   <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title">재고 이력</h5>
-                        <button type="button" class="close" data-dismiss="modal">
+                        <h5 class="modal-title" id="inventory-history-modal-label">재고 이력</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span>&times;</span>
                         </button>
                       </div>
@@ -163,17 +171,17 @@
                               <th>창고 구역</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                              <td>2403160103</td>
-                              <td>20</td>
-                              <td>2024-03-18</td>
-                              <td>입고수량조정</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                            </tr>
+                            <tbody id="inventory-history-modal-body">
+<!--                            <tr>-->
+<!--                              <td th:text="${inventoryHistory.pkInventorySeq}"></td>-->
+<!--                              <td th:text="${inventoryHistory.nInventoryShippingCnt}"></td>-->
+<!--                              <td th:text="${#temporals.format(inventoryHistory.dtInventoryChangeDate, 'yyyy-MM-dd')}"></td>-->
+<!--                              <td th:text="${inventoryHistory.vInventoryChangeType}"></td>-->
+<!--                              <td th:text="${inventoryHistory.vZondCd}"></td>-->
+<!--                              <td th:text="${inventoryHistory.vWarehouseCd}"></td>-->
+<!--                              <td th:text="${inventoryHistory.vZondCd2}"></td>-->
+<!--                              <td th:text="${inventoryHistory.vWarehouseCd2}"></td>-->
+<!--                            </tr>-->
                             </tbody>
                           </table>
                         </div>

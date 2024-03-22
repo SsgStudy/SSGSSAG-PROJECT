@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.controller;
 
+import com.ssg.ssgssag.domain.InventoryHistoryVO;
 import com.ssg.ssgssag.domain.InventoryVO;
 import com.ssg.ssgssag.dto.CategoryFilterDTO;
 import com.ssg.ssgssag.dto.InventoryListDTO;
@@ -26,12 +27,18 @@ public class InventoryController {
     public String showInventoryListPage(Model model) {
         log.info("[controller] inventory all list");
 
-//        모든 재고 리스트 가져오기
         List<InventoryListDTO> inventoryList = inventoryService.selectAllInventory();
         model.addAttribute("inventoryList", inventoryList);
 
-
         return "inventory/inventory-list";
+    }
+
+    @GetMapping("/list/detail/{pkInventorySeq}")
+    @ResponseBody
+    public InventoryHistoryVO getInventoryHistoryBySeq(@PathVariable Integer pkInventorySeq) {
+        log.info("호출");
+        InventoryHistoryVO inventoryHistoryVO = inventoryService.getInventoryHistoryBySeq(pkInventorySeq);
+        return inventoryHistoryVO;
     }
 
     @GetMapping("/warehouse")

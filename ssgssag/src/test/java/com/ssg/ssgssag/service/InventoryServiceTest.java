@@ -1,10 +1,8 @@
 package com.ssg.ssgssag.service;
 
+import com.ssg.ssgssag.domain.InventoryHistoryVO;
 import com.ssg.ssgssag.domain.InventoryVO;
-import com.ssg.ssgssag.dto.CategoryFilterDTO;
-import com.ssg.ssgssag.dto.InventoryListDTO;
-import com.ssg.ssgssag.dto.InventorySearchDTO;
-import com.ssg.ssgssag.dto.WareHouseZoneDTO;
+import com.ssg.ssgssag.dto.*;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +55,12 @@ public class InventoryServiceTest {
         log.info("조건 3 : 카테고리, 창고");
         dtoList1.forEach(System.out::println);
 
+    }
 
-
+    @Test
+    public void getInventoryHistoryBySeq() {
+        Integer num = 1;
+        InventoryHistoryVO inventoryHistoryVO = inventoryService.getInventoryHistoryBySeq(num);
+        log.info(inventoryHistoryVO);
     }
 }

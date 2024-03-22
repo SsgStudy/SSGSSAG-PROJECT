@@ -83,26 +83,35 @@ function readInventory() {
 
             // 테이블에 데이터 추가
             $.each(resp, function (index, inventory) {
+
                 console.log(inventory)
 
                 let formattedDate = formatDate(inventory.dtInventorySlipDate);
-                let row = `<tr role="row" class="odd">
-                            <td data-toggle="modal" data-target="#inventoryhisotry">
-                                <span>${inventory.pkInventorySeq}</span>
-                            </td>
-                            <td>${formattedDate}</td>
-                            <td>${inventory.vproductCd}</td>
-                            <td>${inventory.vproductNm}</td>
-                            <td>${inventory.ninventoryCnt}</td>
-                            <td>${inventory.vwarehouseCd}</td>
-                            <td>${inventory.vwarehouseNm}</td>
-                            <td>${inventory.vzoneCd}</td>
-                        </tr>`;
+                let row = `<tr role="row" class="odd inventory-detail-link" data-inventory-id="${inventory.pkInventorySeq}">
+                                <td data-toggle="modal" data-target="#inventory-history-modal">
+                                    <span>${inventory.pkInventorySeq}</span>
+                                </td>
+                                <td>${formattedDate}</td>
+                                <td>${inventory.vproductCd}</td>
+                                <td>${inventory.vproductNm}</td>
+                                <td>${inventory.ninventoryCnt}</td>
+                                <td>${inventory.vwarehouseCd}</td>
+                                <td>${inventory.vwarehouseNm}</td>
+                                <td>${inventory.vzoneCd}</td>
+                            </tr>`;
                 newTableBody.append(row);
                 cnt = index+1;
                 console.log(row, cnt);
-
             });
+
+// 클릭한 재고 번호를 통해 모달을 열도록 처리
+            $('.inventory-detail-link').on('click', function () {
+                var inventoryId = $(this).attr('data-inventory-id');
+                handleInventoryDetailLinkClick(inventoryId);
+            });
+
+
+            //페이징 처리
             $('#DataTables_Table_0_info').text(`Showing 1 to 10 of ${cnt} entries`);
             $('.pagination').find('.paginate_button').not('#DataTables_Table_0_previous, #DataTables_Table_0_next').remove(); // 이전(pre)과 다음(next)을 제외한 리스트들을 모두 지웁니다.
 
@@ -112,7 +121,7 @@ function readInventory() {
             console.log("page", show, page);
 
             for (let i = 1; i <= page; i++) {
-                console.log('실행?');
+                console.log('실행');
                 $('#DataTables_Table_0_previous').after(
                     `
                     <li class="paginate_button page-item active">

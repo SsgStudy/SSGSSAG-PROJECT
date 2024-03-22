@@ -1,10 +1,8 @@
 package com.ssg.ssgssag.mapper;
 
+import com.ssg.ssgssag.domain.InventoryHistoryVO;
 import com.ssg.ssgssag.domain.InventoryVO;
-import com.ssg.ssgssag.dto.CategoryFilterDTO;
-import com.ssg.ssgssag.dto.InventoryListDTO;
-import com.ssg.ssgssag.dto.InventorySearchDTO;
-import com.ssg.ssgssag.dto.WareHouseZoneDTO;
+import com.ssg.ssgssag.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,4 +16,6 @@ public interface InventoryMapper {
     List<CategoryFilterDTO> selectCategoryHierarchy();
 
     List<InventoryListDTO> searchInventoryByCategoryAndWarehouse(InventorySearchDTO inventorySearchDTO);
+
+    InventoryHistoryVO selectInventoryHistoryBySeq(Integer pkInventorySeq);
 }
