@@ -3,15 +3,14 @@ package com.ssg.ssgssag.controller;
 import com.ssg.ssgssag.domain.InventoryVO;
 import com.ssg.ssgssag.dto.CategoryFilterDTO;
 import com.ssg.ssgssag.dto.InventoryListDTO;
+import com.ssg.ssgssag.dto.InventorySearchDTO;
 import com.ssg.ssgssag.dto.WareHouseZoneDTO;
 import com.ssg.ssgssag.service.InventoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -48,6 +47,16 @@ public class InventoryController {
     public List<CategoryFilterDTO> getCategoryHierarchy() {
         List<CategoryFilterDTO> categoryList = inventoryService.selectCategoryHierarchy();
         return categoryList;
+    }
+
+    @PostMapping("/search")
+    @ResponseBody
+    public List<InventoryListDTO> getInventoryByCategoryAndWarehouse(@RequestBody InventorySearchDTO inventorySearchDTO) {
+        log.info("검색 {}", inventorySearchDTO);
+
+        List<InventoryListDTO> inventoryList = inventoryService.getInventoryByCategoryAndWarehouse(inventorySearchDTO);
+//        inventoryList.stream().forEach(System.out::println);
+        return inventoryList;
     }
 
 }

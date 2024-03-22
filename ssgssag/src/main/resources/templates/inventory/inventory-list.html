@@ -63,7 +63,7 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title"> 필터 선택 </h4>
-              <div class="form-basic">
+              <div class="form-basic" id="inventory-list-search-form">
                 <!-- 옵션 1 -->
                 <div class="form-group">
                   <label class="col-form-label mr-3 mt-3">카테고리</label>
@@ -80,7 +80,7 @@
                 </div>
                 <div class="row">
                   <!-- 옵션 3 -->
-                  <label class="col-sm-1 col-form-label mr-3">창고</label>
+                  <label class="col-sm-1 col-form-label mr-1">창고</label>
                   <select class="custom-select mr-2 col-sm-2" id="select-warehouse">
                     <option selected="selected">창고</option>
                   </select>
@@ -92,7 +92,8 @@
               <!-- 최종 버튼 추가하기 -->
               <div class="row mt-4">
                 <div class="col text-center">
-                  <button type="button" class="btn mb-1 btn-dark">조회</button>
+                  <button type="reset" class="btn mb-1 btn-default" onclick="inventoryReadPageReset()">초기화</button>
+                  <button type="button" class="btn mb-1 btn-dark" id="search-button">조회</button>
                 </div>
               </div>
             </div>
@@ -122,19 +123,20 @@
                     <th>구역 코드</th>
                   </tr>
                   </thead>
-                  <tbody>
-                  <tr th:each="inventory : ${inventoryList}">
-                    <td data-toggle="modal" data-target="#inventoryhisotry">
-                      <span th:text="${inventory.pkInventorySeq}"></span>
-                    </td>
-                    <td th:text="${#temporals.format(inventory.dtInventorySlipDate, 'yyyy-MM-dd')}"></td>
-                    <td th:text="${inventory.vProductCd}"></td>
-                    <td th:text="${inventory.vProductNm}"></td>
-                    <td th:text="${inventory.nInventoryCnt}"></td>
-                    <td th:text="${inventory.vWarehouseCd}"></td>
-                    <td th:text="${inventory.vWarehouseNm}"></td>
-                    <td th:text="${inventory.vZoneCd}"></td>
-                  </tr>
+                  <tbody class="inventory-list-table-body">
+                    <tr th:each="inventory : ${inventoryList}">
+                      <td data-toggle="modal" data-target="#inventoryhisotry">
+                        <span th:text="${inventory.pkInventorySeq}"></span>
+                      </td>
+                      <td th:text="${#temporals.format(inventory.dtInventorySlipDate, 'yyyy-MM-dd')}"></td>
+                      <td th:text="${inventory.vProductCd}"></td>
+                      <td th:text="${inventory.vProductNm}"></td>
+                      <td th:text="${inventory.nInventoryCnt}"></td>
+                      <td th:text="${inventory.vWarehouseCd}"></td>
+                      <td th:text="${inventory.vWarehouseNm}"></td>
+                      <td th:text="${inventory.vZoneCd}"></td>
+                    </tr>
+                  </tbody>
                 </table>
                 <!-- Modal -->
                 <div class="modal fade" id="inventoryhisotry">
@@ -192,6 +194,7 @@
           Main wrapper end
       ***********************************-->
       <script th:src="@{/js/Inventory.js}"></script>
+      <script th:src="@{/js/InventorySearch.js}"></script>
 
       <!--**********************************
           Scripts

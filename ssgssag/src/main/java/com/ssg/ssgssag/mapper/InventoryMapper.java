@@ -3,6 +3,7 @@ package com.ssg.ssgssag.mapper;
 import com.ssg.ssgssag.domain.InventoryVO;
 import com.ssg.ssgssag.dto.CategoryFilterDTO;
 import com.ssg.ssgssag.dto.InventoryListDTO;
+import com.ssg.ssgssag.dto.InventorySearchDTO;
 import com.ssg.ssgssag.dto.WareHouseZoneDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,4 +16,6 @@ public interface InventoryMapper {
     List<WareHouseZoneDTO> selectAllWareHouseZone();
 
     List<CategoryFilterDTO> selectCategoryHierarchy();
+
+    List<InventoryListDTO> searchInventoryByCategoryAndWarehouse(InventorySearchDTO inventorySearchDTO);
 }
