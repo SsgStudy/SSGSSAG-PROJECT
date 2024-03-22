@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Log4j2
@@ -55,18 +56,8 @@ public class WareHouseServiceImpl implements WareHouseService {
 
   }
 
-//  @Override
-//  public void addWarehouse(WareHouseDTO wareHouseDTO) {
-//
-//    String warehouseCode = generateWarehouseCode(wareHouseDTO.getVWarehouseLoc());
-//    wareHouseDTO.setVWarehouseCd("KR-" + warehouseCode);
-//
-//    wareHouseMapper.insertWarehouse(wareHouseDTO);
-//    log.info(wareHouseDTO);
-//    log.info(warehouseCode);
-//  }
-
   @Override
+  @Transactional
   public void addWarehouse(WareHouseDTO wareHouseDTO) {
     String baseCode = generateWarehouseCode(wareHouseDTO.getVWarehouseLoc());
     String latestWarehouseCd = wareHouseMapper.findLatestWarehouseCdByPrefix("KR-" + baseCode + "-");
@@ -77,6 +68,7 @@ public class WareHouseServiceImpl implements WareHouseService {
       String numberPart = latestWarehouseCd.substring(latestWarehouseCd.lastIndexOf('-') + 1);
       nextNumber = Integer.parseInt(numberPart) + 1;
     }
+
 
     // 최종 창고 코드 생성
     String finalWarehouseCd = "KR-" + baseCode + "-" + nextNumber;
