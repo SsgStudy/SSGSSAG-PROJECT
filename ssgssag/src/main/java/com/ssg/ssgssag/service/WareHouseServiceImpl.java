@@ -55,10 +55,35 @@ public class WareHouseServiceImpl implements WareHouseService {
 
   }
 
+//  @Override
+//  public void addWarehouse(WareHouseDTO wareHouseDTO) {
+//
+//    String warehouseCode = generateWarehouseCode(wareHouseDTO.getVWarehouseLoc());
+//    wareHouseDTO.setVWarehouseCd("KR-" + warehouseCode);
+//
+//    wareHouseMapper.insertWarehouse(wareHouseDTO);
+//    log.info(wareHouseDTO);
+//    log.info(warehouseCode);
+//  }
+
   @Override
   public void addWarehouse(WareHouseDTO wareHouseDTO) {
+    String baseCode = generateWarehouseCode(wareHouseDTO.getVWarehouseLoc());
+    String latestWarehouseCd = wareHouseMapper.findLatestWarehouseCdByPrefix("KR-" + baseCode + "-");
+
+    // 최신 코드의 숫자 부분 추출 및 +1
+    int nextNumber = 1; // 기본값
+    if (latestWarehouseCd != null && !latestWarehouseCd.isEmpty()) {
+      String numberPart = latestWarehouseCd.substring(latestWarehouseCd.lastIndexOf('-') + 1);
+      nextNumber = Integer.parseInt(numberPart) + 1;
+    }
+
+    // 최종 창고 코드 생성
+    String finalWarehouseCd = "KR-" + baseCode + "-" + nextNumber;
+    wareHouseDTO.setVWarehouseCd(finalWarehouseCd);
+
     wareHouseMapper.insertWarehouse(wareHouseDTO);
-    log.info(wareHouseDTO);
+    log.info("Added new warehouse with code: {}", finalWarehouseCd);
   }
 
   @Override
@@ -71,5 +96,16 @@ public class WareHouseServiceImpl implements WareHouseService {
     wareHouseMapper.insertWarehouseZone(wareHouseZoneVO);
   }
 
+  private String generateWarehouseCode(String location) {
+    if (location.contains("서울")) return "SEO";
+    else if (location.contains("부산")) return "BUS";
+    else if (location.contains("인천")) return "INC";
+    else if (location.contains("대구")) return "DAG";
+    else if (location.contains("광주")) return "GWA";
+    else if (location.contains("대전")) return "DAE";
+    else if (location.contains("경기")) return "GYE";
+    else return "ETC"; // 기타 지역에 대한 처리
+  }
 
 }
+

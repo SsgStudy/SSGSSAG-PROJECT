@@ -30,4 +30,6 @@ public interface WareHouseMapper {
 
     void insertWarehouseZone(WareHouseZoneVO wareHouseZoneVO);
 
+    String findLatestWarehouseCdByPrefix(@Param("codePrefix") String codePrefix);
+
 }

@@ -48,4 +48,9 @@
     VALUES (#{vZoneCd}, #{vWarehouseCd}, #{vZoneNm})
   </insert>
 
+  <select id="findLatestWarehouseCdByPrefix" parameterType="com.ssg.ssgssag.dto.WareHouseDTO">
+  SELECT V_WAREHOUSE_CD FROM TB_WAREHOUSE WHERE V_WAREHOUSE_CD
+    LIKE CONCAT(#{codePrefix}, '%') ORDER BY V_WAREHOUSE_CD DESC LIMIT 1
+  </select>
+
 </mapper>

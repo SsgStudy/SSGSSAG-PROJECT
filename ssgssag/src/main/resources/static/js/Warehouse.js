@@ -219,23 +219,8 @@ function updateUserAddress () {
 //유저 주소의 조합
   const userAddress = $('#sample3_address').val() +' '+ $('#sample3_detailAddress').val() + $('#sample3_extraAddress').val();
 
-//확인하고 넣을 때 주소를 로컬 스토리지에 저장한다 -> 근데 전체 주소로 저장해서 넣어야 함! 조합으로!
   localStorage.setItem('address', userAddress);
 
-//유저의 주소 업데이트도 해줍니다!
-  $.ajax({
-    url: `/payment/addressUpdate`,
-    type: 'POST',
-    contentType: 'application/json',
-    data: userAddress,
-    success: function (response) {
-      //주소가 저장되었기 때문에 이제 결제로 이동합니다!
-      paymentInformation(userAddress);
-    },
-    error: function (response) {
-      console.error("유저 주소 정보 업데이트 실패");
-    }
-  });
 }
 
 //취소 버튼 클릭시
