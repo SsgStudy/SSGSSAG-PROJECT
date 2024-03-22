@@ -48,8 +48,25 @@ function orderReadPageReset() {
     $("#order-status").val(($('#order-status option[selected]').val()));
     $("#order-confirm-search-form").find("input[type=text]").val("");
     getNowDate();
-    $(".order-single-tbody").empty();
-    $(".order-master-tbody").empty();
+    $(".order-master-tbody").empty().append(
+        `
+            <tr class="odd">
+                <td valign="top" colspan="8" class="dataTables_empty">No data available in table</td>
+            </tr>
+        `
+    );
+    $(".order-single-tbody").empty().append(
+        `<tr>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+        </tr>
+        `
+    );
 }
 
 // 입력폼

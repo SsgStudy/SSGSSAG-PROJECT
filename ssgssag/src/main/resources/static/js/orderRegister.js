@@ -1,8 +1,14 @@
+$(document).ready(function() {
+    $('.container-fluid button, .container-fluid input, .container-fluid select')
+        .not('#order-register-new-btn').prop('disabled', true);
+    $('.alert').hide();
+});
+
 // 전역 변수
 var orderSearch = {
-    "vIncomingProductSupplierNm": "Samsung Electronics",
-    "vWarehouseCd": "KR-SEO-02",
-    "vProductCd": "880-5678-0523"
+    "vIncomingProductSupplierNm": null,
+    "vWarehouseCd": null,
+    "vProductCd": null
 };
 
 var order = {
@@ -22,13 +28,15 @@ var saveStatus = {
 }
 
 // 신규
-$("#order-register-new-btn").click(function () {
-    // 발주번호 생성
+function clickNewBtn() {
     newOrderForm();
     createOrderSeq();
-});
+    activateMasterForm();
+}
 
 function createOrderSeq() {
+    console.log("실행 테스트");
+
     $.ajax({
         url: '/order/register/order-seq',
         type: 'GET',
@@ -50,6 +58,11 @@ function newOrderForm() {
     $("#order-status").val('');
     $("#warehouse-cd").val('');
     $("#order-type").val(($('#order-type option[selected]').val()));
+}
+
+function activateMasterForm() {
+    $('#order-register-form button, .container-fluid input, .container-fluid select')
+        .prop('disabled', false);
 }
 
 // 확정취소
@@ -128,6 +141,19 @@ $('#warehouseSearchInputBox .table-responsive tbody').on('click', 'tr', function
 
 
 // 발주 - 저장
+
+function clickOrderMasterSave() {
+    if (!checkInputFields()) {
+        $('#order-master-save-btn').removeAttr('data-target');
+        $('.alert-danger a').text('입력되지 않은 값이 있습니다.');
+        $('.alert-danger').show();
+        $('.alert-danger').delay(3000).fadeOut();
+        // $('.alert-danger a').text('');
+    }
+    else {
+        $('#order-master-save-btn').attr('data-target','#exampleModalCenter');
+    }
+}
 function orderRegisterSave() {
     if (!checkEmptyOrderForm()) {
         console.log("입력되지 않은 값이 있습니다.")
@@ -154,6 +180,21 @@ function checkEmptyOrderForm() {
         return false;
     }
     return true;
+}
+
+function checkInputFields() {
+    let allFilled = true;
+    $('.order-master-form input,  .order-master-form select').each(function() {
+        console.log("test ", $(this).val())
+        if ($(this).val().trim() === ''
+            || $(this).val().trim() === '선택'
+            || $(this).val().trim() === 'dd/mm/yyyy') {
+            allFilled = false;
+            // return false;
+        }
+    });
+
+    return allFilled;
 }
 
 
@@ -195,6 +236,19 @@ function orderRegisterDelete() {
     $("#order-status").val('');
     $("#warehouse-cd").val('');
     $("#order-type").val(($('#order-type option[selected]').val()));
+    $('.order-detail-tbody').empty().append(`
+        <tr>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+        </tr>
+    `)
+
 }
 
 // 발주 상세 - 추가
