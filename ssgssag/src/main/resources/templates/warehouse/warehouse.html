@@ -79,11 +79,17 @@
                                  placeholder="창고 이름을 입력해주세요">
                         </div>
                       </div>
-                      <div class="row">
+                      <div class="row" style="justify-content: flex-end">
                         <label class="col-sm-3 col-form-label text-left">소재지</label>
                         <div class="col-sm-9 mb-1">
-                          <input type="text" class="form-control input-flat" name="vWarehouseLoc"
-                                 placeholder="창고 소재지를 입력해주세요">
+                          <input type="text" class="form-control input-flat" name="vWarehouseLoc" data-aos="zoom-in-up"
+                                 placeholder="창고 소재지를 입력해주세요" onclick="sample3_execDaumPostcode()" id="sample3_search">
+                        </div>
+
+                        <div id="modal-wrap" class="col-sm-9">
+                          <div id="wrap" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
+                            <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+                          </div>
                         </div>
                       </div>
                       <div class="row">
@@ -100,7 +106,6 @@
                                  placeholder="창고 관리자 코드를 입력해주세요">
                         </div>
                       </div>
-
                     </div>
                   </div>
                   </form>
@@ -300,6 +305,8 @@
   ***********************************-->
   <th:block th:replace="/layout/script :: scriptFragment"></th:block>
   <script th:src="@{/js/Warehouse.js}"></script>
+  <script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
+
 </div>
 </body>
 </html>
