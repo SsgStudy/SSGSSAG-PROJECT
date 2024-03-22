@@ -58,47 +58,43 @@ public class OrderController {
         Long orderSeq = orderService.createOrderSeq();
         Map<String, Long> res = new HashMap<>();
         res.put("orderSeq", orderSeq);
-        log.info("orderSeq {}", orderSeq);
-
         return res;
     }
 
     @PostMapping("/register/detail")
     @ResponseBody
     public ResponseEntity<OrderProductDTO> createOrderDetailForm(@RequestBody OrderProductDTO order) {
-
-        log.info("order {}", order);
         OrderProductDTO createdOrderProduct = orderService.createOrderDetail(order);
-
         return ResponseEntity.ok(createdOrderProduct);
     }
 
     @PostMapping("/register")
     @ResponseBody
     public String registerOrderAndOrderDetail(@RequestBody OrderRequestDTO orderRequest) {
-        log.info("order register {}", orderRequest);
         orderService.registerOrder(orderRequest.getOrder(), orderRequest.getOrderDetails());
         return "ok";
 //        return "order/orderRegister";
     }
 
-    @GetMapping("/confirm/{orderSeq}")
-    @ResponseBody
-    public String orderConfirmation(@RequestParam String orderSeq) {
-        Map<String, Long> map = new HashMap<>();
-//        map.put("orderStatus", );
-
-//        return map;
-        return null;
-    }
-
     @PostMapping("/read")
     @ResponseBody
     public List<OrderProductDTO> getOrderList(@RequestBody OrderReadSearchDTO orderReadSearch) {
-        log.info("orderReadSearch {}", orderReadSearch);
         List<OrderProductDTO> dto = orderService.getOrderList(orderReadSearch);
-
-        log.info("orderList {}", dto);
         return dto;
+    }
+
+    @GetMapping("/single")
+    @ResponseBody
+    public List<OrderProductDTO> getMasterOrderList(@RequestParam("order-seq") Long orderSeq) {
+        return orderService.getOrderSigleList(orderSeq);
+    }
+
+    @PostMapping("/confirm")
+    @ResponseBody
+    public String orderConfirmation(@RequestBody Map<String, List<Long>> param) {
+        log.info("orderSeq {}", param);
+        orderService.updateOrderStatusConfirmed(param.get("orderSeq"));
+
+        return "ok";
     }
 }
