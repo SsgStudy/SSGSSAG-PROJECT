@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.service;
 
+import com.ssg.ssgssag.domain.WareHouseZoneVO;
 import com.ssg.ssgssag.dto.WareHouseDTO;
 import com.ssg.ssgssag.mapper.WareHouseMapper;
 import java.util.List;
@@ -53,5 +54,22 @@ public class WareHouseServiceImpl implements WareHouseService {
     return types;
 
   }
+
+  @Override
+  public void addWarehouse(WareHouseDTO wareHouseDTO) {
+    wareHouseMapper.insertWarehouse(wareHouseDTO);
+    log.info(wareHouseDTO);
+  }
+
+  @Override
+  public List<WareHouseZoneVO> getWareHouseZones(String vWarehouseCd) {
+    return wareHouseMapper.selectWareHouseZone(vWarehouseCd);
+  }
+
+  @Override
+  public void addWarehouseZone(WareHouseZoneVO wareHouseZoneVO) {
+    wareHouseMapper.insertWarehouseZone(wareHouseZoneVO);
+  }
+
 
 }
