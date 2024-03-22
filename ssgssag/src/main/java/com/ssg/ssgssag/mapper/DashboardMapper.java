@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface dashboardMapper {
+public interface DashboardMapper {
 
     //카드 영역 정보 조회
     //입고, 출고, 주문, 발주, 재고, 창고 수준 조회

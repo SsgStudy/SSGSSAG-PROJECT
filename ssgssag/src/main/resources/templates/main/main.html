@@ -46,10 +46,10 @@
       <div class="row scrollable-row-wrapper fixed-height">
         <div class="col-lg-3 col-sm-6 scrollable-row-item">
           <div class="card gradient-1">
-            <div class="card-body">
+            <div class="card-body hover-card-body">
               <h3 class="card-title text-white">신규 입고</h3>
               <div class="d-inline-block">
-                <h2 class="text-white">7</h2>
+                <h2 class="text-white" th:text="${incoming}">7</h2>
                 <p class="text-white mb-0">건 대기 중</p>
               </div>
               <span class="float-right display-5 opacity-5"><i
@@ -59,10 +59,10 @@
         </div>
         <div class="col-lg-3 col-sm-6 scrollable-row-item">
           <div class="card gradient-2">
-            <div class="card-body">
+            <div class="card-body hover-card-body">
               <h3 class="card-title text-white">신규 출고</h3>
               <div class="d-inline-block">
-                <h2 class="text-white">23</h2>
+                <h2 class="text-white" th:text="${outgoing}">23</h2>
                 <p class="text-white mb-0">건 대기 중</p>
               </div>
               <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
@@ -71,10 +71,10 @@
         </div>
         <div class="col-lg-3 col-sm-6 scrollable-row-item">
           <div class="card gradient-3">
-            <div class="card-body">
+            <div class="card-body hover-card-body">
               <h3 class="card-title text-white">신규 주문</h3>
               <div class="d-inline-block">
-                <h2 class="text-white">3</h2>
+                <h2 class="text-white" th:text="${purchase}">3</h2>
                 <p class="text-white mb-0">건 접수</p>
               </div>
               <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
@@ -83,10 +83,10 @@
         </div>
         <div class="col-lg-3 col-sm-6 scrollable-row-item">
           <div class="card gradient-4">
-            <div class="card-body">
+            <div class="card-body hover-card-body">
               <h3 class="card-title text-white">신규 발주</h3>
               <div class="d-inline-block">
-                <h2 class="text-white">17</h2>
+                <h2 class="text-white" th:text="${order}">17</h2>
                 <p class="text-white mb-0">건 미확정</p>
               </div>
               <span class="float-right display-5 opacity-5"><i class="fa fa-heart"></i></span>
@@ -95,10 +95,10 @@
         </div>
         <div class="col-lg-3 col-sm-6 scrollable-row-item">
           <div class="card gradient-1">
-            <div class="card-body">
+            <div class="card-body hover-card-body">
               <h3 class="card-title text-white">재고</h3>
               <div class="d-inline-block">
-                <h2 class="text-white">2</h2>
+                <h2 class="text-white" th:text="${inventory}">2</h2>
                 <p class="text-white mb-0">건 재고 부족 위험</p>
               </div>
               <span class="float-right display-5 opacity-5"><i
@@ -108,10 +108,10 @@
         </div>
         <div class="col-lg-3 col-sm-6 scrollable-row-item">
           <div class="card gradient-3">
-            <div class="card-body">
+            <div class="card-body hover-card-body">
               <h3 class="card-title text-white">창고</h3>
               <div class="d-inline-block">
-                <h2 class="text-white">9</h2>
+                <h2 class="text-white" th:text="${warehouse}">9</h2>
                 <p class="text-white mb-0">개 관리 중</p>
               </div>
               <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>

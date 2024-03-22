@@ -1,5 +1,5 @@
 .scrollable-row-wrapper {
-  flex-wrap: nowrap!important;
+  flex-wrap: nowrap !important;
   overflow-x: hidden;
   white-space: nowrap;
   width: 100%;
@@ -17,10 +17,19 @@
 
 .scrollable-row-wrapper .col-lg-3,
 .scrollable-row-wrapper .col-sm-6 {
-  flex: 0 0 22%!important;
-  max-width: 22%!important;
+  flex: 0 0 22% !important;
+  max-width: 22% !important;
 }
 
 .scrollable-row-wrapper::-webkit-scrollbar {
   display: none;
+}
+
+.hover-card-body:hover {
+  scale: 110%;
+  transition: 0.2s ease-in-out;
+}
+
+.hover-card-body {
+  transition: 0.2s ease-in-out;
 }

@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class StatusCountDTO {
 
     private String section;
-    private int count;
+    private int cnt;
 }
