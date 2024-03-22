@@ -25,4 +25,5 @@ public class OrderProductVO {
     private String vProductStatus;
     private int nInventoryCnt;
     private int nOrderCnt;
+    private int orderTotalPrice;
 }

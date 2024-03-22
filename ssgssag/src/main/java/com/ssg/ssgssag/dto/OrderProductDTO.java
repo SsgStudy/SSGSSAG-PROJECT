@@ -23,6 +23,7 @@ public class OrderProductDTO {  // 발주 등록 DTO
     private String vIncomingProductSupplierNm;
     private String vOrderStatus;
     private String vWarehouseCd;
+    private String vWarehouseNm;
     private String vOrderType;
     private LocalDate dtOrderCreatedDate;
     private LocalDateTime dtOrderCompletionDate;
@@ -35,7 +36,7 @@ public class OrderProductDTO {  // 발주 등록 DTO
     private String vProductStatus;
     private int nInventoryCnt;
     private int nOrderCnt;
-
+    private int orderTotalPrice;
 
     public String getvIncomingProductSupplierNm() {
         return vIncomingProductSupplierNm;
@@ -47,6 +48,10 @@ public class OrderProductDTO {  // 발주 등록 DTO
 
     public String getvWarehouseCd() {
         return vWarehouseCd;
+    }
+
+    public String getvWarehouseNm() {
+        return vWarehouseNm;
     }
 
     public String getvOrderType() {

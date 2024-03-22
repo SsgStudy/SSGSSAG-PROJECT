@@ -3,7 +3,7 @@
 <th:block th:fragment="navFragment">
   <div class="nav-header" style="background-color: #ffffff;">
     <div class="brand-logo">
-      <a href="index.html" style="padding: 0;">
+      <a href="/" style="padding: 0;">
         <b class="logo-abbr"><img th:src="@{/images/logo.png}" style = "min-width: 50px; margin-top: 20px;" alt=""> </b>
         <span class="logo-compact"><img th:src="@{/./images/logo-compact.png}" alt=""></span>
         <span class="brand-title">
@@ -27,8 +27,9 @@
             <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
                 class="mdi mdi-magnify"></i></span>
           </div>
-          <input type="search" class="form-control" placeholder="Search Dashboard"
-                 aria-label="Search Dashboard">
+          <div class="search-container">
+            <input type="search" class="form-control searchable-input" placeholder="메뉴를 검색해주세요." aria-label="Search Dashboard">
+          </div>
           <div class="drop-down   d-md-none">
             <form action="#">
               <input type="text" class="form-control" placeholder="Search">
@@ -153,7 +154,7 @@
           <li class="icons dropdown">
             <div class="user-img c-pointer position-relative" data-toggle="dropdown">
               <span class="activity active"></span>
-              <img th:src="@{/images/user/1.png}" height="40" width="40" alt="">
+              <img th:src="@{/images/user/1.gif}" height="40" width="40" alt="">
             </div>
             <div class="drop-down dropdown-profile   dropdown-menu">
               <div class="dropdown-content-body">
