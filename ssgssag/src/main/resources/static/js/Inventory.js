@@ -25,11 +25,23 @@ function handleInventoryDetailLinkClick(key) {
 
             // 새로운 행을 생성하여 tbody에 추가
             let formattedDate = formatDate(data.dtInventoryChangeDate);
+
+            let changeType;
+            switch (data.vinventoryChanegeType){
+                case 'CHANGE_CNT_INBOUND' : changeType = '입고 수량 조절';
+                    break;
+                case 'CHANGE_CNT_OUTBOUND' : changeType = '출고 수량 조절';
+                    break;
+                case 'MOVE' : changeType = '창고 이동';
+                    break;
+            }
+
+
             let row = `<tr role="row" class="odd">
                     <td>${data.pkInventorySeq}</td>
                     <td>${data.ninventoryShippingCnt}</td>
                     <td>${formattedDate}</td>
-                    <td>${data.vinventoryChanegeType}</td>
+                    <td>${changeType}</td>
                     <td>${data.vzoneCd}</td>
                     <td>${data.vwarehouseCd}</td>
                     <td>${data.vzoneCd2}</td>
