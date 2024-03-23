@@ -29,4 +29,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const walk = (x - startX) * 2;
     slider.scrollLeft = scrollLeft - walk;
   });
+
+});
+
+document.addEventListener('visibilitychange', function() {
+  if (document.hidden) {
+    document.title = "🥲돌아와요...!";
+  } else {
+    document.title = "SSGSSAG";
+  }
 });
