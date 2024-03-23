@@ -32,10 +32,3 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-document.addEventListener('visibilitychange', function() {
-  if (document.hidden) {
-    document.title = "🥲돌아와요...!";
-  } else {
-    document.title = "SSGSSAG";
-  }
-});
