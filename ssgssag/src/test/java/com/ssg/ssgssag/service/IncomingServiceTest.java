@@ -32,4 +32,6 @@ public class IncomingServiceTest {
         IncomingDetailDTO detail = incomingService.getIncomingDetailByCode(pkIncomingProductSeq);
         log.info(detail);
     }
+
+
 }

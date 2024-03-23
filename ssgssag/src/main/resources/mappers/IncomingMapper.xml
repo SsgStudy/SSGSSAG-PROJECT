@@ -15,7 +15,7 @@
   </select>
 
   <select id="selectAllIncomingProgressProductsWithDetails" resultType="com.ssg.ssgssag.dto.IncomingDTO">
-    SELECT * FROM TB_INCOMING_PRODUCT WHERE V_INCOMING_PRODUCT_STATUS = 'PROGRESS'
+    SELECT * FROM TB_INCOMING_PRODUCT WHERE V_INCOMING_PRODUCT_STATUS = '미입고'
   </select>
 
   <select id="selectIncomingDetailByCode" resultType="com.ssg.ssgssag.dto.IncomingDetailDTO">
@@ -28,7 +28,7 @@
 
   <update id="updateIncomingProductStatusToComplete">
     UPDATE TB_INCOMING_PRODUCT
-    SET V_INCOMING_PRODUCT_STATUS = 'COMPLETE'
+    SET V_INCOMING_PRODUCT_STATUS = '입고'
     WHERE PK_INCOMING_PRODUCT_SEQ = #{pkIncomingProductSeq}
   </update>
 

@@ -1,10 +1,8 @@
 package com.ssg.ssgssag.mapper;
 
-import com.ssg.ssgssag.domain.IncomingVO;
 import com.ssg.ssgssag.dto.IncomingDTO;
 import com.ssg.ssgssag.dto.IncomingDetailDTO;
 import com.ssg.ssgssag.dto.OrderSupplierDTO;
-import com.ssg.ssgssag.dto.ProductDTO;
 import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;

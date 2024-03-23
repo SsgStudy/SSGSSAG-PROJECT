@@ -29,4 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const walk = (x - startX) * 2;
     slider.scrollLeft = scrollLeft - walk;
   });
+
 });
+
