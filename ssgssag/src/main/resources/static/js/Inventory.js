@@ -247,3 +247,48 @@ function renderWarehouseZone(warehouseNm) {
     });
 
 }
+
+
+
+// 재고 목록 checkbox 선택
+
+let selectedNumber
+$('.inventory-checkbox').on('change', function() {
+    if ($(this).prop('checked')) {
+        selectedNumber = $(this).data('inventory-id');
+        console.log(selectedNumber);
+    }
+});
+
+
+$('#submitButton').on('click', function() {
+    let quantity = parseFloat($('#adjustment-cnt').val());
+    let type = $('#in-bound').prop('checked') ? 'CHANGE_CNT_INBOUND' : 'CHANGE_CNT_OUTBOUND';
+
+    let data = {
+        pkInventorySeq: selectedNumber,
+        vInventoryChangeType: type,
+        nInventoryShippingCnt: quantity
+    };
+
+    console.log(data)
+
+    // JSON 데이터를 POST로 서버에 보냄
+    $.ajax({
+        url: '/inventory/adjustment/update',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function(response) {
+            console.log('서버 응답:');
+            console.log("여기가 진짜야!!!!!!!" + JSON.stringify(data))
+            // 서버 응답에 따른 처리
+        },
+        error: function(xhr, status, error) {
+            console.error('에러 발생:', error);
+            // 에러 처리
+        }
+    });
+});
+
+

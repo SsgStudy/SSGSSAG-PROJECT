@@ -53,7 +53,6 @@
     </div>
     <!-- row -->
 
-    <!-- 여기에 각자 맡은 페이지를 넣어서 작업하면 됩니다.-->
     <div class="container-fluid">
       <!-- 재고  조정-->
       <h2>재고 조정</h2>
@@ -64,12 +63,11 @@
               <h4 class="card-title">조정 선택</h4>
               <div class="form-basic">
                 <div class="form-group">
-                  <!-- <h6 class="mr-3">조정 선택</h6> -->
                   <label class="col-form-label mr-4">구분</label>
                   <label class="radio-inline mr-3">
-                    <input type="radio" name="optradio"> 입고 조정 </label>
+                    <input type="radio" name="optradio" id="in-bound"> 입고 조정 </label>
                   <label class="radio-inline mr-3">
-                    <input type="radio" name="optradio"> 출고 조정 </label>
+                    <input type="radio" name="optradio" id="out-bound"> 출고 조정 </label>
                 </div>
               </div>
             </div>
@@ -82,36 +80,38 @@
               <h4 class="card-title"> 재고 목록 </h4>
               <div class="form-inline">
                 <div class="table-responsive">
-                  <table class="table table-hover">
+                  <table class="table table-striped table-bordered zero-configuration">
                     <thead>
                     <tr>
-                      <th>No</th>
-                      <th>선택</th>
                       <th>재고 번호</th>
+                      <th>선택</th>
                       <th>전표 일자</th>
                       <th>상품 코드</th>
+                      <th>상품 이름</th>
                       <th>재고 수량</th>
                       <th>창고 코드</th>
-                      <th>창고 구역 코드</th>
+                      <th>창고 이름</th>
+                      <th>구역 코드</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                      <td>1</td>
-                      <!-- 재고 번호에 맞는 이력 모달로 불러오기 -->
-                      <td>
-                        <div class="form-check form-check-inline">
-                          <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" value=""></label>
-                        </div>
-                      </td>
-                      <td>2403160103</td>
-                      <td>2024-02-15</td>
-                      <td>880-5678-0523</td>
-                      <td>100</td>
-                      <td>A-01</td>
-                      <td>KR-SEO-02</td>
-                    </tr>
+                    <tbody class="inventory-list-table-body">
+                      <tr th:each="inventory : ${inventoryList}">
+                        <td th:text="${inventory.pkInventorySeq}"></td>
+                        <td>
+                          <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                              <input type="checkbox" class="form-check-input inventory-checkbox" th:attr="data-inventory-id=${inventory.pkInventorySeq}">
+                            </label>
+                          </div>
+                        </td>
+                        <td th:text="${#temporals.format(inventory.dtInventorySlipDate, 'yyyy-MM-dd')}"></td>
+                          <td th:text="${inventory.vProductCd}"></td>
+                          <td th:text="${inventory.vProductNm}"></td>
+                          <td th:text="${inventory.nInventoryCnt}"></td>
+                          <td th:text="${inventory.vWarehouseCd}"></td>
+                          <td th:text="${inventory.vWarehouseNm}"></td>
+                          <td th:text="${inventory.vZoneCd}"></td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -129,13 +129,13 @@
                   <label class="col-form-label mr-2">수량</label>
                   <div class="form-group">
                     <div class="col-sm-10">
-                      <input class="form-control form-control-sm" type="number" min="0">
+                      <input class="form-control form-control-sm" type="number" min="0" id="adjustment-cnt">
                     </div>
                   </div>
                   <!-- 최종 버튼 추가하기 -->
                   <div class="row">
                     <div class="col text-center">
-                      <button type="button" class="btn mb-1 btn-dark">확인</button>
+                      <button type="button" class="btn mb-1 btn-dark" id="submitButton">확인</button>
                     </div>
                   </div>
                 </div>
@@ -156,6 +156,7 @@
       Scripts
   ***********************************-->
   <th:block th:replace="/layout/script :: scriptFragment"></th:block>
+  <script th:src="@{/js/Inventory.js}"></script>
 </div>
 </body>
 
