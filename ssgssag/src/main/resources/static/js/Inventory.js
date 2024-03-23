@@ -1,5 +1,6 @@
 $(document).ready(function () {
     console.log("실행");
+    $(".alert").hide();
     getWarehouseAndZone();
     getCategoryHierarchy();
 });
@@ -280,15 +281,44 @@ $('#submitButton').on('click', function() {
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function(response) {
-            console.log('서버 응답:');
-            console.log("여기가 진짜야!!!!!!!" + JSON.stringify(data))
-            // 서버 응답에 따른 처리
+            console.log('서버 응답:'+ JSON.stringify(data));
+
+            // 성공 시 초록 alert창 띄우기
+            showSuccessAlert();
+            scrollToTop();
+            // location.reload();
+            // 페이지 리로딩
         },
         error: function(xhr, status, error) {
             console.error('에러 발생:', error);
-            // 에러 처리
+
+            // 실패 시 에러 alert창 띄우기
+            showDangerAlert();
+            scrollToTop();
+            // 페이지 리로딩
+            // location.reload();
         }
     });
 });
 
 
+// alert
+function showSuccessAlert() {
+    $("#successAlert").fadeIn(); // 알림 보이기
+    setTimeout(function() {
+        $("#successAlert").fadeOut(); // 몇 초 후에 다시 숨기기
+    }, 5000); // 3초 후에 숨김
+}
+function showDangerAlert() {
+    $("#dangerAlert").fadeIn(); // 알림 보이기
+    setTimeout(function() {
+        $("#dangerAlert").fadeOut(); // 몇 초 후에 다시 숨기기
+    }, 5000); // 3초 후에 숨김
+}
+// 상단으로 이동
+function scrollToTop() {
+    window.scrollTo({
+        top: 0, // 상단으로 이동
+        behavior: "smooth" // 부드럽게 스크롤링
+    });
+}
