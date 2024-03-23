@@ -183,6 +183,7 @@
                 <tbody>
                 <tr th:each="incoming, iterStat : ${incomingList}"
                     th:data-pk-incoming-product-seq="${incoming.pkIncomingProductSeq}"
+                    th:data-warehouse-code="${incoming.vWarehouseCd}"
                     onclick="fetchIncomingDetails(this.getAttribute('data-pk-incoming-product-seq'))">
                   <td th:text="${iterStat.count}">1</td>
                   <td th:text="${incoming.pkIncomingProductSeq}">1</td>
@@ -241,9 +242,6 @@
                   <div class="col-sm-9">
                     <select class="form-control" id="warehouseZoneSelect">
                       <option value="">구역 선택</option>
-                      <option value="zone1">구역 1</option>
-                      <option value="zone2">구역 2</option>
-                      <option value="zone3">구역 3</option>
                     </select>
                   </div>
                 </div>

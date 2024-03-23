@@ -136,4 +136,12 @@ public class IncomingController {
             return ResponseEntity.badRequest().body("입고 상태 업데이트 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
+
+    @GetMapping("/zones/{warehouseCd}")
+    @ResponseBody
+    public ResponseEntity<?> getZonesByWarehouseCode(@PathVariable String warehouseCd) {
+        List<String> zones = incomingService.getZonesByWarehouseCode(warehouseCd);
+        return ResponseEntity.ok(zones);
+
+    }
 }
