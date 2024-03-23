@@ -9,8 +9,8 @@ $(document).ready(function () {
         $('.inventory-checkbox').change(handleCheckboxChange);
     });
 
-// 체크박스 조절
-    $('.inventory-checkbox').change(function() {
+    // 체크박스 조절
+    $('.inventory-checkbox').change(function () {
         $('.inventory-checkbox').not(this).prop('checked', false);
     });
 });
@@ -260,11 +260,9 @@ function renderWarehouseZone(warehouseNm) {
 }
 
 
-
-// 재고 목록 checkbox 선택
-
+// 재고 조정 : 재고 목록 checkbox 선택
 let selectedNumber
-$('.inventory-checkbox').on('change', function() {
+$('.inventory-checkbox').on('change', function () {
     if ($(this).prop('checked')) {
         selectedNumber = $(this).data('inventory-id');
         console.log(selectedNumber);
@@ -281,16 +279,13 @@ function handleCheckboxChange() {
 }
 
 function handleOutputQuantityChange() {
-    let currentValue = parseInt($('#adjustment-cnt').val()); // 현재 입력된 값
-    let minValue = 1; // 최소 값
-    let maxValue = selectCnt; // 최대 값
+    let currentValue = parseInt($('#adjustment-cnt').val());
+    let minValue = 1;
+    let maxValue = selectCnt;
 
-    // 입력된 값이 범위를 벗어나는 경우
     if (currentValue < minValue || currentValue > maxValue) {
-        // 안내 메시지 표시
         $('#warningMessage').text('조건에 맞는 수량을 입력해주세요').show();
     } else {
-        // 범위 내에 있는 경우 안내 메시지 숨기기
         $('#warningMessage').hide();
     }
 }
@@ -300,9 +295,8 @@ $('#adjustment-cnt').on('input', function () {
 });
 
 
-
-
-$('#submitButton').on('click', function() {
+// 재고 조정 버튼 클릭 시 반영
+$('#submitButton').on('click', function () {
     let quantity = parseFloat($('#adjustment-cnt').val());
     let type = $('#in-bound').prop('checked') ? 'CHANGE_CNT_INBOUND' : 'CHANGE_CNT_OUTBOUND';
 
@@ -314,32 +308,24 @@ $('#submitButton').on('click', function() {
 
     console.log(data)
 
-    // JSON 데이터를 POST로 서버에 보냄
     $.ajax({
         url: '/inventory/adjustment/update',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(data),
-        success: function(response) {
-            console.log('서버 응답:'+ JSON.stringify(data));
+        success: function (response) {
+            console.log('서버 응답:' + JSON.stringify(data));
 
-            // 성공 시 초록 alert창 띄우기
             showSuccessAlert();
             window.scrollTo(0, 0);
-            // reloadInventoryTable();
             reloadPageAfterDelay(1000);
-            // 페이지 리로딩
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error('에러 발생:', error);
 
-            // 실패 시 에러 alert창 띄우기
             showDangerAlert();
             window.scrollTo(0, 0);
-            // reloadInventoryTable();
             reloadPageAfterDelay(1000);
-            // 페이지 리로딩
-            // location.reload();
         }
     });
 });
@@ -347,24 +333,21 @@ $('#submitButton').on('click', function() {
 
 // alert
 function showSuccessAlert() {
-    $("#successAlert").fadeIn(); // 알림 보이기
-    setTimeout(function() {
-        $("#successAlert").fadeOut(); // 몇 초 후에 다시 숨기기
-    }, 3000); // 3초 후에 숨김
+    $("#successAlert").fadeIn();
+    setTimeout(function () {
+        $("#successAlert").fadeOut();
+    }, 3000);
 }
+
 function showDangerAlert() {
-    $("#dangerAlert").fadeIn(); // 알림 보이기
-    setTimeout(function() {
-        $("#dangerAlert").fadeOut(); // 몇 초 후에 다시 숨기기
-    }, 3000); // 3초 후에 숨김
+    $("#dangerAlert").fadeIn();
+    setTimeout(function () {
+        $("#dangerAlert").fadeOut();
+    }, 3000);
 }
 
 function reloadPageAfterDelay(delay) {
-    setTimeout(function() {
-        location.reload(); // 페이지 리로드
-    }, delay); // 지연 시간 (밀리초)
+    setTimeout(function () {
+        location.reload();
+    }, delay);
 }
-
-$("#reloadPageBtn").on("click", function() {
-    location.reload(); // 페이지 다시 로드
-});
