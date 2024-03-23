@@ -52,4 +52,6 @@ public interface IncomingMapper {
     //매입 거래처 목록 조회
     List<OrderSupplierDTO> selectAllOrderSupplierName();
 
+    List<String> selectZonesByWarehouseCode(@Param("warehouseCd") String warehouseCd);
+
 }

@@ -58,4 +58,11 @@
           )}
   </select>
 
+  <select id="selectZonesByWarehouseCode" resultType="string">
+    SELECT DISTINCT V_ZONE_CD
+    FROM TB_ZONE
+    WHERE V_WAREHOUSE_CD = #{warehouseCd}
+    ORDER BY V_ZONE_CD
+  </select>
+
 </mapper>

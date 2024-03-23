@@ -72,4 +72,8 @@ public class IncomingServiceImpl implements IncomingService {
             dtIncomingProductDate);
     }
 
+    public List<String> getZonesByWarehouseCode(String warehouseCd) {
+        return incomingMapper.selectZonesByWarehouseCode(warehouseCd);
+    }
+
 }
