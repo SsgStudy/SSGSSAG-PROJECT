@@ -66,8 +66,8 @@ function initializeModalMap(address) {
       console.log(y)
 
       // 변환된 숫자에 0.001을 더함
-      let adjustedX = x - 0.007;
-      let adjustedY = y + 0.001; // 예시로, y 값도 조정해봅니다.
+      let adjustedX = x - 0.005;
+      let adjustedY = y + 0.002; // 예시로, y 값도 조정해봅니다.
 
       console.log(adjustedX); // 변환 후 결과를 확인하기 위한 로그
       console.log(adjustedY); // 변환 후 결과를 확인하기 위한 로그
