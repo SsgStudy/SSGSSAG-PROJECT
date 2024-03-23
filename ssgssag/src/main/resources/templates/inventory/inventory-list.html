@@ -63,65 +63,36 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title"> 필터 선택 </h4>
-              <div class="form-basic">
+              <div class="form-basic" id="inventory-list-search-form">
                 <!-- 옵션 1 -->
                 <div class="form-group">
-                  <label class="col-form-label mr-3">카테고리</label>
-                  <!-- <h6 class="mr-3">카테고리별 분류</h6> -->
-                  <select class="custom-select mr-2 col-sm-2">
+                  <label class="col-form-label mr-3 mt-3">카테고리</label>
+                  <select class="custom-select mr-2 col-sm-2" id="select-main-category">
                     <option selected="selected">대분류</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
                   </select>
-                  <select class="custom-select mr-2 col-sm-2">
+                  <select class="custom-select mr-2 col-sm-2" id="select-sub-category">
                     <option selected="selected">중분류</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
                   </select>
-                  <select class="custom-select col-sm-2">
+                  <select class="custom-select col-sm-2" id="select-detail-category">
                     <option selected="selected">소분류</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
                   </select>
-                </div>
-                <div class="row">
-                  <!-- 옵션 2 -->
-                  <label class="col-sm-1 col-form-label">상품</label>
-                  <select class="custom-select mr-2 col-sm-2">
-                    <option selected="selected">선택</option>
-                    <option value="1">상품코드</option>
-                    <option value="2">상품이름</option>
-                  </select>
-                  <div class="form-group">
-                    <div class="col-sm-10">
-                      <input class="form-control form-control-sm" type="text">
-                    </div>
-                  </div>
                 </div>
                 <div class="row">
                   <!-- 옵션 3 -->
-                  <label class="col-sm-1 col-form-label">창고</label>
-                  <select class="custom-select mr-2 col-sm-2">
+                  <label class=" col-form-label mr-5 ml-3">창고</label>
+                  <select class="custom-select mr-2 col-sm-2" id="select-warehouse">
                     <option selected="selected">창고</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
                   </select>
-                  <select class="custom-select mr-2 col-sm-2">
+                  <select class="custom-select mr-2 col-sm-2" id="select-zone">
                     <option selected="selected">구역</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
                   </select>
                 </div>
               </div>
               <!-- 최종 버튼 추가하기 -->
               <div class="row mt-4">
                 <div class="col text-center">
-                  <button type="button" class="btn mb-1 btn-dark">조회</button>
+                  <button type="reset" class="btn mb-1 btn-default" onclick="inventoryReadPageReset()">초기화</button>
+                  <button type="button" class="btn mb-1 btn-dark" id="search-button">조회</button>
                 </div>
               </div>
             </div>
@@ -136,40 +107,46 @@
             <div class="card-body">
               <h4 class="card-title"> 재고 목록 </h4>
               <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-striped table-bordered zero-configuration">
                   <thead>
                   <tr>
                     <!-- <th>#</th> -->
-                    <th>No</th>
+<!--                    <th>No</th>-->
                     <th>재고 번호</th>
                     <th>전표 일자</th>
                     <th>상품 코드</th>
+                    <th>상품 이름</th>
                     <th>재고 수량</th>
                     <th>창고 코드</th>
-                    <th>창고 구역 코드</th>
+                    <th>창고 이름</th>
+                    <th>구역 코드</th>
                   </tr>
                   </thead>
-                  <tbody>
-                  <tr>
-                    <td>1</td>
-                    <!-- 재고 번호에 맞는 이력 모달로 불러오기 -->
-                    <td data-toggle="modal" data-target="#inventoryhisotry">
-                      2403160103
-                    </td>
-                    <td>2024-02-15</td>
-                    <td>880-5678-0523</td>
-                    <td>100</td>
-                    <td>A-01</td>
-                    <td>KR-SEO-02</td>
-                  </tr>
+                  <tbody class="inventory-list-table-body">
+                    <tr th:each="inventory : ${inventoryList}">
+                      <td data-toggle="modal" data-target="#inventory-history-modal" th:onclick="'handleInventoryDetailLinkClick(' + ${inventory.pkInventorySeq} + ')'">
+                        <a class="inventory-detail-link" th:attr="data-inventory-id=${inventory.pkInventorySeq}">
+                          <span th:text="${inventory.pkInventorySeq}"></span>
+                        </a>
+
+                      </td>
+                      <td th:text="${#temporals.format(inventory.dtInventorySlipDate, 'yyyy-MM-dd')}"></td>
+                      <td th:text="${inventory.vProductCd}"></td>
+                      <td th:text="${inventory.vProductNm}"></td>
+                      <td th:text="${inventory.nInventoryCnt}"></td>
+                      <td th:text="${inventory.vWarehouseCd}"></td>
+                      <td th:text="${inventory.vWarehouseNm}"></td>
+                      <td th:text="${inventory.vZoneCd}"></td>
+                    </tr>
+                  </tbody>
                 </table>
                 <!-- Modal -->
-                <div class="modal fade" id="inventoryhisotry">
+                <div class="modal fade" id="inventory-history-modal" tabindex="-1" role="dialog" aria-labelledby="inventory-history-modal-label">
                   <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title">재고 이력</h5>
-                        <button type="button" class="close" data-dismiss="modal">
+                        <h5 class="modal-title" id="inventory-history-modal-label">재고 이력</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span>&times;</span>
                         </button>
                       </div>
@@ -188,17 +165,7 @@
                               <th>창고 구역</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                              <td>2403160103</td>
-                              <td>20</td>
-                              <td>2024-03-18</td>
-                              <td>입고수량조정</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                            </tr>
+                            <tbody id="inventory-history-modal-body">
                             </tbody>
                           </table>
                         </div>
@@ -218,6 +185,8 @@
       <!--**********************************
           Main wrapper end
       ***********************************-->
+      <script th:src="@{/js/Inventory.js}"></script>
+      <script th:src="@{/js/InventorySearch.js}"></script>
 
       <!--**********************************
           Scripts
