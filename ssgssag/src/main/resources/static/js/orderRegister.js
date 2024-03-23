@@ -23,8 +23,34 @@ var saveStatus = {
 
 // 신규
 $("#order-register-new-btn").click(function () {
-
+    // 발주번호 생성
+    newOrderForm();
+    createOrderSeq();
 });
+
+function createOrderSeq() {
+    $.ajax({
+        url: '/order/register/order-seq',
+        type: 'GET',
+        success: function (data) {
+            let orderSeq = data.orderSeq;
+            $("#order-seq").val(orderSeq);
+            $("#order-status").val("미확정");
+        },
+        error: function (error) {
+            console.log('Error:', error);
+        }
+    });
+}
+
+function newOrderForm() {
+    $("#order-created-date").val(getCurrentDateFormatted());
+    $("#order-seq").val('');
+    $("#incoming-product-supplier-nm").val('');
+    $("#order-status").val('');
+    $("#warehouse-cd").val('');
+    $("#order-type").val(($('#order-type option[selected]').val()));
+}
 
 // 확정취소
 
@@ -36,23 +62,11 @@ $("#order-register-new-btn").click(function () {
 function orderRegisterSave() {
     if (!checkEmptyOrderForm()) {
         console.log("입력되지 않은 값이 있습니다.")
+        saveStatus.order = false;
         return;
     }
-
-    $.ajax({
-        url: '/order/register/order-seq',
-        type: 'GET',
-        success: function (data) {
-            let orderSeq = data.orderSeq;
-            $("#order-seq").val(orderSeq);
-            $("#order-status").val("신규");
-            saveOrderForm();
-            saveStatus.order = true;
-        },
-        error: function (error) {
-            console.log('Error:', error);
-        }
-    });
+    saveOrderForm();
+    saveStatus.order = true;
 }
 
 function checkEmptyOrderForm() {
@@ -104,10 +118,15 @@ $("#order-register-remove-btn").click(function () {
     );
 });
 
-$("#order-register-remove-ok-btn").click(function () {
-    console.log('초기화')
-    $("#order-register-form").find("input[type=text], select").val("");
-});
+
+function orderRegisterDelete() {
+    $("#order-created-date").val('dd/mm/yyyy');
+    $("#order-seq").val('');
+    $("#incoming-product-supplier-nm").val('');
+    $("#order-status").val('');
+    $("#warehouse-cd").val('');
+    $("#order-type").val(($('#order-type option[selected]').val()));
+}
 
 // 발주 상세 - 추가
 function createOrderDetailForm() {
@@ -225,9 +244,6 @@ function saveOrderDetailForm() {
 // 발주 삭제 - 삭제
 
 
-
-
-
 // 기타
 function dateFormatting(dateString) {
     var date = new Date(dateString);
@@ -246,4 +262,13 @@ function calculateOrderTotalPrice(currentIndex) {
     let cnt = +$(`#order-tr-order-cnt-${currentIndex}`).val();
     let price = +$(`#order-tr-product-price-${currentIndex}`).text();
     return price * cnt;
+}
+
+function getCurrentDateFormatted() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    return mm + '/' + dd + '/' + yyyy;
 }
