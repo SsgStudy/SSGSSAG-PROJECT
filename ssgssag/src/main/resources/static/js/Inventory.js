@@ -3,6 +3,16 @@ $(document).ready(function () {
     $(".alert").hide();
     getWarehouseAndZone();
     getCategoryHierarchy();
+
+    // 수량 조절
+    $('#out-bound').change(function () {
+        $('.inventory-checkbox').change(handleCheckboxChange);
+    });
+
+// 체크박스 조절
+    $('.inventory-checkbox').change(function() {
+        $('.inventory-checkbox').not(this).prop('checked', false);
+    });
 });
 
 // 재고 이력 모달창
@@ -260,6 +270,36 @@ $('.inventory-checkbox').on('change', function() {
         console.log(selectedNumber);
     }
 });
+
+
+// input box 수량 조
+let selectCnt;
+
+function handleCheckboxChange() {
+    let selectedRow = $(this).closest('tr');
+    selectCnt = selectedRow.find('.inventory-quantity').text();
+}
+
+function handleOutputQuantityChange() {
+    let currentValue = parseInt($('#adjustment-cnt').val()); // 현재 입력된 값
+    let minValue = 1; // 최소 값
+    let maxValue = selectCnt; // 최대 값
+
+    // 입력된 값이 범위를 벗어나는 경우
+    if (currentValue < minValue || currentValue > maxValue) {
+        // 안내 메시지 표시
+        $('#warningMessage').text('조건에 맞는 수량을 입력해주세요').show();
+    } else {
+        // 범위 내에 있는 경우 안내 메시지 숨기기
+        $('#warningMessage').hide();
+    }
+}
+
+$('#adjustment-cnt').on('input', function () {
+    handleOutputQuantityChange();
+});
+
+
 
 
 $('#submitButton').on('click', function() {

@@ -111,7 +111,7 @@
                         <td th:text="${#temporals.format(inventory.dtInventorySlipDate, 'yyyy-MM-dd')}"></td>
                           <td th:text="${inventory.vProductCd}"></td>
                           <td th:text="${inventory.vProductNm}"></td>
-                          <td th:text="${inventory.nInventoryCnt}"></td>
+                          <td class="inventory-quantity" th:text="${inventory.nInventoryCnt}"></td>
                           <td th:text="${inventory.vWarehouseCd}"></td>
                           <td th:text="${inventory.vWarehouseNm}"></td>
                           <td th:text="${inventory.vZoneCd}"></td>
@@ -141,6 +141,7 @@
                     <div class="col text-center">
                       <button type="button" class="btn mb-1 btn-dark" id="submitButton">확인</button>
                     </div>
+                      <div id="warningMessage" class="alert alert-warning"></div>
                   </div>
                 </div>
               </div>
