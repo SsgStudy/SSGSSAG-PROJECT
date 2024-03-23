@@ -125,5 +125,10 @@ public class WareHouseController {
     return ResponseEntity.ok().build();
   }
 
+  @GetMapping("/location")
+  public String showMapPage(){
+    return "warehouse/warehouse-map";
+  }
+
 
 }
