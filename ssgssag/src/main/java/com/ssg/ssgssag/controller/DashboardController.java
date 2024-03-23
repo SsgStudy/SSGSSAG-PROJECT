@@ -1,10 +1,14 @@
 package com.ssg.ssgssag.controller;
 
 import com.ssg.ssgssag.dto.BestProductDTO;
+import com.ssg.ssgssag.dto.DailyPurchaseCountDTO;
 import com.ssg.ssgssag.dto.IncomingDTO;
 import com.ssg.ssgssag.dto.StatusCountDTO;
 import com.ssg.ssgssag.service.DashboardService;
+import io.swagger.v3.oas.annotations.Operation;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -21,11 +25,13 @@ public class DashboardController {
     private final DashboardService dashboardService;
 
     @GetMapping()
+    @Operation(summary = "대시 보드 정보 조회", description = "대시 보드 내 필요 데이터를 조회합니다.")
     public String showDashboardPage(Model model) {
         log.info("Load dashboard page");
 
         List<StatusCountDTO> statusCountDTOList = dashboardService.getAllStatusCount();
         List<BestProductDTO> bestProductDTOList = dashboardService.getBestProducts();
+        List<DailyPurchaseCountDTO> dailyPurchaseCountDTOList = dashboardService.getDailyPurchaseStatistics();
 
         model.addAttribute("incoming", statusCountDTOList.get(0).getCnt());
         model.addAttribute("outgoing", statusCountDTOList.get(1).getCnt());
@@ -36,6 +42,19 @@ public class DashboardController {
 
         model.addAttribute("bestProducts", bestProductDTOList);
 
+        // 라인 차트를 위한 데이터 추가
+        List<String> purchaseDates = dailyPurchaseCountDTOList.stream()
+            .map(dto -> new SimpleDateFormat("yyyy-MM-dd").format(dto.getPurchaseDate()))
+            .collect(Collectors.toList());
+        List<Integer> dailyPurchases = dailyPurchaseCountDTOList.stream()
+            .map(DailyPurchaseCountDTO::getDailyPurchaseCount)
+            .collect(Collectors.toList());
+
+        log.info(purchaseDates);
+        log.info(dailyPurchases);
+
+        model.addAttribute("purchaseDates", purchaseDates);
+        model.addAttribute("dailyPurchases", dailyPurchases);
         return "main/main";
     }
 }

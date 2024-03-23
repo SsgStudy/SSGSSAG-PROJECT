@@ -30,5 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
     slider.scrollLeft = scrollLeft - walk;
   });
 
+
 });
 

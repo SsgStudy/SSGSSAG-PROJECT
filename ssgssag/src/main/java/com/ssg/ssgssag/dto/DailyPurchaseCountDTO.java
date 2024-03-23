@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class DailyPurchaseCountDTO {
 
     private Date purchaseDate;
-    private int dailyPurchaseDate;
+    private int dailyPurchaseCount;
 }
