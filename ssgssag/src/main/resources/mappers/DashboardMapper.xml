@@ -38,5 +38,19 @@
     ORDER BY 2 desc, 3 desc, 1 asc
     LIMIT 7
   </select>
+  
+  <select id="selectDailyPurchaseStatistics" resultType="com.ssg.ssgssag.dto.DailyPurchaseCountDTO">
+    SELECT
+      DATE(DT_SHOP_PURCHASE_DATE) AS purchase_date,
+      COUNT(*) AS daily_purchase_count
+    FROM
+      TB_SHOP_PURCHASE
+    WHERE
+      DT_SHOP_PURCHASE_DATE >= CURDATE() - INTERVAL 30 DAY
+    GROUP BY
+      DATE(DT_SHOP_PURCHASE_DATE)
+    ORDER BY
+      purchase_date
+  </select>
 
 </mapper>
