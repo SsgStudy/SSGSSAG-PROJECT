@@ -124,9 +124,11 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Line Chart</h4>
-              <div>
-                <canvas id="myChart"></canvas>
+              <h4 class="card-title">일별 주문</h4>
+              <div class="flot-chart">
+                <div>
+                  <canvas id="myChart" style="max-height: 100%;"></canvas>
+                </div>
               </div>
               <script th:inline="javascript">
                 /*<![CDATA[*/
@@ -139,14 +141,17 @@
                   data: {
                     labels: purchaseDates,
                     datasets: [{
-                      label: '일일 구매량',
+                      label: '일일 판매량',
                       data: dailyPurchases,
                       fill: false,
-                      borderColor: 'rgb(75, 192, 192)',
-                      tension: 0.1
+                      borderColor: 'rgb(5,117,230)',
+                      tension: 0.2
                     }]
                   },
                   options: {
+                    maintainAspectRatio: true,
+                    responsive: true,
+                    aspectRatio: 1.7,
                     scales: {
                       y: {
                         beginAtZero: true
@@ -163,26 +168,28 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">베스트 상품</h4>
-              <table class="table table-xs mb-0">
-                <thead>
-                <tr>
-                  <th>순위</th>
-                  <th>인기 상품 명</th>
-                  <th>주문 건 수</th>
-                  <th>보유 재고</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="product, iterStat : ${bestProducts}">
-                  <td th:text="${iterStat.count}">1</td>
-                  <td th:text="${product.name}">상품명</td>
-                  <td th:text="${product.purchase}">주문건수</td>
-                  <td th:text="${product.inventory}">보유재고</td>
-                </tr>
-                </tbody>
-                <tfoot>
-                </tfoot>
-              </table>
+              <div class="flot-chart">
+                <table class="table table-xs mb-0">
+                  <thead>
+                  <tr>
+                    <th>순위</th>
+                    <th>인기 상품 명</th>
+                    <th>주문 건 수</th>
+                    <th>보유 재고</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="product, iterStat : ${bestProducts}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${product.name}">상품명</td>
+                    <td th:text="${product.purchase}">주문건수</td>
+                    <td th:text="${product.inventory}">보유재고</td>
+                  </tr>
+                  </tbody>
+                  <tfoot>
+                  </tfoot>
+                </table>
+              </div>
             </div>
           </div>
         </div>
