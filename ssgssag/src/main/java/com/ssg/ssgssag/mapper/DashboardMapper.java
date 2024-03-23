@@ -1,6 +1,7 @@
 package com.ssg.ssgssag.mapper;
 
 import com.ssg.ssgssag.dto.BestProductDTO;
+import com.ssg.ssgssag.dto.DailyPurchaseCountDTO;
 import com.ssg.ssgssag.dto.StatusCountDTO;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,4 +15,5 @@ public interface DashboardMapper {
 
     List<BestProductDTO> selectBestProducts();
 
+    List<DailyPurchaseCountDTO> selectDailyPurchaseStatistics();
 }

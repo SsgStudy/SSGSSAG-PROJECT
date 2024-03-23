@@ -6,7 +6,7 @@
 
   <select id="selectAllStatusCount" resultType="com.ssg.ssgssag.dto.StatusCountDTO">
     <![CDATA[
-      SELECT 'INCOMING' AS SECTION, COUNT(*) AS CNT FROM TB_INCOMING_PRODUCT WHERE V_INCOMING_PRODUCT_STATUS = 'PROGRESS'
+      SELECT 'INCOMING' AS SECTION, COUNT(*) AS CNT FROM TB_INCOMING_PRODUCT WHERE V_INCOMING_PRODUCT_STATUS = '미입고'
       UNION ALL
       SELECT 'OUTGOING' AS SECTION, COUNT(*) AS CNT FROM TB_OUTGOING_INST WHERE V_OUTGOING_INTS_STATUS = 'INSTRUCTION'
       UNION ALL
@@ -37,6 +37,20 @@
     GROUP BY V_PRODUCT_NM
     ORDER BY 2 desc, 3 desc, 1 asc
     LIMIT 7
+  </select>
+  
+  <select id="selectDailyPurchaseStatistics" resultType="com.ssg.ssgssag.dto.DailyPurchaseCountDTO">
+    SELECT
+      DATE(DT_SHOP_PURCHASE_DATE) AS purchase_date,
+      COUNT(*) AS daily_purchase_count
+    FROM
+      TB_SHOP_PURCHASE
+    WHERE
+      DT_SHOP_PURCHASE_DATE >= CURDATE() - INTERVAL 30 DAY
+    GROUP BY
+      DATE(DT_SHOP_PURCHASE_DATE)
+    ORDER BY
+      purchase_date
   </select>
 
 </mapper>
