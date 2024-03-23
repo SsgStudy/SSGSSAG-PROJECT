@@ -17,5 +17,5 @@ public interface InventoryService {
 
     InventoryHistoryVO getInventoryHistoryBySeq(Integer pkInventorySeq);
 
-    String updateInventoryWithHistory(InventoryAdjustmentDTO inventoryAdjustmentDTO);
+    void updateInventoryWithHistory(InventoryAdjustmentDTO inventoryAdjustmentDTO);
 }

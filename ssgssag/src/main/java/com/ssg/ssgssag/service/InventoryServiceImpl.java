@@ -46,8 +46,8 @@ public class InventoryServiceImpl implements InventoryService{
 
     @Override
     @Transactional
-    public String updateInventoryWithHistory(InventoryAdjustmentDTO inventoryAdjustmentDTO) {
+    public void updateInventoryWithHistory(InventoryAdjustmentDTO inventoryAdjustmentDTO) {
         inventoryMapper.updateInventoryWithHistory(inventoryAdjustmentDTO);
-        return "Success!";
+//        return "Success!";
     }
 }

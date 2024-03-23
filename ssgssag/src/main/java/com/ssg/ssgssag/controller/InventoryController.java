@@ -81,8 +81,8 @@ public class InventoryController {
     @PostMapping("/adjustment/update")
     @Operation(summary = "재고 조정 값 반환", description = "번호, 수량, 상태 반환")
     @ResponseBody
-    public String selectedInventory(@RequestBody InventoryAdjustmentDTO dto){
-        return inventoryService.updateInventoryWithHistory(dto);
+    public void selectedInventory(@RequestBody InventoryAdjustmentDTO dto) {
+        inventoryService.updateInventoryWithHistory(dto);
     }
 
 }
