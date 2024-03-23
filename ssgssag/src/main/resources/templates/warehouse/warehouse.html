@@ -169,7 +169,7 @@
                   <td th:text="${warehouse.pkMemberSeq}">관리자코드</td>
                   <td>
                     <button type="button"
-                            class="btn btn-info btn-sm"
+                            class="btn btn-info btn-sm btn-warehouse-modal"
                             data-toggle="modal"
                             th:data-warehouse-cd="${warehouse.vWarehouseCd}"
                             th:data-warehouse-nm="${warehouse.vWarehouseNm}"
@@ -178,7 +178,8 @@
                             th:data-pk-member-seq="${warehouse.pkMemberSeq}"
                             th:attr="data-target='#warehouseDetail' + ${warehouse.vWarehouseCd}"
 
-                            onclick="openWarehouseModal(this, this.dataset.warehouseCd)">
+                            onclick="openWarehouseModal(this, this.dataset.warehouseCd)"
+                    >
                       구역 보기
                     </button>
                   </td>
@@ -186,7 +187,7 @@
                 </tbody>
               </table>
 
-              <div id="map" style="width:100%;height:350px;"></div>
+              <div id="map-in-list" style="width:100%;height:350px;"></div>
 
               <!-- Modal -->
               <div class="modal fade" id="warehouseDetail" tabindex="-1" role="dialog" aria-labelledby="warehouseDetailLabel" >
@@ -274,6 +275,8 @@
                           </tbody>
 
                         </table>
+
+                        <div id="map-in-modal" style="width:100%;height:350px;"></div>
 
                       </div>
                     </div>

@@ -96,7 +96,7 @@ function openWarehouseModal(button,warehouseCd) {
 function addZone() {
 
   const zoneCode = document.getElementById('zoneCode').value;
-  const warehouseCd = document.getElementById('hiddenWarehouseCd').value;
+  let warehouseCd = document.getElementById('hiddenWarehouseCd').value;
   const zoneName = document.getElementById('zoneName').value;
 
   const data = {
