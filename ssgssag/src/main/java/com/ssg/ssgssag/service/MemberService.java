@@ -10,4 +10,10 @@ public interface MemberService {
 
     List<MemberDTO> getAllMembers();
 
+    List<MemberDTO> getMembersByName(String name);
+
+    List<MemberDTO> getMemberList(MemberDTO memberDTO);
+
+    void modifyMembers(MemberDTO memberDTO);
+
 }

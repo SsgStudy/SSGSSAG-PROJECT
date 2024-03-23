@@ -39,4 +39,54 @@ public class MemberServiceTest {
             log.info(memberDTOList);
     }
 
+    @Test
+    public void testListByName() {
+        String name = "한예슬";
+        log.info(memberService.getMembersByName(name));
+    }
+
+    @Test
+    public void testFilters() {
+        // 이름 검색
+        MemberDTO memberDTO = MemberDTO.builder()
+            .vMemberAuth("admin")
+            .vMemberNm("조민수")
+            .build();
+
+        memberService.getMemberList(memberDTO).forEach(System.out::println);
+
+        MemberDTO memberDTO2 = MemberDTO.builder()
+            .vMemberAuth("admin")
+            .vMemberId("admin001")
+            .build();
+
+        memberService.getMemberList(memberDTO2).forEach(System.out::println);
+
+        MemberDTO memberDTO3 = MemberDTO.builder()
+            .vMemberAuth("admin")
+            .vEmail("aa")
+            .build();
+
+        memberService.getMemberList(memberDTO3).forEach(System.out::println);
+
+        MemberDTO memberDTO4 = MemberDTO.builder()
+            .vMemberAuth("admin")
+            .vMemberNm("조민수")
+            .vEmail("aa")
+            .build();
+
+        memberService.getMemberList(memberDTO4).forEach(System.out::println);
+
+        MemberDTO memberDTO5 = MemberDTO.builder()
+            .vMemberAuth("admin")
+            .vMemberId("admin001")
+            .vMemberNm("조민수")
+            .vEmail("aa")
+            .build();
+
+        memberService.getMemberList(memberDTO5).forEach(System.out::println);
+
+
+    }
+
 }

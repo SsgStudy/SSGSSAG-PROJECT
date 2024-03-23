@@ -34,4 +34,18 @@ public class MemberServiceImpl implements MemberService{
         return memberMapper.selectAllMembers();
     }
 
+    @Override
+    public List<MemberDTO> getMembersByName(String name) {
+        return memberMapper.selectMemberByName(name);
+    }
+    @Override
+    public List<MemberDTO> getMemberList(MemberDTO memberDTO) {
+        return memberMapper.selectMemberByString(memberDTO);
+    }
+
+    @Override
+    public void modifyMembers(MemberDTO memberDTO) {
+       memberMapper.modifyMemberInfo(memberDTO);
+    }
+
 }

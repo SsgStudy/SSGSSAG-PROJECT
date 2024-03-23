@@ -51,47 +51,67 @@
       </div>
     </div>
     <!-- row -->
-
+    <form class="mt-5 mb-5 login-input">
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">회원 관리 테이블</h4>
-
               <div class="table-responsive" style="margin-top:50px; margin-bottom:50px">
                 <table class="table table-hover">
                   <thead>
-                  <select name="roles" id="role">
-                    <option value="all">전체</option>
-                    <option value="general">일반 회원</option>
-                    <option value="warehouse">창고 관리자</option>
-                    <option value="administrator">총관리자</option>
-                  </select>
+                  <tr>
+                    <th>
+                      이름
+                      <input type="text" id = "name" class="form-control" placeholder="이름" required>
+                    </th>
+                    <th>
+                      아이디
+                      <input type="text" id = "id" class="form-control" placeholder="이름" required>
+                    </th>
+                    <th>
+                      이메일
+                      <input type="text" id = "email" class="form-control" placeholder="이름" required>
+                    </th>
+                    <th>
+                      권한
+                      <select name="roles" id="role" class="form-control">
+                        <option value="all">전체</option>
+                        <option value="admin">일반 회원</option>
+                        <option value="warehouse">창고 관리자</option>
+                        <option value="operator">총관리자</option>
+                      </select>
+                    </th>
+                  </tr>
+                  </thead>
+                  <thead>
+                  <input type="button" class="btn btn-primary" th:value="조회" onclick="fetchMembersByName()">
                   </thead>
                 </table>
               </div>
 
               <div class="table-responsive">
-                <table class="table table-hover text-center">
+                <table class="table table-hover text-center zero-configuration" id="memberTable" >
                   <thead>
-                  <tr>
-                    <th>번호</th>
-                    <th>회원 이름</th>
-                    <th>회원 아이디</th>
-                    <th>회원 이메일</th>
-                    <th>권한</th>
-                    <th>수정</th>
-                    <th>삭제</th>
-                  </tr>
+                    <tr>
+                      <th>번호</th>
+                      <th>회원 이름</th>
+                      <th>회원 아이디</th>
+                      <th>회원 이메일</th>
+                      <th>권한</th>
+                      <th>수정</th>
+                      <th>탈퇴</th>
+                    </tr>
                   </thead>
-                  <tbody>
-                    <tr th:each="member, iterStat : ${memberList}">
-                      <td th:text="${member.pkMemberSeq}">번호</td>
-                      <td th:text="${member.vMemberNm}">회원 이름</td>
-                      <td th:text="${member.vMemberId}">회원 아이디</td>
-                      <td th:text="${member.vEmail}">회원 이메일</td>
-                      <td th:text="${member.vMemberAuth}">권한</td>
+
+                  <tbody id="memberTableBody">
+                    <tr th:each="members, iterStat : ${memberList}">
+                      <td th:text="${members.pkMemberSeq}">번호</td>
+                      <td th:text="${members.vMemberNm}">회원 이름</td>
+                      <td th:text="${members.vMemberId}">회원 아이디</td>
+                      <td th:text="${members.vEmail}">회원 이메일</td>
+                      <td th:text="${members.vMemberAuth}">권한</td>
                       <td>
                         <form>
                           <button class="btn btn-primary">수정</button>
@@ -103,8 +123,7 @@
                         </form>
                       </td>
                     </tr>
-                  </tbody>
-
+                </tbody>
                 </table>
               </div>
             </div>
@@ -113,6 +132,7 @@
       </div>
     </div>
     <!-- #/ container -->
+    </form>
   </div>
   <!--**********************************
       Content body end
@@ -128,6 +148,8 @@
     Scripts
 ***********************************-->
 <th:block th:replace="/layout/script :: scriptFragment"></th:block>
+<script th:src="@{/js/Member.js}"></script>
+
 </body>
 
 </html>
