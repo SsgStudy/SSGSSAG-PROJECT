@@ -13,9 +13,11 @@ public class InventoryHistoryVO {
     private Long pkInventorySeq;
     private int nInventoryShippingCnt;
     private LocalDateTime dtInventoryChangeDate;
-    private String vInventoryChangeType;
-    private String vZondCd;
-    private String vZondCd2;
+    private String vInventoryChanegeType;
+    private String vZoneCd;
+    private String vZoneCd2;
     private String vWarehouseCd;
     private String vWarehouseCd2;
+
+
 }

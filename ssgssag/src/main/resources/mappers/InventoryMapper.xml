@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ssg.ssgssag.mapper.InventoryMapper">
+    <select id="selectAllInventory" resultType="com.ssg.ssgssag.dto.InventoryListDTO">
+        SELECT PK_INVENTORY_SEQ, DT_INVENTORY_SLIP_DATE, N_INVENTORY_CNT, V_ZONE_CD, I.V_WAREHOUSE_CD, I.V_PRODUCT_CD, P.V_PRODUCT_NM, W.V_WAREHOUSE_NM
+        FROM TB_INVENTORY I LEFT JOIN TB_PRODUCT P ON I.V_PRODUCT_CD  = P.V_PRODUCT_CD
+        LEFT JOIN TB_WAREHOUSE W ON I.V_WAREHOUSE_CD = W.V_WAREHOUSE_CD
+        ORDER BY PK_INVENTORY_SEQ
+    </select>
+
+    <select id="selectAllWareHouseZone" resultType="com.ssg.ssgssag.dto.WareHouseZoneDTO">
+        SELECT W.V_WAREHOUSE_NM, V_ZONE_NM
+        FROM TB_WAREHOUSE W JOIN TB_ZONE Z
+        ON Z.V_WAREHOUSE_CD = W.V_WAREHOUSE_CD
+        ORDER BY W.V_WAREHOUSE_NM, V_ZONE_NM
+    </select>
+
+    <select id="selectCategoryHierarchy" resultType="com.ssg.ssgssag.dto.CategoryFilterDTO">
+        SELECT
+            main.V_CATEGORY_NM AS V_MAIN_CATEGORY_NM,
+            sub.V_CATEGORY_NM AS V_SUB_CATEGORY_NM,
+            detail.V_CATEGORY_NM AS V_DETAIL_CATEGORY_NM
+        FROM
+            TB_CATEGORY AS main
+                INNER JOIN
+            TB_CATEGORY AS sub ON sub.V_CATEGORY_PARENT_CD = main.V_CATEGORY_CD
+                INNER JOIN
+            TB_CATEGORY AS detail ON detail.V_CATEGORY_PARENT_CD = sub.V_CATEGORY_CD
+    </select>
+
+    <select id="searchInventoryByCategoryAndWarehouse" parameterType="com.ssg.ssgssag.dto.InventorySearchDTO" resultType="com.ssg.ssgssag.dto.InventoryListDTO">
+        SELECT PK_INVENTORY_SEQ, DT_INVENTORY_SLIP_DATE, N_INVENTORY_CNT, V_ZONE_CD, I.V_WAREHOUSE_CD, I.V_PRODUCT_CD, P.V_PRODUCT_NM, W.V_WAREHOUSE_NM
+        FROM TB_INVENTORY I
+        LEFT JOIN TB_PRODUCT P ON I.V_PRODUCT_CD = P.V_PRODUCT_CD
+        LEFT JOIN TB_WAREHOUSE W ON I.V_WAREHOUSE_CD = W.V_WAREHOUSE_CD
+        WHERE 1=1
+        <if test="vMainCategoryNm != null and !vMainCategoryNm.equals('')">
+            AND P.V_PRODUCT_CD IN (
+                SELECT P.V_PRODUCT_CD
+                FROM TB_PRODUCT P
+                WHERE P.V_CATEGORY_CD IN (
+                    SELECT V_CATEGORY_CD
+                    FROM TB_CATEGORY
+                    WHERE V_CATEGORY_NM = #{vMainCategoryNm}
+                    OR V_CATEGORY_CD LIKE CONCAT((SELECT V_CATEGORY_CD FROM TB_CATEGORY WHERE V_CATEGORY_NM =
+                    #{vMainCategoryNm}), '-%-%')
+                )
+            )
+        </if>
+        <if test="vMainCategoryNm != null and vSubCategoryNm != null and !vMainCategoryNm.equals('') and !vSubCategoryNm.equals('') ">
+            AND P.V_PRODUCT_CD IN (
+                SELECT P.V_PRODUCT_CD
+                FROM TB_PRODUCT P
+                WHERE P.V_CATEGORY_CD IN (
+                    SELECT V_CATEGORY_CD
+                    FROM TB_CATEGORY
+                    WHERE V_CATEGORY_NM = #{vMainCategoryNm}
+                    OR V_CATEGORY_CD LIKE CONCAT((SELECT V_CATEGORY_CD FROM TB_CATEGORY WHERE V_CATEGORY_NM =
+                    #{vSubCategoryNm}), '-%')
+                )
+            )
+        </if>
+        <if test="vMainCategoryNm != null and vSubCategoryNm != null and vDetailCategoryNm != null and !vMainCategoryNm.equals('') and !vSubCategoryNm.equals('') and !vDetailCategoryNm.equals('')">
+            AND P.V_PRODUCT_CD IN (
+                SELECT P.V_PRODUCT_CD
+                FROM TB_PRODUCT P
+                WHERE P.V_CATEGORY_CD IN (
+                    SELECT V_CATEGORY_CD
+                    FROM TB_CATEGORY
+                    WHERE V_CATEGORY_NM = #{vDetailCategoryNm}
+                )
+            )
+        </if>
+        <if test="vWarehouseNm != null and !vWarehouseNm.equals('')">
+            AND V_WAREHOUSE_NM = #{vWarehouseNm}
+        </if>
+
+        <if test="vWarehouseNm != null and vZoneNm != null and !vWarehouseNm.equals('') and !vZoneNm.equals('')">
+            AND V_WAREHOUSE_NM = #{vWarehouseNm}
+            AND I.V_ZONE_CD IN (
+                SELECT V_ZONE_CD
+                FROM TB_ZONE
+                WHERE V_ZONE_NM = #{vZoneNm}
+            )
+        </if>
+    </select>
+
+
+    <select id="selectInventoryHistoryBySeq" parameterType="java.lang.Integer" resultType="InventoryHistoryVO">
+        SELECT PK_INVENTORY_SEQ
+             , COALESCE(N_INVENTORY_SHIPPING_CNT, '') AS N_INVENTORY_SHIPPING_CNT
+             , DT_INVENTORY_CHANGE_DATE
+             , COALESCE(V_INVENTORY_CHANEGE_TYPE, '') AS V_INVENTORY_CHANEGE_TYPE
+             , COALESCE(V_ZONE_CD, '')                AS V_ZONE_CD
+             , COALESCE(V_WAREHOUSE_CD, '')           AS V_WAREHOUSE_CD
+             , COALESCE(V_ZONE_CD2, '')               AS V_ZONE_CD2
+             , COALESCE(V_WAREHOUSE_CD2, '')          AS V_WAREHOUSE_CD2
+        FROM TB_INVENTORY_HISTORY
+        WHERE PK_INVENTORY_SEQ = #{pkInventorySeq}
+    </select>
+
+</mapper>
