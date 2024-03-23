@@ -16,4 +16,6 @@ public interface InventoryService {
     List<InventoryListDTO> getInventoryByCategoryAndWarehouse(InventorySearchDTO inventorySearchDTO);
 
     InventoryHistoryVO getInventoryHistoryBySeq(Integer pkInventorySeq);
+
+    void updateInventoryWithHistory(InventoryAdjustmentDTO inventoryAdjustmentDTO);
 }

@@ -100,5 +100,14 @@
         FROM TB_INVENTORY_HISTORY
         WHERE PK_INVENTORY_SEQ = #{pkInventorySeq}
     </select>
+    
+    
+    <update id="updateInventoryWithHistory" parameterType="com.ssg.ssgssag.dto.InventoryAdjustmentDTO">
+        { call UPDATE_INVENTORY_WITH_HISTORY (
+                #{pkInventorySeq, mode=IN, jdbcType=INTEGER},
+                #{nInventoryShippingCnt, mode=IN, jdbcType=INTEGER},
+                #{vInventoryChangeType, mode=IN, jdbcType=VARCHAR}
+               ) }
+    </update>
 
 </mapper>

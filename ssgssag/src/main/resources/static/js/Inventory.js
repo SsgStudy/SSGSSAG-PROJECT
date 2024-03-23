@@ -1,7 +1,18 @@
 $(document).ready(function () {
     console.log("실행");
+    $(".alert").hide();
     getWarehouseAndZone();
     getCategoryHierarchy();
+
+    // 수량 조절
+    $('#out-bound').change(function () {
+        $('.inventory-checkbox').change(handleCheckboxChange);
+    });
+
+    // 체크박스 조절
+    $('.inventory-checkbox').change(function () {
+        $('.inventory-checkbox').not(this).prop('checked', false);
+    });
 });
 
 // 재고 이력 모달창
@@ -246,4 +257,97 @@ function renderWarehouseZone(warehouseNm) {
         );
     });
 
+}
+
+
+// 재고 조정 : 재고 목록 checkbox 선택
+let selectedNumber
+$('.inventory-checkbox').on('change', function () {
+    if ($(this).prop('checked')) {
+        selectedNumber = $(this).data('inventory-id');
+        console.log(selectedNumber);
+    }
+});
+
+
+// input box 수량 조
+let selectCnt;
+
+function handleCheckboxChange() {
+    let selectedRow = $(this).closest('tr');
+    selectCnt = selectedRow.find('.inventory-quantity').text();
+}
+
+function handleOutputQuantityChange() {
+    let currentValue = parseInt($('#adjustment-cnt').val());
+    let minValue = 1;
+    let maxValue = selectCnt;
+
+    if (currentValue < minValue || currentValue > maxValue) {
+        $('#warningMessage').text('조건에 맞는 수량을 입력해주세요').show();
+    } else {
+        $('#warningMessage').hide();
+    }
+}
+
+$('#adjustment-cnt').on('input', function () {
+    handleOutputQuantityChange();
+});
+
+
+// 재고 조정 버튼 클릭 시 반영
+$('#submitButton').on('click', function () {
+    let quantity = parseFloat($('#adjustment-cnt').val());
+    let type = $('#in-bound').prop('checked') ? 'CHANGE_CNT_INBOUND' : 'CHANGE_CNT_OUTBOUND';
+
+    let data = {
+        pkInventorySeq: selectedNumber,
+        vInventoryChangeType: type,
+        nInventoryShippingCnt: quantity
+    };
+
+    console.log(data)
+
+    $.ajax({
+        url: '/inventory/adjustment/update',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log('서버 응답:' + JSON.stringify(data));
+
+            showSuccessAlert();
+            window.scrollTo(0, 0);
+            reloadPageAfterDelay(1000);
+        },
+        error: function (xhr, status, error) {
+            console.error('에러 발생:', error);
+
+            showDangerAlert();
+            window.scrollTo(0, 0);
+            reloadPageAfterDelay(1000);
+        }
+    });
+});
+
+
+// alert
+function showSuccessAlert() {
+    $("#successAlert").fadeIn();
+    setTimeout(function () {
+        $("#successAlert").fadeOut();
+    }, 3000);
+}
+
+function showDangerAlert() {
+    $("#dangerAlert").fadeIn();
+    setTimeout(function () {
+        $("#dangerAlert").fadeOut();
+    }, 3000);
+}
+
+function reloadPageAfterDelay(delay) {
+    setTimeout(function () {
+        location.reload();
+    }, delay);
 }

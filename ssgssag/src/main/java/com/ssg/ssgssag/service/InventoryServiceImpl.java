@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -41,5 +42,11 @@ public class InventoryServiceImpl implements InventoryService{
     @Override
     public InventoryHistoryVO getInventoryHistoryBySeq(Integer pkInventorySeq) {
         return inventoryMapper.selectInventoryHistoryBySeq(pkInventorySeq);
+    }
+
+    @Override
+    @Transactional
+    public void updateInventoryWithHistory(InventoryAdjustmentDTO inventoryAdjustmentDTO) {
+        inventoryMapper.updateInventoryWithHistory(inventoryAdjustmentDTO);
     }
 }

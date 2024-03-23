@@ -3,6 +3,7 @@ package com.ssg.ssgssag.mapper;
 import com.ssg.ssgssag.domain.InventoryHistoryVO;
 import com.ssg.ssgssag.dto.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface InventoryMapper {
     List<InventoryListDTO> searchInventoryByCategoryAndWarehouse(InventorySearchDTO inventorySearchDTO);
 
     InventoryHistoryVO selectInventoryHistoryBySeq(Integer pkInventorySeq);
+
+    void updateInventoryWithHistory(InventoryAdjustmentDTO inventoryAdjustmentDTO);
 }
