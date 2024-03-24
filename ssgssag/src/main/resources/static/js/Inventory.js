@@ -19,6 +19,8 @@ $(document).ready(function () {
 function handleInventoryDetailLinkClick(key) {
     console.log("handleInventoryDetailLinkClick 호출");
 
+    $('#inventory-seq').text(key);
+
     // AJAX 요청
     $.ajax({
         url: '/inventory/list/detail/' + key,
@@ -26,39 +28,46 @@ function handleInventoryDetailLinkClick(key) {
         dataType: 'json',
         success: function (data) {
 
-            console.log(data)
+            // console.log(data)
 
             // 기존의 행들을 모두 제거
             $('#inventory-history-modal-body').empty();
 
-            // 새로운 행을 생성하여 tbody에 추가
-            let formattedDate = formatDate(data.dtInventoryChangeDate);
+            let cnt = 1;
+            data.forEach(function (item) {
+                let formattedDate = formatDate(item.dtInventoryChangeDate); // 날짜 처리
+                let shippingCnt =  item.ninventoryShippingCnt; // 수량 처리
 
-            let changeType;
-            switch (data.vinventoryChanegeType) {
-                case 'CHANGE_CNT_INBOUND' :
-                    changeType = '입고 수량 조절';
-                    break;
-                case 'CHANGE_CNT_OUTBOUND' :
-                    changeType = '출고 수량 조절';
-                    break;
-                case 'MOVE' :
-                    changeType = '창고 이동';
-                    break;
-            }
+                let changeType;
+                switch (item.vinventoryChanegeType) {
+                    case 'CHANGE_CNT_INBOUND' :
+                        changeType = '입고 수량 조절';
+                        break;
+                    case 'CHANGE_CNT_OUTBOUND' :
+                        changeType = '출고 수량 조절';
+                        break;
+                    case 'MOVE' :
+                        changeType = '창고 이동';
+                        shippingCnt = '';
+                        break;
+                }
 
-            let row = `<tr role="row" class="odd">
-                    <td>${data.pkInventorySeq}</td>
-                    <td>${data.ninventoryShippingCnt}</td>
-                    <td>${formattedDate}</td>
-                    <td>${changeType}</td>
-                    <td>${data.vzoneCd}</td>
-                    <td>${data.vwarehouseCd}</td>
-                    <td>${data.vzoneCd2}</td>
-                    <td>${data.vwarehouseCd2}</td>
-                </tr>`;
+                let row = `<tr role="row" class="odd">
+            <td>${cnt}</td>
+<!--            <td>${item.pkInventorySeq}</td>-->
+            <td>${shippingCnt}</td>
+            <td>${formattedDate}</td>
+            <td>${changeType}</td>
+            <td>${item.vzoneCd}</td>
+            <td>${item.vwarehouseCd}</td>
+            <td>${item.vzoneCd2}</td>
+            <td>${item.vwarehouseCd2}</td>
+        </tr>`;
 
-            $('#inventory-history-modal-body').append(row);
+                $('#inventory-history-modal-body').append(row);
+
+                cnt++;
+            });
         },
 
         error: function (xhr, status, error) {
