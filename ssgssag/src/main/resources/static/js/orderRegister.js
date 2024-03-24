@@ -355,7 +355,7 @@ function createOrderDetailForm() {
                             </div>
                         </div>
                     </td>
-                    <td class="product-price">${resp.nProductPrice}</td>
+                    <td class="product-price">${addCommas(resp.nProductPrice)}</td>
                     <td class="total-price"></td>
                 </tr>`
             );
@@ -438,8 +438,8 @@ function dateFormatting(dateString) {
 
 function calculateOrderTotalPrice($tr) {
     let orderCnt = +$tr.find('.order-cnt').val();
-    let productPrice = +$tr.find('.product-price').text();
-    return orderCnt * productPrice;
+    let productPrice = removeCommas($tr.find('.product-price').text());
+    return addCommas(orderCnt * productPrice);
 }
 
 function getCurrentDateFormatted() {
@@ -461,4 +461,12 @@ function showAlertSuccess(text) {
     $('.alert-success a').text(text);
     $('.alert-success').show();
     $('.alert-success').delay(2000).fadeOut();
+}
+
+function addCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function removeCommas(str) {
+    return parseInt(str.replace(/,/g, ''), 10);
 }

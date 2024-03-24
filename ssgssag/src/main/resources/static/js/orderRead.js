@@ -184,3 +184,11 @@ function formatDate(date) {
 
     return [month, day, year].join('/');
 }
+
+function addCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function removeCommas(str) {
+    return parseInt(str.replace(/,/g, ''), 10);
+}
