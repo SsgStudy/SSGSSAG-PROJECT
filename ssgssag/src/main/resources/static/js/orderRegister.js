@@ -1,6 +1,7 @@
 $(document).ready(function() {
     // allDeactivateForm();
     $('.alert').hide();
+    console.log("삭제 확인 ", order);
 
 });
 
@@ -20,11 +21,12 @@ var order = {
     "dtDeliveryDate": "2024-03-21T10:00:00",
 };
 
-
 var saveStatus = {
     "order" : false,
     "orderDetail" : false
 }
+
+var addProducts = {};
 
 // 신규
 function clickNewBtn() {
@@ -62,6 +64,7 @@ function newOrderForm() {
 
 function activateMasterForm() {
     $('#order-register-form button, .container-fluid input, .container-fluid select')
+        .not("#order-register-delete-btn")
         .prop('disabled', false);
 }
 
@@ -142,7 +145,6 @@ $('#warehouseSearchInputBox .table-responsive tbody').on('click', 'tr', function
 
 
 // 발주 - 저장
-
 function clickOrderMasterSave() {
     if (!checkInputFields()) {
         $('#order-master-save-btn').removeAttr('data-target');
@@ -199,7 +201,6 @@ function checkInputFields() {
             // return false;
         }
     });
-
     return allFilled;
 }
 
@@ -216,24 +217,21 @@ function saveOrderForm() {
 }
 
 // 발주 - 삭제
-$("#order-register-remove-btn").click(function () {
-    swal(
-        {
-            title: "Confirm",
-            text: "삭제하시겠습니까?",
-            type: "info",
-            showCancelButton: true,
-            closeOnConfirm: false,
-            showLoaderOnConfirm: true,
+function deleteOrder() {
+    $.ajax({
+        url: `/order/register/${order.pkOrderSeq}`,
+        type: 'DELETE',
+        success: function (resp) {
+            showAlertSuccess("성공적으로 삭제되었습니다.");
+            setTimeout(() => {
+                window.location.href = "/order/register";
+            }, 1500);
         },
-        function () {
-            setTimeout(function () {
-                swal("저장되었습니다.");
-            }, 2000);
+        error: function (error) {
+            showAlertDanger("삭제 실패했습니다.");
         }
-    );
-});
-
+    });
+}
 
 function orderRegisterReset() {
     $("#order-created-date").val('dd/mm/yyyy');
@@ -273,7 +271,6 @@ function orderObjectDelete() {
 // 발주 상세 - 저장
 function insertOrderAndOrderDetail() {
     let orderDetails = saveOrderDetailForm();
-
     console.log("상태 ", saveStatus);
 
     if (orderDetails.length === 0)
@@ -286,6 +283,7 @@ function insertOrderAndOrderDetail() {
             contentType: 'application/json',
             data: JSON.stringify({order: order, orderDetails: orderDetails}),
             success: function (resp) {
+                $('#order-register-delete-btn').prop('disabled', false);
             },
             error: function (error) {
                 console.log('Error:', error);
@@ -346,6 +344,8 @@ function createOrderDetailForm() {
     orderSearch.vIncomingProductSupplierNm = order.vIncomingProductSupplierNm;
     orderSearch.vProductCd = $("#input-product-cd").val();
     orderSearch.vWarehouseCd = order.vWarehouseCd;
+    if (!checkDuplicateProductRegistration(orderSearch.vProductCd))
+        return;
 
     $.ajax({
         url: '/order/register/detail',
@@ -355,6 +355,9 @@ function createOrderDetailForm() {
             JSON.stringify(orderSearch),
         success: function (resp) {
             $("#default-tr").remove();
+            addProducts[resp.vProductCd] = 1;
+            console.log("addProducts ", addProducts);
+
             let idx = $(".order-detail-tbody tr").length + 1;
 
             $(".order-detail-tbody").append(
@@ -385,6 +388,16 @@ function createOrderDetailForm() {
     });
 }
 
+function checkDuplicateProductRegistration(productCd) {
+    if (productCd in addProducts) {
+        showAlertDanger("이미 추가된 상품입니다.");
+        console.log("addProducts ", addProducts);
+        return false;
+    }
+
+    return true;
+}
+
 
 $('body').on('input', '[class^=order-cnt]', function() {
     let $tr = $(this).closest('tr');
@@ -392,17 +405,37 @@ $('body').on('input', '[class^=order-cnt]', function() {
     $tr.find('.total-price').text(totalPrice);
 });
 
-$('body').on('input', '[class^=order-cnt]', function() {
-    let $tr = $(this).closest('tr');
-    let totalPrice = calculateOrderTotalPrice($tr);
-    $tr.find('.total-price').text(totalPrice);
-});
+// $('body').on('input', '[class^=order-cnt]', function() {
+//     let $tr = $(this).closest('tr');
+//     let totalPrice = calculateOrderTotalPrice($tr);
+//     $tr.find('.total-price').text(totalPrice);
+// });
 
 
-// 발주 삭제 - 삭제
+// 발주 상세 - 삭제
 function deleteOrderSingle() {
     $('.order-detail-tbody input[type="checkbox"]:checked').each(function() {
+        let productCd = $(this).closest('tr').find(".product-cd").text();
         $(this).closest('tr').remove();
+
+        console.log("길이 얼마임?", $('.order-detail-tbody tr').length );
+        if ($('.order-detail-tbody tr').length === 0) {
+            $('.order-detail-tbody').append(`
+                <tr id="default-tr">
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            `)
+        }
+
+        delete addProducts[productCd];
+        console.log("addProducts", addProducts);
     });
 
     $('.order-detail-tbody tr').each(function(index) {
@@ -445,4 +478,10 @@ function showAlertDanger(text) {
     $('.alert-danger a').text(text);
     $('.alert-danger').show();
     $('.alert-danger').delay(2000).fadeOut();
+}
+
+function showAlertSuccess(text) {
+    $('.alert-success a').text(text);
+    $('.alert-success').show();
+    $('.alert-success').delay(2000).fadeOut();
 }

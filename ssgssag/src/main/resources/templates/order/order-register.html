@@ -237,7 +237,7 @@
                                             <div class="modal-body center">저장하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
                                                 <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                <button type="button" id="order-register-save-ok-btn" class="btn" onclick="orderRegisterSave()" data-dismiss="modal">확인</button>
+                                                <button type="button" id="order-register-save-ok-btn" class="btn btn-info" onclick="orderRegisterSave()" data-dismiss="modal">확인</button>
                                             </div>
                                         </div>
                                     </div>
@@ -245,7 +245,7 @@
                             </div>
                             <div class="bootstrap-modal">
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#order-register-remove">삭제</button>
+                                <button type="button" class="btn btn-light" id="order-register-delete-btn" data-toggle="modal" data-target="#order-register-remove">삭제</button>
                                 <!-- Modal -->
                                 <div class="modal fade" id="order-register-remove" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -258,7 +258,7 @@
                                             <div class="modal-body center">삭제하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
                                                 <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                <button type="button" class="btn btn-info" onclick="orderRegisterDelete()" data-dismiss="modal">확인</button>
+                                                <button type="button" class="btn btn-info" onclick="deleteOrder()" data-dismiss="modal">확인</button>
                                             </div>
                                         </div>
                                     </div>
@@ -384,6 +384,7 @@
       Main wrapper end
   ***********************************-->
 <script th:src="@{/js/orderRegister.js}"></script>
+
   <!--**********************************
       Scripts
   ***********************************-->
