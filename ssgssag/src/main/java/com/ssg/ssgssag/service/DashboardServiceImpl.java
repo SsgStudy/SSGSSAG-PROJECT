@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.service;
 
+import com.ssg.ssgssag.dto.BestCategoryDTO;
 import com.ssg.ssgssag.dto.BestProductDTO;
 import com.ssg.ssgssag.dto.DailyPurchaseCountDTO;
 import com.ssg.ssgssag.dto.StatusCountDTO;
@@ -31,5 +32,10 @@ public class DashboardServiceImpl implements DashboardService {
     @Override
     public List<DailyPurchaseCountDTO> getDailyPurchaseStatistics() {
         return dashboardMapper.selectDailyPurchaseStatistics();
+    }
+
+    @Override
+    public List<BestCategoryDTO> getBestCategoryList() {
+        return dashboardMapper.selectBestCategoryList();
     }
 }
