@@ -27,7 +27,7 @@ public class DashboardController {
     private final DashboardService dashboardService;
 
     @GetMapping()
-    @Operation(summary = "대시 보드 정보 조회", description = "대시 보드 내 필요 데이터를 조회합니다.")
+    @Operation(summary = "대시보드 정보 조회", description = "대시보드 내 필요 데이터를 조회합니다.")
     public String showDashboardPage(Model model) {
         log.info("Load dashboard page");
 
