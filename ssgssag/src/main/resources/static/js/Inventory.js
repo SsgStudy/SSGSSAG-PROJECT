@@ -351,3 +351,40 @@ function reloadPageAfterDelay(delay) {
         location.reload();
     }, delay);
 }
+
+
+// 3. 재고 이동
+$('#submitMovementButton').on('click', function () {
+    let warehouse = $('#select-warehouse').val();
+    let zone = $('#select-zone').val();
+
+    let data = {
+        pkInventorySeq: selectedNumber,
+        vWarehouseNm2: warehouse,
+        vZoneNm2: zone
+    }
+
+    console.log(data)
+
+    $.ajax({
+        url: '/inventory/movement/update',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log('서버 응답:' + JSON.stringify(data));
+
+            showSuccessAlert();
+            window.scrollTo(0, 0);
+            reloadPageAfterDelay(1000);
+        },
+        error: function (xhr, status, error) {
+            console.error('에러 발생:', error);
+
+            showDangerAlert();
+            window.scrollTo(0, 0);
+            reloadPageAfterDelay(1000);
+        }
+     });
+
+});

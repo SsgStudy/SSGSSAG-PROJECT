@@ -49,4 +49,9 @@ public class InventoryServiceImpl implements InventoryService{
     public void updateInventoryWithHistory(InventoryAdjustmentDTO inventoryAdjustmentDTO) {
         inventoryMapper.updateInventoryWithHistory(inventoryAdjustmentDTO);
     }
+
+    @Override
+    public void updateInventoryWithHistoryMove(InventoryMovementDTO inventoryMovementDTO) {
+        inventoryMapper.updateInventoryWithHistoryMove(inventoryMovementDTO);
+    }
 }
