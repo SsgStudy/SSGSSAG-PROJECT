@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html class="h-100" lang="en">
+<html class="h-100" lang="en" xmlns:th="http://www.thymeleaf.org">
+
 
 <head>
     <meta charset="utf-8">
@@ -7,8 +8,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
     
 </head>
 
@@ -110,11 +111,11 @@
     <!--**********************************
         Scripts
     ***********************************-->
-    <script src="plugins/common/common.min.js"></script>
-    <script src="js/custom.min.js"></script>
-    <script src="js/settings.js"></script>
-    <script src="js/gleek.js"></script>
-    <script src="js/styleSwitcher.js"></script>
+    <script th:src="@{/plugins/common/common.min.js}"></script>
+    <script th:src="@{/js/custom.min.js}"></script>
+    <script th:src="@{/js/settings.js}"></script>
+    <script th:src="@{/js/gleek.js}"></script>
+    <script th:src="@{/js/styleSwitcher.js}"></script>
 </body>
 </html>
 

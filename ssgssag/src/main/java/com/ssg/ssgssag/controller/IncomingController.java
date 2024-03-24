@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class IncomingController {
 
     private final IncomingService incomingService;
-
+    
     //입고 현황 리스트 조회
     @GetMapping("/list")
     public String showIncomingListPage(Model model) {
