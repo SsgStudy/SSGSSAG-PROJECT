@@ -5,6 +5,7 @@ import com.ssg.ssgssag.dto.IncomingDetailDTO;
 import com.ssg.ssgssag.dto.IncomingProductUpdateRequestDTO;
 import com.ssg.ssgssag.dto.OrderSupplierDTO;
 import com.ssg.ssgssag.service.IncomingService;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.Date;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class IncomingController {
     
     //입고 현황 리스트 조회
     @GetMapping("/list")
+    @Operation(summary = "입고 현황 리스트 페이지 이동", description = "입고 리스트 페이지 이동")
     public String showIncomingListPage(Model model) {
         log.info("incoming controller test");
 
@@ -43,6 +45,7 @@ public class IncomingController {
 
     //입고 현황 리스트 동적 필터링 조회
     @PostMapping("/list/filter")
+    @Operation(summary = "입고 현황 리스트 필터링 조회", description = "기간,창고,거래처,상태로 입고 현황 리스트 필터링 조회")
     @ResponseBody
     public ResponseEntity<List<IncomingDTO>> getIncomingListWithFilters(
         @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -61,6 +64,7 @@ public class IncomingController {
     }
     //입고 미승인 리스트 동적 필터링 조회
     @PostMapping("/list/unconfirm-filter")
+    @Operation(summary = "입고 미승인 리스트 필터링 조회", description = "기간,창고,거래처,상태로 입고 미승인 리스트 필터링 조회")
     @ResponseBody
     public ResponseEntity<List<IncomingDTO>> getUnconfirmIncomingListWithFilters(
         @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -80,6 +84,7 @@ public class IncomingController {
 
     //발주 입고 등록
     @GetMapping("/register")
+    @Operation(summary = "발주 입고 등록 페이지 이동", description = "미등록 리스트와 함께 발주 입고 페이지 이동")
     public String showOrderedIncomingRegisterPage(Model model) {
         log.info("incoming controller test");
 
@@ -91,6 +96,7 @@ public class IncomingController {
 
     //입고 승인
     @GetMapping("/confirm")
+    @Operation(summary = "입고 승인 처리 페이지 이동", description = "리스트와 함께 입고 승인페이지 이동")
     public String showIncomingConfirmPage(Model model) {
         log.info("incoming controller test");
 
@@ -102,6 +108,7 @@ public class IncomingController {
 
     //입고 상세 조회
     @GetMapping("/details/{pkIncomingProductSeq}")
+    @Operation(summary = "입고 상세 조회", description = "코드로 입고 상세 정보 조회")
     @ResponseBody
     public IncomingDetailDTO getIncomingDetailByPk(@PathVariable String pkIncomingProductSeq) {
         return incomingService.getIncomingDetailByCode(pkIncomingProductSeq);
@@ -109,6 +116,7 @@ public class IncomingController {
 
     //입고 승인(확정)
     @PostMapping("/confirm")
+    @Operation(summary = "입고 승인 처리", description = "입고 최종 승인 처리")
     @ResponseBody
     public ResponseEntity<?> confirmIncomingProducts(@RequestBody List<String> pkIncomingProductSeqs) {
         incomingService.confirmIncomingProducts(pkIncomingProductSeqs);
@@ -117,11 +125,13 @@ public class IncomingController {
 
     //매입 거래처 리스트 조회
     @GetMapping("/supplier")
+    @Operation(summary = "매입 거래처 리스트 조회", description = "모든 매입 거래처 이름 조회")
     @ResponseBody
     public List<OrderSupplierDTO> getAllOrderSupplierName() {
         return incomingService.getAllOrderSupplierName();
     }
     @PostMapping("/update-status-for-register")
+    @Operation(summary = "입고 상태 업데이트", description = "입고 상태를 확정으로 업데이트")
     public ResponseEntity<?> updateIncomingProductStatusForRegister(@RequestBody List<IncomingProductUpdateRequestDTO> updateRequests) {
         try {
             for (IncomingProductUpdateRequestDTO request : updateRequests) {
@@ -138,6 +148,7 @@ public class IncomingController {
     }
 
     @GetMapping("/zones/{warehouseCd}")
+    @Operation(summary = "창고 구역 정보 조회", description = "창고 코드로 창고 구역 정보를 조회")
     @ResponseBody
     public ResponseEntity<?> getZonesByWarehouseCode(@PathVariable String warehouseCd) {
         List<String> zones = incomingService.getZonesByWarehouseCode(warehouseCd);
