@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html class="h-100" lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <title>회원 가입</title>
+</head>
+
+<body class="h-100">
+<!--*******************
+    Preloader start
+********************-->
+<th:block th:replace="/layout/preloader :: preloaderFragment"></th:block>
+<!--*******************
+    Preloader end
+********************-->
+
+<div class="login-form-bg h-100">
+  <div class="container h-100">
+    <div class="row justify-content-center h-100">
+      <div class="col-xl-6">
+        <div class="form-input-content">
+          <div class="card login-form mb-0">
+            <div class="card-body pt-5">
+              <a class="text-center"><h4><b>회원가입</b></h4></a>
+
+                <form th:action="@{/member/signup}" id="signup-form" class="mt-5 mb-5 login-input" method="post">
+
+                <div class="form-group d-flex justify-content-between">
+                  <input type="text" name = "vMemberNm" class="form-control w-75" placeholder="이름" required>
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                  <input type="text" name = "vMemberId" class="form-control w-75" placeholder="아이디" required>
+                  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                          data-target="#customAlert" id="alertButton">중복확인
+                  </button>
+
+
+                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">모달 창 제목</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          모달 내용이 여기에 들어갑니다.
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                          <!-- 다른 버튼이 필요하면 여기에 추가 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="passwordEye">
+                  <div class="form-group d-flex justify-content-between w-75">
+                    <input type="password" id="vMemberPw" name="vMemberPw" class="form-control" placeholder="비밀번호"
+                           required>
+                    <i class="fa fa-eye-slash fa-lg"></i>
+                  </div>
+                  <div class="form-group d-flex justify-content-between w-75">
+                    <input type="password" id="pwd" class="form-control"
+                           placeholder="비밀번호 확인" required>
+                    <i class="fa fa-eye-slash fa-lg"></i>
+                  </div>
+
+                  <div>
+                    <span id="pwdCheck" style="color: red; display:none;">비밀번호가 일치하지 않습니다.</span>
+                  </div>
+
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                  <input type="email" name="vEmail" class="form-control w-75" placeholder="이메일"
+                         required>
+                </div>
+                <button class="btn btn-primary submit w-100" onclick="passwordCheck()" type="submit">가입하기</button>
+              </form>
+              <p class="mt-5">기존 회원이신가요? <a href="/member/login" class="text-primary">로그인</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--**********************************
+    Scripts
+***********************************-->
+<th:block th:replace="/layout/script :: scriptFragment"></th:block>
+<script th:src="@{/js/Member.js}"></script>
+
+</body>
+</html>
+
+
+
+
+
