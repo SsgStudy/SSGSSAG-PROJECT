@@ -375,16 +375,16 @@ $('#submitMovementButton').on('click', function () {
             console.log('서버 응답:' + JSON.stringify(data));
 
             showSuccessAlert();
-            // window.scrollTo(0, 0);
-            // reloadPageAfterDelay(1000);
+            window.scrollTo(0, 0);
+            reloadPageAfterDelay(1000);
         },
         error: function (xhr, status, error) {
             console.error('에러 발생:', error);
 
             showDangerAlert();
-            // window.scrollTo(0, 0);
-            // reloadPageAfterDelay(1000);
+            window.scrollTo(0, 0);
+            reloadPageAfterDelay(1000);
         }
-    });
+     });
 
 });
