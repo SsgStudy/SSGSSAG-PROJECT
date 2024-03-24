@@ -40,7 +40,7 @@ public class InventoryServiceImpl implements InventoryService{
     }
 
     @Override
-    public InventoryHistoryVO getInventoryHistoryBySeq(Integer pkInventorySeq) {
+    public List<InventoryHistoryVO> getInventoryHistoryBySeq(Integer pkInventorySeq) {
         return inventoryMapper.selectInventoryHistoryBySeq(pkInventorySeq);
     }
 

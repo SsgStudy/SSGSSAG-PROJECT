@@ -35,10 +35,10 @@ public class InventoryController {
     @GetMapping("/list/detail/{pkInventorySeq}")
     @Operation(summary = "재고 조회 : 모달 출력", description = "재고 번호에 따른 재고 이력 모달 출력")
     @ResponseBody
-    public InventoryHistoryVO getInventoryHistoryBySeq(@PathVariable Integer pkInventorySeq) {
+    public List<InventoryHistoryVO> getInventoryHistoryBySeq(@PathVariable Integer pkInventorySeq) {
         log.info("호출");
-        InventoryHistoryVO inventoryHistoryVO = inventoryService.getInventoryHistoryBySeq(pkInventorySeq);
-        return inventoryHistoryVO;
+        List<InventoryHistoryVO> inventoryHistoryList = inventoryService.getInventoryHistoryBySeq(pkInventorySeq);
+        return inventoryHistoryList;
     }
 
     @GetMapping("/warehouse")
