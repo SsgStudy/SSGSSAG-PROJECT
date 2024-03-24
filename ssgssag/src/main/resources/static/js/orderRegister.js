@@ -1,6 +1,8 @@
 $(document).ready(function() {
     allDeactivateForm();
     $('.alert').hide();
+
+    console.log("container", orderRegisterContainer);
 });
 
 // 전역 변수
@@ -25,11 +27,14 @@ var saveStatus = {
 }
 
 var addProducts = {};
+const orderRegisterContainer = $('.order-register-container');
+
 
 // 신규
 function clickNewBtn() {
     $('#order-register-reset-btn').prop('disabled', false);
-    $('.general-button button').prop('disabled', false);
+    orderRegisterContainer.find('.general-button button')
+        .prop('disabled', false);
 
     newOrderForm();
     createOrderSeq();
@@ -61,15 +66,17 @@ function newOrderForm() {
 }
 
 function activateMasterForm() {
-    $('#order-register-form button, .container-fluid input, .container-fluid select')
+    $('#order-register-form button')
         .not("#order-register-delete-btn")
         .prop('disabled', false);
+    orderRegisterContainer.find('input, select').prop('disabled', false);
 }
 
 // 초기화
 function allDeactivateForm() {
-    $('.order-register-body button, .order-register-body input, .order-register-body select')
-        .not('#order-register-new-btn, .modal button').prop('disabled', true);
+    orderRegisterContainer.find('button,input, select')
+        .not('#order-register-new-btn, .modal button')
+        .prop('disabled', true);
 }
 
 // 등록 폼
@@ -152,7 +159,6 @@ function clickOrderMasterSave() {
     else {
         $('#order-master-save-btn').attr('data-target','#exampleModalCenter');
         saveStatus.order = true;
-        $('.input-supplier').prop('disabled', true);
     }
 }
 function orderRegisterSave() {
@@ -160,13 +166,16 @@ function orderRegisterSave() {
     $('.alert-success').show();
     $('.alert-success').delay(2000).fadeOut();
 
+    orderRegisterContainer.find('.input-supplier').prop('disabled', true);
     saveOrderForm();
     activateOrderSingleForm();
 }
 
 function activateOrderSingleForm() {
-    $('#order-register-order-single-btn-wrap button, #order-register-order-single-btn-wrap button input')
+    orderRegisterContainer
+        .find('#order-register-order-single-btn-wrap button')
         .prop('disabled', false);
+
 }
 
 function checkInputFields() {
@@ -261,8 +270,8 @@ function insertOrderAndOrderDetail() {
             contentType: 'application/json',
             data: JSON.stringify({order: order, orderDetails: orderDetails}),
             success: function (resp) {
-                $('.container-fluid button, .container-fluid input, .container-fluid select')
-                    .not('#order-register-new-btn, .modal button, #order-register-delete-btn')
+                orderRegisterContainer.find('button, input, select')
+                    .not('#order-register-new-btn, .modal button')
                     .prop('disabled', true);
                 $('#order-register-delete-btn').prop('disabled', false);
 
@@ -349,10 +358,8 @@ function createOrderDetailForm() {
                     <td class="product-nm">${resp.vProductNm}</td>
                     <td class="inventory-cnt">${resp.nInventoryCnt}</td>
                     <td>
-                        <div class="col-sm-3">
-                            <div class="input-group">
-                                <input type="number" class="order-cnt">
-                            </div>
+                        <div class="input-group">
+                            <input type="number" class="order-cnt" style="width:60px">
                         </div>
                     </td>
                     <td class="product-price">${addCommas(resp.nProductPrice)}</td>
@@ -383,13 +390,6 @@ $('body').on('input', '[class^=order-cnt]', function() {
     let totalPrice = calculateOrderTotalPrice($tr);
     $tr.find('.total-price').text(totalPrice);
 });
-
-// $('body').on('input', '[class^=input-supplier]', function() {
-//     if($('.order-detail-tbody tr').length > 0) {
-//         showAlertDanger("입력된 단품 내역이 있습니다.");
-//     }
-// });
-
 
 // 발주 상세 - 삭제
 function deleteOrderSingle() {

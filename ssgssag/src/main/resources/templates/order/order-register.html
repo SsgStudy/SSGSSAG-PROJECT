@@ -4,7 +4,7 @@
   <th:block th:replace="/layout/head :: headFragment"></th:block>
   <title>발주 등록</title>
 </head>
-<body class="order-register-body">
+<body>
 <!--*******************
     Preloader start
 ********************-->
@@ -38,7 +38,6 @@
       Content body start
   ***********************************-->
     <div class="content-body" style="min-height: 876px;">
-
         <div class="row page-titles mx-0">
             <div class="col p-md-0">
                 <ol class="breadcrumb">
@@ -49,7 +48,7 @@
         </div>
         <!-- row -->
 
-        <div class="container-fluid">
+        <div class="container-fluid order-register-container">
             <div class="col-lg-12">
                 <h1>발주 등록</h1>
             </div>
@@ -65,7 +64,7 @@
                                     <button type="button" class="close" data-dismiss="modal"><span>×</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">초기화 하시겠습니까?</div>
+                                <div class="modal-body" style="text-align:left">초기화 하시겠습니까?</div>
                                 <div class="modal-footer d-flex justify-content-center">
                                     <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
                                     <button type="button" id="order-register-reset-ok-btn" class="btn btn-info"
@@ -93,7 +92,7 @@
                         <form class="order-master-form">
                             <div class="form-group row">
                                 <label class="col-sm-1 col-form-label">발주일자</label>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" id="order-created-date" placeholder="mm/dd/yyyy">
                                         <span class="input-group-append">
@@ -105,13 +104,13 @@
                                 </div>
 
                                 <label class="col-sm-1 col-form-label">발주번호</label>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <div class="input-group">
                                         <input type="text"  id="order-seq" class="form-control input-flat" readonly>
                                     </div>
                                 </div>
                                 <label class="col-sm-1 col-form-label">발주확정</label>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <div class="input-group">
                                         <input type="text" class="form-control input-flat" id="order-status" readonly>
                                     </div>
@@ -120,7 +119,7 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-1 col-form-label">매입처</label>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <div class="input-group">
                                         <input type="text" class="form-control input-flat input-supplier" id="incoming-product-supplier-nm" placeholder="매입처 검색"
                                                data-toggle="modal" data-target="#purchaserSearchInputBox">
@@ -168,7 +167,7 @@
                                 </div>
 
                                 <label class="col-sm-1 col-form-label">창고</label>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <div class="input-group">
                                         <input type="text" class="form-control input-flat input-whsearch" id="warehouse-cd" placeholder="창고 검색"
                                                data-toggle="modal" data-target="#warehouseSearchInputBox">
@@ -209,7 +208,7 @@
                                 </div>
 
                                 <label class="col-sm-1 col-form-label">발주유형</label>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <div class="input-group">
                                         <select id="order-type" class="form-control">
                                             <option selected="selected">선택</option>
@@ -234,7 +233,7 @@
                                                 <button type="button" class="close" data-dismiss="modal"><span>×</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body center">저장하시겠습니까?</div>
+                                            <div class="modal-body">저장하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
                                                 <button type="button" class="btn" data-dismiss="modal">취소</button>
                                                 <button type="button" id="order-register-save-ok-btn" class="btn btn-info" onclick="orderRegisterSave()" data-dismiss="modal">확인</button>
@@ -255,7 +254,7 @@
                                                 <button type="button" class="close" data-dismiss="modal"><span>×</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body center">삭제하시겠습니까?</div>
+                                            <div class="modal-body">삭제하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
                                                 <button type="button" class="btn" data-dismiss="modal">취소</button>
                                                 <button type="button" class="btn btn-info" onclick="deleteOrder()" data-dismiss="modal">확인</button>
@@ -338,7 +337,7 @@
                                                 <button type="button" class="close" data-dismiss="modal"><span>×</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body center">저장하시겠습니까?</div>
+                                            <div class="modal-body">저장하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
                                                 <button type="button" class="btn" data-dismiss="modal">취소</button>
                                                 <button type="button" class="btn btn-info" id="order-detail-save-btn" data-dismiss="modal"
@@ -364,7 +363,7 @@
                                                 <button type="button" class="close" data-dismiss="modal"><span>×</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body center">삭제하시겠습니까?</div>
+                                            <div class="modal-body">삭제하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
                                                 <button type="button" class="btn" data-dismiss="modal">취소</button>
                                                 <button type="button" class="btn btn-info" onclick="deleteOrderSingle()" data-dismiss="modal">확인</button>
