@@ -17,8 +17,8 @@ public interface InventoryMapper {
 
     List<InventoryListDTO> searchInventoryByCategoryAndWarehouse(InventorySearchDTO inventorySearchDTO);
 
-    InventoryHistoryVO selectInventoryHistoryBySeq(Integer pkInventorySeq);
+    List<InventoryHistoryVO> selectInventoryHistoryBySeq(Integer pkInventorySeq);
 
-    void updateInventoryWithHistory(InventoryAdjustmentDTO inventoryAdjustmentDTO);
+    void updateInventoryWithHistoryCnt(InventoryAdjustmentDTO inventoryAdjustmentDTO);
     void updateInventoryWithHistoryMove(InventoryMovementDTO inventoryMovementDTO);
 }
