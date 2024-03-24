@@ -162,25 +162,40 @@ function filterMembers() {
 
       $.each(data, function (i, members) {
 
-        console.log(members);
-
         let row = `<tr>
                         <td>${members.pkMemberSeq}</td>
                         <td>${members.vMemberNm}</td>
                         <td>${members.vMemberId}</td>
                         <td>${members.vEmail}</td>
                         <td>${members.vMemberAuth}</td>
-                        <td><input type="button" class="btn btn-primary btn-modify" th:value="수정" onclick = "modalPage()"></button></td>
-                        <td><input type="button" class="btn btn-primary" th:value="삭제"></button></td>
+                        <td>
+                        <input type="button" class="btn btn-primary ssgssag-blue editBtn"
+                               value="수정"
+                               data-toggle="modal"
+                               data-target="#editModal"
+                               data-member-id="${members.vMemberId}"/>
+                        
+                        </td>
+                        <td>
+                        <form>
+                          <input type="button" class="btn btn-primary ssgssag-blue" th:value="삭제"/>
+                        </form></td>
                         </tr>`;
         tableBody.append(row);
-
       });
+
+
+      $('.editBtn').click(function() {
+        var memberId = $(this).data('member-id');
+        modalButton(memberId);
+      });
+
     },
     error: function(xhr, status, error) {
       console.error('AJAX 요청 에러:', error);
     }
   });
+
 }
 
 function modalButton(memberId) {
