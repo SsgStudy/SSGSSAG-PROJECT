@@ -53,7 +53,7 @@ public class MemberController {
 
 
         memberService.registerMember(member);
-        return "redirect:/member/memberslist";
+        return "redirect:/member/member-list";
     }
 
 
@@ -65,7 +65,7 @@ public class MemberController {
     }
 
 
-    @GetMapping("/memberslist")
+    @GetMapping("/member-list")
     @Operation(summary = "회원 목록 조회", description = "모든 회원의 목록을 조회합니다.")
     public String showAllMemberListPage(Model model) {
 
@@ -85,16 +85,8 @@ public class MemberController {
         return ResponseEntity.ok(memberList);
     }
 
-
-//    public ResponseEntity<MemberDTO> showOneMemberInModalPage(@RequestBody MemberDTO, Model model) {
-//
-//        MemberDTO memberDTO = memberService.
-//
-//    }
-
-
     //모달창에 개인 회원 출력
-    @GetMapping("/getOneMember")
+    @GetMapping("/get-one-member")
     @ResponseBody
     public MemberVO getMembersInModal(@RequestParam("memberId") String memberId) {
         log.info("member id = {}", memberId);
@@ -103,7 +95,7 @@ public class MemberController {
     }
 
 
-    @PostMapping("/modifymemberInfo")
+    @PostMapping("/modify-member-info")
     @Operation(summary = "회원 정보 수정", description = "총관리자가 회원들의 정보를 수정합니다.")
     public String modifyMembers(
         @RequestParam String memberId,
@@ -128,6 +120,6 @@ public class MemberController {
 
         memberService.modifyMembers(dto);
 
-        return "redirect:/member/memberslist";
+        return "redirect:/member/member-list";
     }
 }

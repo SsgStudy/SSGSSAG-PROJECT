@@ -37,7 +37,7 @@ $(document).ready(function() {
       success: function (response) {
         // 성공 시 처리 로직 작성
         console.log(response);
-        window.location.href='/member/memberslist'
+        window.location.href='/member/member-list'
         alert('회원가입이 완료되었습니다.');
       },
       error: function (xhr, status, error) {
@@ -74,7 +74,7 @@ $(document).ready(function() {
     }
 
     $.ajax({
-      url: '/member/modifymemberInfo',
+      url: '/member/modify-member-info',
       type: 'POST',
       data: {
         memberId: memberId,
@@ -85,12 +85,12 @@ $(document).ready(function() {
       },
       success: function (response) {
         // 성공 시 처리 로직 작성
-        window.location.href='/member/memberslist'
+        window.location.href='/member/member-list'
         alert('수정 완료');
       },
       error: function (xhr, status, error) {
         // 에러 처리 로직 작성
-       console.log(memberAuth)
+        console.log(memberAuth)
         console.error('Error:', error);
         alert('수정에 실패하였습니다. 다시 시도해주세요.');
       }
@@ -169,11 +169,12 @@ function filterMembers() {
                         <td>${members.vEmail}</td>
                         <td>${members.vMemberAuth}</td>
                         <td>
-                        <input type="button" class="btn btn-primary ssgssag-blue editBtn"
+                        <input type="button" class="btn btn-primary ssgssag-blue"
                                value="수정"
                                data-toggle="modal"
-                               data-target="#editModal"
-                               data-member-id="${members.vMemberId}"/>
+                               data-target="#customAlert"
+                               vMemberId="${members.vMemberId}"
+                               onclick="modalButton(this.getAttribute('vMemberId'))"/>
                         
                         </td>
                         <td>
@@ -182,181 +183,58 @@ function filterMembers() {
                         </form></td>
                         </tr>`;
         tableBody.append(row);
+
       });
-
-
-      $('.editBtn').click(function() {
-        var memberId = $(this).data('member-id');
-        modalButton(memberId);
-      });
-
     },
     error: function(xhr, status, error) {
       console.error('AJAX 요청 에러:', error);
     }
   });
-
 }
 
 function modalButton(memberId) {
-    console.log("current ", memberId);
+  console.log("current ", memberId);
 
-    $("#editModal").modal('show');
+  $("#editModal").modal('show');
 
-    $.ajax({
-      url: `/member/getOneMember?memberId=${memberId}`,
-      type: 'GET',
-      contentType: 'application/json',
-      success: function (getone) {
-        console.log("조회 결과 ", JSON.stringify(getone))
+  $.ajax({
+    url: `/member/get-one-member?memberId=${memberId}`,
+    type: 'GET',
+    contentType: 'application/json',
+    success: function (getone) {
+      console.log("조회 결과 ", JSON.stringify(getone))
 
-        let tableBody = $('.modalForm tbody');
-        tableBody.empty(); // 기존 테이블 내용 초기화
+      let tableBody = $('.modalForm tbody');
+      tableBody.empty(); // 기존 테이블 내용 초기화
 
-        $('#editModal #memberId').val(getone.vmemberId);
-        $('#editModal #memberName').val(getone.vmemberNm);
-        $('#editModal #memberPw').val(getone.vmemberPw);
-        $('#editModal #memberEmail').val(getone.vemail);
-        $('#editModal #memberRole').val(getone.vmemberAuth);
+      $('#editModal #memberId').val(getone.vmemberId);
+      $('#editModal #memberName').val(getone.vmemberNm);
+      $('#editModal #memberPw').val(getone.vmemberPw);
+      $('#editModal #memberEmail').val(getone.vemail);
+      $('#editModal #memberRole').val(getone.vmemberAuth);
 
-        let memberAuth = null;
+      let memberAuth = null;
 
-        switch(getone.vmemberAuth) {
-          case 'OPERATOR':
-            memberAuth = 'operator';
-            break;
-          case 'WAREHOUSE_MANAGER':
-            memberAuth = 'warehouse';
-            break;
-          default:
-            memberAuth = 'admin';
-        }
-        console.log("권한", memberAuth);
-
-
-        $('#editModal #memberRole').find('option[value="' + memberAuth + '"]').prop('selected', true);
-
-        $("#editModal").modal('show');
-
-      },
-      error: function (xhr, status, error) {
-        console.error('AJAX 요청 에러:', error);
+      switch(getone.vmemberAuth) {
+        case 'OPERATOR':
+          memberAuth = 'operator';
+          break;
+        case 'WAREHOUSE_MANAGER':
+          memberAuth = 'warehouse';
+          break;
+        default:
+          memberAuth = 'admin';
       }
-    });
+      console.log("권한", memberAuth);
+
+
+      $('#editModal #memberRole').find('option[value="' + memberAuth + '"]').prop('selected', true);
+
+      $("#editModal").modal('show');
+
+    },
+    error: function (xhr, status, error) {
+      console.error('AJAX 요청 에러:', error);
+    }
+  });
 }
-
-
-
-
-// function fetchMembersByName() {
-//   var url = '/member/namefilter'; // AJAX 요청을 보낼 URL
-//   var formData = {
-//     name: $("input[name='name']").val()
-//   };
-//   // AJAX 요청
-//   $.ajax({
-//     url: url,
-//     type: 'POST',
-//     data: $.param(formData),
-//     contentType: 'application/x-www-form-urlencoded',
-//     success: function (data) {
-//       let tableBody = $('.zero-configuration tbody');
-//       tableBody.empty(); // 기존 테이블 내용 초기화
-//       // 응답 데이터를 사용하여 테이블 행 생성 및 추가
-//       $.each(data, function (i, member) {
-//         var row = '<tr>';
-//         row += '<td>' + member.pkMemberSeq + '</td>';
-//         row += '<td>' + member.vmemberNm + '</td>'; // 필드 이름 변경
-//         row += '<td>' + member.vmemberId + '</td>'; // 필드 이름 변경
-//         row += '<td>' + member.vemail + '</td>'; // 필드 이름 변경
-//         row += '<td>' + member.vmemberAuth + '</td>'; // 필드 이름 변경
-//         row += '<td><button class="btn btn-primary">수정</button></td>';
-//         row += '<td><button class="btn btn-primary">삭제</button></td>';
-//         row += '</tr>';
-//         tableBody.append(row);
-//       });
-//     },
-//     error: function(xhr, status, error) {
-//       console.error('AJAX 요청 에러:', error);
-//     }
-//   });
-//
-// }
-
-
-//
-// function modalPage(){
-//   // 수정 버튼 클릭 시 모달 띄우기
-//     $.ajax({
-//       url: '/member/getOneMember',
-//       type: 'POST',
-//       data: JSON.stringify(member),
-//       contentType: 'application/json',
-//       success: function (data) {
-//
-//         console.log("조회 결과 ", JSON.stringify(member))
-//
-//         let tableBody = $('.modalForm tbody');
-//         tableBody.empty(); // 기존 테이블 내용 초기화
-//
-//         $.each(data, function (i, getone) {
-//
-//
-//           $('#editModal #memberId').val(${getone.vMemberId});
-//           $('#editModal #memberName').val(${getone.vMemberNm});
-//           $('#editModal #memberPw').val(${getone.vMemberPw});
-//           $('#editModal #memberEmail').val(${getone.vEmail});
-//           $('#editModal #memberRole').val(${getone.vEmail});
-//         });
-//       },
-//       error: function (xhr, status, error) {
-//         console.error('AJAX 요청 에러:', error);
-//       }
-//     });
-//   };
-//
-//
-//
-//
-//
-//
-// //
-// // // 모달에 회원 정보 채우기
-// //     $('#editModal #memberId').val(memberId);
-// //     $('#editModal #memberName').val(memberName);
-// //     $('#editModal #memberEmail').val(memberEmail);
-// //     $('#editModal #memberRole').val(memberRole);
-// //
-// //     // 모달 띄우기
-// //     $('#editModal').modal('show');
-// //   });
-// //   });
-// // //
-// // //   // 저장 버튼 클릭 시 AJAX 요청
-// // //   $('#saveBtn').click(function() {
-// // //     var memberId = $('#memberId').val();
-// // //     var memberName = $('#memberName').val();
-// // //     var memberEmail = $('#memberEmail').val();
-// // //     var memberRole = $('#memberRole').val();
-// // //
-// // //     $.ajax({
-// //       type: 'POST',
-// //       url: '/member/ㅎㄷ',
-// //       data: {
-// //         memberId: memberId,
-// //         memberName: memberName,
-// //         memberEmail: memberEmail,
-// //         memberRole: memberRole
-// //       },
-// //       success: function(response) {
-// //         // 성공 시 모달 닫기 및 페이지 새로고침
-// //         $('#editModal').modal('hide');
-// //         location.reload();
-// //       },
-// //       error: function(xhr, status, error) {
-// //         // 실패 시 에러 처리
-// //         console.error(xhr.responseText);
-// //       }
-// //     });
-// //   });
-// });
