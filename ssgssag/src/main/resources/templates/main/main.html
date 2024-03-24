@@ -132,26 +132,27 @@
               </div>
               <script th:inline="javascript">
                 /*<![CDATA[*/
-                const purchaseDates = /*[[${purchaseDates}]]*/ [];
-                const dailyPurchases = /*[[${dailyPurchases}]]*/ [];
+                let purchaseDates = /*[[${purchaseDates}]]*/ [];
+                let predictedPurchases = /*[[${predictedPurchases}]]*/ [];
+                console.log(predictedPurchases);
+                for (let i = 1; i <= 7; i++) {
+                  purchaseDates.push(`예측 ${i}일 후`);
+                }
 
-                const ctx = document.getElementById('myChart').getContext('2d');
-                const myLineChart = new Chart(ctx, {
+                let ctx = document.getElementById('myChart').getContext('2d');
+                let myLineChart = new Chart(ctx, {
                   type: 'line',
                   data: {
                     labels: purchaseDates,
                     datasets: [{
                       label: '일일 판매량',
-                      data: dailyPurchases,
+                      data: predictedPurchases,
                       fill: false,
-                      borderColor: 'rgb(5,117,230)',
-                      tension: 0.2
+                      borderColor: 'rgb(75, 192, 192)',
+                      tension: 0.1
                     }]
                   },
                   options: {
-                    maintainAspectRatio: true,
-                    responsive: true,
-                    aspectRatio: 1.7,
                     scales: {
                       y: {
                         beginAtZero: true
@@ -161,6 +162,7 @@
                 });
                 /*]]>*/
               </script>
+
             </div>
           </div>
         </div>
