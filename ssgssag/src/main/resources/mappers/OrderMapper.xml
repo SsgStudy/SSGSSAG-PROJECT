@@ -42,10 +42,10 @@
     </insert>
 
     <insert id="insertOrderDetail" parameterType="java.util.List">
-        INSERT INTO TB_ORDER_DETAIL (PK_ORDER_SEQ, N_ORDER_CNT, V_ORDER_STATUS, V_PRODUCT_CD, V_WAREHOUSE_CD)
+        INSERT INTO TB_ORDER_DETAIL (PK_ORDER_SEQ, N_ORDER_CNT, V_PRODUCT_CD, V_WAREHOUSE_CD)
         VALUES
         <foreach collection="list" item="detail" separator=",">
-            (#{detail.pkOrderSeq}, #{detail.nOrderCnt}, #{detail.vOrderStatus}, #{detail.vProductCd}, #{detail.vWarehouseCd})
+            (#{detail.pkOrderSeq}, #{detail.nOrderCnt}, #{detail.vProductCd}, #{detail.vWarehouseCd})
         </foreach>
     </insert>
 
