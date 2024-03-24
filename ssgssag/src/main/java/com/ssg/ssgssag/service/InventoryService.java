@@ -17,7 +17,7 @@ public interface InventoryService {
 
     List<InventoryHistoryVO> getInventoryHistoryBySeq(Integer pkInventorySeq);
 
-    void updateInventoryWithHistory(InventoryAdjustmentDTO inventoryAdjustmentDTO);
+    void updateInventoryWithHistoryCnt(InventoryAdjustmentDTO inventoryAdjustmentDTO);
 
     void updateInventoryWithHistoryMove(InventoryMovementDTO inventoryMovementDTO);
 }

@@ -82,7 +82,7 @@ public class InventoryController {
     @Operation(summary = "재고 조정 값 반환", description = "번호, 수량, 상태 반환")
     @ResponseBody
     public void selectedInventory(@RequestBody InventoryAdjustmentDTO dto) {
-        inventoryService.updateInventoryWithHistory(dto);
+        inventoryService.updateInventoryWithHistoryCnt(dto);
     }
 
     // 3. 재고 이동
