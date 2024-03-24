@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class IncomingController {
 
     private final IncomingService incomingService;
-
+    
     //입고 현황 리스트 조회
     @GetMapping("/list")
     @Operation(summary = "입고 현황 리스트 페이지 이동", description = "입고 리스트 페이지 이동")
