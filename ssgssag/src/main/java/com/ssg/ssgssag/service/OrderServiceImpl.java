@@ -82,9 +82,10 @@ public class OrderServiceImpl implements OrderService {
     public int updateOrderStatusConfirmed(List<Long> orderSeqList) {
         return orderMapper.updateOrderStatusByOrderSeq(orderSeqList);
     }
-//
-//    @Override
-//    public List<OrderDetailDTO> getOrderDetailList(OrderDetailDTO orderDetail) {
-//        return null;
-//    }
+
+    @Override
+    public int deleteOrder(Long orderSeq) {
+        return orderMapper.deleteOneOrderByOrderSeq(orderSeq);
+    }
+
 }

@@ -22,6 +22,8 @@ public interface OrderMapper {
     String selectProductSupplier(OrderProductDTO orderProduct); // 매입거래처 내의 상품인지 확인
     int insertOrder(OrderVO order);
     int insertOrderDetail(List<OrderDetailVO> orderDetails);
+    int deleteOneOrderByOrderSeq(Long orderSeq);
+
 
 // 발주 조회
     List<OrderProductDTO> selectOrderDetailByDateOrString(OrderReadSearchDTO orderReadSearch);

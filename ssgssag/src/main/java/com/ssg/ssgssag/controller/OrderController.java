@@ -82,6 +82,7 @@ public class OrderController {
     @PostMapping("/register")
     @ResponseBody
     public String registerOrderAndOrderDetail(@RequestBody OrderRequestDTO orderRequest) {
+        log.info("orderDTO {}", orderRequest.getOrder());
         orderService.registerOrder(orderRequest.getOrder(), orderRequest.getOrderDetails());
         return "ok";
 //        return "order/orderRegister";
@@ -107,5 +108,13 @@ public class OrderController {
         orderService.updateOrderStatusConfirmed(param.get("orderSeq"));
 
         return "ok";
+    }
+
+    @ResponseStatus(HttpStatus.SEE_OTHER)
+    @DeleteMapping("/register/{orderSeq}")
+    public String deleteOrder(@PathVariable Long orderSeq) {
+        orderService.deleteOrder(orderSeq);
+
+        return "redirect:/order/register";
     }
 }

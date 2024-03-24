@@ -23,6 +23,8 @@ public interface OrderService {
     List<OrderProductDTO> getOrderSigleList(Long orderSeq); // 발주 상세 조회
     int updateOrderStatusConfirmed(List<Long> orderSeq);
 
+    int deleteOrder(Long orderSeq);
+
 //    List<OrderVO> getAllOrdersWithDetails();
 //    List<OrderVO> getAllOrdersStatusProgress();
 //    List<ProductVO> getProductInventoryList();
