@@ -4,6 +4,7 @@ import com.ssg.ssgssag.domain.MemberVO;
 import com.ssg.ssgssag.dto.MemberDTO;
 import com.ssg.ssgssag.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
+import java.lang.reflect.Member;
 import java.util.List;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -50,8 +51,6 @@ public class MemberController {
             .vEmail(vEmail)
             .build();
 
-        log.info("vo : " + member.toString());
-
 
         memberService.registerMember(member);
         return "redirect:/member/memberslist";
@@ -79,7 +78,7 @@ public class MemberController {
     @Operation(summary = "이름을 검색하여 회원 조회", description = "검색한 이름에 해당하는 회원의 정보를 조회합니다.")
     @ResponseBody
     public ResponseEntity<List<MemberDTO>> showMemberListPageByName(@RequestBody MemberDTO member, Model model) {
-
+        log.info("member search {}", member);
         List<MemberDTO> memberList = memberService.getMemberList(member);
 
         model.addAttribute("memberList", memberList);
@@ -87,6 +86,48 @@ public class MemberController {
     }
 
 
+//    public ResponseEntity<MemberDTO> showOneMemberInModalPage(@RequestBody MemberDTO, Model model) {
+//
+//        MemberDTO memberDTO = memberService.
+//
+//    }
 
 
+    //모달창에 개인 회원 출력
+    @GetMapping("/getOneMember")
+    @ResponseBody
+    public MemberVO getMembersInModal(@RequestParam("memberId") String memberId) {
+        log.info("member id = {}", memberId);
+
+        return memberService.getOneMemberInModal(memberId);
+    }
+
+
+    @PostMapping("/modifymemberInfo")
+    @Operation(summary = "회원 정보 수정", description = "총관리자가 회원들의 정보를 수정합니다.")
+    public String modifyMembers(
+        @RequestParam String memberId,
+        @RequestParam String memberName,
+        @RequestParam String memberPw,
+        @RequestParam String memberEmail,
+        @RequestParam String memberAuth
+    ) {
+
+        log.info("emails {}", memberEmail);
+
+        MemberDTO dto = MemberDTO.builder()
+            .vMemberId(memberId)
+            .vMemberNm(memberName)
+            .vMemberPw(memberPw)
+            .vEmail(memberEmail)
+            .vMemberAuth(memberAuth).build();
+
+
+        log.info("회원 아이디 : "+dto.getvMemberId());
+
+
+        memberService.modifyMembers(dto);
+
+        return "redirect:/member/memberslist";
+    }
 }

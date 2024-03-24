@@ -20,4 +20,6 @@ public interface MemberMapper {
 
     void modifyMemberInfo(MemberDTO memberDTO);
 
+    MemberVO getOneMemberInfo(String memberId);
+
 }

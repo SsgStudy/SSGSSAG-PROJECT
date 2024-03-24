@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+
   $('.passwordEye i').on('click', function () {
     $('input').toggleClass('active');
 
@@ -12,16 +13,22 @@ $(document).ready(function() {
     }
   });
 
+
   // 아이디 중복 확인 버튼 클릭 시 alert 창 생성
   $("#alertButton").click(function () {
     alert("중복된 아이디입니다.\n다른 아이디를 입력해주세요");
   });
+
+
+
+
 
   // 회원 가입 폼 제출 시 Ajax 요청 보내기
   $("#signup-form").submit(function (e) {
     e.preventDefault();
 
     var formData = $(this).serialize(); // 폼 데이터 직렬화
+
 
     $.ajax({
       url: '/member/signup',
@@ -30,9 +37,8 @@ $(document).ready(function() {
       success: function (response) {
         // 성공 시 처리 로직 작성
         console.log(response);
-        window.location.href="='/member/memberslist"
+        window.location.href='/member/memberslist'
         alert('회원가입이 완료되었습니다.');
-        // 원하는 곳으로 리다이렉트 등의 추가 처리 가능
       },
       error: function (xhr, status, error) {
         // 에러 처리 로직 작성
@@ -41,6 +47,63 @@ $(document).ready(function() {
       }
     });
   });
+
+
+
+  $("#save-modify").submit(function (e) {
+    e.preventDefault();
+
+    var memberId = $('#memberId').val();
+    var memberPw = $('#memberPw').val();
+    var memberName = $('#memberName').val();
+    var memberEmail = $('#memberEmail').val();
+    var role = $('#memberRole').val();
+    var memberAuth;
+
+    console.log("수정된 이름", memberName)
+
+    switch(role) {
+      case 'admin':
+        memberAuth = 'ADMIN'; break;
+      case 'warehouse':
+        memberAuth = 'WAREHOUSE_MANAGER'; break;
+      case 'operator':
+        memberAuth = 'OPERATOR'; break;
+      default:
+        memberAuth = 'ALL'; break;
+    }
+
+    $.ajax({
+      url: '/member/modifymemberInfo',
+      type: 'POST',
+      data: {
+        memberId: memberId,
+        memberPw: memberPw,
+        memberName: memberName,
+        memberEmail: memberEmail,
+        memberAuth: memberAuth
+      },
+      success: function (response) {
+        // 성공 시 처리 로직 작성
+        window.location.href='/member/memberslist'
+        alert('수정 완료');
+      },
+      error: function (xhr, status, error) {
+        // 에러 처리 로직 작성
+       console.log(memberAuth)
+        console.error('Error:', error);
+        alert('수정에 실패하였습니다. 다시 시도해주세요.');
+      }
+    });
+  });
+
+
+
+
+
+
+
+
 });
 
 
@@ -67,20 +130,21 @@ function changeMemberAuth() {
     case 'operator':
       memberAuth = 'OPERATOR';
     default:
-      memberAuth = ''; break;
+      memberAuth = 'ALL'; break;
   }
-
 
   return memberAuth;
 }
 
 
 
-function fetchMembersByName() {
+//
+function filterMembers() {
 
   member.vMemberNm = $('#name').val() === '' ? null : $('#name').val();
   member.vEmail = $('#email').val()=== '' ? null :$('#email').val();
   member.vMemberId = $('#id').val()=== '' ? null :$('#id').val();
+
   member.vMemberAuth = changeMemberAuth();
 
   // AJAX 요청
@@ -100,16 +164,16 @@ function fetchMembersByName() {
 
         console.log(members);
 
-          let row = `<tr>
+        let row = `<tr>
                         <td>${members.pkMemberSeq}</td>
                         <td>${members.vMemberNm}</td>
                         <td>${members.vMemberId}</td>
                         <td>${members.vEmail}</td>
                         <td>${members.vMemberAuth}</td>
-                        <td><input type="button" class="btn btn-primary" th:value="수정"></td>
-                        <td><input type="button" class="btn btn-primary" th:value="삭제"></td>
+                        <td><input type="button" class="btn btn-primary btn-modify" th:value="수정" onclick = "modalPage()"></button></td>
+                        <td><input type="button" class="btn btn-primary" th:value="삭제"></button></td>
                         </tr>`;
-          tableBody.append(row);
+        tableBody.append(row);
 
       });
     },
@@ -118,6 +182,55 @@ function fetchMembersByName() {
     }
   });
 }
+
+function modalButton(memberId) {
+    console.log("current ", memberId);
+
+    $("#editModal").modal('show');
+
+    $.ajax({
+      url: `/member/getOneMember?memberId=${memberId}`,
+      type: 'GET',
+      contentType: 'application/json',
+      success: function (getone) {
+        console.log("조회 결과 ", JSON.stringify(getone))
+
+        let tableBody = $('.modalForm tbody');
+        tableBody.empty(); // 기존 테이블 내용 초기화
+
+        $('#editModal #memberId').val(getone.vmemberId);
+        $('#editModal #memberName').val(getone.vmemberNm);
+        $('#editModal #memberPw').val(getone.vmemberPw);
+        $('#editModal #memberEmail').val(getone.vemail);
+        $('#editModal #memberRole').val(getone.vmemberAuth);
+
+        let memberAuth = null;
+
+        switch(getone.vmemberAuth) {
+          case 'OPERATOR':
+            memberAuth = 'operator';
+            break;
+          case 'WAREHOUSE_MANAGER':
+            memberAuth = 'warehouse';
+            break;
+          default:
+            memberAuth = 'admin';
+        }
+        console.log("권한", memberAuth);
+
+
+        $('#editModal #memberRole').find('option[value="' + memberAuth + '"]').prop('selected', true);
+
+        $("#editModal").modal('show');
+
+      },
+      error: function (xhr, status, error) {
+        console.error('AJAX 요청 에러:', error);
+      }
+    });
+}
+
+
 
 
 // function fetchMembersByName() {
@@ -154,3 +267,81 @@ function fetchMembersByName() {
 //   });
 //
 // }
+
+
+//
+// function modalPage(){
+//   // 수정 버튼 클릭 시 모달 띄우기
+//     $.ajax({
+//       url: '/member/getOneMember',
+//       type: 'POST',
+//       data: JSON.stringify(member),
+//       contentType: 'application/json',
+//       success: function (data) {
+//
+//         console.log("조회 결과 ", JSON.stringify(member))
+//
+//         let tableBody = $('.modalForm tbody');
+//         tableBody.empty(); // 기존 테이블 내용 초기화
+//
+//         $.each(data, function (i, getone) {
+//
+//
+//           $('#editModal #memberId').val(${getone.vMemberId});
+//           $('#editModal #memberName').val(${getone.vMemberNm});
+//           $('#editModal #memberPw').val(${getone.vMemberPw});
+//           $('#editModal #memberEmail').val(${getone.vEmail});
+//           $('#editModal #memberRole').val(${getone.vEmail});
+//         });
+//       },
+//       error: function (xhr, status, error) {
+//         console.error('AJAX 요청 에러:', error);
+//       }
+//     });
+//   };
+//
+//
+//
+//
+//
+//
+// //
+// // // 모달에 회원 정보 채우기
+// //     $('#editModal #memberId').val(memberId);
+// //     $('#editModal #memberName').val(memberName);
+// //     $('#editModal #memberEmail').val(memberEmail);
+// //     $('#editModal #memberRole').val(memberRole);
+// //
+// //     // 모달 띄우기
+// //     $('#editModal').modal('show');
+// //   });
+// //   });
+// // //
+// // //   // 저장 버튼 클릭 시 AJAX 요청
+// // //   $('#saveBtn').click(function() {
+// // //     var memberId = $('#memberId').val();
+// // //     var memberName = $('#memberName').val();
+// // //     var memberEmail = $('#memberEmail').val();
+// // //     var memberRole = $('#memberRole').val();
+// // //
+// // //     $.ajax({
+// //       type: 'POST',
+// //       url: '/member/ㅎㄷ',
+// //       data: {
+// //         memberId: memberId,
+// //         memberName: memberName,
+// //         memberEmail: memberEmail,
+// //         memberRole: memberRole
+// //       },
+// //       success: function(response) {
+// //         // 성공 시 모달 닫기 및 페이지 새로고침
+// //         $('#editModal').modal('hide');
+// //         location.reload();
+// //       },
+// //       error: function(xhr, status, error) {
+// //         // 실패 시 에러 처리
+// //         console.error(xhr.responseText);
+// //       }
+// //     });
+// //   });
+// });

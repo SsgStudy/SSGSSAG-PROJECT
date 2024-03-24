@@ -14,6 +14,8 @@ public interface MemberService {
 
     List<MemberDTO> getMemberList(MemberDTO memberDTO);
 
-    void modifyMembers(MemberDTO memberDTO);
+    MemberVO getOneMemberInModal(String getMemberId);
+
+    void modifyMembers(MemberDTO dto);
 
 }

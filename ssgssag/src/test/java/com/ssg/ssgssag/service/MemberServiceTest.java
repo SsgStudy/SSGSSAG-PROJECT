@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -18,7 +19,6 @@ public class MemberServiceTest {
 
     @Autowired(required = false)
     private MemberService memberService;
-
     @Test
     public void testRegisterMember() {
         MemberVO memberVO= MemberVO.builder()
@@ -87,6 +87,22 @@ public class MemberServiceTest {
         memberService.getMemberList(memberDTO5).forEach(System.out::println);
 
 
+    }
+
+
+    @Test
+    public void testModify() {
+        MemberDTO memberDTO = MemberDTO.builder()
+            .vMemberId("w").vMemberNm("안녕").vMemberPw("12345").vEmail("sowon901@naver.com")
+            .vMemberAuth("ADMIN").build();
+
+
+       memberService.modifyMembers(memberDTO);
+    }
+
+    @Test
+    public void testGet() {
+        log.info(memberService.getOneMemberInModal("admin001"));
     }
 
 }

@@ -10,13 +10,21 @@
     select * from TB_MEMBER;
   </select>
 
+  <select id="getOneMemberInfo" resultType="com.ssg.ssgssag.domain.MemberVO">
+    select * from TB_MEMBER where V_MEMBER_ID = #{vMemberId}
+  </select>
+
+
   <select id="selectMemberByName" resultType="com.ssg.ssgssag.dto.MemberDTO">
     select * from TB_MEMBER where V_MEMBER_NM = #{name};
   </select>
 
   <select id="selectMemberByString" resultType="com.ssg.ssgssag.dto.MemberDTO">
     select * from TB_MEMBER
-    where V_MEMBER_AUTH = #{vMemberAuth}
+    where 1=1
+      <if test="vMemberAuth != null and vMemberAuth != 'ALL'">
+        and V_MEMBER_AUTH = #{vMemberAuth}
+      </if>
       <if test="vMemberNm != null">
         and V_MEMBER_NM = #{vMemberNm}
       </if>
@@ -28,9 +36,9 @@
       </if>
   </select>
 
-<!--  <update id="modifyMemberInfo" parameterType="MemberDTO">-->
-<!--&#45;&#45;     update TB_MEMBER -->
-<!--  </update>-->
+  <update id="modifyMemberInfo" parameterType="com.ssg.ssgssag.dto.MemberDTO">
+    update TB_MEMBER set V_MEMBER_NM = #{vMemberNm}, V_MEMBER_PW = #{vMemberPw}, V_MEMBER_AUTH = #{vMemberAuth}, V_EMAIL = #{vEmail} where V_MEMBER_ID = #{vMemberId}
+  </update>
 
 
 </mapper>

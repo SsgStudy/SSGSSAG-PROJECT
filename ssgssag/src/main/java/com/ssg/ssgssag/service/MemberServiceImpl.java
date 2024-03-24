@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 @Service
 @Log4j2
@@ -17,17 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class MemberServiceImpl implements MemberService{
 
-
     @Autowired
     private final MemberMapper memberMapper;
 
 
     @Override
-    public void registerMember(MemberVO vo) {
-
-        memberMapper.insertMembers(vo);
+    public void registerMember(MemberVO memberVO) {
+        memberMapper.insertMembers(memberVO);
     }
-
     @Override
     public List<MemberDTO> getAllMembers() {
 
@@ -44,8 +42,12 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void modifyMembers(MemberDTO memberDTO) {
-       memberMapper.modifyMemberInfo(memberDTO);
+    public MemberVO getOneMemberInModal(String memberId) {
+        return memberMapper.getOneMemberInfo(memberId);
     }
 
+    @Override
+    public void modifyMembers(MemberDTO dto) {
+        memberMapper.modifyMemberInfo(dto);
+    }
 }
