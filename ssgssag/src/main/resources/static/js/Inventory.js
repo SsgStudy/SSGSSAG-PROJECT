@@ -395,5 +395,4 @@ $('#submitMovementButton').on('click', function () {
             reloadPageAfterDelay(1000);
         }
      });
-
 });
