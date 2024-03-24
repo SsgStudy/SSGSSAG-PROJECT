@@ -59,15 +59,13 @@
                     <button type="button" class="btn mb-1 btn-light" id="order-register-reset-btn" data-toggle="modal" data-target="#registerModal">초기화</button>
                     <div class="modal fade" id="registerModal" style="display: none;" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content  d-flex justify-content-center">
+                            <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Confirm</h5>
                                     <button type="button" class="close" data-dismiss="modal"><span>×</span>
                                     </button>
                                 </div>
-                                <div class="modal-body center">
-                                    <p>초기화 하시겠습니까?</p>
-                                </div>
+                                <div class="modal-body">초기화 하시겠습니까?</div>
                                 <div class="modal-footer d-flex justify-content-center">
                                     <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
                                     <button type="button" id="order-register-reset-ok-btn" class="btn btn-info"
@@ -236,9 +234,7 @@
                                                 <button type="button" class="close" data-dismiss="modal"><span>×</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body center">
-                                                <p>저장하시겠습니까?</p>
-                                            </div>
+                                            <div class="modal-body center">저장하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
                                                 <button type="button" class="btn" data-dismiss="modal">취소</button>
                                                 <button type="button" id="order-register-save-ok-btn" class="btn" onclick="orderRegisterSave()" data-dismiss="modal">확인</button>
@@ -259,12 +255,10 @@
                                                 <button type="button" class="close" data-dismiss="modal"><span>×</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body center">
-                                                <p>삭제하시겠습니까?</p>
-                                            </div>
+                                            <div class="modal-body center">삭제하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
                                                 <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                <button type="button" class="btn" onclick="orderRegisterDelete()" data-dismiss="modal">확인</button>
+                                                <button type="button" class="btn btn-info" onclick="orderRegisterDelete()" data-dismiss="modal">확인</button>
                                             </div>
                                         </div>
                                     </div>
@@ -344,12 +338,10 @@
                                                 <button type="button" class="close" data-dismiss="modal"><span>×</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body center">
-                                                <p>저장하시겠습니까?</p>
-                                            </div>
+                                            <div class="modal-body center">저장하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
                                                 <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                <button type="button" class="btn" id="order-detail-save-btn" data-dismiss="modal"
+                                                <button type="button" class="btn btn-info" id="order-detail-save-btn" data-dismiss="modal"
                                                         onclick="insertOrderAndOrderDetail()">확인</button>
                                             </div>
                                         </div>
@@ -372,18 +364,15 @@
                                                 <button type="button" class="close" data-dismiss="modal"><span>×</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body center">
-                                                <p>삭제하시겠습니까?</p>
-                                            </div>
+                                            <div class="modal-body center">삭제하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
                                                 <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                <button type="button" class="btn" data-dismiss="modal">확인</button>
+                                                <button type="button" class="btn btn-info" onclick="deleteOrderSingle()" data-dismiss="modal">확인</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- <button type="button" class="btn mb-1 btn-light" id="order-register-remove-btn" background-color="#0575E6">삭제</button> -->
                         </div>
                     </div>
                 </div>
