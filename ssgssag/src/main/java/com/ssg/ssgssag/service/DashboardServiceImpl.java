@@ -38,4 +38,9 @@ public class DashboardServiceImpl implements DashboardService {
     public List<BestCategoryDTO> getBestCategoryList() {
         return dashboardMapper.selectBestCategoryList();
     }
+
+    @Override
+    public List<BestCategoryDTO> getWorstCategoryList() {
+        return dashboardMapper.selectWorstCategoryList();
+    }
 }

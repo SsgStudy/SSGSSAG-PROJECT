@@ -34,8 +34,9 @@ public class DashboardController {
         List<BestProductDTO> bestProductDTOList = dashboardService.getBestProducts();
         List<DailyPurchaseCountDTO> dailyPurchaseCountDTOList = dashboardService.getDailyPurchaseStatistics();
         List<BestCategoryDTO> bestCategoryDTOList = dashboardService.getBestCategoryList();
+        List<BestCategoryDTO> worstCategoryDTOList = dashboardService.getWorstCategoryList();
 
-        log.info(bestCategoryDTOList);
+        log.info(worstCategoryDTOList);
 
         model.addAttribute("incoming", statusCountDTOList.get(0).getCnt());
         model.addAttribute("outgoing", statusCountDTOList.get(1).getCnt());
@@ -67,6 +68,17 @@ public class DashboardController {
 
         model.addAttribute("categoryNames", categoryNames);
         model.addAttribute("categoryCounts", categoryCounts);
+
+        //비인기 카테고리 파이 차트 데이터 준비
+        List<String> worstCategoryNames = worstCategoryDTOList.stream()
+            .map(BestCategoryDTO::getCategoryName)
+            .toList();
+        List<Integer> worstCategoryCounts = worstCategoryDTOList.stream()
+            .map(BestCategoryDTO::getCategoryCnt)
+            .toList();
+
+        model.addAttribute("worstCategoryNames", worstCategoryNames);
+        model.addAttribute("worstCategoryCounts", worstCategoryCounts);
 
         return "main/main";
     }

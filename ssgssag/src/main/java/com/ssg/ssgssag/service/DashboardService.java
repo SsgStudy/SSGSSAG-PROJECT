@@ -16,4 +16,6 @@ public interface DashboardService {
     List<DailyPurchaseCountDTO> getDailyPurchaseStatistics();
 
     List<BestCategoryDTO> getBestCategoryList();
+
+    List<BestCategoryDTO> getWorstCategoryList();
 }

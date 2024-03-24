@@ -19,4 +19,6 @@ public interface DashboardMapper {
     List<DailyPurchaseCountDTO> selectDailyPurchaseStatistics();
 
     List<BestCategoryDTO> selectBestCategoryList();
+
+    List<BestCategoryDTO> selectWorstCategoryList();
 }
