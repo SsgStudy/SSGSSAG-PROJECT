@@ -85,4 +85,20 @@ public class InventoryController {
         inventoryService.updateInventoryWithHistory(dto);
     }
 
+    // 3. 재고 이동
+    @GetMapping("/movement")
+    @Operation(summary = "재고 이동", description = "재고 이동 페이지")
+    public String showInventoryMovementPage(Model model) {
+        List<InventoryListDTO> inventoryList = inventoryService.selectAllInventory();
+        model.addAttribute("inventoryList", inventoryList);
+        return "inventory/inventory-movement";
+    }
+
+    @PostMapping("/movement/update")
+    @Operation(summary = "재고 이동 값 반환", description = "번호, 창고, 구역 반환")
+    @ResponseBody
+    public void selectedInventoryMovement(@RequestBody InventoryMovementDTO dto) {
+        log.info(dto);
+    }
+
 }
