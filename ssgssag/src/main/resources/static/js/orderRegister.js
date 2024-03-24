@@ -243,7 +243,7 @@ function orderRegisterReset() {
     $("#warehouse-cd").val('');
     $("#order-type").val(($('#order-type option[selected]').val()));
     $('.order-detail-tbody').empty().append(`
-        <tr>
+        <tr id="default-tr">
             <th>-</th>
             <th>-</th>
             <th>-</th>
