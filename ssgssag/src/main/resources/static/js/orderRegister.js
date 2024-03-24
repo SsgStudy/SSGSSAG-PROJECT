@@ -1,6 +1,7 @@
 $(document).ready(function() {
-    allDeactivateForm();
+    // allDeactivateForm();
     $('.alert').hide();
+
 });
 
 // 전역 변수
@@ -19,7 +20,6 @@ var order = {
     "dtDeliveryDate": "2024-03-21T10:00:00",
 };
 
-var orderDetails= []
 
 var saveStatus = {
     "order" : false,
@@ -192,7 +192,6 @@ function checkEmptyOrderForm() {
 function checkInputFields() {
     let allFilled = true;
     $('.order-master-form input,  .order-master-form select').each(function() {
-        console.log("test ", $(this).val())
         if ($(this).val().trim() === ''
             || $(this).val().trim() === '선택'
             || $(this).val().trim() === 'dd/mm/yyyy') {
@@ -268,9 +267,79 @@ function orderObjectDelete() {
         "dtOrderCreatedDate": null,
         "dtDeliveryDate": null,
     }
-
-    orderDetails= [];
 }
+
+
+// 발주 상세 - 저장
+function insertOrderAndOrderDetail() {
+    let orderDetails = saveOrderDetailForm();
+
+    console.log("상태 ", saveStatus);
+
+    if (orderDetails.length === 0)
+        return;
+
+    if (saveStatus.order && saveStatus.orderDetail) {
+        $.ajax({
+            url: '/order/register',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({order: order, orderDetails: orderDetails}),
+            success: function (resp) {
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+    else {
+        showAlertDanger("발주 or 발주 상세 값이 비었습니다.");
+    }
+}
+
+function saveOrderDetailForm() {
+    let orderDetails = [];
+    let isValid = true;
+
+    if ($('.order-detail-tbody input[type="checkbox"]:checked').length === 0) {
+        showAlertDanger("단품을 입력하세요.").
+        return;
+    }
+
+
+    $('.order-detail-tbody input[type="checkbox"]:checked').each(function() {
+        if (!isValid) return;
+
+        let $tr = $(this).closest('tr');
+        let productCd = $tr.find('.product-cd').text();
+        let orderCnt = +$tr.find('.order-cnt').val();
+
+        if (!orderCnt) {
+            console.log("단품 수량을 입력하세요.");
+            showAlertDanger("단품 수량을 입력하세요.");
+            isValid = false;
+            return;
+        }
+
+        let orderDetail = {
+            pkOrderSeq: order.pkOrderSeq,
+            nOrderCnt: orderCnt,
+            vProductCd: productCd,
+            vWarehouseCd: order.vWarehouseCd
+        };
+
+        orderDetails.push(orderDetail);
+    });
+
+    if (!isValid) {
+        saveStatus.orderDetail = false;
+        return [];
+    }
+
+    saveStatus.orderDetail = true;
+    return orderDetails;
+}
+
 
 // 발주 상세 - 추가
 function createOrderDetailForm() {
@@ -286,29 +355,24 @@ function createOrderDetailForm() {
             JSON.stringify(orderSearch),
         success: function (resp) {
             $("#default-tr").remove();
-
             let idx = $(".order-detail-tbody tr").length + 1;
 
             $(".order-detail-tbody").append(
-                `<tr>
+                `<tr data-index="${idx}">
                     <th>${idx}</th>
-                    <td><input type="checkbox" id="order-tr-checked-${idx}" /></td>
-                    <td id="order-tr-product-cd-${idx}">${resp.vProductCd}</td>
-                    <td id="order-tr-product-nm-${idx}">${resp.vProductNm}</td>
-                    <td id="order-tr-inventory-cnt-${idx}">${resp.nInventoryCnt}</td>
-                    <td><div class="col-sm-3">
+                    <td><input type="checkbox" class="order-checked" /></td>
+                    <td class="product-cd">${resp.vProductCd}</td>
+                    <td class="product-nm">${resp.vProductNm}</td>
+                    <td class="inventory-cnt">${resp.nInventoryCnt}</td>
+                    <td>
+                        <div class="col-sm-3">
                             <div class="input-group">
-                                    <input type="number" id="order-tr-order-cnt-${idx}"">
+                                <input type="number" class="order-cnt">
                             </div>
                         </div>
                     </td>
-                    <td id="order-tr-product-price-${idx}">${resp.nProductPrice}</td>
-                    <td><div class="col-sm-3">
-                            <div class="input-group">
-                                    <input type="number" id="order-tr-total-price-${idx}">
-                            </div>
-                        </div>
-                    </td>
+                    <td class="product-price">${resp.nProductPrice}</td>
+                    <td class="total-price"></td>
                 </tr>`
             );
         },
@@ -322,101 +386,57 @@ function createOrderDetailForm() {
 }
 
 
-$('body').on('input', '[id^=order-tr-order-cnt-]', function() {
-    let currentIndex = this.id.match(/\d+$/)[0];
-    let totalPrice = calculateOrderTotalPrice(currentIndex);
-    console.log(totalPrice)
-
-    $("#order-tr-total-price-" + currentIndex).val(totalPrice);
+$('body').on('input', '[class^=order-cnt]', function() {
+    let $tr = $(this).closest('tr');
+    let totalPrice = calculateOrderTotalPrice($tr);
+    $tr.find('.total-price').text(totalPrice);
 });
 
-// 발주 상세 - 저장
-function insertOrderAndOrderDetail() {
-    saveOrderDetailForm();
+$('body').on('input', '[class^=order-cnt]', function() {
+    let $tr = $(this).closest('tr');
+    let totalPrice = calculateOrderTotalPrice($tr);
+    $tr.find('.total-price').text(totalPrice);
+});
 
-    console.log(saveStatus);
-    if (saveStatus.order && saveStatus.orderDetail) {
-        console.log(order);
-        console.log(orderDetails);
-
-        $.ajax({
-            url: '/order/register',
-            type: 'POST',
-            contentType: 'application/json', // 요청의 컨텐츠 타입
-            data: JSON.stringify({order: order, orderDetails: orderDetails}), // 데이터를 JSON 문자열로 변환
-            success: function (resp) {
-                // 성공 시 로직
-            },
-            error: function (error) {
-                console.log('Error:', error);
-            }
-        });
-    }
-    else {
-        console.log("발주 or 발주 상세 값이 비었습니다.");
-    }
-}
-
-function saveOrderDetailForm() {
-    $('.order-detail-tbody input[type="checkbox"]:checked').each(function() {
-        var index = this.id.match(/\d+$/)[0];
-        var productCd = $(`#order-tr-product-cd-${index}`).text();
-        var orderCnt = +$(`#order-tr-order-cnt-${index}`).val();
-
-        console.log("orderCnt " + orderCnt);
-
-        if (orderCnt.isEmpty || orderCnt===0) {
-            console.log("발주 수량 입력");
-            saveStatus.orderDetail = false;
-            return
-        }
-
-        var orderDetail = {
-            nOrderCnt: orderCnt,
-            vOrderStatus: "미입고",
-            vProductCd: productCd,
-            pkOrderSeq: order.pkOrderSeq,
-            vWarehouseCd: order.vWarehouseCd
-        }
-        orderDetails.push(orderDetail);
-        console.log(orderDetail);
-    });
-
-    if (orderDetails.length < 1)
-        saveStatus.orderDetail = false;
-
-    else
-        saveStatus.orderDetail = true;
-}
 
 // 발주 삭제 - 삭제
+function deleteOrderSingle() {
+    $('.order-detail-tbody input[type="checkbox"]:checked').each(function() {
+        $(this).closest('tr').remove();
+    });
 
+    $('.order-detail-tbody tr').each(function(index) {
+        let newIndex = index + 1;
+        $(this).attr('data-index', newIndex);
+        $(this).find('th').first().text(newIndex);
+    });
+}
 
 // 기타
 function dateFormatting(dateString) {
-    var date = new Date(dateString);
+    let date = new Date(dateString);
 
     // 한국 시간대(KST, UTC+9) 설정
-    var kstOffset = 9 * 60;
-    var localDate = new Date(date.getTime() + kstOffset * 60000);
+    let kstOffset = 9 * 60;
+    let localDate = new Date(date.getTime() + kstOffset * 60000);
 
-    var formattedDate = localDate.toISOString().replace('Z', '+09:00').substring(0, 19);
+    let formattedDate = localDate.toISOString().replace('Z', '+09:00').substring(0, 19);
 
     return formattedDate;
 }
 
 
-function calculateOrderTotalPrice(currentIndex) {
-    let cnt = +$(`#order-tr-order-cnt-${currentIndex}`).val();
-    let price = +$(`#order-tr-product-price-${currentIndex}`).text();
-    return price * cnt;
+function calculateOrderTotalPrice($tr) {
+    let orderCnt = +$tr.find('.order-cnt').val();
+    let productPrice = +$tr.find('.product-price').text();
+    return orderCnt * productPrice;
 }
 
 function getCurrentDateFormatted() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
 
     return mm + '/' + dd + '/' + yyyy;
 }
