@@ -60,7 +60,7 @@ public class InventoryServiceTest {
     @Test
     public void getInventoryHistoryBySeq() {
         Integer num = 1;
-        InventoryHistoryVO inventoryHistoryVO = inventoryService.getInventoryHistoryBySeq(num);
-        log.info(inventoryHistoryVO);
+        List<InventoryHistoryVO> inventoryHistoryList = inventoryService.getInventoryHistoryBySeq(num);
+        inventoryHistoryList.forEach(System.out::println);
     }
 }
