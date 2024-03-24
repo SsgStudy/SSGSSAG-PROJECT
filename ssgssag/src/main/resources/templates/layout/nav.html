@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<style>
+  .search-results div {
+    text-align: left;
+    padding: 8px;
+  }
+
+  .search-results a {
+    text-decoration: none;
+    color: gray;
+  }
+</style>
 <th:block th:fragment="navFragment">
   <div class="nav-header" style="background-color: #ffffff;">
     <div class="brand-logo">
       <a href="/" style="padding: 0;">
-        <b class="logo-abbr"><img th:src="@{/images/logo.png}" style = "min-width: 50px; margin-top: 20px;" alt=""> </b>
+        <b class="logo-abbr"><img th:src="@{/images/logo.png}"
+                                  style="min-width: 50px; margin-top: 20px;" alt=""> </b>
         <span class="logo-compact"><img th:src="@{/./images/logo-compact.png}" alt=""></span>
         <span class="brand-title">
           <img th:src="@{/images/logo-text.png}" style="max-width: 240px;" alt="">
@@ -22,20 +34,31 @@
         </div>
       </div>
       <div class="header-left">
-        <div class="input-group icons">
-          <div class="input-group-prepend">
-            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
-                class="mdi mdi-magnify"></i></span>
+        <div class="row" style="display:flex; flex-direction: row">
+          <div class="input-group icons" style="display: flex; align-items: flex-start;">
+            <div class="input-group-prepend">
+            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"
+                  style="display: flex; align-items: flex-start;">
+              <i class="mdi mdi-magnify" style="font-size: 24px;"></i> <!-- 아이콘 크기 조정 -->
+            </span>
+            </div>
+            <!-- 검색 입력 필드 -->
+            <div class="search-container" style="flex-grow: 1;">
+              <input type="search" class="form-control searchable-input" placeholder="메뉴를 검색해주세요."
+                     aria-label="Search Dashboard" id="menuSearch">
+              <div class="search-results" style="display: none; background-color: white; border: solid 0.5px gray"></div>
+            </div>
           </div>
-          <div class="search-container">
-            <input type="search" class="form-control searchable-input" placeholder="메뉴를 검색해주세요." aria-label="Search Dashboard">
-          </div>
-          <div class="drop-down   d-md-none">
-            <form action="#">
-              <input type="text" class="form-control" placeholder="Search">
-            </form>
-          </div>
+
         </div>
+
+
+        <div class="drop-down   d-md-none">
+          <form action="#">
+            <input type="text" class="form-control" placeholder="Search">
+          </form>
+        </div>
+
       </div>
       <div class="header-right">
         <ul class="clearfix">
@@ -52,7 +75,8 @@
                 <ul>
                   <li class="notification-unread">
                     <a href="javascript:void()">
-                      <img class="float-left mr-3 avatar-img" th:src="@{/images/avatar/1.jpg}" alt="">
+                      <img class="float-left mr-3 avatar-img" th:src="@{/images/avatar/1.jpg}"
+                           alt="">
                       <div class="notification-content">
                         <div class="notification-heading">Saiful Islam</div>
                         <div class="notification-timestamp">08 Hours ago</div>
@@ -62,7 +86,8 @@
                   </li>
                   <li class="notification-unread">
                     <a href="javascript:void()">
-                      <img class="float-left mr-3 avatar-img" th:src="@{/images/avatar/2.jpg}" alt="">
+                      <img class="float-left mr-3 avatar-img" th:src="@{/images/avatar/2.jpg}"
+                           alt="">
                       <div class="notification-content">
                         <div class="notification-heading">Adam Smith</div>
                         <div class="notification-timestamp">08 Hours ago</div>
@@ -72,7 +97,8 @@
                   </li>
                   <li>
                     <a href="javascript:void()">
-                      <img class="float-left mr-3 avatar-img" th:src="@{/images/avatar/3.jpg}" alt="">
+                      <img class="float-left mr-3 avatar-img" th:src="@{/images/avatar/3.jpg}"
+                           alt="">
                       <div class="notification-content">
                         <div class="notification-heading">Barak Obama</div>
                         <div class="notification-timestamp">08 Hours ago</div>
@@ -82,7 +108,8 @@
                   </li>
                   <li>
                     <a href="javascript:void()">
-                      <img class="float-left mr-3 avatar-img" th:src="@{/images/avatar/4.jpg}" alt="">
+                      <img class="float-left mr-3 avatar-img" th:src="@{/images/avatar/4.jpg}"
+                           alt="">
                       <div class="notification-content">
                         <div class="notification-heading">Hilari Clinton</div>
                         <div class="notification-timestamp">08 Hours ago</div>

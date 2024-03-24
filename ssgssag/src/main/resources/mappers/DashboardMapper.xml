@@ -53,4 +53,28 @@
       purchase_date
   </select>
 
+  <select id="selectBestCategoryList" resultType="com.ssg.ssgssag.dto.BestCategoryDTO">
+    SELECT TC.V_CATEGORY_NM AS CATEGORY_NAME, COUNT(*) AS CATEGORY_CNT
+    FROM TB_SHOP_PURCHASE_DETAIL SP
+           JOIN TB_PRODUCT TP
+                ON SP.V_PRODUCT_CD = TP.V_PRODUCT_CD
+           JOIN TB_CATEGORY TC
+                ON TP.V_CATEGORY_CD = TC.V_CATEGORY_CD
+    WHERE SP.DT_SHOP_PURCHASE_DATE >= CURDATE() - INTERVAL 30 DAY
+    GROUP BY TC.V_CATEGORY_NM
+    ORDER BY 2 DESC
+    LIMIT 10;
+  </select>
+  <select id="selectWorstCategoryList" resultType="com.ssg.ssgssag.dto.BestCategoryDTO">
+    SELECT TC.V_CATEGORY_NM AS CATEGORY_NAME, COUNT(*) AS CATEGORY_CNT
+    FROM TB_SHOP_PURCHASE_DETAIL SP
+           JOIN TB_PRODUCT TP
+                ON SP.V_PRODUCT_CD = TP.V_PRODUCT_CD
+           JOIN TB_CATEGORY TC
+                ON TP.V_CATEGORY_CD = TC.V_CATEGORY_CD
+    WHERE SP.DT_SHOP_PURCHASE_DATE >= CURDATE() - INTERVAL 30 DAY
+    GROUP BY TC.V_CATEGORY_NM
+    ORDER BY 2
+    LIMIT 10;
+  </select>
 </mapper>

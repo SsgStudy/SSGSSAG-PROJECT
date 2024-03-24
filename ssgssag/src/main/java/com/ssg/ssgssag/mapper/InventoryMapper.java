@@ -20,4 +20,5 @@ public interface InventoryMapper {
     InventoryHistoryVO selectInventoryHistoryBySeq(Integer pkInventorySeq);
 
     void updateInventoryWithHistory(InventoryAdjustmentDTO inventoryAdjustmentDTO);
+    void updateInventoryWithHistoryMove(InventoryMovementDTO inventoryMovementDTO);
 }
