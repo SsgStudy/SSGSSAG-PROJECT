@@ -19,6 +19,8 @@ $(document).ready(function () {
 function handleInventoryDetailLinkClick(key) {
     console.log("handleInventoryDetailLinkClick 호출");
 
+    $('#inventory-seq').text(key);
+
     // AJAX 요청
     $.ajax({
         url: '/inventory/list/detail/' + key,
@@ -26,39 +28,46 @@ function handleInventoryDetailLinkClick(key) {
         dataType: 'json',
         success: function (data) {
 
-            console.log(data)
+            // console.log(data)
 
             // 기존의 행들을 모두 제거
             $('#inventory-history-modal-body').empty();
 
-            // 새로운 행을 생성하여 tbody에 추가
-            let formattedDate = formatDate(data.dtInventoryChangeDate);
+            let cnt = 1;
+            data.forEach(function (item) {
+                let formattedDate = formatDate(item.dtInventoryChangeDate); // 날짜 처리
+                let shippingCnt =  item.ninventoryShippingCnt; // 수량 처리
 
-            let changeType;
-            switch (data.vinventoryChanegeType) {
-                case 'CHANGE_CNT_INBOUND' :
-                    changeType = '입고 수량 조절';
-                    break;
-                case 'CHANGE_CNT_OUTBOUND' :
-                    changeType = '출고 수량 조절';
-                    break;
-                case 'MOVE' :
-                    changeType = '창고 이동';
-                    break;
-            }
+                let changeType;
+                switch (item.vinventoryChanegeType) {
+                    case 'CHANGE_CNT_INBOUND' :
+                        changeType = '입고 수량 조절';
+                        break;
+                    case 'CHANGE_CNT_OUTBOUND' :
+                        changeType = '출고 수량 조절';
+                        break;
+                    case 'MOVE' :
+                        changeType = '창고 이동';
+                        shippingCnt = '';
+                        break;
+                }
 
-            let row = `<tr role="row" class="odd">
-                    <td>${data.pkInventorySeq}</td>
-                    <td>${data.ninventoryShippingCnt}</td>
-                    <td>${formattedDate}</td>
-                    <td>${changeType}</td>
-                    <td>${data.vzoneCd}</td>
-                    <td>${data.vwarehouseCd}</td>
-                    <td>${data.vzoneCd2}</td>
-                    <td>${data.vwarehouseCd2}</td>
-                </tr>`;
+                let row = `<tr role="row" class="odd">
+            <td>${cnt}</td>
+<!--            <td>${item.pkInventorySeq}</td>-->
+            <td>${shippingCnt}</td>
+            <td>${formattedDate}</td>
+            <td>${changeType}</td>
+            <td>${item.vzoneCd}</td>
+            <td>${item.vwarehouseCd}</td>
+            <td>${item.vzoneCd2}</td>
+            <td>${item.vwarehouseCd2}</td>
+        </tr>`;
 
-            $('#inventory-history-modal-body').append(row);
+                $('#inventory-history-modal-body').append(row);
+
+                cnt++;
+            });
         },
 
         error: function (xhr, status, error) {
@@ -309,7 +318,7 @@ $('#submitButton').on('click', function () {
     console.log(data)
 
     $.ajax({
-        url: '/inventory/adjustment/update',
+        url: '/inventory/adjustment',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(data),
@@ -351,3 +360,39 @@ function reloadPageAfterDelay(delay) {
         location.reload();
     }, delay);
 }
+
+
+// 3. 재고 이동
+$('#submitMovementButton').on('click', function () {
+    let warehouse = $('#select-warehouse').val();
+    let zone = $('#select-zone').val();
+
+    let data = {
+        pkInventorySeq: selectedNumber,
+        vWarehouseNm2: warehouse,
+        vZoneNm2: zone
+    }
+
+    console.log(data)
+
+    $.ajax({
+        url: '/inventory/movement',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log('서버 응답:' + JSON.stringify(data));
+
+            showSuccessAlert();
+            window.scrollTo(0, 0);
+            reloadPageAfterDelay(1000);
+        },
+        error: function (xhr, status, error) {
+            console.error('에러 발생:', error);
+
+            showDangerAlert();
+            window.scrollTo(0, 0);
+            reloadPageAfterDelay(1000);
+        }
+     });
+});

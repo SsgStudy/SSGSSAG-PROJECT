@@ -35,10 +35,10 @@ public class InventoryController {
     @GetMapping("/list/detail/{pkInventorySeq}")
     @Operation(summary = "재고 조회 : 모달 출력", description = "재고 번호에 따른 재고 이력 모달 출력")
     @ResponseBody
-    public InventoryHistoryVO getInventoryHistoryBySeq(@PathVariable Integer pkInventorySeq) {
+    public List<InventoryHistoryVO> getInventoryHistoryBySeq(@PathVariable Integer pkInventorySeq) {
         log.info("호출");
-        InventoryHistoryVO inventoryHistoryVO = inventoryService.getInventoryHistoryBySeq(pkInventorySeq);
-        return inventoryHistoryVO;
+        List<InventoryHistoryVO> inventoryHistoryList = inventoryService.getInventoryHistoryBySeq(pkInventorySeq);
+        return inventoryHistoryList;
     }
 
     @GetMapping("/warehouse")
@@ -78,11 +78,27 @@ public class InventoryController {
         return "inventory/inventory-adjustment";
     }
 
-    @PostMapping("/adjustment/update")
+    @PostMapping("/adjustment")
     @Operation(summary = "재고 조정 값 반환", description = "번호, 수량, 상태 반환")
     @ResponseBody
     public void selectedInventory(@RequestBody InventoryAdjustmentDTO dto) {
-        inventoryService.updateInventoryWithHistory(dto);
+        inventoryService.updateInventoryWithHistoryCnt(dto);
+    }
+
+    // 3. 재고 이동
+    @GetMapping("/movement")
+    @Operation(summary = "재고 이동", description = "재고 이동 페이지")
+    public String showInventoryMovementPage(Model model) {
+        List<InventoryListDTO> inventoryList = inventoryService.selectAllInventory();
+        model.addAttribute("inventoryList", inventoryList);
+        return "inventory/inventory-movement";
+    }
+
+    @PostMapping("/movement")
+    @Operation(summary = "재고 이동 값 반환", description = "번호, 창고, 구역 반환")
+    @ResponseBody
+    public void selectedInventoryMovement(@RequestBody InventoryMovementDTO dto) {
+        inventoryService.updateInventoryWithHistoryMove(dto);
     }
 
 }

@@ -102,11 +102,19 @@
     </select>
     
     
-    <update id="updateInventoryWithHistory" parameterType="com.ssg.ssgssag.dto.InventoryAdjustmentDTO">
-        { call UPDATE_INVENTORY_WITH_HISTORY (
+    <update id="updateInventoryWithHistoryCnt" parameterType="com.ssg.ssgssag.dto.InventoryAdjustmentDTO">
+        { call UPDATE_INVENTORY_WITH_HISTORY_CNT (
                 #{pkInventorySeq, mode=IN, jdbcType=INTEGER},
                 #{nInventoryShippingCnt, mode=IN, jdbcType=INTEGER},
                 #{vInventoryChangeType, mode=IN, jdbcType=VARCHAR}
+               ) }
+    </update>
+
+    <update id="updateInventoryWithHistoryMove" parameterType="com.ssg.ssgssag.dto.InventoryMovementDTO">
+        { call UPDATE_INVENTORY_WITH_HISTORY_MOVE (
+                #{pkInventorySeq, mode=IN, jdbcType=INTEGER},
+                #{vWarehouseNm2, mode=IN, jdbcType=VARCHAR},
+                #{vZoneNm2, mode=IN, jdbcType=VARCHAR}
                ) }
     </update>
 
