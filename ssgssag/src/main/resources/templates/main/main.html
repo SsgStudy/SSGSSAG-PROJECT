@@ -198,17 +198,87 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Pie Chart</h4>
-              <div id="flotPie1" class="flot-chart"></div>
+              <h4 class="card-title">최근 1달 인기 카테고리</h4>
+              <canvas id="categoryPieChart"></canvas>
+              <script th:inline="javascript">
+                /*<![CDATA[*/
+                let ctx2 = document.getElementById('categoryPieChart').getContext('2d');
+                let categoryPieChart = new Chart(ctx2, {
+                  type: 'pie',
+                  data: {
+                    labels: /*[[${categoryNames}]]*/[],
+                    datasets: [{
+                      data: /*[[${categoryCounts}]]*/[],
+                      backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                      ],
+                      borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                      ],
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    maintainAspectRatio: true,
+                  }
+                });
+                /*]]>*/
+              </script>
             </div>
           </div>
         </div>
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Pie Chart</h4>
-              <div id="flotPie2" class="flot-chart"></div>
+              <h4 class="card-title">최근 1달 비인기 카테고리</h4>
+              <canvas id="categoryPieChart2"></canvas>
+              <script th:inline="javascript">
+                /*<![CDATA[*/
+                let ctx3 = document.getElementById('categoryPieChart2').getContext('2d');
+                let categoryPieChart2 = new Chart(ctx3, {
+                  type: 'pie',
+                  data: {
+                    labels: /*[[${worstCategoryNames}]]*/[],
+                    datasets: [{
+                      data: /*[[${worstCategoryCounts}]]*/[],
+                      backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                      ],
+                      borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                      ],
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    maintainAspectRatio: true,
+                  }
+                });
+                /*]]>*/
+              </script>
             </div>
+
+          </div>
           </div>
         </div>
       </div>

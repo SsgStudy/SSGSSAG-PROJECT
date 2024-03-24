@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.mapper;
 
+import com.ssg.ssgssag.dto.BestCategoryDTO;
 import com.ssg.ssgssag.dto.BestProductDTO;
 import com.ssg.ssgssag.dto.DailyPurchaseCountDTO;
 import com.ssg.ssgssag.dto.StatusCountDTO;
@@ -16,4 +17,8 @@ public interface DashboardMapper {
     List<BestProductDTO> selectBestProducts();
 
     List<DailyPurchaseCountDTO> selectDailyPurchaseStatistics();
+
+    List<BestCategoryDTO> selectBestCategoryList();
+
+    List<BestCategoryDTO> selectWorstCategoryList();
 }

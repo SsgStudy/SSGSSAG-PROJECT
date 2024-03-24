@@ -1,5 +1,6 @@
 package com.ssg.ssgssag.controller;
 
+import com.ssg.ssgssag.dto.BestCategoryDTO;
 import com.ssg.ssgssag.dto.BestProductDTO;
 import com.ssg.ssgssag.dto.DailyPurchaseCountDTO;
 import com.ssg.ssgssag.dto.IncomingDTO;
@@ -32,6 +33,10 @@ public class DashboardController {
         List<StatusCountDTO> statusCountDTOList = dashboardService.getAllStatusCount();
         List<BestProductDTO> bestProductDTOList = dashboardService.getBestProducts();
         List<DailyPurchaseCountDTO> dailyPurchaseCountDTOList = dashboardService.getDailyPurchaseStatistics();
+        List<BestCategoryDTO> bestCategoryDTOList = dashboardService.getBestCategoryList();
+        List<BestCategoryDTO> worstCategoryDTOList = dashboardService.getWorstCategoryList();
+
+        log.info(worstCategoryDTOList);
 
         model.addAttribute("incoming", statusCountDTOList.get(0).getCnt());
         model.addAttribute("outgoing", statusCountDTOList.get(1).getCnt());
@@ -42,7 +47,7 @@ public class DashboardController {
 
         model.addAttribute("bestProducts", bestProductDTOList);
 
-        // 라인 차트를 위한 데이터 추가
+        // 라인 차트 데이터 준비
         List<String> purchaseDates = dailyPurchaseCountDTOList.stream()
             .map(dto -> new SimpleDateFormat("yyyy-MM-dd").format(dto.getPurchaseDate()))
             .collect(Collectors.toList());
@@ -50,11 +55,31 @@ public class DashboardController {
             .map(DailyPurchaseCountDTO::getDailyPurchaseCount)
             .collect(Collectors.toList());
 
-        log.info(purchaseDates);
-        log.info(dailyPurchases);
-
         model.addAttribute("purchaseDates", purchaseDates);
         model.addAttribute("dailyPurchases", dailyPurchases);
+
+        //인기 카테고리 파이 차트 데이터 준비
+        List<String> categoryNames = bestCategoryDTOList.stream()
+            .map(BestCategoryDTO::getCategoryName)
+            .collect(Collectors.toList());
+        List<Integer> categoryCounts = bestCategoryDTOList.stream()
+            .map(BestCategoryDTO::getCategoryCnt)
+            .collect(Collectors.toList());
+
+        model.addAttribute("categoryNames", categoryNames);
+        model.addAttribute("categoryCounts", categoryCounts);
+
+        //비인기 카테고리 파이 차트 데이터 준비
+        List<String> worstCategoryNames = worstCategoryDTOList.stream()
+            .map(BestCategoryDTO::getCategoryName)
+            .toList();
+        List<Integer> worstCategoryCounts = worstCategoryDTOList.stream()
+            .map(BestCategoryDTO::getCategoryCnt)
+            .toList();
+
+        model.addAttribute("worstCategoryNames", worstCategoryNames);
+        model.addAttribute("worstCategoryCounts", worstCategoryCounts);
+
         return "main/main";
     }
 }
