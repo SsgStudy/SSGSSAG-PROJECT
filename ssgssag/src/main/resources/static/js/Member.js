@@ -27,7 +27,7 @@ $(document).ready(function() {
   $("#signup-form").submit(function (e) {
     e.preventDefault();
 
-    var formData = $(this).serialize(); // 폼 데이터 직렬화
+    let formData = $(this).serialize(); // 폼 데이터 직렬화
 
 
     $.ajax({
@@ -53,12 +53,12 @@ $(document).ready(function() {
   $("#save-modify").submit(function (e) {
     e.preventDefault();
 
-    var memberId = $('#memberId').val();
-    var memberPw = $('#memberPw').val();
-    var memberName = $('#memberName').val();
-    var memberEmail = $('#memberEmail').val();
-    var role = $('#memberRole').val();
-    var memberAuth;
+    let memberId = $('#memberId').val();
+    let memberPw = $('#memberPw').val();
+    let memberName = $('#memberName').val();
+    let memberEmail = $('#memberEmail').val();
+    let role = $('#memberRole').val();
+    let memberAuth;
 
     console.log("수정된 이름", memberName)
 
@@ -107,7 +107,7 @@ $(document).ready(function() {
 });
 
 
-var member = {
+let member = {
   pkMemberSeq:null,
   vMemberId:null,
   vMemberPw:null,
@@ -119,8 +119,8 @@ var member = {
 }
 
 function changeMemberAuth() {
-  var role = $('#role').val();
-  var memberAuth;
+  let role = $('#role').val();
+  let memberAuth;
 
   switch(role) {
     case 'admin':
