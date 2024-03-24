@@ -5,7 +5,7 @@ $(document).ready(function() {
     { name: "입고 승인", url: "/incoming/confirm" },
     { name: "입고 수정", url: "/incoming/confirm" },
     { name: "입고 조회", url: "/incoming/list" },
-    { name: "출고 조회", url: "/outgoing/list" },
+    { name: "출고 조회", url: "/outgoing" },
     { name: "발주 등록", url: "/order/register" },
     { name: "발주 확정", url: "/order/confirm" },
     { name: "발주 조회", url: "/order/read" },
@@ -20,13 +20,13 @@ $(document).ready(function() {
   ];
 
   $("#menuSearch").on("input", function() {
-    let searchVal = $(this).val().toLowerCase();
+    let searchVal = $(this).val().toLowerCase().replace(/\s+/g, '');
     $(".search-results").empty();
 
     if(searchVal) {
       $(".search-results").show();
       menuItems.forEach(function(item) {
-        if(item.name.toLowerCase().includes(searchVal)) {
+        if(item.name.toLowerCase().replace(/\s+/g, '').includes(searchVal)) {
           $(".search-results").append('<div class="text-left" style="padding: 8px;"><a href="' + item.url + '" style="text-decoration: none; color: black;">' + item.name + '</a></div>');
         }
       });
