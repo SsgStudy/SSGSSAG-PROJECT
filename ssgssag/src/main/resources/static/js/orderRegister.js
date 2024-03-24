@@ -1,8 +1,6 @@
 $(document).ready(function() {
-    // allDeactivateForm();
+    allDeactivateForm();
     $('.alert').hide();
-    console.log("삭제 확인 ", order);
-
 });
 
 // 전역 변수
@@ -70,15 +68,13 @@ function activateMasterForm() {
 
 // 초기화
 function allDeactivateForm() {
-    $('.container-fluid button, .container-fluid input, .container-fluid select')
+    $('.order-register-body button, .order-register-body input, .order-register-body select')
         .not('#order-register-new-btn, .modal button').prop('disabled', true);
 }
-
 
 // 등록 폼
 
 $(".input-supplier").click(function() {
-    console.log("실행?")
     $.ajax({
         url: '/incoming/supplier',
         type: 'GET',
@@ -156,6 +152,7 @@ function clickOrderMasterSave() {
     else {
         $('#order-master-save-btn').attr('data-target','#exampleModalCenter');
         saveStatus.order = true;
+        $('.input-supplier').prop('disabled', true);
     }
 }
 function orderRegisterSave() {
@@ -170,25 +167,6 @@ function orderRegisterSave() {
 function activateOrderSingleForm() {
     $('#order-register-order-single-btn-wrap button, #order-register-order-single-btn-wrap button input')
         .prop('disabled', false);
-}
-
-
-function checkEmptyOrderForm() {
-    if ($("#order-created-date").val() === "") {
-        console.log("날짜 입력하세요");
-        return false;
-    }
-
-    if ($("#incoming-product-supplier-nm").val() === "") {
-        console.log("매입거래처를 선택하세요");
-        return false;
-    }
-
-    if ($("#warehouse-cd").val() === "") {
-        console.log("창고를 선택하세요");
-        return false;
-    }
-    return true;
 }
 
 function checkInputFields() {
@@ -283,7 +261,11 @@ function insertOrderAndOrderDetail() {
             contentType: 'application/json',
             data: JSON.stringify({order: order, orderDetails: orderDetails}),
             success: function (resp) {
+                $('.container-fluid button, .container-fluid input, .container-fluid select')
+                    .not('#order-register-new-btn, .modal button, #order-register-delete-btn')
+                    .prop('disabled', true);
                 $('#order-register-delete-btn').prop('disabled', false);
+
             },
             error: function (error) {
                 console.log('Error:', error);
@@ -313,7 +295,6 @@ function saveOrderDetailForm() {
         let orderCnt = +$tr.find('.order-cnt').val();
 
         if (!orderCnt) {
-            console.log("단품 수량을 입력하세요.");
             showAlertDanger("단품 수량을 입력하세요.");
             isValid = false;
             return;
@@ -356,9 +337,9 @@ function createOrderDetailForm() {
         success: function (resp) {
             $("#default-tr").remove();
             addProducts[resp.vProductCd] = 1;
-            console.log("addProducts ", addProducts);
 
             let idx = $(".order-detail-tbody tr").length + 1;
+            $('#input-product-cd').val('');
 
             $(".order-detail-tbody").append(
                 `<tr data-index="${idx}">
@@ -381,7 +362,6 @@ function createOrderDetailForm() {
         },
         error: function (xhr, status, error) {
             if (xhr.status === 422) {
-                console.log(xhr.responseText);
                 showAlertDanger(xhr.responseText);
             }
         }
@@ -391,7 +371,6 @@ function createOrderDetailForm() {
 function checkDuplicateProductRegistration(productCd) {
     if (productCd in addProducts) {
         showAlertDanger("이미 추가된 상품입니다.");
-        console.log("addProducts ", addProducts);
         return false;
     }
 
@@ -405,10 +384,10 @@ $('body').on('input', '[class^=order-cnt]', function() {
     $tr.find('.total-price').text(totalPrice);
 });
 
-// $('body').on('input', '[class^=order-cnt]', function() {
-//     let $tr = $(this).closest('tr');
-//     let totalPrice = calculateOrderTotalPrice($tr);
-//     $tr.find('.total-price').text(totalPrice);
+// $('body').on('input', '[class^=input-supplier]', function() {
+//     if($('.order-detail-tbody tr').length > 0) {
+//         showAlertDanger("입력된 단품 내역이 있습니다.");
+//     }
 // });
 
 
@@ -418,7 +397,6 @@ function deleteOrderSingle() {
         let productCd = $(this).closest('tr').find(".product-cd").text();
         $(this).closest('tr').remove();
 
-        console.log("길이 얼마임?", $('.order-detail-tbody tr').length );
         if ($('.order-detail-tbody tr').length === 0) {
             $('.order-detail-tbody').append(`
                 <tr id="default-tr">
@@ -435,7 +413,6 @@ function deleteOrderSingle() {
         }
 
         delete addProducts[productCd];
-        console.log("addProducts", addProducts);
     });
 
     $('.order-detail-tbody tr').each(function(index) {
