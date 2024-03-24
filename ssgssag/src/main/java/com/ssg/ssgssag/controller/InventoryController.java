@@ -78,7 +78,7 @@ public class InventoryController {
         return "inventory/inventory-adjustment";
     }
 
-    @PostMapping("/adjustment/update")
+    @PostMapping("/adjustment")
     @Operation(summary = "재고 조정 값 반환", description = "번호, 수량, 상태 반환")
     @ResponseBody
     public void selectedInventory(@RequestBody InventoryAdjustmentDTO dto) {
@@ -94,7 +94,7 @@ public class InventoryController {
         return "inventory/inventory-movement";
     }
 
-    @PostMapping("/movement/update")
+    @PostMapping("/movement")
     @Operation(summary = "재고 이동 값 반환", description = "번호, 창고, 구역 반환")
     @ResponseBody
     public void selectedInventoryMovement(@RequestBody InventoryMovementDTO dto) {

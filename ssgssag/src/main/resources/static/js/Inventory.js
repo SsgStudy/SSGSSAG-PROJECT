@@ -309,7 +309,7 @@ $('#submitButton').on('click', function () {
     console.log(data)
 
     $.ajax({
-        url: '/inventory/adjustment/update',
+        url: '/inventory/adjustment',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(data),
@@ -367,7 +367,7 @@ $('#submitMovementButton').on('click', function () {
     console.log(data)
 
     $.ajax({
-        url: '/inventory/movement/update',
+        url: '/inventory/movement',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(data),
