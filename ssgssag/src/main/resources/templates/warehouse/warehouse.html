@@ -74,7 +74,7 @@
                         <label class="col-sm-3 col-form-label text-left">이름</label>
                         <div class="col-sm-9 mb-1">
                           <input type="text" class="form-control input-flat"  name="vWarehouseNm"
-                                 placeholder="창고 이름을 입력해주세요">
+                                 placeholder="창고 이름을 입력해주세요" required>
                         </div>
                       </div>
                       <div class="row" style="justify-content: flex-end">
@@ -94,8 +94,13 @@
                       <div class="row">
                         <label class="col-sm-3 col-form-label text-left">종류</label>
                         <div class="col-sm-9 mb-1">
-                          <input type="text" class="form-control input-flat" name="sWarehouseType"
-                                 placeholder="창고 종류를 입력해주세요">
+                            <select class="custom-select mb-1" id="sWarehouseTypeSelect" name="sWarehouseTypeSelect" style="height: 45px;" required>
+                              <option value="">창고종류를 선택하세요</option>
+                              <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
+                              <option value="custom">직접입력</option>
+                            </select>
+                          <input type="text" class="form-control input-flat" id="sWarehouseTypeInput" name="sWarehouseType"
+                                 placeholder="창고 종류를 입력해주세요" style="display:none">
                         </div>
                       </div>
                       <div class="row">
