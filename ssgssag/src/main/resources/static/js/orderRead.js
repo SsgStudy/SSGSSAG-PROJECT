@@ -14,10 +14,85 @@ var orderSearchForm = {
 
 // 초기화
 function orderReadPageReset() {
-    console.log('초기화')
-    $("#order-read-search-form").find("input[type=text], select").val("");
-    $(".order-single-tbody").empty();
+    $("#order-status").val(($('#order-status option[selected]').val()));
+    $("#order-read-search-form").find("input[type=text]").val("");
+    getNowDate();
+    $(".order-master-tbody").empty().append(
+        `
+            <tr class="odd">
+                <td valign="top" colspan="8" class="dataTables_empty">No data available in table</td>
+            </tr>
+        `
+    );
 }
+
+// 검색폼
+$(".input-supplier").click(function() {
+    console.log("실행?")
+    $.ajax({
+        url: '/incoming/supplier',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            let tableBody = $("#purchaserSearchInputBox .table-responsive tbody");
+            tableBody.empty();
+            $.each(data, function(index, item) {
+                let row = "<tr>" +
+                    "<td>" + (index + 1) + "</td>" +
+                    "<td>" + item.vincomingProductSupplierNm + "</td>" +
+                    "</tr>";
+                tableBody.append(row);
+            });
+        },
+        error: function(xhr, status, error) {
+            alert("An error occurred: " + error);
+        }
+    });
+});
+
+$("#purchaserSearchInputBox .table-responsive tbody").on('click', 'tr', function() {
+    let supplierName = $(this).find('td:nth-child(2)').text();
+    $('.input-supplier').val(supplierName);
+    $('#purchaserSearchInputBox').modal('hide');
+});
+
+$('.input-whsearch').click(function() {
+    let formData = {
+        name: $("#warehouseNameInput").val(),
+        location: $("#warehouseLocationSelect").val(),
+        type: $("#warehouseTypeSelect").val()
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/warehouse/search",
+        data: $.param(formData),
+        contentType: 'application/x-www-form-urlencoded',
+        success: function(data) {
+            let tableBody = $('#warehouseSearchInputBox .table-responsive tbody');
+            tableBody.empty();
+            $.each(data, function(i, warehouse) {
+                let row = "<tr>" +
+                    "<td>" + (i + 1) + "</td>" +
+                    "<td>" + warehouse.swarehouseType + "</td>" +
+                    "<td>" + warehouse.vwarehouseCd + "</td>" +
+                    "<td>" + warehouse.vwarehouseNm + "</td>" +
+                    "</tr>";
+                tableBody.append(row);
+            });
+        },
+        error: function(error) {
+            console.error("Error: ", error);
+        }
+    });
+});
+
+$('#warehouseSearchInputBox .table-responsive tbody').on('click', 'tr', function() {
+    let warehouseCode = $(this).find('td:nth-child(3)').text();
+    $('.input-whsearch').val(warehouseCode);
+    $('#warehouseSearchInputBox').modal('hide');
+});
+
 
 // 조회
 function searchForm() {
@@ -108,4 +183,12 @@ function formatDate(date) {
         day = '0' + day;
 
     return [month, day, year].join('/');
+}
+
+function addCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function removeCommas(str) {
+    return parseInt(str.replace(/,/g, ''), 10);
 }
