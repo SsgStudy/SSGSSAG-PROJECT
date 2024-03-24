@@ -98,7 +98,7 @@ public class InventoryController {
     @Operation(summary = "재고 이동 값 반환", description = "번호, 창고, 구역 반환")
     @ResponseBody
     public void selectedInventoryMovement(@RequestBody InventoryMovementDTO dto) {
-        log.info(dto);
+        inventoryService.updateInventoryWithHistoryMove(dto);
     }
 
 }

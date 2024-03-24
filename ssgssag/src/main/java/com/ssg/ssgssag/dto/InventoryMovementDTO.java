@@ -10,15 +10,15 @@ public class InventoryMovementDTO {
     private Long pkInventorySeq; //해당하는 재고 번호
 
     @Getter
-    private String vWarehouseNm;
+    private String vWarehouseNm2;
     @Getter
-    private String vZoneNm;
+    private String vZoneNm2;
 
-    public String getvWarehouseNm() {
-        return vWarehouseNm;
+    public String getvWarehouseNm2() {
+        return vWarehouseNm2;
     }
 
-    public String getvZoneNm() {
-        return vZoneNm;
+    public String getvZoneNm2() {
+        return vZoneNm2;
     }
 }

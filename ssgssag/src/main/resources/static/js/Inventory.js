@@ -360,8 +360,8 @@ $('#submitMovementButton').on('click', function () {
 
     let data = {
         pkInventorySeq: selectedNumber,
-        vWarehouseNm: warehouse,
-        vZoneNm: zone
+        vWarehouseNm2: warehouse,
+        vZoneNm2: zone
     }
 
     console.log(data)
@@ -382,8 +382,8 @@ $('#submitMovementButton').on('click', function () {
             console.error('에러 발생:', error);
 
             showDangerAlert();
-            window.scrollTo(0, 0);
-            reloadPageAfterDelay(1000);
+            // window.scrollTo(0, 0);
+            // reloadPageAfterDelay(1000);
         }
     });
 
