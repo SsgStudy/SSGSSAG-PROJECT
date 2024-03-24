@@ -29,4 +29,5 @@ public interface IncomingService {
 
     void fetchIncomingProductStatusForRegister(String pkIncomingProductSeq, String vzoneCd, String dtIncomingProductDate);
 
+    List<String> getZonesByWarehouseCode(String warehouseCd);
 }

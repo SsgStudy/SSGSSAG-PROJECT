@@ -81,7 +81,7 @@ $(document).ready(function () {
     let supplierNm = $('[data-target="#purchaserSearchInputBox"]').val();
     let status;
     switch ($('#inputState').val()) {
-      case '신규':
+      case '입고':
         status = 'NEW_INVENTORY';
         break;
       case '미입고':
@@ -193,10 +193,31 @@ $(document).ready(function () {
   });
 
 
-  $('.checkbox input').change(function() {
+  $('.zero-configuration tbody').on('change', '.checkbox input', function() {
     let selectedRow = $(this).closest('tr');
     let incomingDate = selectedRow.find('td:nth-child(6)').text();
     let warehouseZone = selectedRow.find('td:last-child').text();
+    let warehouseCode = selectedRow.find('td:nth-last-child(2)').text().trim();
+    let $warehouseZoneSelect = $('#warehouseZoneSelect');
+
+    $warehouseZoneSelect.empty();
+    $warehouseZoneSelect.append('<option value="">구역 선택</option>');
+
+
+    $.ajax({
+      url: `/incoming/zones/${warehouseCode}`,
+      type: 'GET',
+      success: function(data) {
+
+        data.forEach(function(zone) {
+          $warehouseZoneSelect.append(`<option value="${zone}">${zone}</option>`);
+        });
+      },
+      error: function(xhr, status, error) {
+        console.error('창고 구역 정보를 가져오는데 실패했습니다:', error);
+      }
+    });
+
 
     $('#incomingDateInput').val(incomingDate);
     $('#warehouseZoneSelect').val(warehouseZone);
@@ -294,7 +315,8 @@ $(document).ready(function () {
     $('#warehouseSearchInputBox').modal('hide');
   });
 
-});
+}
+);
 
 function fetchIncomingDetails(pkIncomingProductSeq) {
   $.ajax({
@@ -321,6 +343,7 @@ function fetchIncomingDetails(pkIncomingProductSeq) {
         </tr>`;
 
       detailsTable.append(newRow);
+
     },
     error: function (error) {
       console.log('Error:', error);

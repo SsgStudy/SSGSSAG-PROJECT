@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ssg.ssgssag.mapper.DashboardMapper">
+
+  <select id="selectAllStatusCount" resultType="com.ssg.ssgssag.dto.StatusCountDTO">
+    <![CDATA[
+      SELECT 'INCOMING' AS SECTION, COUNT(*) AS CNT FROM TB_INCOMING_PRODUCT WHERE V_INCOMING_PRODUCT_STATUS = '미입고'
+      UNION ALL
+      SELECT 'OUTGOING' AS SECTION, COUNT(*) AS CNT FROM TB_OUTGOING_INST WHERE V_OUTGOING_INTS_STATUS = 'INSTRUCTION'
+      UNION ALL
+      SELECT 'PURCHASE' AS SECTION, COUNT(*) AS CNT FROM TB_SHOP_PURCHASE WHERE V_SHOP_PURCHASE_STATUS = '신규등록'
+      UNION ALL
+      SELECT 'ORDER' AS SECTION, COUNT(*) AS CNT FROM TB_ORDER WHERE V_ORDER_STATUS = '미확정'
+      UNION ALL
+      SELECT 'INVENTORY' AS SECTION, COUNT(*) AS CNT FROM TB_INVENTORY WHERE N_INVENTORY_CNT <= 10
+      UNION ALL
+      SELECT 'WAREHOUSE' AS SECTION, COUNT(*) AS CNT FROM TB_WAREHOUSE
+    ]]>
+  </select>
+
+  <select id="selectBestProducts" resultType="com.ssg.ssgssag.dto.BestProductDTO">
+    SELECT
+      TP.V_PRODUCT_NM AS 'name',
+      COUNT(*) AS 'purchase',
+      SUM(PD.N_PRODUCT_CNT) AS 'conut',
+      SUM(TI.N_INVENTORY_CNT) AS 'inventory'
+    FROM
+      TB_SHOP_PURCHASE_DETAIL PD
+        INNER JOIN
+      TB_PRODUCT TP
+      ON PD.V_PRODUCT_CD = TP.V_PRODUCT_CD
+        INNER JOIN
+      TB_INVENTORY TI
+      ON PD.V_PRODUCT_CD = TI.V_PRODUCT_CD
+    GROUP BY V_PRODUCT_NM
+    ORDER BY 2 desc, 3 desc, 1 asc
+    LIMIT 7
+  </select>
+  
+  <select id="selectDailyPurchaseStatistics" resultType="com.ssg.ssgssag.dto.DailyPurchaseCountDTO">
+    SELECT
+      DATE(DT_SHOP_PURCHASE_DATE) AS purchase_date,
+      COUNT(*) AS daily_purchase_count
+    FROM
+      TB_SHOP_PURCHASE
+    WHERE
+      DT_SHOP_PURCHASE_DATE >= CURDATE() - INTERVAL 30 DAY
+    GROUP BY
+      DATE(DT_SHOP_PURCHASE_DATE)
+    ORDER BY
+      purchase_date
+  </select>
+
+  <select id="selectBestCategoryList" resultType="com.ssg.ssgssag.dto.BestCategoryDTO">
+    SELECT TC.V_CATEGORY_NM AS CATEGORY_NAME, COUNT(*) AS CATEGORY_CNT
+    FROM TB_SHOP_PURCHASE_DETAIL SP
+           JOIN TB_PRODUCT TP
+                ON SP.V_PRODUCT_CD = TP.V_PRODUCT_CD
+           JOIN TB_CATEGORY TC
+                ON TP.V_CATEGORY_CD = TC.V_CATEGORY_CD
+    WHERE SP.DT_SHOP_PURCHASE_DATE >= CURDATE() - INTERVAL 30 DAY
+    GROUP BY TC.V_CATEGORY_NM
+    ORDER BY 2 DESC
+    LIMIT 10;
+  </select>
+  <select id="selectWorstCategoryList" resultType="com.ssg.ssgssag.dto.BestCategoryDTO">
+    SELECT TC.V_CATEGORY_NM AS CATEGORY_NAME, COUNT(*) AS CATEGORY_CNT
+    FROM TB_SHOP_PURCHASE_DETAIL SP
+           JOIN TB_PRODUCT TP
+                ON SP.V_PRODUCT_CD = TP.V_PRODUCT_CD
+           JOIN TB_CATEGORY TC
+                ON TP.V_CATEGORY_CD = TC.V_CATEGORY_CD
+    WHERE SP.DT_SHOP_PURCHASE_DATE >= CURDATE() - INTERVAL 30 DAY
+    GROUP BY TC.V_CATEGORY_NM
+    ORDER BY 2
+    LIMIT 10;
+  </select>
+</mapper>

@@ -14720,3 +14720,7 @@ body, body * {
   width: 600px;
   background-color: lightgrey;
 }
+canvas {
+  /*position: absolute;*/
+  width: 100%;
+}

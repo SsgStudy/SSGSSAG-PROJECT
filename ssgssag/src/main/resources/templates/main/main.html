@@ -46,76 +46,76 @@
       <div class="row scrollable-row-wrapper fixed-height">
         <div class="col-lg-3 col-sm-6 scrollable-row-item">
           <div class="card gradient-1">
-            <div class="card-body">
+            <a href="/incoming/register" class="card-body hover-card-body">
               <h3 class="card-title text-white">신규 입고</h3>
               <div class="d-inline-block">
-                <h2 class="text-white">7</h2>
+                <h2 class="text-white" th:text="${incoming}">7</h2>
                 <p class="text-white mb-0">건 대기 중</p>
               </div>
               <span class="float-right display-5 opacity-5"><i
                   class="fa fa-shopping-cart"></i></span>
-            </div>
+            </a>
           </div>
         </div>
         <div class="col-lg-3 col-sm-6 scrollable-row-item">
           <div class="card gradient-2">
-            <div class="card-body">
+            <a href="/outgoing/list" class="card-body hover-card-body">
               <h3 class="card-title text-white">신규 출고</h3>
               <div class="d-inline-block">
-                <h2 class="text-white">23</h2>
+                <h2 class="text-white" th:text="${outgoing}">23</h2>
                 <p class="text-white mb-0">건 대기 중</p>
               </div>
               <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
-            </div>
+            </a>
           </div>
         </div>
         <div class="col-lg-3 col-sm-6 scrollable-row-item">
           <div class="card gradient-3">
-            <div class="card-body">
+            <a href="/outgoing/list" class="card-body hover-card-body">
               <h3 class="card-title text-white">신규 주문</h3>
               <div class="d-inline-block">
-                <h2 class="text-white">3</h2>
+                <h2 class="text-white" th:text="${purchase}">3</h2>
                 <p class="text-white mb-0">건 접수</p>
               </div>
               <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
-            </div>
+            </a>
           </div>
         </div>
         <div class="col-lg-3 col-sm-6 scrollable-row-item">
           <div class="card gradient-4">
-            <div class="card-body">
+            <a href="/order/confirm" class="card-body hover-card-body">
               <h3 class="card-title text-white">신규 발주</h3>
               <div class="d-inline-block">
-                <h2 class="text-white">17</h2>
+                <h2 class="text-white" th:text="${order}">17</h2>
                 <p class="text-white mb-0">건 미확정</p>
               </div>
               <span class="float-right display-5 opacity-5"><i class="fa fa-heart"></i></span>
-            </div>
+            </a>
           </div>
         </div>
         <div class="col-lg-3 col-sm-6 scrollable-row-item">
           <div class="card gradient-1">
-            <div class="card-body">
+            <a href="/inventory/list" class="card-body hover-card-body">
               <h3 class="card-title text-white">재고</h3>
               <div class="d-inline-block">
-                <h2 class="text-white">2</h2>
+                <h2 class="text-white" th:text="${inventory}">2</h2>
                 <p class="text-white mb-0">건 재고 부족 위험</p>
               </div>
               <span class="float-right display-5 opacity-5"><i
                   class="fa fa-shopping-cart"></i></span>
-            </div>
+            </a>
           </div>
         </div>
         <div class="col-lg-3 col-sm-6 scrollable-row-item">
           <div class="card gradient-3">
-            <div class="card-body">
+            <a href="/warehouse" class="card-body hover-card-body">
               <h3 class="card-title text-white">창고</h3>
               <div class="d-inline-block">
-                <h2 class="text-white">9</h2>
+                <h2 class="text-white" th:text="${warehouse}">9</h2>
                 <p class="text-white mb-0">개 관리 중</p>
               </div>
               <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
-            </div>
+            </a>
           </div>
         </div>
       </div>
@@ -124,63 +124,72 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Line Chart</h4>
-              <div id="flotLine1" class="flot-chart"></div>
+              <h4 class="card-title">일별 주문</h4>
+              <div class="flot-chart">
+                <div>
+                  <canvas id="myChart" style="max-height: 100%;"></canvas>
+                </div>
+              </div>
+              <script th:inline="javascript">
+                /*<![CDATA[*/
+                const purchaseDates = /*[[${purchaseDates}]]*/ [];
+                const dailyPurchases = /*[[${dailyPurchases}]]*/ [];
+
+                const ctx = document.getElementById('myChart').getContext('2d');
+                const myLineChart = new Chart(ctx, {
+                  type: 'line',
+                  data: {
+                    labels: purchaseDates,
+                    datasets: [{
+                      label: '일일 판매량',
+                      data: dailyPurchases,
+                      fill: false,
+                      borderColor: 'rgb(5,117,230)',
+                      tension: 0.2
+                    }]
+                  },
+                  options: {
+                    maintainAspectRatio: true,
+                    responsive: true,
+                    aspectRatio: 1.7,
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                });
+                /*]]>*/
+              </script>
             </div>
           </div>
         </div>
         <div class="col-lg-6 table-responsive">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Line Chart</h4>
-              <table class="table table-xs mb-0">
-                <thead>
-                <tr>
-                  <th>순위</th>
-                  <th>인기 상품 명</th>
-                  <th>보유 재고</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>iPhone16</td>
-                  <td>5,603</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>더벤티아아</td>
-                  <td>13</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>스벅아아</td>
-                  <td>130</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>스벅아아</td>
-                  <td>130</td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>스벅아아</td>
-                  <td>130</td>
-                </tr>
-                <tr>
-                  <td>6</td>
-                  <td>스벅아아</td>
-                  <td>130</td>
-                </tr>
-                <tr>
-                  <td>7</td>
-                  <td>스벅아아</td>
-                  <td>130</td>
-                </tr>
-                </tbody>
-                <tfoot>
-                </tfoot>
-              </table>
+              <h4 class="card-title">베스트 상품</h4>
+              <div class="flot-chart">
+                <table class="table table-xs mb-0">
+                  <thead>
+                  <tr>
+                    <th>순위</th>
+                    <th>인기 상품 명</th>
+                    <th>주문 건 수</th>
+                    <th>보유 재고</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="product, iterStat : ${bestProducts}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${product.name}">상품명</td>
+                    <td th:text="${product.purchase}">주문건수</td>
+                    <td th:text="${product.inventory}">보유재고</td>
+                  </tr>
+                  </tbody>
+                  <tfoot>
+                  </tfoot>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -189,17 +198,87 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Pie Chart</h4>
-              <div id="flotPie1" class="flot-chart"></div>
+              <h4 class="card-title">최근 1달 인기 카테고리</h4>
+              <canvas id="categoryPieChart"></canvas>
+              <script th:inline="javascript">
+                /*<![CDATA[*/
+                let ctx2 = document.getElementById('categoryPieChart').getContext('2d');
+                let categoryPieChart = new Chart(ctx2, {
+                  type: 'pie',
+                  data: {
+                    labels: /*[[${categoryNames}]]*/[],
+                    datasets: [{
+                      data: /*[[${categoryCounts}]]*/[],
+                      backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                      ],
+                      borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                      ],
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    maintainAspectRatio: true,
+                  }
+                });
+                /*]]>*/
+              </script>
             </div>
           </div>
         </div>
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Pie Chart</h4>
-              <div id="flotPie2" class="flot-chart"></div>
+              <h4 class="card-title">최근 1달 비인기 카테고리</h4>
+              <canvas id="categoryPieChart2"></canvas>
+              <script th:inline="javascript">
+                /*<![CDATA[*/
+                let ctx3 = document.getElementById('categoryPieChart2').getContext('2d');
+                let categoryPieChart2 = new Chart(ctx3, {
+                  type: 'pie',
+                  data: {
+                    labels: /*[[${worstCategoryNames}]]*/[],
+                    datasets: [{
+                      data: /*[[${worstCategoryCounts}]]*/[],
+                      backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                      ],
+                      borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                      ],
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    maintainAspectRatio: true,
+                  }
+                });
+                /*]]>*/
+              </script>
             </div>
+
+          </div>
           </div>
         </div>
       </div>

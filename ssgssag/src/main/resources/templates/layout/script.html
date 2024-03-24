@@ -55,5 +55,16 @@
   <script th:src="@{/plugins/flot/js/jquery.flot.spline.js}"></script>
   <script th:src="@{/plugins/flot/js/jquery.flot.init.js}"></script>
 
+  <script>
+    const originalTitle = document.title; // 원래 타이틀 저장
+
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = "🥲돌아와요...!";
+      } else {
+        document.title = originalTitle;
+      }
+    });
+  </script>
 </th:block>
 </html>

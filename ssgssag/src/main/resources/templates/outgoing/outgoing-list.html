@@ -53,16 +53,13 @@
         <h1>출고 조회</h1>
       </div>
       <div class="col-lg-12 mb-4 text-right">
-        <div class="general-button">
-          <button type="button" class="btn btn-dark mb-1 btn-primary">조회</button>
-        </div>
+
       </div>
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">출고 조회</h4>
-  
-  
+
             <div class="table-responsive">
               <table class="table table-hover">
                 <thead>
@@ -71,56 +68,24 @@
                   <th>상태</th>
                   <th>출고일</th>
                   <th>수량</th>
+                  <th>주문상세번호</th>
+                  <th>주문번호</th>
                   <th>상품코드</th>
                   <th>창고코드</th>
                   <th>구역코드</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>PROGRESS</td>
-                  <td>2024-03-15</td>
-                  <td>100</td>
-                  <td>001-002-001</td>
-                  <td>WH001</td>
-                  <td>ZONE01</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>COMPLETE</td>
-                  <td>2024-03-14</td>
-                  <td>200</td>
-                  <td>002-003-001</td>
-                  <td>WH002</td>
-                  <td>ZONE02</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>WAIT</td>
-                  <td>2024-03-16</td>
-                  <td>150</td>
-                  <td>003-001-001</td>
-                  <td>WH003</td>
-                  <td>ZONE03</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>PROGRESS</td>
-                  <td>2024-03-15</td>
-                  <td>50</td>
-                  <td>001-002-003</td>
-                  <td>WH004</td>
-                  <td>ZONE04</td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>WAIT</td>
-                  <td>2024-03-13</td>
-                  <td>75</td>
-                  <td>001-002-001</td>
-                  <td>WH005</td>
-                  <td>ZONE05</td>
+                <tr th:each="outgoing, iterStat : ${outgoingList}">
+                  <td th:text="${outgoing.pkOutgoingId}"></td>
+                  <td th:text="${outgoing.vOutgoingStatus}"></td>
+                  <td th:text="${#temporals.format(outgoing.dtOutgoingDate, 'yyyy/MM/dd')}"></td>
+                  <td th:text="${outgoing.nOutgoingCnt}"></td>
+                  <td th:text="${outgoing.pkShopPurchaseDetailSeq}"></td>
+                  <td th:text="${outgoing.pkShopPurchaseSeq}"></td>
+                  <td th:text="${outgoing.vProductCd}"></td>
+                  <td th:text="${outgoing.vZoneCd}"></td>
+                  <td th:text="${outgoing.vWarehouseCd}"></td>
                 </tr>
                 </tbody>
               </table>
