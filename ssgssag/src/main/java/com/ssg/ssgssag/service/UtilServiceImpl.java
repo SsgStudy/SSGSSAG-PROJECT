@@ -25,52 +25,66 @@ public class UtilServiceImpl implements UtilService {
     private JavaMailSender javaMailSender;
 
 
-    // 선언
-
     @Override
     public void sendShortageNotificationEmails() {
 
         // 1. 재고 부족 상품 목록 조회
         List<InventoryShortageDTO> shortageProducts = utilMapper.findShortageInventory();
 
-        log.info("Shortage Products: {}", shortageProducts);
-
         // 2. 메일 보낼 대상의 이메일 주소 조회
         List<String> recipientEmails = utilMapper.selectMemberEmail();
 
         // 3. 재고 부족 상품 목록을 이메일로 발송
-        String subject = "재고 부족 알림";
+        String subject = "[SSGSSAG] 재고 부족 알림";
         StringBuilder contentBuilder = new StringBuilder();
 
-        for (InventoryShortageDTO product : shortageProducts) {
+        // HTML 테이블 시작 태그
+        contentBuilder.append("<table border='0'>");
+        // 테이블 헤더 추가
+        contentBuilder.append("<tr><th>번호</th><th>상품명</th><th>상품 코드</th><th>재고 수량</th><th>창고 코드</th></tr>");
 
+        int number = 1;
+
+        for (InventoryShortageDTO product : shortageProducts) {
             String productName = product.getVProductNm();
+            String productCode = product.getVProductCd();
             int inventoryCount = product.getTotalInventoryCount();
             String warehouseCode = product.getVWarehouseCd();
 
-            String content = "상품명: " + productName + ", 재고 수량: " + inventoryCount + ", 창고 코드: " + warehouseCode;
-            contentBuilder.append(content).append("\n");
+            // 테이블의 각 행 추가
+            contentBuilder.append("<tr>");
+            contentBuilder.append("<td>").append(number).append("</td>");
+            contentBuilder.append("<td>").append(productName).append("</td>");
+            contentBuilder.append("<td>").append(productCode).append("</td>");
+            contentBuilder.append("<td>").append(inventoryCount).append("</td>");
+            contentBuilder.append("<td>").append(warehouseCode).append("</td>");
+            contentBuilder.append("</tr>");
+
+            number++;
         }
 
-        // 모든 수신자에게 한 번만 이메일 전송
+// HTML 테이블 종료 태그
+        contentBuilder.append("</table>");
+
         String content = contentBuilder.toString();
         for (String recipientEmail : recipientEmails) {
             try {
-                sendEmail(recipientEmail, subject, content);
+                if (!shortageProducts.isEmpty()){
+                    sendEmail(recipientEmail, subject, content);
+                }
             } catch (MessagingException e) {
-                e.printStackTrace(); // 이메일 전송에 실패한 경우 예외 처리
+                e.printStackTrace();
             }
         }
 
     }
 
-    // 박아 놓기
     private void sendEmail(String recipientEmail, String subject, String content) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(recipientEmail);
         helper.setSubject(subject);
-        helper.setText(content, true); // HTML 형식의 내용을 허용
+        helper.setText(content, true);
 
         javaMailSender.send(message); // 이메일 전송
     }
