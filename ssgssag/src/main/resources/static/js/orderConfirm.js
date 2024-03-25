@@ -22,10 +22,18 @@ function orderConfirm() {
     $('.order-master-tbody input[type="checkbox"]:checked').each(function() {
         let index = this.id.match(/\d+$/)[0];
 
-        if ($(`#order-td-order-status-${index}`) !== '확정') {
+        if ($(`#order-td-order-status-${index}`).text() !== '확정') {
             orderSeq.push(+$(`#order-td-order-seq-${index}`).text());
+            console.log(+$(`#order-td-order-seq-${index}`).text());
         }
     });
+
+
+
+    if (orderSeq.length < 1) {
+        toastr.info("확정할 발주 건을 선택해주세요.");
+        return;
+    }
 
     let dataToSend = {
         orderSeq: orderSeq
@@ -37,7 +45,8 @@ function orderConfirm() {
         contentType: 'application/json',
         data: JSON.stringify(dataToSend),
         success: function(response) {
-            toastr.attr('class', 'toast-top-right').success('발주 확정 성공!');
+            toastr.success('발주 확정 성공');
+            getMasterOrderList();
         },
         error: function(error) {
             toastr.error('발주 확정 실패');
@@ -169,7 +178,7 @@ function getMasterOrderList() {
             $.each(resp, function (index, resp) {
                 let currentIndex = index + 1;
                 tableBody.append(
-                    `<tr onclick="getOrderSingleList(${resp.pkOrderSeq})">
+                    `<tr ondblclick="getOrderSingleList(${resp.pkOrderSeq})">
                         <th>${currentIndex}</th>
                         <td><input type="checkbox" id="order-master-td-checked-${currentIndex}" /></td>
                         <td id="order-master-td-created-date-${currentIndex}">${resp.dtOrderCreatedDate}</td>
@@ -189,6 +198,7 @@ function getMasterOrderList() {
 }
 
 // 발주 상세
+
 
 function getOrderSingleList(orderSeq) {
 
