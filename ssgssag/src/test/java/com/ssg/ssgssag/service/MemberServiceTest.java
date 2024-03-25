@@ -21,15 +21,14 @@ public class MemberServiceTest {
     private MemberService memberService;
     @Test
     public void testRegisterMember() {
-        MemberVO memberVO= MemberVO.builder()
+        MemberDTO memberDTO= MemberDTO.builder()
             .vMemberId("sowon")
             .vMemberPw("990901ok")
             .vMemberNm("최소원")
             .vEmail("sowon901@naver.com")
-            .vMemberAuth("일반회원")
             .build();
 
-        memberService.registerMember(memberVO);
+        memberService.registerMember(memberDTO);
     }
 
     @Test
@@ -103,6 +102,42 @@ public class MemberServiceTest {
     @Test
     public void testGet() {
         log.info(memberService.getOneMemberInModal("admin001"));
+    }
+
+
+    @Test
+    public void testId() {
+
+        if(memberService.checkIdInfo("admin001")) {
+            log.info("회원존재");
+        }
+        else
+            log.info("회원 존재하지 않음");
+
+        log.info("조민수 id 정보" + memberService.checkIdInfo("admin001"));
+
+    }
+
+    @Test
+    public void loginTest() {
+
+        MemberDTO memberDTO = MemberDTO.builder()
+                .vMemberId("test0325")
+                    .vMemberPw("12345")
+                     .build();
+
+        memberService.login(memberDTO);
+        log.info(memberService.login(memberDTO));
+    }
+
+    @Test
+    public void testFindOneMember() {
+        MemberDTO memberDTO= MemberDTO.builder()
+            .vMemberId("test0325")
+            .vMemberPw("12345")
+            .build();
+
+        memberService.getMemberByMemberId(memberDTO.getvMemberId());
     }
 
 }
