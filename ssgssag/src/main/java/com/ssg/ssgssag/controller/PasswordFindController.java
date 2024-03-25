@@ -1,6 +1,7 @@
 package com.ssg.ssgssag.controller;
 
 import com.ssg.ssgssag.service.PasswordFindService;
+import com.ssg.ssgssag.service.UtilService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class PasswordFindController {
 
     private final PasswordFindService passwordFindService;
+    private final UtilService utilService;
 
 
     @GetMapping("/find-password")
@@ -29,7 +31,8 @@ public class PasswordFindController {
     @Operation(summary = "메일 반환", description = "입력한 아이디에 따른 메일 반환")
     public ResponseEntity<String> getEmailById(@RequestParam String id) {
         String email = passwordFindService.selectEmailById(id);
-        log.info(email);
+        utilService.sendResetPasswordLink(email);
+        log.info("일단 전송 성공");
         return ResponseEntity.ok(email);
     }
 
@@ -38,5 +41,12 @@ public class PasswordFindController {
     public String showResetPasswordPage() {
         return "passwordfind/reset-password";
     }
+
+    @GetMapping("/issue-password")
+    @Operation(summary = "임시 비밀번호 발금 페이지 호출", description = "임시 비밀번호 발급 링크 클릭시 완료")
+    public String showIssuePasswordPage() {
+        return "passwordfind/issue-password";
+    }
+
 
 }
