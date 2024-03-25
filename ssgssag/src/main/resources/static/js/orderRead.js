@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 
 // 전역 변수
-var orderSearchForm = {
+let orderSearchForm = {
     "vIncomingProductSupplierNm": null,
     "vWarehouseCd": null,
     "vOrderStatus": null,
