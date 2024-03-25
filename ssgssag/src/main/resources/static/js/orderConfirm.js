@@ -1,9 +1,12 @@
 $(document).ready(function() {
     getNowDate();
+
 });
 
+
+
 // 전역 변수
-var orderSearchForm = {
+let orderSearchForm = {
     "vIncomingProductSupplierNm": null,
     "vWarehouseCd": null,
     "vOrderStatus": null,
@@ -34,10 +37,10 @@ function orderConfirm() {
         contentType: 'application/json',
         data: JSON.stringify(dataToSend),
         success: function(response) {
-            console.log('Success:', response);
+            toastr.attr('class', 'toast-top-right').success('발주 확정 성공!');
         },
         error: function(error) {
-            console.log('Error:', error);
+            toastr.error('발주 확정 실패');
         }
     });
 }
@@ -71,7 +74,6 @@ function orderReadPageReset() {
 
 // 입력폼
 $(".input-supplier").click(function() {
-    console.log("실행?")
     $.ajax({
         url: '/incoming/supplier',
         type: 'GET',
@@ -165,7 +167,7 @@ function getMasterOrderList() {
             tableBody.empty();
 
             $.each(resp, function (index, resp) {
-                var currentIndex = index + 1;
+                let currentIndex = index + 1;
                 tableBody.append(
                     `<tr onclick="getOrderSingleList(${resp.pkOrderSeq})">
                         <th>${currentIndex}</th>
@@ -215,20 +217,20 @@ function getOrderSingleList(orderSeq) {
 
 // 기타
 function convertDateFormat(dateStr) {
-    var parts = dateStr.split('/');
+    let parts = dateStr.split('/');
     return parts[2] + '-' + parts[0] + '-' + parts[1];
 }
 
 function getNowDate() {
     let now = new Date(); // 현재 날짜 및 시간
-    let startDate = formatDate(new Date(now.getFullYear(), now.getMonth(), 1));
-    let endDate = formatDate(new Date(now.getFullYear(), now.getMonth() + 1, 0));
+    let startDate = formatDate(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7));
+    let endDate = formatDate(new Date(now.getFullYear(), now.getMonth(), now.getDate()));
 
     $('#order-period').val(startDate + ' - ' + endDate);
 }
 
 function formatDate(date) {
-    var d = new Date(date),
+    let d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
         year = d.getFullYear();
