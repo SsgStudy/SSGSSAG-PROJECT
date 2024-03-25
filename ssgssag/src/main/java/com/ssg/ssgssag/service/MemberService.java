@@ -3,10 +3,12 @@ package com.ssg.ssgssag.service;
 import com.ssg.ssgssag.domain.MemberVO;
 import com.ssg.ssgssag.dto.MemberDTO;
 import java.util.List;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public interface MemberService {
 
-    void registerMember(MemberVO memberVO);
+    void registerMember(MemberDTO member);
 
     List<MemberDTO> getAllMembers();
 
@@ -17,5 +19,14 @@ public interface MemberService {
     MemberVO getOneMemberInModal(String getMemberId);
 
     void modifyMembers(MemberDTO dto);
+
+    //중복 아이디
+    boolean checkIdInfo(String vMemberId);
+
+    UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException;
+
+    MemberVO getMemberByMemberId(String memberId);
+
+    MemberVO login(MemberDTO memberDTO);
 
 }

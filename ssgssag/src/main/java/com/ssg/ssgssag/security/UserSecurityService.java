@@ -1,0 +1,44 @@
+package com.ssg.ssgssag.security;
+
+import com.ssg.ssgssag.domain.MemberVO;
+import com.ssg.ssgssag.mapper.MemberMapper;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@RequiredArgsConstructor
+@Service
+@Log4j2
+public class UserSecurityService implements UserDetailsService {
+
+	private final MemberMapper memberMapper;
+
+	@Override
+	public UserDetails loadUserByUsername(String vMemberNm) throws UsernameNotFoundException {
+		MemberVO member = memberMapper.getOneMemberInfo(vMemberNm);
+		log.info("security test {} {}", vMemberNm, member);
+
+		if (member.getvMemberId() == null) {
+			throw new UsernameNotFoundException("사용자를 찾을수 없습니다.");
+		}
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		String memberAuth = member.getvMemberAuth();
+		if ("ADMIN".equals(memberAuth)) {
+			authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getValue()));
+		} else if ("WAREHOUSE_MANAGER".equals(memberAuth)) {
+			authorities.add(new SimpleGrantedAuthority(MemberRole.WAREHOUSE_MANAGER.getValue()));
+		} else {
+			authorities.add(new SimpleGrantedAuthority(MemberRole.OPERATOR.getValue()));
+		}
+		return new User(member.getvMemberNm(), member.getvMemberPw(), authorities);
+	}
+}

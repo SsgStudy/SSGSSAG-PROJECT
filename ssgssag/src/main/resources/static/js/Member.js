@@ -14,39 +14,40 @@ $(document).ready(function() {
   });
 
 
-  // 아이디 중복 확인 버튼 클릭 시 alert 창 생성
-  $("#alertButton").click(function () {
-    alert("중복된 아이디입니다.\n다른 아이디를 입력해주세요");
+  $("#checkButton").click(function() {
+    console.log("체크버튼 눌림");
+    checkId();
   });
 
-
-
+  //회원가입 중복
+  // $("checkButton").click(function() {
+  //
+  //   let memberId = $('#vMemberId').val();
+  //
+  //   $.ajax({
+  //     url: '/member/check/id',
+  //     type: 'GET',
+  //     data: {
+  //         vMemberId : memberId
+  //     },
+  //     contentType: 'application/json',
+  //     success: function (response) {
+  //       // 성공 시 처리 로직 작성
+  //       if(response === true) {
+  //         alert('이미 사용중인 아이디입니다.\n 다른 아이디를 입력하세요');
+  //       } else {
+  //         alert('사용 가능한 아이디입니다.');
+  //       }
+  //     },
+  //     error: function (xhr, status, error) {
+  //       console.error('Error:', error);
+  //     }
+  //   })
+  // })
+  //
 
 
   // 회원 가입 폼 제출 시 Ajax 요청 보내기
-  $("#signup-form").submit(function (e) {
-    e.preventDefault();
-
-    let formData = $(this).serialize(); // 폼 데이터 직렬화
-
-
-    $.ajax({
-      url: '/member/signup',
-      type: 'POST',
-      data: formData,
-      success: function (response) {
-        // 성공 시 처리 로직 작성
-        console.log(response);
-        window.location.href='/member/member-list'
-        alert('회원가입이 완료되었습니다.');
-      },
-      error: function (xhr, status, error) {
-        // 에러 처리 로직 작성
-        console.error('Error:', error);
-        alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
-      }
-    });
-  });
 
 
 
@@ -74,7 +75,7 @@ $(document).ready(function() {
     }
 
     $.ajax({
-      url: '/member/modify-member-info',
+      url: '/admin/modify-member-info',
       type: 'POST',
       data: {
         memberId: memberId,
@@ -85,7 +86,7 @@ $(document).ready(function() {
       },
       success: function (response) {
         // 성공 시 처리 로직 작성
-        window.location.href='/member/member-list'
+        window.location.href='/admin/member-list'
         alert('수정 완료');
       },
       error: function (xhr, status, error) {
@@ -96,14 +97,6 @@ $(document).ready(function() {
       }
     });
   });
-
-
-
-
-
-
-
-
 });
 
 
@@ -118,6 +111,8 @@ let member = {
   vSocialLoginToken:null,
 }
 
+
+//option 선택 시 입력값 변환
 function changeMemberAuth() {
   let role = $('#role').val();
   let memberAuth;
@@ -137,8 +132,36 @@ function changeMemberAuth() {
 }
 
 
+//회원 중복 불러오기
+function checkId() {
+  let memberId = $('#vMemberId').val();
+  console.log("vMemberId" , memberId);
 
-//
+  $.ajax({
+    url: '/member/check/id',
+    type: 'GET',
+    data: {
+      vMemberId : memberId
+    },
+    contentType: 'application/json',
+    success: function (response) {
+      // 성공 시 처리 로직 작성
+      if(response === true) {
+        alert('이미 사용중인 아이디입니다.\n 다른 아이디를 입력하세요');
+      } else {
+        alert('사용 가능한 아이디입니다.');
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error('Error:', error);
+    }
+  })
+}
+
+
+
+
+//총관리자가 회원 조회 시 이름, 이메일, 아이디, 권한별 회원 조회
 function filterMembers() {
 
   member.vMemberNm = $('#name').val() === '' ? null : $('#name').val();
@@ -149,7 +172,7 @@ function filterMembers() {
 
   // AJAX 요청
   $.ajax({
-    url: '/member/namefilter',
+    url: '/admin/namefilter',
     type: 'POST',
     data: JSON.stringify(member),
     contentType: 'application/json',
@@ -192,13 +215,16 @@ function filterMembers() {
   });
 }
 
+
+
+//총관리자 회원 조회 시 개인정보 수정 모달 창
 function modalButton(memberId) {
   console.log("current ", memberId);
 
   $("#editModal").modal('show');
 
   $.ajax({
-    url: `/member/get-one-member?memberId=${memberId}`,
+    url: `/admin/get-one-member?memberId=${memberId}`,
     type: 'GET',
     contentType: 'application/json',
     success: function (getone) {
@@ -235,6 +261,42 @@ function modalButton(memberId) {
     },
     error: function (xhr, status, error) {
       console.error('AJAX 요청 에러:', error);
+    }
+  });
+}
+
+function signupRequest() {
+  let member = {
+    "vMemberNm" : $('#vMemberNm').val(),
+    "vMemberId" : $('#vMemberId').val(),
+    "vMemberPw" : $('#vMemberPw').val(),
+    "vEmail": $('#vEmail').val()
+  }
+
+  // let member = {
+  //   "vMemberNm" : "최소원",
+  //   "vMemberId" : "test0325",
+  //   "vMemberPw" : "0325",
+  //   "vEmail": "test0325@naver.com"
+  // }
+
+  console.log(member);
+
+  $.ajax({
+    // url: '/member/signup',
+    url: '/member/signup',
+    type: 'POST',
+    contentType:'application/json',
+    data: JSON.stringify(member),
+    success: function (response) {
+      // 성공 시 처리 로직 작성
+      window.location.href='/'
+      alert('회원가입이 완료되었습니다.');
+    },
+    error: function (xhr, status, error) {
+      // 에러 처리 로직 작성
+      console.error('Error:', error);
+      alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
     }
   });
 }
