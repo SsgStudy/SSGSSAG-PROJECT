@@ -22,9 +22,8 @@
         <div class="form-input-content">
           <div class="card login-form mb-0">
             <div class="card-body pt-5">
-              <a class="text-center" href="index.html"> <h4>로그인</h4></a>
+              <a class="text-center"> <h4>로그인</h4></a>
               <form th:action="@{/member/login}" method="post" class="mt-5 mb-5 login-input">
-<!--                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
                 <div class="form-group">
                   <input type="text" class="form-control" name="username" id="username" placeholder="아이디">
                 </div>
