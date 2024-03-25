@@ -90,12 +90,17 @@ public class WareHouseController {
 
   }
 
+
   @PostMapping("/add")
   @Operation(summary = "창고 등록", description = "창고를 등록합니다.")
-  public String addWarehouse(@ModelAttribute WareHouseDTO wareHouseDTO) {
+  public String addWarehouse(@ModelAttribute WareHouseDTO wareHouseDTO,
+      @RequestParam("sWarehouseTypeSelect") String sWarehouseTypeSelect,
+      @RequestParam(value = "sWarehouseTypeInput", required = false) String sWarehouseTypeInput) {
     log.info("창고등록 시작");
+
     wareHouseService.addWarehouse(wareHouseDTO);
-    log.info(wareHouseDTO);
+    log.info("등록된 창고 정보: {}", wareHouseDTO);
+
     return "redirect:/warehouse";
   }
 
@@ -124,11 +129,5 @@ public class WareHouseController {
     wareHouseService.addWarehouseZone(wareHouseZoneVO);
     return ResponseEntity.ok().build();
   }
-
-  @GetMapping("/location")
-  public String showMapPage(){
-    return "warehouse/warehouse-map";
-  }
-
 
 }
