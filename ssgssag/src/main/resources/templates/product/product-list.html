@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <title>상품 조회</title>
+</head>
+<body>
+<!--*******************
+    Preloader start
+********************-->
+<th:block th:replace="/layout/preloader :: preloaderFragment"></th:block>
+<!--*******************
+    Preloader end
+********************-->
+
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+  <!--**********************************
+      Nav header start
+  ***********************************-->
+  <th:block th:replace="/layout/nav :: navFragment"></th:block>
+  <!--**********************************
+      Header end ti-comment-alt
+  ***********************************-->
+
+  <!--**********************************
+      Sidebar start
+  ***********************************-->
+  <th:block th:replace="/layout/sidebar :: sidebarFragment"></th:block>
+  <!--**********************************
+      Sidebar end
+  ***********************************-->
+
+  <!--**********************************
+      Content body start
+  ***********************************-->
+  <div class="content-body">
+    <div class="row page-titles mx-0">
+      <div class="col p-md-0">
+
+      </div>
+    </div>
+    <!-- row -->
+    <div class="container-fluid mt-3">
+      <div class="col-lg-12">
+        <h1>상품조회</h1>
+      </div>
+
+      <div class="col-lg-12 mb-4 text-right">
+
+      </div>
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">상품조회</h4>
+
+            <div class="table-responsive">
+              <table class="table table-hover zero-configuration">
+                <thead>
+                <tr>
+                  <th>상품코드</th>
+                  <th>상품명</th>
+                  <th>판매가격</th>
+                  <th>브랜드</th>
+                  <th>원산지</th>
+                  <th>제조사</th>
+                  <th>판매상태</th>
+                  <th>제조일</th>
+                  <th>카테고리 코드</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product, iterStat : ${productList}">
+                  <td th:text="${product.vProductCd}"></td>
+                  <td th:text="${product.vProductNm}"></td>
+                  <td th:text="${product.nProductPrice}"></td>
+                  <td th:text="${product.vProductBrand}"></td>
+                  <td th:text="${product.vProductOrigin}"></td>
+                  <td th:text="${product.vProductManufactor}"></td>
+                  <td th:text="${product.vProductStatus}"></td>
+                  <td th:text="${product.dProductManufactorDate}"></td>
+                  <td th:text="${product.vCategoryCd}"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- /# card -->
+    </div>
+  </div>
+  <!--**********************************
+      Main wrapper end
+  ***********************************-->
+
+  <!--**********************************
+      Scripts
+  ***********************************-->
+  <!--**********************************
+      Scripts
+  ***********************************-->
+  <th:block th:replace="/layout/script :: scriptFragment"></th:block>
+</div>
+</body>
+
+</html>
