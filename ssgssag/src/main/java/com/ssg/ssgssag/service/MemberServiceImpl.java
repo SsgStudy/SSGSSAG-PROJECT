@@ -3,11 +3,23 @@ package com.ssg.ssgssag.service;
 import com.ssg.ssgssag.domain.MemberVO;
 import com.ssg.ssgssag.dto.MemberDTO;
 import com.ssg.ssgssag.mapper.MemberMapper;
+import com.ssg.ssgssag.security.DataNotFoundException;
+import com.ssg.ssgssag.security.MemberRole;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.config.Configuration.AccessLevel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -21,14 +33,39 @@ public class MemberServiceImpl implements MemberService{
     @Autowired
     private final MemberMapper memberMapper;
 
+    private final PasswordEncoder passwordEncoder;
+    private ModelMapper modelMapper = new ModelMapper();
+
+    @Bean
+    public ModelMapper modelMapper() {
+        modelMapper.getConfiguration()
+            .setFieldAccessLevel(AccessLevel.PRIVATE)
+            .setFieldMatchingEnabled(true);
+
+        return modelMapper;
+    }
 
     @Override
-    public void registerMember(MemberVO memberVO) {
+    public void registerMember(MemberDTO member) {
+        member.setvMemberPw(passwordEncoder.encode(member.getvMemberPw()));
+        MemberVO memberVO = modelMapper.map(member, MemberVO.class);
+        log.info("registerMember {}", memberVO);
+
         memberMapper.insertMembers(memberVO);
     }
+
+
+    @Override
+    public MemberVO getMemberByMemberId(String memberId) {
+        MemberVO member = memberMapper.getOneMemberInfo(memberId);
+        if (member == null) {
+            throw new DataNotFoundException("member not found");
+        }
+        return member;
+    }
+
     @Override
     public List<MemberDTO> getAllMembers() {
-
         return memberMapper.selectAllMembers();
     }
 
@@ -49,5 +86,38 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public void modifyMembers(MemberDTO dto) {
         memberMapper.modifyMemberInfo(dto);
+    }
+
+    @Override
+    public boolean checkIdInfo(String vMemberId) {
+        return memberMapper.checkId(vMemberId);
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
+
+        MemberVO memberVO = memberMapper.getOneMemberInfo(memberId);
+
+        if (memberVO == null) {
+            throw new UsernameNotFoundException("사용자를 찾을수 없습니다.");
+        }
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        if ("ADMIN".equals(memberVO.getvMemberAuth())) {
+            authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getValue()));
+        } if ("WAREHOUSE_MANAGER".equals(memberVO.getvMemberAuth())) {
+            authorities.add(new SimpleGrantedAuthority(MemberRole.WAREHOUSE_MANAGER.getValue()));
+        }
+        else {
+            authorities.add(new SimpleGrantedAuthority(MemberRole.OPERATOR.getValue()));
+        }
+        return new User(memberVO.getvMemberId(), memberVO.getvMemberPw(), authorities);
+    }
+
+    @Override
+    public MemberVO login(MemberDTO memberDTO) {
+       return memberMapper.login(memberDTO.getvMemberId(),
+            passwordEncoder.encode(memberDTO.getvMemberPw()));
+
     }
 }

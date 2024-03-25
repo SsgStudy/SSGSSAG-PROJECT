@@ -9,7 +9,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface MemberMapper {
 
-
     void insertMembers(MemberVO memberVO);
 
     List<MemberDTO> selectAllMembers();
@@ -22,4 +21,6 @@ public interface MemberMapper {
 
     MemberVO getOneMemberInfo(String memberId);
 
+    boolean checkId(String vMemberId);
+    MemberVO login(@Param("vMemberId") String memberId, @Param("vMemberPw") String memberPw);
 }

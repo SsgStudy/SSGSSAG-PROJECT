@@ -51,10 +51,15 @@ dependencies {
     implementation 'net.coobird:thumbnailator:0.4.16'
 
 
-
-//    //spring security 적용
+    //spring security 적용
 //    implementation 'org.springframework.boot:spring-boot-starter-security'
-//    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+//    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //  Temporary explicit version to fix Thymeleaf bug
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // 메일 적용
     implementation 'org.springframework.boot:spring-boot-starter-mail'
@@ -68,3 +73,5 @@ tasks.named('bootBuildImage') {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+compileJava.dependsOn('clean')

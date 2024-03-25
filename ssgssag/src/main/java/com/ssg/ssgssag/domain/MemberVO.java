@@ -18,4 +18,32 @@ public class MemberVO {
     private String vEmail;
     private Blob bProfilePic;
     private String vSocialLoginToken;
+
+    public String getvMemberId() {
+        return vMemberId;
+    }
+
+    public String getvMemberPw() {
+        return vMemberPw;
+    }
+
+    public String getvMemberNm() {
+        return vMemberNm;
+    }
+
+    public String getvMemberAuth() {
+        return vMemberAuth;
+    }
+
+    public String getvEmail() {
+        return vEmail;
+    }
+
+    public Blob getbProfilePic() {
+        return bProfilePic;
+    }
+
+    public String getvSocialLoginToken() {
+        return vSocialLoginToken;
+    }
 }
