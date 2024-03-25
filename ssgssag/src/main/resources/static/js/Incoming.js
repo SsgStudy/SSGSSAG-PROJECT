@@ -383,10 +383,6 @@ function formatDate(dateString) {
   return year + '-' + month + '-' + day;
 }
 
-function printPage() {
-  window.print();
-}
-
 function inputFormatDate(input) {
   let datePart = input.match(/\d+/g),
       year = datePart[2],
@@ -396,27 +392,4 @@ function inputFormatDate(input) {
   }
 
   return [year, month, day].join('-');
-}
-function exportTableToExcel(fileName) {
-  let table = document.querySelector('.zero-configuration');
-  let workbook = XLSX.utils.table_to_book(table, {sheet: "Sheet 1"});
-  let wbout = XLSX.write(workbook, {bookType:'xlsx', type: 'binary'});
-  let blob = new Blob([s2ab(wbout)], {type: "application/octet-stream"});
-  let url = URL.createObjectURL(blob);
-
-  let a = document.createElement("a");
-  document.body.appendChild(a);
-  a.style = "display: none";
-  a.href = url;
-  a.download = fileName + '.xlsx';
-  a.click();
-  document.body.removeChild(a);
-  window.URL.revokeObjectURL(url);
-}
-
-function s2ab(s) {
-  let buf = new ArrayBuffer(s.length);
-  let view = new Uint8Array(buf);
-  for (let i=0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-  return buf;
 }
