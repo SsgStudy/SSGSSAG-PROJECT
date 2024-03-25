@@ -1,22 +1,36 @@
 package com.ssg.ssgssag.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssg.ssgssag.dto.AnalysisAndSuggestionDTO;
 import com.ssg.ssgssag.dto.BestCategoryDTO;
 import com.ssg.ssgssag.dto.BestProductDTO;
+import com.ssg.ssgssag.dto.ChatGptResponseDto;
 import com.ssg.ssgssag.dto.DailyPurchaseCountDTO;
 import com.ssg.ssgssag.dto.IncomingDTO;
+import com.ssg.ssgssag.dto.QuestionRequestDto;
 import com.ssg.ssgssag.dto.StatusCountDTO;
+import com.ssg.ssgssag.service.ChatGptService;
 import com.ssg.ssgssag.service.DashboardService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Log4j2
 @Controller
@@ -24,7 +38,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class DashboardController {
 
+    @Autowired
     private final DashboardService dashboardService;
+    @Autowired
+    private final ChatGptService chatGptService;
+
+
+    List<BestCategoryDTO> bestCategoryDTOList = null;
+    List<BestCategoryDTO> worstCategoryDTOList = null;
+    ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping()
     @Operation(summary = "대시보드 정보 조회", description = "대시보드 내 필요 데이터를 조회합니다.")
@@ -34,8 +56,15 @@ public class DashboardController {
         List<StatusCountDTO> statusCountDTOList = dashboardService.getAllStatusCount();
         List<BestProductDTO> bestProductDTOList = dashboardService.getBestProducts();
         List<DailyPurchaseCountDTO> dailyPurchaseCountDTOList = dashboardService.getDailyPurchaseStatistics();
-        List<BestCategoryDTO> bestCategoryDTOList = dashboardService.getBestCategoryList();
-        List<BestCategoryDTO> worstCategoryDTOList = dashboardService.getWorstCategoryList();
+        bestCategoryDTOList = dashboardService.getBestCategoryList();
+        worstCategoryDTOList = dashboardService.getWorstCategoryList();
+
+        String bestCategoryJson;
+        try {
+            bestCategoryJson = objectMapper.writeValueAsString(bestCategoryDTOList);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
         log.info(worstCategoryDTOList);
 
@@ -58,6 +87,7 @@ public class DashboardController {
 
         model.addAttribute("purchaseDates", purchaseDates);
         model.addAttribute("dailyPurchases", dailyPurchases);
+        model.addAttribute("bestCategoryJson", bestCategoryJson);
 
         //인기 카테고리 파이 차트 데이터 준비
         List<String> categoryNames = bestCategoryDTOList.stream()
@@ -85,6 +115,58 @@ public class DashboardController {
         model.addAttribute("predictedPurchases", predictedPurchases);
         log.info(predictedPurchases);
         return "main/main";
+    }
+
+//    @PostMapping("/question")
+//    @ResponseBody
+//    public ChatGptResponseDto sendQuestion(@RequestBody QuestionRequestDto requestDto,
+//        Model model) {
+//        log.info("gpt 요청값 : "+requestDto.toString());
+//        ChatGptResponseDto response = chatGptService.askQuestion(requestDto);
+//        response.getChoices().forEach(choice -> {
+//            String contentJson = choice.getMessage().getContent();
+//            AnalysisAndSuggestionDTO analysisAndSuggestion = parseContentToJson(contentJson);
+//            model.addAttribute("analysis", analysisAndSuggestion.getAnalysis());
+//            model.addAttribute("suggestion", analysisAndSuggestion.getSuggestion());
+//        });
+//        log.info("gpt 호출함.");
+//        log.info(model.getAttribute("analysis"));
+//        log.info(model.getAttribute("suggestion"));
+//
+//        return response;
+//    }
+@PostMapping("/question")
+@ResponseBody
+public ResponseEntity<?> sendQuestion(@RequestBody QuestionRequestDto requestDto) {
+    log.info("GPT 요청값: " + requestDto.toString());
+    ChatGptResponseDto response = chatGptService.askQuestion(requestDto);
+
+    List<AnalysisAndSuggestionDTO> analysisAndSuggestions = response.getChoices().stream()
+        .map(choice -> parseContentToJson(choice.getMessage().getContent()))
+        .collect(Collectors.toList());
+
+    if (!analysisAndSuggestions.isEmpty()) {
+        // 여기서는 단순화를 위해 첫 번째 응답만 사용
+        AnalysisAndSuggestionDTO analysisAndSuggestion = analysisAndSuggestions.get(0);
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("analysis", analysisAndSuggestion.getAnalysis());
+        responseBody.put("suggestion", analysisAndSuggestion.getSuggestion());
+
+        return ResponseEntity.ok(responseBody);
+    } else {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No analysis and suggestion available.");
+    }
+}
+
+
+    public AnalysisAndSuggestionDTO parseContentToJson(String contentJson) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(contentJson, AnalysisAndSuggestionDTO.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return new AnalysisAndSuggestionDTO(); // 예외 발생 시 빈 객체 반환
+        }
     }
 
     private List<Double> predictPurchase(List<Integer> dailyPurchases) {
