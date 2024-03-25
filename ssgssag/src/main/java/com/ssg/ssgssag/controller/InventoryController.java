@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 @Log4j2
 @Controller
@@ -85,6 +86,9 @@ public class InventoryController {
     @ResponseBody
     public void selectedInventory(@RequestBody InventoryAdjustmentDTO dto) {
         inventoryService.updateInventoryWithHistoryCnt(dto);
+        // 비동기 처리
+        CompletableFuture.runAsync(() -> utilService.sendShortageNotificationEmails());
+
     }
 
     // 3. 재고 이동
@@ -101,7 +105,8 @@ public class InventoryController {
     @ResponseBody
     public void selectedInventoryMovement(@RequestBody InventoryMovementDTO dto) {
         inventoryService.updateInventoryWithHistoryMove(dto);
-        utilService.sendShortageNotificationEmails();
+        // 비동기 처리
+        CompletableFuture.runAsync(() -> utilService.sendShortageNotificationEmails());
     }
 
 }

@@ -35,7 +35,7 @@ public class UtilServiceImpl implements UtilService {
         List<String> recipientEmails = utilMapper.selectMemberEmail();
 
         // 3. 재고 부족 상품 목록을 이메일로 발송
-        String subject = "[SSGSSAG] 재고 부족 알림";
+        String subject = "[SSGSSAG] 재고 부족 알림입니다.";
         StringBuilder contentBuilder = new StringBuilder();
 
         // HTML 테이블 시작 태그
