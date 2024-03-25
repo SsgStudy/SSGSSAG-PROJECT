@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface UtilMapper {
     List<InventoryShortageDTO> findShortageInventory();
+
+    List<String> selectMemberEmail();
 }

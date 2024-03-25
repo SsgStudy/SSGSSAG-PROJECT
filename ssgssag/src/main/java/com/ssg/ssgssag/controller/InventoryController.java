@@ -4,6 +4,7 @@ import com.ssg.ssgssag.domain.InventoryHistoryVO;
 import com.ssg.ssgssag.domain.InventoryVO;
 import com.ssg.ssgssag.dto.*;
 import com.ssg.ssgssag.service.InventoryService;
+import com.ssg.ssgssag.service.UtilService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -20,6 +21,7 @@ import java.util.*;
 public class InventoryController {
 
     private final InventoryService inventoryService;
+    private final UtilService utilService;
 
     @GetMapping("/list")
     @Operation(summary = "재고 목록 출력", description = "재고 조회 리스트 모두 출력")
@@ -99,6 +101,7 @@ public class InventoryController {
     @ResponseBody
     public void selectedInventoryMovement(@RequestBody InventoryMovementDTO dto) {
         inventoryService.updateInventoryWithHistoryMove(dto);
+        utilService.sendShortageNotificationEmails();
     }
 
 }

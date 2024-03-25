@@ -12,4 +12,8 @@
         HAVING TOTALCNT &lt;= 10
     </select>
     
+    <select id="selectMemberEmail" resultType="java.lang.String">
+        SELECT V_EMAIL FROM TB_MEMBER
+    </select>
+    
 </mapper>

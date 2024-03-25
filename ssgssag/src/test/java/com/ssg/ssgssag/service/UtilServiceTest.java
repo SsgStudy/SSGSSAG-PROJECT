@@ -11,13 +11,20 @@ import java.util.List;
 @SpringBootTest
 @Log4j2
 public class UtilServiceTest {
-    @Autowired(required = false)
-    private UtilService utilService;
 
-
-    @Test
-    public void findShortageInventory() {
-        List<InventoryShortageDTO> inventoryShortageList = utilService.findShortageInventory();
-        inventoryShortageList.forEach(System.out::println);
-    }
+//    @Autowired(required = false)
+//    private UtilService utilService;
+//
+//
+//    @Test
+//    public void findShortageInventory() {
+//        List<InventoryShortageDTO> inventoryShortageList = utilService.findShortageInventory();
+//        inventoryShortageList.forEach(System.out::println);
+//    }
+//
+//    @Test
+//    public void selectMemberEmail() {
+//        List<String> memberEmailList = utilService.selectMemberEmail();
+//        memberEmailList.forEach(System.out::println);
+//    }
 }
