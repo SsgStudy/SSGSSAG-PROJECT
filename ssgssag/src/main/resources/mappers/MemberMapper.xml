@@ -3,14 +3,15 @@
 <mapper namespace="com.ssg.ssgssag.mapper.MemberMapper">
 
   <insert id="insertMembers" parameterType="MemberVO">
-    insert into TB_MEMBER(V_MEMBER_ID, V_MEMBER_PW, V_MEMBER_NM, V_MEMBER_AUTH, V_EMAIL) values(#{vMemberId},#{vMemberPw},#{vMemberNm},'OPERATOR',#{vEmail})
+    insert into TB_MEMBER(V_MEMBER_ID, V_MEMBER_PW, V_MEMBER_NM, V_MEMBER_AUTH, V_EMAIL)
+    values(#{vMemberId},#{vMemberPw},#{vMemberNm},'OPERATOR',#{vEmail})
   </insert>
 
   <select id="selectAllMembers" resultType="com.ssg.ssgssag.dto.MemberDTO">
     select * from TB_MEMBER;
   </select>
 
-  <select id="getOneMemberInfo" resultType="com.ssg.ssgssag.domain.MemberVO">
+  <select id="getOneMemberInfo" resultType="MemberVO">
     select * from TB_MEMBER where V_MEMBER_ID = #{vMemberId}
   </select>
 
@@ -40,5 +41,12 @@
     update TB_MEMBER set V_MEMBER_NM = #{vMemberNm}, V_MEMBER_PW = #{vMemberPw}, V_MEMBER_AUTH = #{vMemberAuth}, V_EMAIL = #{vEmail} where V_MEMBER_ID = #{vMemberId}
   </update>
 
+  <select id="checkId" resultType="boolean">
+    select count(*) from TB_MEMBER where V_MEMBER_ID = #{vMemberId}
+  </select>
+
+  <select id="login" parameterType="string" resultType="MemberVO">
+    select * from TB_MEMBER where V_MEMBER_ID = #{vMemberId} and V_MEMBER_PW = #{vMemberPw}
+  </select>
 
 </mapper>
