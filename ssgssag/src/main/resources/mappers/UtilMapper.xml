@@ -4,12 +4,12 @@
 <mapper namespace="com.ssg.ssgssag.mapper.UtilMapper">
     
     <select id="findShortageInventory" resultType="com.ssg.ssgssag.dto.InventoryShortageDTO">
-        SELECT SUM(N_INVENTORY_CNT) AS TOTALCNT, V_WAREHOUSE_CD, P.V_PRODUCT_CD, V_PRODUCT_NM
+        SELECT SUM(N_INVENTORY_CNT) AS totalInventoryCount, V_WAREHOUSE_CD, P.V_PRODUCT_CD, V_PRODUCT_NM
         FROM TB_INVENTORY I
         LEFT JOIN TB_PRODUCT P
         ON I.V_PRODUCT_CD = P.V_PRODUCT_CD
         GROUP BY V_WAREHOUSE_CD, V_PRODUCT_CD
-        HAVING TOTALCNT &lt;= 10
+        HAVING totalInventoryCount &lt;= 10
     </select>
     
     <select id="selectMemberEmail" resultType="java.lang.String">
