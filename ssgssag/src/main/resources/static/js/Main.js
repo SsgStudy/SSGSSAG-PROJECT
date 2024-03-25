@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
   const slider = document.querySelector('.scrollable-row-wrapper');
+  const flipButton = document.querySelector('#flip-card .btn-dark');
+  const backToCategoryChartButton = document.getElementById('back-to-best-category-chart');
+  const cardInner = document.querySelector('#flip-card-inner');
+
   let isDown = false;
   let startX;
   let scrollLeft;
@@ -30,6 +34,11 @@ document.addEventListener('DOMContentLoaded', function () {
     slider.scrollLeft = scrollLeft - walk;
   });
 
-
+  flipButton.addEventListener('click', function() {
+    cardInner.classList.toggle('flip'); // 'flip' 클래스 토글로 뒤집기 효과 적용
+  });
+  backToCategoryChartButton.addEventListener('click', function() {
+    cardInner.classList.toggle('flip');
+  });
 });
 
