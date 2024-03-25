@@ -23,9 +23,9 @@ public class UserSecurityService implements UserDetailsService {
 	private final MemberMapper memberMapper;
 
 	@Override
-	public UserDetails loadUserByUsername(String vMemberNm) throws UsernameNotFoundException {
-		MemberVO member = memberMapper.getOneMemberInfo(vMemberNm);
-		log.info("security test {} {}", vMemberNm, member);
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		MemberVO member = memberMapper.getOneMemberInfo(username);
+		log.info("security test {} {}", username, member);
 
 		if (member.getvMemberId() == null) {
 			throw new UsernameNotFoundException("사용자를 찾을수 없습니다.");
@@ -39,6 +39,6 @@ public class UserSecurityService implements UserDetailsService {
 		} else {
 			authorities.add(new SimpleGrantedAuthority(MemberRole.OPERATOR.getValue()));
 		}
-		return new User(member.getvMemberNm(), member.getvMemberPw(), authorities);
+		return new User(member.getvMemberId(), member.getvMemberPw(), authorities);
 	}
 }
