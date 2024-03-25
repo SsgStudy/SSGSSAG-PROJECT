@@ -83,7 +83,7 @@ public class AdminController {
 		log.info("회원 아이디 : "+dto.getvMemberId());
 
 
-		memberService.modifyMembers(dto);
+//		memberService.modifyMembers(dto);
 
 		return "redirect:/admin/member-list";
 	}

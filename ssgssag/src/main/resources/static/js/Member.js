@@ -300,3 +300,31 @@ function signupRequest() {
     }
   });
 }
+
+function modifyMemberInfo() {
+    let memberId = $('#vMemberId').val();
+    let pwd = $('input[name="pwd"]').val();
+    let pwdCheck = $('input[name="pwdCheck"]').val();
+    let memberEmail = $('input[name="email"]').val();
+
+    $.ajax({
+      url: '/member/info',
+      type: 'PATCH',
+      data: {
+        memberId: memberId,
+        memberPw: pwd,
+        memberEmail: memberEmail,
+      },
+      success: function (response) {
+        // 성공 시 처리 로직 작성
+        window.location.href='/'
+        alert('수정 완료');
+      },
+      error: function (xhr, status, error) {
+        // 에러 처리 로직 작성
+        console.log(memberAuth)
+        console.error('Error:', error);
+        alert('수정에 실패하였습니다. 다시 시도해주세요.');
+      }
+    });
+}
