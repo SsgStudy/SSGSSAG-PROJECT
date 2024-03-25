@@ -9,6 +9,7 @@ import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -63,14 +64,25 @@ public class OrderController {
 
     @PostMapping("/register/detail")
     @ResponseBody
-    public ResponseEntity<OrderProductDTO> createOrderDetailForm(@RequestBody OrderProductDTO order) {
+    public ResponseEntity<?> createOrderDetailForm(@RequestBody OrderProductDTO order) {
+        log.info("orderRegister {}", order);
         OrderProductDTO createdOrderProduct = orderService.createOrderDetail(order);
+
+        String result = createdOrderProduct.getResult();
+        if (result.equals("INVALID")) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("유효하지 않은 상품입니다.");
+        } else if (result.equals("UNLISTED")) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                    .body("해당 회사에서 제공하지 않는 상품입니다.");
+        }
         return ResponseEntity.ok(createdOrderProduct);
     }
+
 
     @PostMapping("/register")
     @ResponseBody
     public String registerOrderAndOrderDetail(@RequestBody OrderRequestDTO orderRequest) {
+        log.info("orderDTO {}", orderRequest.getOrder());
         orderService.registerOrder(orderRequest.getOrder(), orderRequest.getOrderDetails());
         return "ok";
 //        return "order/orderRegister";
@@ -96,5 +108,13 @@ public class OrderController {
         orderService.updateOrderStatusConfirmed(param.get("orderSeq"));
 
         return "ok";
+    }
+
+    @ResponseStatus(HttpStatus.SEE_OTHER)
+    @DeleteMapping("/register/{orderSeq}")
+    public String deleteOrder(@PathVariable Long orderSeq) {
+        orderService.deleteOrder(orderSeq);
+
+        return "redirect:/order/register";
     }
 }

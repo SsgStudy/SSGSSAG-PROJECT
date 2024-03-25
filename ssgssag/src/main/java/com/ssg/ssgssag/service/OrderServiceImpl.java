@@ -39,12 +39,18 @@ public class OrderServiceImpl implements OrderService {
         Map<String, Object> map = new HashMap<>();
         map.put("productCd", orderProduct.getvProductCd());
         map.put("warehouseCd", orderProduct.getvWarehouseCd());
+        map.put("productManufactor", orderProduct.getvIncomingProductSupplierNm());
 
-        String manufactor = orderMapper.selectProductSupplier(orderProduct.getvProductCd());
-        if (!manufactor.equals(orderProduct.getvIncomingProductSupplierNm())) return null;
-        OrderProductVO orderProductVO = orderMapper.selectProductInventory(map);
+        String result = orderMapper.selectProductSupplier(orderProduct);
 
-        return modelMapper.map(orderProductVO, OrderProductDTO.class);
+        if (result.equals("VALID")) {
+            OrderProductVO orderProductVO = orderMapper.selectProductInventory(map);
+            OrderProductDTO orderProductDTO = modelMapper.map(orderProductVO, OrderProductDTO.class);
+            orderProductDTO.setResult(result);
+            return orderProductDTO;
+        }
+        else
+            return OrderProductDTO.builder().result(result).build();
     }
 
     @Override
@@ -76,9 +82,10 @@ public class OrderServiceImpl implements OrderService {
     public int updateOrderStatusConfirmed(List<Long> orderSeqList) {
         return orderMapper.updateOrderStatusByOrderSeq(orderSeqList);
     }
-//
-//    @Override
-//    public List<OrderDetailDTO> getOrderDetailList(OrderDetailDTO orderDetail) {
-//        return null;
-//    }
+
+    @Override
+    public int deleteOrder(Long orderSeq) {
+        return orderMapper.deleteOneOrderByOrderSeq(orderSeq);
+    }
+
 }

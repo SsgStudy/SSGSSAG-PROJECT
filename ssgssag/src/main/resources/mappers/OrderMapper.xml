@@ -8,8 +8,17 @@
         select max(pk_order_seq) from TB_ORDER;
     </select>
 
-    <select id="selectProductSupplier" parameterType="string" resultType="string">
-        SELECT V_PRODUCT_MANUFACTOR FROM TB_PRODUCT WHERE V_PRODUCT_CD = #{productCd}
+    <select id="selectProductSupplier" parameterType="com.ssg.ssgssag.dto.OrderProductDTO" resultType="string">
+        SELECT CASE
+                   WHEN NOT EXISTS (SELECT 1 FROM TB_PRODUCT WHERE V_PRODUCT_CD = #{vProductCd}) THEN 'INVALID'
+                   WHEN EXISTS (
+                       SELECT 1
+                       FROM TB_PRODUCT
+                       WHERE V_PRODUCT_CD = #{vProductCd} AND V_PRODUCT_MANUFACTOR = #{vIncomingProductSupplierNm}
+                   ) THEN 'VALID'
+                   ELSE 'UNLISTED'
+                   END AS result;
+
     </select>
 
     <select id="selectProductInventory" parameterType="hashmap" resultType="OrderProductVO">
@@ -28,17 +37,21 @@
     </select>
 
     <insert id="insertOrder" parameterType="OrderVO">
-        INSERT INTO TB_ORDER (V_ORDER_STATUS, V_INCOMING_PRODUCT_SUPPLIER_NM, V_ORDER_TYPE, DT_DELIVERY_DATE, DT_ORDER_CREATED_DATE)
-        VALUES (#{vOrderStatus}, #{vIncomingProductSupplierNm}, #{vOrderType},#{dtDeliveryDate}, #{dtOrderCreatedDate});
+        INSERT INTO TB_ORDER (PK_ORDER_SEQ, V_ORDER_STATUS, V_INCOMING_PRODUCT_SUPPLIER_NM, V_ORDER_TYPE, DT_DELIVERY_DATE, DT_ORDER_CREATED_DATE)
+        VALUES (#{pkOrderSeq}, #{vOrderStatus}, #{vIncomingProductSupplierNm}, #{vOrderType},#{dtDeliveryDate}, #{dtOrderCreatedDate});
     </insert>
 
     <insert id="insertOrderDetail" parameterType="java.util.List">
-        INSERT INTO TB_ORDER_DETAIL (PK_ORDER_SEQ, N_ORDER_CNT, V_ORDER_STATUS, V_PRODUCT_CD, V_WAREHOUSE_CD)
+        INSERT INTO TB_ORDER_DETAIL (PK_ORDER_SEQ, N_ORDER_CNT, V_PRODUCT_CD, V_WAREHOUSE_CD)
         VALUES
         <foreach collection="list" item="detail" separator=",">
-            (#{detail.pkOrderSeq}, #{detail.nOrderCnt}, #{detail.vOrderStatus}, #{detail.vProductCd}, #{detail.vWarehouseCd})
+            (#{detail.pkOrderSeq}, #{detail.nOrderCnt}, #{detail.vProductCd}, #{detail.vWarehouseCd})
         </foreach>
     </insert>
+
+    <delete id="deleteOneOrderByOrderSeq" parameterType="long">
+        DELETE FROM TB_ORDER WHERE PK_ORDER_SEQ = #{orderSeq};
+    </delete>
 
 <!--  발주 조회  -->
     <select id="selectOrderDetailByDateOrString" parameterType="com.ssg.ssgssag.dto.OrderReadSearchDTO" resultType="com.ssg.ssgssag.dto.OrderProductDTO">
@@ -77,6 +90,7 @@
         ORDER BY od.PK_ORDER_DETAIL_SEQ
     </select>
 
+<!--  발주 확정  -->
     <update id="updateOrderStatusByOrderSeq" parameterType="java.util.List">
         UPDATE TB_ORDER
         SET V_ORDER_STATUS = '확정', DT_ORDER_COMPLETION_DATE = NOW()

@@ -17,6 +17,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class OrderProductDTO {  // 발주 등록 DTO
 
+    // 상태
+    private String result;
+
     // 발주
     private LocalDateTime dtDeliveryDate;
     private Long pkOrderSeq;

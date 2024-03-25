@@ -1,8 +1,15 @@
+$(document).ready(function() {
+    allDeactivateForm();
+    $('.alert').hide();
+
+    console.log("container", orderRegisterContainer);
+});
+
 // 전역 변수
 var orderSearch = {
-    "vIncomingProductSupplierNm": "Samsung Electronics",
-    "vWarehouseCd": "KR-SEO-02",
-    "vProductCd": "880-5678-0523"
+    "vIncomingProductSupplierNm": null,
+    "vWarehouseCd": null,
+    "vProductCd": null
 };
 
 var order = {
@@ -14,19 +21,25 @@ var order = {
     "dtDeliveryDate": "2024-03-21T10:00:00",
 };
 
-var orderDetails= []
-
 var saveStatus = {
     "order" : false,
     "orderDetail" : false
 }
 
+var addProducts = {};
+const orderRegisterContainer = $('.order-register-container');
+
+
 // 신규
-$("#order-register-new-btn").click(function () {
-    // 발주번호 생성
+function clickNewBtn() {
+    $('#order-register-reset-btn').prop('disabled', false);
+    orderRegisterContainer.find('.general-button button')
+        .prop('disabled', false);
+
     newOrderForm();
     createOrderSeq();
-});
+    activateMasterForm();
+}
 
 function createOrderSeq() {
     $.ajax({
@@ -52,39 +65,130 @@ function newOrderForm() {
     $("#order-type").val(($('#order-type option[selected]').val()));
 }
 
-// 확정취소
+function activateMasterForm() {
+    $('#order-register-form button')
+        .not("#order-register-delete-btn")
+        .prop('disabled', false);
+    orderRegisterContainer.find('input, select').prop('disabled', false);
+}
 
+// 초기화
+function allDeactivateForm() {
+    orderRegisterContainer.find('button,input, select')
+        .not('#order-register-new-btn, .modal button')
+        .prop('disabled', true);
+}
 
-// 확정
+// 등록 폼
+
+$(".input-supplier").click(function() {
+    $.ajax({
+        url: '/incoming/supplier',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            let tableBody = $("#purchaserSearchInputBox .table-responsive tbody");
+            tableBody.empty();
+            $.each(data, function(index, item) {
+                let row = "<tr>" +
+                    "<td>" + (index + 1) + "</td>" +
+                    "<td>" + item.vincomingProductSupplierNm + "</td>" +
+                    "</tr>";
+                tableBody.append(row);
+            });
+        },
+        error: function(xhr, status, error) {
+            alert("An error occurred: " + error);
+        }
+    });
+});
+
+$("#purchaserSearchInputBox .table-responsive tbody").on('click', 'tr', function() {
+    let supplierName = $(this).find('td:nth-child(2)').text();
+    $('.input-supplier').val(supplierName);
+    $('#purchaserSearchInputBox').modal('hide');
+});
+
+$('.input-whsearch').click(function() {
+    let formData = {
+        name: $("#warehouseNameInput").val(),
+        location: $("#warehouseLocationSelect").val(),
+        type: $("#warehouseTypeSelect").val()
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/warehouse/search",
+        data: $.param(formData),
+        contentType: 'application/x-www-form-urlencoded',
+        success: function(data) {
+            let tableBody = $('#warehouseSearchInputBox .table-responsive tbody');
+            tableBody.empty();
+            $.each(data, function(i, warehouse) {
+                let row = "<tr>" +
+                    "<td>" + (i + 1) + "</td>" +
+                    "<td>" + warehouse.swarehouseType + "</td>" +
+                    "<td>" + warehouse.vwarehouseCd + "</td>" +
+                    "<td>" + warehouse.vwarehouseNm + "</td>" +
+                    "</tr>";
+                tableBody.append(row);
+            });
+        },
+        error: function(error) {
+            console.error("Error: ", error);
+        }
+    });
+});
+
+$('#warehouseSearchInputBox .table-responsive tbody').on('click', 'tr', function() {
+    let warehouseCode = $(this).find('td:nth-child(3)').text();
+    $('.input-whsearch').val(warehouseCode);
+    $('#warehouseSearchInputBox').modal('hide');
+});
 
 
 // 발주 - 저장
-function orderRegisterSave() {
-    if (!checkEmptyOrderForm()) {
-        console.log("입력되지 않은 값이 있습니다.")
-        saveStatus.order = false;
-        return;
+function clickOrderMasterSave() {
+    if (!checkInputFields()) {
+        $('#order-master-save-btn').removeAttr('data-target');
+        $('.alert-danger a').text('입력되지 않은 값이 있습니다.');
+        $('.alert-danger').show();
+        $('.alert-danger').delay(2000).fadeOut();
+        // $('.alert-danger a').text('');
     }
+    else {
+        $('#order-master-save-btn').attr('data-target','#exampleModalCenter');
+        saveStatus.order = true;
+    }
+}
+function orderRegisterSave() {
+    $('.alert-success a').text('발주 마스터가 저장되었습니다.');
+    $('.alert-success').show();
+    $('.alert-success').delay(2000).fadeOut();
+
+    orderRegisterContainer.find('.input-supplier').prop('disabled', true);
     saveOrderForm();
-    saveStatus.order = true;
+    activateOrderSingleForm();
 }
 
-function checkEmptyOrderForm() {
-    if ($("#order-created-date").val() === "") {
-        console.log("날짜 입력하세요");
-        return false;
-    }
+function activateOrderSingleForm() {
+    orderRegisterContainer
+        .find('#order-register-order-single-btn-wrap button')
+        .prop('disabled', false);
 
-    if ($("#incoming-product-supplier-nm").val() === "") {
-        console.log("매입거래처를 선택하세요");
-        return false;
-    }
+}
 
-    if ($("#warehouse-cd").val() === "") {
-        console.log("창고를 선택하세요");
-        return false;
-    }
-    return true;
+function checkInputFields() {
+    let allFilled = true;
+    $('.order-master-form input,  .order-master-form select').each(function() {
+        if ($(this).val().trim() === ''
+            || $(this).val().trim() === '선택'
+            || $(this).val().trim() === 'dd/mm/yyyy') {
+            allFilled = false;
+            // return false;
+        }
+    });
+    return allFilled;
 }
 
 
@@ -100,104 +204,77 @@ function saveOrderForm() {
 }
 
 // 발주 - 삭제
-$("#order-register-remove-btn").click(function () {
-    swal(
-        {
-            title: "Confirm",
-            text: "삭제하시겠습니까?",
-            type: "info",
-            showCancelButton: true,
-            closeOnConfirm: false,
-            showLoaderOnConfirm: true,
+function deleteOrder() {
+    $.ajax({
+        url: `/order/register/${order.pkOrderSeq}`,
+        type: 'DELETE',
+        success: function (resp) {
+            showAlertSuccess("성공적으로 삭제되었습니다.");
+            setTimeout(() => {
+                window.location.href = "/order/register";
+            }, 1500);
         },
-        function () {
-            setTimeout(function () {
-                swal("저장되었습니다.");
-            }, 2000);
+        error: function (error) {
+            showAlertDanger("삭제 실패했습니다.");
         }
-    );
-});
+    });
+}
 
-
-function orderRegisterDelete() {
+function orderRegisterReset() {
     $("#order-created-date").val('dd/mm/yyyy');
     $("#order-seq").val('');
     $("#incoming-product-supplier-nm").val('');
     $("#order-status").val('');
     $("#warehouse-cd").val('');
     $("#order-type").val(($('#order-type option[selected]').val()));
+    $('.order-detail-tbody').empty().append(`
+        <tr id="default-tr">
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+        </tr>
+    `)
+    $('#input-product-cd').val('');
+    allDeactivateForm();
 }
 
-// 발주 상세 - 추가
-function createOrderDetailForm() {
-    console.log("click");
-    $.ajax({
-        url: '/order/register/detail',
-        type: 'POST',
-        contentType:'application/json',
-        data:
-            JSON.stringify(orderSearch),
-        success: function (resp) {
-            var currentIndex;
-            if ($(".order-detail-tbody tr").isEmpty)
-                currentIndex = 1;
-            currentIndex = $(".order-detail-tbody tr").length + 1;
-
-            $(".order-detail-tbody").append(
-                `<tr>
-                    <th>${currentIndex}</th>
-                    <td><input type="checkbox" id="order-tr-checked-${currentIndex}" /></td>
-                    <td id="order-tr-product-cd-${currentIndex}">${resp.vProductCd}</td>
-                    <td id="order-tr-product-nm-${currentIndex}">${resp.vProductNm}</td>
-                    <td>Y</td>
-                    <td>Y</td>
-                    <td id="order-tr-inventory-cnt-${currentIndex}">${resp.nInventoryCnt}</td>
-                    <td><div class="col-sm-3">
-                            <div class="input-group">
-                                    <input type="number" id="order-tr-order-cnt-${currentIndex}"">
-                            </div>
-                        </div>
-                    </td>
-                    <td id="order-tr-product-price-${currentIndex}">${resp.nProductPrice}</td>
-                    <td><div class="col-sm-3">
-                            <div class="input-group">
-                                    <input type="number" id="order-tr-total-price-${currentIndex}">
-                            </div>
-                        </div>
-                    </td>
-                </tr>`
-            );
-        },
-        error: function (error) {
-            console.log('Error:', error);
-        }
-    });
+function orderObjectDelete() {
+    order = {
+        "pkOrderSeq": null,
+        "vOrderStatus": null,
+        "vIncomingProductSupplierNm": null,
+        "vOrderType": null,
+        "dtOrderCreatedDate": null,
+        "dtDeliveryDate": null,
+    }
 }
 
-$('body').on('input', '[id^=order-tr-order-cnt-]', function() {
-    let currentIndex = this.id.match(/\d+$/)[0];
-    let totalPrice = calculateOrderTotalPrice(currentIndex);
-    console.log(totalPrice)
-
-    $("#order-tr-total-price-" + currentIndex).val(totalPrice);
-});
 
 // 발주 상세 - 저장
 function insertOrderAndOrderDetail() {
-    saveOrderDetailForm();
+    let orderDetails = saveOrderDetailForm();
+    console.log("상태 ", saveStatus);
 
-    console.log(saveStatus);
+    if (orderDetails.length === 0)
+        return;
+
     if (saveStatus.order && saveStatus.orderDetail) {
-        console.log(order);
-        console.log(orderDetails);
-
         $.ajax({
             url: '/order/register',
             type: 'POST',
-            contentType: 'application/json', // 요청의 컨텐츠 타입
-            data: JSON.stringify({order: order, orderDetails: orderDetails}), // 데이터를 JSON 문자열로 변환
+            contentType: 'application/json',
+            data: JSON.stringify({order: order, orderDetails: orderDetails}),
             success: function (resp) {
-                // 성공 시 로직
+                orderRegisterContainer.find('button, input, select')
+                    .not('#order-register-new-btn, .modal button')
+                    .prop('disabled', true);
+                $('#order-register-delete-btn').prop('disabled', false);
+
             },
             error: function (error) {
                 console.log('Error:', error);
@@ -205,70 +282,191 @@ function insertOrderAndOrderDetail() {
         });
     }
     else {
-        console.log("발주 or 발주 상세 값이 비었습니다.");
+        showAlertDanger("발주 or 발주 상세 값이 비었습니다.");
     }
 }
 
 function saveOrderDetailForm() {
+    let orderDetails = [];
+    let isValid = true;
+
+    if ($('.order-detail-tbody input[type="checkbox"]:checked').length === 0) {
+        showAlertDanger("단품을 입력하세요.").
+        return;
+    }
+
+
     $('.order-detail-tbody input[type="checkbox"]:checked').each(function() {
-        var index = this.id.match(/\d+$/)[0];
-        var productCd = $(`#order-tr-product-cd-${index}`).text();
-        var orderCnt = +$(`#order-tr-order-cnt-${index}`).val();
+        if (!isValid) return;
 
-        console.log("orderCnt " + orderCnt);
+        let $tr = $(this).closest('tr');
+        let productCd = $tr.find('.product-cd').text();
+        let orderCnt = +$tr.find('.order-cnt').val();
 
-        if (orderCnt.isEmpty || orderCnt===0) {
-            console.log("발주 수량 입력");
-            saveStatus.orderDetail = false;
-            return
+        if (!orderCnt) {
+            showAlertDanger("단품 수량을 입력하세요.");
+            isValid = false;
+            return;
         }
 
-        var orderDetail = {
-            nOrderCnt: orderCnt,
-            vOrderStatus: "미입고",
-            vProductCd: productCd,
+        let orderDetail = {
             pkOrderSeq: order.pkOrderSeq,
+            nOrderCnt: orderCnt,
+            vProductCd: productCd,
             vWarehouseCd: order.vWarehouseCd
-        }
+        };
+
         orderDetails.push(orderDetail);
-        console.log(orderDetail);
     });
 
-    if (orderDetails.length < 1)
+    if (!isValid) {
         saveStatus.orderDetail = false;
+        return [];
+    }
 
-    else
-        saveStatus.orderDetail = true;
+    saveStatus.orderDetail = true;
+    return orderDetails;
 }
 
-// 발주 삭제 - 삭제
 
+// 발주 상세 - 추가
+function createOrderDetailForm() {
+    orderSearch.vIncomingProductSupplierNm = order.vIncomingProductSupplierNm;
+    orderSearch.vProductCd = $("#input-product-cd").val();
+    orderSearch.vWarehouseCd = order.vWarehouseCd;
+    if (!checkDuplicateProductRegistration(orderSearch.vProductCd))
+        return;
+
+    $.ajax({
+        url: '/order/register/detail',
+        type: 'POST',
+        contentType:'application/json',
+        data:
+            JSON.stringify(orderSearch),
+        success: function (resp) {
+            $("#default-tr").remove();
+            addProducts[resp.vProductCd] = 1;
+
+            let idx = $(".order-detail-tbody tr").length + 1;
+            $('#input-product-cd').val('');
+
+            $(".order-detail-tbody").append(
+                `<tr data-index="${idx}">
+                    <th>${idx}</th>
+                    <td><input type="checkbox" class="order-checked" /></td>
+                    <td class="product-cd">${resp.vProductCd}</td>
+                    <td class="product-nm">${resp.vProductNm}</td>
+                    <td class="inventory-cnt">${resp.nInventoryCnt}</td>
+                    <td>
+                        <div class="input-group">
+                            <input type="number" class="order-cnt" style="width:60px">
+                        </div>
+                    </td>
+                    <td class="product-price">${addCommas(resp.nProductPrice)}</td>
+                    <td class="total-price"></td>
+                </tr>`
+            );
+        },
+        error: function (xhr, status, error) {
+            if (xhr.status === 422) {
+                showAlertDanger(xhr.responseText);
+            }
+        }
+    });
+}
+
+function checkDuplicateProductRegistration(productCd) {
+    if (productCd in addProducts) {
+        showAlertDanger("이미 추가된 상품입니다.");
+        return false;
+    }
+
+    return true;
+}
+
+
+$('body').on('input', '[class^=order-cnt]', function() {
+    let $tr = $(this).closest('tr');
+    let totalPrice = calculateOrderTotalPrice($tr);
+    $tr.find('.total-price').text(totalPrice);
+});
+
+// 발주 상세 - 삭제
+function deleteOrderSingle() {
+    $('.order-detail-tbody input[type="checkbox"]:checked').each(function() {
+        let productCd = $(this).closest('tr').find(".product-cd").text();
+        $(this).closest('tr').remove();
+
+        if ($('.order-detail-tbody tr').length === 0) {
+            $('.order-detail-tbody').append(`
+                <tr id="default-tr">
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            `)
+        }
+
+        delete addProducts[productCd];
+    });
+
+    $('.order-detail-tbody tr').each(function(index) {
+        let newIndex = index + 1;
+        $(this).attr('data-index', newIndex);
+        $(this).find('th').first().text(newIndex);
+    });
+}
 
 // 기타
 function dateFormatting(dateString) {
-    var date = new Date(dateString);
+    let date = new Date(dateString);
 
     // 한국 시간대(KST, UTC+9) 설정
-    var kstOffset = 9 * 60;
-    var localDate = new Date(date.getTime() + kstOffset * 60000);
+    let kstOffset = 9 * 60;
+    let localDate = new Date(date.getTime() + kstOffset * 60000);
 
-    var formattedDate = localDate.toISOString().replace('Z', '+09:00').substring(0, 19);
+    let formattedDate = localDate.toISOString().replace('Z', '+09:00').substring(0, 19);
 
     return formattedDate;
 }
 
 
-function calculateOrderTotalPrice(currentIndex) {
-    let cnt = +$(`#order-tr-order-cnt-${currentIndex}`).val();
-    let price = +$(`#order-tr-product-price-${currentIndex}`).text();
-    return price * cnt;
+function calculateOrderTotalPrice($tr) {
+    let orderCnt = +$tr.find('.order-cnt').val();
+    let productPrice = removeCommas($tr.find('.product-price').text());
+    return addCommas(orderCnt * productPrice);
 }
 
 function getCurrentDateFormatted() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
 
     return mm + '/' + dd + '/' + yyyy;
+}
+
+function showAlertDanger(text) {
+    $('.alert-danger a').text(text);
+    $('.alert-danger').show();
+    $('.alert-danger').delay(2000).fadeOut();
+}
+
+function showAlertSuccess(text) {
+    $('.alert-success a').text(text);
+    $('.alert-success').show();
+    $('.alert-success').delay(2000).fadeOut();
+}
+
+function addCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function removeCommas(str) {
+    return parseInt(str.replace(/,/g, ''), 10);
 }
