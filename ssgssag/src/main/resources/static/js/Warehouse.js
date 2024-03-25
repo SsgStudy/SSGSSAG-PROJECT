@@ -83,9 +83,11 @@ let ready = $(document).ready(function() {
       success: function(response) {
 
         console.log("창고 추가 완료");
+        toastr.success('창고 등록 성공!');
         $('#warehouseAdd').modal('hide');
       },
       error: function(xhr, status, error) {
+        toastr.error('창고 등록 실패');
         console.error("Error: ", error);
       }
     });
@@ -157,9 +159,11 @@ function addZone() {
     success: function(response) {
 
       console.log("Zone added successfully");
+      toastr.success('창고 구역 등록 성공!');
       $('#warehouseDetail').modal('hide');
     },
     error: function(error) {
+      toastr.error('창고 구역 등록 실패!');
       console.log("Error adding zone", error);
     }
   });
@@ -293,3 +297,4 @@ $('#warehouseDetail').on('hidden.bs.modal', function () {
   $('#zoneCode', this).val('');
   $('#zoneName', this).val('');
 });
+

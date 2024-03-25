@@ -43,9 +43,11 @@
   <div class="content-body">
     <div class="container-fluid mt-3">
       <div class="col-lg-12">
+
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">창고 조회</h4>
+
             <div class="d-flex justify-content-end">
               <button type="button" class="btn mb-3 btn-primary btn-warehouse" data-toggle="modal"
                       data-target="#warehouseAdd">창고 등록
@@ -81,7 +83,7 @@
                         <label class="col-sm-3 col-form-label text-left">소재지</label>
                         <div class="col-sm-9 mb-1">
                           <input type="text" class="form-control input-flat" name="vWarehouseLoc" data-aos="zoom-in-up"
-                                 placeholder="창고 소재지를 입력해주세요" onclick="sample3_execDaumPostcode()" id="sample3_search">
+                                 placeholder="창고 소재지를 입력해주세요" onclick="sample3_execDaumPostcode()" id="sample3_search" required>
                         </div>
 
                         <div id="modal-wrap" class="col-sm-9">
@@ -107,7 +109,7 @@
                         <label class="col-sm-3 col-form-label text-left">관리자코드</label>
                         <div class="col-sm-9">
                           <input type="text" class="form-control input-flat" name="pkMemberSeq"
-                                 placeholder="창고 관리자 코드를 입력해주세요">
+                                 placeholder="창고 관리자 코드를 입력해주세요" required>
                         </div>
                       </div>
                       <div class="general-button text-center">
