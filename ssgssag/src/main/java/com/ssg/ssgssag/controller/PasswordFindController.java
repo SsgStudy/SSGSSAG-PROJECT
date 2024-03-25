@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Log4j2
@@ -32,7 +33,7 @@ public class PasswordFindController {
     public ResponseEntity<String> getEmailById(@RequestParam String id) {
         String email = passwordFindService.selectEmailById(id);
         utilService.sendResetPasswordLink(email);
-        log.info("일단 전송 성공");
+
         return ResponseEntity.ok(email);
     }
 
@@ -44,7 +45,9 @@ public class PasswordFindController {
 
     @GetMapping("/issue-password")
     @Operation(summary = "임시 비밀번호 발금 페이지 호출", description = "임시 비밀번호 발급 링크 클릭시 완료")
-    public String showIssuePasswordPage() {
+    public String showIssuePasswordPage(Model model) {
+        String tempPassword = passwordFindService.getRandomPassword();
+        model.addAttribute("tempPassword", tempPassword);
         return "passwordfind/issue-password";
     }
 

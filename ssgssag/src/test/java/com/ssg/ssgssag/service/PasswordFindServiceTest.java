@@ -22,4 +22,10 @@ public class PasswordFindServiceTest {
         String email = passwordFindService.selectEmailById("sojin");
         log.info(email);
     }
+
+    @Test
+    public void getRandomPassword() {
+        String tempPassword = passwordFindService.getRandomPassword();
+        log.info(tempPassword);
+    }
 }
