@@ -221,8 +221,8 @@ function convertDateFormat(dateStr) {
 
 function getNowDate() {
     let now = new Date(); // 현재 날짜 및 시간
-    let startDate = formatDate(new Date(now.getFullYear(), now.getMonth(), 1));
-    let endDate = formatDate(new Date(now.getFullYear(), now.getMonth() + 1, 0));
+    let startDate = formatDate(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7));
+    let endDate = formatDate(new Date(now.getFullYear(), now.getMonth(), now.getDate()));
 
     $('#order-period').val(startDate + ' - ' + endDate);
 }
