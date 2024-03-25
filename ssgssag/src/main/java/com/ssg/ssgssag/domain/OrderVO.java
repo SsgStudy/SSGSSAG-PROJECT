@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderVO {
-    private Long pkoOrderSeq;
+    private Long pkOrderSeq;
     private String vOrderStatus;
     private String vIncomingProductSupplierNm;
     private String vOrderType;
