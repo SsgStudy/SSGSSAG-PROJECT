@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <th:block th:replace="/layout/head :: headFragment"></th:block>
-  <title>출고 조회</title>
+  <title>상품 조회</title>
 </head>
 <body>
 <!--*******************
@@ -41,66 +41,54 @@
   <div class="content-body">
     <div class="row page-titles mx-0">
       <div class="col p-md-0">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="javascript:void(0)">출고 관리</a></li>
-          <li class="breadcrumb-item active"><a href="javascript:void(0)">출고 조회</a></li>
-        </ol>
+
       </div>
     </div>
     <!-- row -->
     <div class="container-fluid mt-3">
       <div class="col-lg-12">
-        <h1>출고 조회</h1>
+        <h1>상품조회</h1>
       </div>
-      <div class="col-lg-12 mb-4 text-right">
-        <div class="general-button">
-          <button type="button" class="btn btn-dark mb-1 btn-primary" onclick="printPage()">인쇄
-          </button>
-        </div>
-      </div>
+
       <div class="col-lg-12 mb-4 text-right">
 
       </div>
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">출고 조회</h4>
+            <h4 class="card-title">상품조회</h4>
 
             <div class="table-responsive">
               <table class="table table-hover zero-configuration">
                 <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>상태</th>
-                  <th>출고일</th>
-                  <th>수량</th>
-                  <th>주문상세번호</th>
-                  <th>주문번호</th>
                   <th>상품코드</th>
-                  <th>창고코드</th>
-                  <th>구역코드</th>
+                  <th>상품명</th>
+                  <th>판매가격</th>
+                  <th>브랜드</th>
+                  <th>원산지</th>
+                  <th>제조사</th>
+                  <th>판매상태</th>
+                  <th>제조일</th>
+                  <th>카테고리 코드</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="outgoing, iterStat : ${outgoingList}">
-                  <td th:text="${outgoing.pkOutgoingId}"></td>
-                  <td th:text="${outgoing.vOutgoingStatus}"></td>
-                  <td th:text="${#temporals.format(outgoing.dtOutgoingDate, 'yyyy/MM/dd')}"></td>
-                  <td th:text="${outgoing.nOutgoingCnt}"></td>
-                  <td th:text="${outgoing.pkShopPurchaseDetailSeq}"></td>
-                  <td th:text="${outgoing.pkShopPurchaseSeq}"></td>
-                  <td th:text="${outgoing.vProductCd}"></td>
-                  <td th:text="${outgoing.vZoneCd}"></td>
-                  <td th:text="${outgoing.vWarehouseCd}"></td>
+                <tr th:each="product, iterStat : ${productList}">
+                  <td th:text="${product.vProductCd}"></td>
+                  <td th:text="${product.vProductNm}"></td>
+                  <td th:text="${product.nProductPrice}"></td>
+                  <td th:text="${product.vProductBrand}"></td>
+                  <td th:text="${product.vProductOrigin}"></td>
+                  <td th:text="${product.vProductManufactor}"></td>
+                  <td th:text="${product.vProductStatus}"></td>
+                  <td th:text="${product.dProductManufactorDate}"></td>
+                  <td th:text="${product.vCategoryCd}"></td>
                 </tr>
                 </tbody>
               </table>
             </div>
-            <div class="general-button col-lg-12 text-center">
-              <button type="button" class="btn btn-dark mb-1 btn-primary"
-                      onclick="exportTableToExcel('출고리스트현황')">엑셀로 내보내기
-              </button>
-            </div>
+
           </div>
         </div>
       </div>

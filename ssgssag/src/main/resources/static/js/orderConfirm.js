@@ -1,9 +1,12 @@
 $(document).ready(function() {
     getNowDate();
+
 });
 
+
+
 // 전역 변수
-var orderSearchForm = {
+let orderSearchForm = {
     "vIncomingProductSupplierNm": null,
     "vWarehouseCd": null,
     "vOrderStatus": null,
@@ -34,10 +37,10 @@ function orderConfirm() {
         contentType: 'application/json',
         data: JSON.stringify(dataToSend),
         success: function(response) {
-            console.log('Success:', response);
+            toastr.attr('class', 'toast-top-right').success('발주 확정 성공!');
         },
         error: function(error) {
-            console.log('Error:', error);
+            toastr.error('발주 확정 실패');
         }
     });
 }
@@ -45,11 +48,97 @@ function orderConfirm() {
 
 // 초기화
 function orderReadPageReset() {
-    console.log('초기화')
-    $("#order-confirm-search-form").find("input[type=text], select").val("");
-    $(".order-single-tbody").empty();
-    $(".order-master-tbody").empty();
+    $("#order-status").val(($('#order-status option[selected]').val()));
+    $("#order-confirm-search-form").find("input[type=text]").val("");
+    getNowDate();
+    $(".order-master-tbody").empty().append(
+        `
+            <tr class="odd">
+                <td valign="top" colspan="8" class="dataTables_empty">No data available in table</td>
+            </tr>
+        `
+    );
+    $(".order-single-tbody").empty().append(
+        `<tr>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+            <th>-</th>
+        </tr>
+        `
+    );
 }
+
+// 입력폼
+$(".input-supplier").click(function() {
+    $.ajax({
+        url: '/incoming/supplier',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            let tableBody = $("#purchaserSearchInputBox .table-responsive tbody");
+            tableBody.empty();
+            $.each(data, function(index, item) {
+                let row = "<tr>" +
+                    "<td>" + (index + 1) + "</td>" +
+                    "<td>" + item.vincomingProductSupplierNm + "</td>" +
+                    "</tr>";
+                tableBody.append(row);
+            });
+        },
+        error: function(xhr, status, error) {
+            alert("An error occurred: " + error);
+        }
+    });
+});
+
+$("#purchaserSearchInputBox .table-responsive tbody").on('click', 'tr', function() {
+    let supplierName = $(this).find('td:nth-child(2)').text();
+    $('.input-supplier').val(supplierName);
+    $('#purchaserSearchInputBox').modal('hide');
+});
+
+$('.input-whsearch').click(function() {
+    let formData = {
+        name: $("#warehouseNameInput").val(),
+        location: $("#warehouseLocationSelect").val(),
+        type: $("#warehouseTypeSelect").val()
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/warehouse/search",
+        data: $.param(formData),
+        contentType: 'application/x-www-form-urlencoded',
+        success: function(data) {
+            let tableBody = $('#warehouseSearchInputBox .table-responsive tbody');
+            tableBody.empty();
+            $.each(data, function(i, warehouse) {
+                let row = "<tr>" +
+                    "<td>" + (i + 1) + "</td>" +
+                    "<td>" + warehouse.swarehouseType + "</td>" +
+                    "<td>" + warehouse.vwarehouseCd + "</td>" +
+                    "<td>" + warehouse.vwarehouseNm + "</td>" +
+                    "</tr>";
+                tableBody.append(row);
+            });
+        },
+        error: function(error) {
+            console.error("Error: ", error);
+        }
+    });
+});
+
+$('#warehouseSearchInputBox .table-responsive tbody').on('click', 'tr', function() {
+    let warehouseCode = $(this).find('td:nth-child(3)').text();
+    $('.input-whsearch').val(warehouseCode);
+    $('#warehouseSearchInputBox').modal('hide');
+});
+
+
 
 // 조회
 function searchForm() {
@@ -78,7 +167,7 @@ function getMasterOrderList() {
             tableBody.empty();
 
             $.each(resp, function (index, resp) {
-                var currentIndex = index + 1;
+                let currentIndex = index + 1;
                 tableBody.append(
                     `<tr onclick="getOrderSingleList(${resp.pkOrderSeq})">
                         <th>${currentIndex}</th>
@@ -128,20 +217,20 @@ function getOrderSingleList(orderSeq) {
 
 // 기타
 function convertDateFormat(dateStr) {
-    var parts = dateStr.split('/');
+    let parts = dateStr.split('/');
     return parts[2] + '-' + parts[0] + '-' + parts[1];
 }
 
 function getNowDate() {
     let now = new Date(); // 현재 날짜 및 시간
-    let startDate = formatDate(new Date(now.getFullYear(), now.getMonth(), 1));
-    let endDate = formatDate(new Date(now.getFullYear(), now.getMonth() + 1, 0));
+    let startDate = formatDate(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7));
+    let endDate = formatDate(new Date(now.getFullYear(), now.getMonth(), now.getDate()));
 
     $('#order-period').val(startDate + ' - ' + endDate);
 }
 
 function formatDate(date) {
-    var d = new Date(date),
+    let d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
         year = d.getFullYear();
@@ -153,3 +242,4 @@ function formatDate(date) {
 
     return [month, day, year].join('/');
 }
+

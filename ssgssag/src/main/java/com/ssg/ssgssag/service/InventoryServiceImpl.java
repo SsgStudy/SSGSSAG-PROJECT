@@ -40,14 +40,14 @@ public class InventoryServiceImpl implements InventoryService{
     }
 
     @Override
-    public InventoryHistoryVO getInventoryHistoryBySeq(Integer pkInventorySeq) {
+    public List<InventoryHistoryVO> getInventoryHistoryBySeq(Integer pkInventorySeq) {
         return inventoryMapper.selectInventoryHistoryBySeq(pkInventorySeq);
     }
 
     @Override
     @Transactional
-    public void updateInventoryWithHistory(InventoryAdjustmentDTO inventoryAdjustmentDTO) {
-        inventoryMapper.updateInventoryWithHistory(inventoryAdjustmentDTO);
+    public void updateInventoryWithHistoryCnt(InventoryAdjustmentDTO inventoryAdjustmentDTO) {
+        inventoryMapper.updateInventoryWithHistoryCnt(inventoryAdjustmentDTO);
     }
 
     @Override

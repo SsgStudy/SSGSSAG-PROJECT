@@ -8,6 +8,7 @@ import com.ssg.ssgssag.dto.StatusCountDTO;
 import com.ssg.ssgssag.service.DashboardService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class DashboardController {
     private final DashboardService dashboardService;
 
     @GetMapping()
-    @Operation(summary = "대시 보드 정보 조회", description = "대시 보드 내 필요 데이터를 조회합니다.")
+    @Operation(summary = "대시보드 정보 조회", description = "대시보드 내 필요 데이터를 조회합니다.")
     public String showDashboardPage(Model model) {
         log.info("Load dashboard page");
 
@@ -80,6 +81,55 @@ public class DashboardController {
         model.addAttribute("worstCategoryNames", worstCategoryNames);
         model.addAttribute("worstCategoryCounts", worstCategoryCounts);
 
+        List<Double> predictedPurchases = predictPurchase(dailyPurchases);
+        model.addAttribute("predictedPurchases", predictedPurchases);
+        log.info(predictedPurchases);
         return "main/main";
     }
+
+    private List<Double> predictPurchase(List<Integer> dailyPurchases) {
+        List<Double> predictions = new ArrayList<>();
+        for (Integer purchase : dailyPurchases) {
+            predictions.add(purchase.doubleValue());
+        }
+
+        int daysCount = dailyPurchases.size();
+
+        for (int futureDay = 1; futureDay <= 7; futureDay++) {
+            int[] days = new int[daysCount + futureDay - 1];
+            for (int i = 0; i < days.length; i++) {
+                days[i] = i + 1;
+            }
+
+            double[] stocks = predictions.stream().mapToDouble(Double::doubleValue).toArray();
+            double[] model = linearRegression(days, stocks);
+
+            double predictedStock = model[0] * (daysCount + futureDay) + model[1];
+            predictedStock = Math.round(predictedStock * 10) / 10.0;
+
+            predictions.add(predictedStock);
+
+            System.out.printf("예측된 %d일차 판매수량: %.2f개\n", daysCount + futureDay, predictedStock);
+        }
+        return predictions;
+    }
+
+
+    private static double[] linearRegression(int[] x, double[] y) {
+        int n = x.length;
+        double sumX = 0, sumY = 0, sumXx = 0, sumXy = 0;
+
+        for (int i = 0; i < n; i++) {
+            sumX += x[i];
+            sumY += y[i];
+            sumXx += x[i] * x[i];
+            sumXy += x[i] * y[i];
+        }
+
+        double slope = (n * sumXy - sumX * sumY) / (n * sumXx - sumX * sumX);
+        double intercept = (sumY - slope * sumX) / n;
+
+        return new double[]{slope, intercept};
+    }
+
 }

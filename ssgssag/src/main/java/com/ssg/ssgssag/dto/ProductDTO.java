@@ -10,12 +10,12 @@ import java.sql.Date;
 @AllArgsConstructor
 public class ProductDTO {
     private String vProductCd;
-    private String vProductName;
+    private String vProductNm;
     private int nProductPrice;
     private String vProductBrand;
     private String vProductOrigin;
-    private String vProductManufacturer;
+    private String vProductManufactor;
     private String vProductStatus;
-    private Date dProductManufactureDate;
+    private Date dProductManufactorDate;
     private String vCategoryCd;
 }

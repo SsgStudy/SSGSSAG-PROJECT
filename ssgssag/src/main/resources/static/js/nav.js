@@ -1,6 +1,7 @@
 $(document).ready(function() {
   let menuItems = [
     { name: "통계", url: "/" },
+    { name: "상품 조회", url: "/product" },
     { name: "발주 입고 등록", url: "/incoming/register" },
     { name: "입고 승인", url: "/incoming/confirm" },
     { name: "입고 수정", url: "/incoming/confirm" },

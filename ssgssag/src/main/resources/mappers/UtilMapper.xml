@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ssg.ssgssag.mapper.UtilMapper">
+    
+    <select id="findShortageInventory" resultType="com.ssg.ssgssag.dto.InventoryShortageDTO">
+        SELECT SUM(N_INVENTORY_CNT) AS totalInventoryCount, V_WAREHOUSE_CD, P.V_PRODUCT_CD, V_PRODUCT_NM
+        FROM TB_INVENTORY I
+        LEFT JOIN TB_PRODUCT P
+        ON I.V_PRODUCT_CD = P.V_PRODUCT_CD
+        GROUP BY V_WAREHOUSE_CD, V_PRODUCT_CD
+        HAVING totalInventoryCount &lt;= 10
+    </select>
+    
+    <select id="selectMemberEmail" resultType="java.lang.String">
+        SELECT V_EMAIL FROM TB_MEMBER
+    </select>
+    
+</mapper>
