@@ -48,53 +48,48 @@ let ready = $(document).ready(function() {
   $(document).on('click', '.open-modal', function() {
     let button = $(this);
     let warehouseCd = button.data('warehouse-cd');
+
     openWarehouseModal(button[0], warehouseCd);
   });
 
-  // 셀렉트 박스 값 변경 시 이벤트 핸들러
+
   $('#sWarehouseTypeSelect').change(function() {
-    // '직접입력' 선택 시 인풋 박스 표시
+
     if ($(this).val() == 'custom') {
       $('#sWarehouseTypeInput').show();
     } else {
-      // 다른 옵션 선택 시 인풋 박스 숨김 및 값 초기화
+
       $('#sWarehouseTypeInput').hide().val('');
     }
-  }).change(); // 페이지 로딩 시에도 셀렉트 박스 상태에 따라 동작하도록 함
+  }).change();
 
 
-  // 창고 등록 모달의 폼 제출 핸들러
   $('#warehouseAdd form').submit(function(event) {
-    event.preventDefault(); // 폼 기본 제출 방지
+    event.preventDefault();
 
-    // '직접 입력' 선택 여부 확인
-    var isCustomType = $('#sWarehouseTypeSelect').val() === 'custom';
-    var warehouseType = isCustomType ? $('#sWarehouseTypeInput').val() : $('#sWarehouseTypeSelect').val();
 
-    // 폼 데이터 수정
-    var formData = $(this).serializeArray(); // 폼 데이터를 serializeArray로 변환
-    // 'sWarehouseTypeSelect' 값 수정 또는 추가
-    formData = formData.filter(item => item.name !== 'sWarehouseType'); // 기존 'sWarehouseType' 제거
-    formData.push({ name: 'sWarehouseType', value: warehouseType }); // 새로운 'sWarehouseType' 추가
+    let isCustomType = $('#sWarehouseTypeSelect').val() === 'custom';
+    let warehouseType = isCustomType ? $('#sWarehouseTypeInput').val() : $('#sWarehouseTypeSelect').val();
+    let formData = $(this).serializeArray();
 
-    // AJAX 요청
+    formData = formData.filter(item => item.name !== 'sWarehouseType');
+    formData.push({ name: 'sWarehouseType', value: warehouseType });
+
     $.ajax({
-      type: $(this).attr('method'), // 폼의 method 사용
-      url: $(this).attr('action'), // 폼의 action 사용
-      data: $.param(formData), // 수정된 formData를 query string으로 변환
+      type: $(this).attr('method'),
+      url: $(this).attr('action'),
+      data: $.param(formData),
       contentType: 'application/x-www-form-urlencoded',
       success: function(response) {
-        // 성공 로직...
-        console.log("Warehouse added successfully");
-        $('#warehouseAdd').modal('hide'); // 모달 숨기기
+
+        console.log("창고 추가 완료");
+        $('#warehouseAdd').modal('hide');
       },
       error: function(xhr, status, error) {
-        // 에러 로직...
         console.error("Error: ", error);
       }
     });
   });
-
 
 });
 
@@ -160,6 +155,7 @@ function addZone() {
     url: "/warehouse/addZone",
     data: data,
     success: function(response) {
+
       console.log("Zone added successfully");
       $('#warehouseDetail').modal('hide');
     },
@@ -169,11 +165,9 @@ function addZone() {
   });
 }
 
-// 주소 검색
 
 let element_wrap = document.getElementById('wrap');
 let element_modal_wrap = document.getElementById('modal-wrap');
-// let element_address_modal = document.getElementById('address-modal');
 
 function foldDaumPostcode() {
 
@@ -282,4 +276,20 @@ $("#address-apply-button").click(function() {
   element_modal_wrap.style.display = 'none';
   // element_address_modal.style.display ='none';
   updateUserAddress();
+});
+
+$('#warehouseAdd').on('hidden.bs.modal', function () {
+
+  $(this).find('form')[0].reset();
+
+  $('#sWarehouseTypeInput').hide().val('');
+
+  $(this).find('select').val('');
+
+});
+
+$('#warehouseDetail').on('hidden.bs.modal', function () {
+  // 직접적으로 특정 필드 값 설정
+  $('#zoneCode', this).val('');
+  $('#zoneName', this).val('');
 });
