@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
   let startX;
   let scrollLeft;
 
-  slider.addEventListener('mousedown', (e) => {
+  slider.addEventListener('mousedown', (e
+  ) => {
     isDown = true;
     slider.classList.add('active');
     startX = e.pageX - slider.offsetLeft;
@@ -39,6 +40,19 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   backToCategoryChartButton.addEventListener('click', function() {
     cardInner.classList.toggle('flip');
+  });
+
+
+
+  const flipButtonWorst = document.querySelector('#flip-card-worst .btn-primary');
+  const backToWorstCategoryChartButton = document.getElementById('back-to-worst-category-chart');
+  const cardInnerWorst = document.querySelector('#flip-card-inner-worst');
+
+  flipButtonWorst.addEventListener('click', function() {
+    cardInnerWorst.classList.toggle('flip'); // 'flip' 클래스 토글로 뒤집기 효과 적용
+  });
+  backToWorstCategoryChartButton.addEventListener('click', function() {
+    cardInnerWorst.classList.toggle('flip');
   });
 });
 
