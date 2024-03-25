@@ -53,6 +53,12 @@
         <h1>출고 조회</h1>
       </div>
       <div class="col-lg-12 mb-4 text-right">
+        <div class="general-button">
+          <button type="button" class="btn btn-dark mb-1 btn-primary" onclick="printPage()">인쇄
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-12 mb-4 text-right">
 
       </div>
       <div class="col-lg-12">
@@ -61,7 +67,7 @@
             <h4 class="card-title">출고 조회</h4>
 
             <div class="table-responsive">
-              <table class="table table-hover">
+              <table class="table table-hover zero-configuration">
                 <thead>
                 <tr>
                   <th>ID</th>
@@ -89,24 +95,29 @@
                 </tr>
                 </tbody>
               </table>
-                  </div>
-                </div>
-              </div>
             </div>
-            <!-- /# card -->
+            <div class="general-button col-lg-12 text-center">
+              <button type="button" class="btn btn-dark mb-1 btn-primary"
+                      onclick="exportTableToExcel('출고리스트현황')">엑셀로 내보내기
+              </button>
+            </div>
           </div>
         </div>
-<!--**********************************
-    Main wrapper end
-***********************************-->
+      </div>
+      <!-- /# card -->
+    </div>
+  </div>
+  <!--**********************************
+      Main wrapper end
+  ***********************************-->
 
-<!--**********************************
-    Scripts
-***********************************-->
-<!--**********************************
-    Scripts
-***********************************-->
-<th:block th:replace="/layout/script :: scriptFragment"></th:block>
+  <!--**********************************
+      Scripts
+  ***********************************-->
+  <!--**********************************
+      Scripts
+  ***********************************-->
+  <th:block th:replace="/layout/script :: scriptFragment"></th:block>
 </div>
 </body>
 
