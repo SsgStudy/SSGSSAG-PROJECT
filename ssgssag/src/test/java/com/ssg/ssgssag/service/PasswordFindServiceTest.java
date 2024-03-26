@@ -23,15 +23,10 @@ public class PasswordFindServiceTest {
         log.info(email);
     }
 
-//    @Test
-//    public void getRandomPassword() {
-//        String tempPassword = passwordFindService.getRandomPassword();
-//        log.info(tempPassword);
-//    }
 
     @Test
     public void updateTempPassword() {
-        String email = "ksjine2@gmail.com";
-        passwordFindService.updateTempPassword(email);
+        String pw = "kasdfsd";
+        passwordFindService.getTempPassword(pw);
     }
 }

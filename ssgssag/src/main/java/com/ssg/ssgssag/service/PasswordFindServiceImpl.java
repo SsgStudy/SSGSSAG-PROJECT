@@ -13,7 +13,7 @@ import java.util.Base64;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class PasswordFindServiceImpl implements PasswordFindService{
+public class PasswordFindServiceImpl implements PasswordFindService {
 
     @Autowired
     private final PasswordFindMapper passwordFindMapper;
@@ -27,8 +27,8 @@ public class PasswordFindServiceImpl implements PasswordFindService{
     }
 
 
-
-    private String getRandomPassword() {
+    @Override
+    public String getRandomPassword() {
         int length = 8;
         SecureRandom random = new SecureRandom();
         byte[] bytes = new byte[length];
@@ -37,13 +37,16 @@ public class PasswordFindServiceImpl implements PasswordFindService{
         return tempPassword.substring(0, length);
     }
 
-    public String updateTempPassword(String email) {
-        // 임시 비밀번호 생성
-        String tempPassword = getRandomPassword();
-        log.info(tempPassword);
-        // 임시 비밀번호를 암호화
-        String encryptedPassword = passwordEncoder.encode(tempPassword);
-        // 데이터베이스에 암호화된 비밀번호 저장
-        return passwordFindMapper.updatePassword(email, encryptedPassword);
+    public String getTempPassword(String pw) {
+        log.info(pw);
+        String encryptPw = passwordEncoder.encode(pw);
+        log.info(encryptPw);
+
+        return encryptPw;
+    }
+
+    @Override
+    public void updateTempPassword(String id, String pw) {
+        passwordFindMapper.updatePassword(id,pw);
     }
 }

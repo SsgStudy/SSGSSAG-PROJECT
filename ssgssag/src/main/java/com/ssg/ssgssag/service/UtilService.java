@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface UtilService {
     void sendShortageNotificationEmails();
-    void sendResetPasswordLink(String email);
+    void sendResetPasswordLink(String email, String tempPassword);
 }
