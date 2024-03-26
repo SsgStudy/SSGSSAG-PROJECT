@@ -79,6 +79,22 @@ public class UtilServiceImpl implements UtilService {
 
     }
 
+    @Override
+    public void sendResetPasswordLink(String email, String tempPassword) {
+        // 임시 비밀번호 발급 안내 메일의 내용을 생성합니다.
+        String subject = "[SSGSSAG] 임시 비밀번호 발급 안내 메일입니다.";
+        String resetPasswordUrl = "<a href=\"http://localhost:8090/member/login\">임시 비밀번호로 로그인해주세요.</a>";
+        String content = "임시 비밀번호가 발급되었습니다.<br>"+ tempPassword +"<br>다음 링크로 로그인해주세요.<br>"+ resetPasswordUrl;
+
+        // 이메일을 발송합니다.
+        try {
+            sendEmail(email, subject, content);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     private void sendEmail(String recipientEmail, String subject, String content) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
