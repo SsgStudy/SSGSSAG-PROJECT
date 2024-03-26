@@ -446,3 +446,16 @@ function addCommas(number) {
 function removeCommas(str) {
     return parseInt(str.replace(/,/g, ''), 10);
 }
+
+$("#cbx_chkAll").click(function() {
+    if($("#cbx_chkAll").is(":checked")) $("input[class=order-checked]").prop("checked", true);
+    else $("input[class=order-checked]").prop("checked", false);
+});
+
+$("input[class=order-checked]").click(function() {
+    let total = $("input[class=order-checked]").length;
+    let checked = $("input[class=order-checked]:checked").length;
+
+    if(total != checked) $("#cbx_chkAll").prop("checked", false);
+    else $("#cbx_chkAll").prop("checked", true);
+});

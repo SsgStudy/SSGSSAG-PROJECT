@@ -20,15 +20,13 @@ function orderConfirm() {
     let orderSeq = [];
 
     $('.order-master-tbody input[type="checkbox"]:checked').each(function() {
-        let index = this.id.match(/\d+$/)[0];
+        let rowData = $('#master-order-table').DataTable().row($(this).closest('tr')).data();
 
-        if ($(`#order-td-order-status-${index}`).text() !== '확정') {
-            orderSeq.push(+$(`#order-td-order-seq-${index}`).text());
-            console.log(+$(`#order-td-order-seq-${index}`).text());
+        // 발주 상태가 확정이 아닌 경우만 처리
+        if (rowData.vOrderStatus !== '확정') {
+            orderSeq.push(rowData.pkOrderSeq);
         }
     });
-
-
 
     if (orderSeq.length < 1) {
         toastr.info("확정할 발주 건을 선택해주세요.");
@@ -147,8 +145,6 @@ $('#warehouseSearchInputBox .table-responsive tbody').on('click', 'tr', function
     $('#warehouseSearchInputBox').modal('hide');
 });
 
-
-
 // 조회
 function searchForm() {
     let period = $("#order-period").val().split(' - ');
@@ -165,37 +161,47 @@ function searchForm() {
 function getMasterOrderList() {
     searchForm();
 
-    $.ajax({
-        url: '/order/read',
-        type: 'POST',
-        contentType: 'application/json',
-        data:
-            JSON.stringify(orderSearchForm),
-        success: function (resp) {
-            let tableBody = $('.zero-configuration tbody');
-            tableBody.empty();
-
-            $.each(resp, function (index, resp) {
-                let currentIndex = index + 1;
-                tableBody.append(
-                    `<tr ondblclick="getOrderSingleList(${resp.pkOrderSeq})">
-                        <th>${currentIndex}</th>
-                        <td><input type="checkbox" id="order-master-td-checked-${currentIndex}" /></td>
-                        <td id="order-master-td-created-date-${currentIndex}">${resp.dtOrderCreatedDate}</td>
-                        <td id="order-td-order-seq-${currentIndex}">${resp.pkOrderSeq}</td>
-                        <td id="order-td-order-status-${currentIndex}">${resp.vOrderStatus}</td>
-                        <td id="order-td-order-type-${currentIndex}">${resp.vOrderType}</td>
-                        <td id="order-td-supplier-nm-${currentIndex}">${resp.vIncomingProductSupplierNm}</td>
-                        <td id="order-td-order-warehouse-nm-${currentIndex}">${resp.vWarehouseNm}</td>
-                    </tr>`
-                );
-            });
+    $('#master-order-table').DataTable({
+        "processing": true,
+        "serverSide": false,
+        "destroy": true,
+        "lengthMenu": [10,25,50],
+        "pageLenth":15,
+        "ajax": {
+            "url": "/order/read", // 서버의 URL
+            "type": "POST",
+            "contentType": "application/json",
+            "data": function(d) {
+                return JSON.stringify(orderSearchForm); // 데이터 테이블에서 전송할 데이터
+            },
+            "dataSrc": function (json) {
+                // 서버로부터 받은 응답을 DataTables가 처리할 수 있는 형태로 변환합니다.
+                return json;
+            }
         },
-        error: function (error) {
-            console.log('Error:', error);
-        }
+        "columns": [
+            {
+                "data":null,
+                "render": function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+            {
+                "data": null,
+                "render": function () {
+                    return '<input type="checkbox" class="order-checked">';
+                }
+            },
+            { "data": "dtOrderCreatedDate" },
+            { "data": "pkOrderSeq" },
+            { "data": "vOrderStatus" },
+            { "data": "vOrderType" },
+            { "data": "vIncomingProductSupplierNm" },
+            { "data": "vWarehouseNm" }
+        ]
     });
 }
+
 
 // 발주 상세
 function getOrderSingleList(orderSeq) {
@@ -221,6 +227,12 @@ function getOrderSingleList(orderSeq) {
         }
     });
 }
+
+$('tbody.order-master-tbody').on('dblclick', 'tr', function(e) {
+    let rowData = $('#master-order-table').DataTable().row($(this).closest('tr')).data();
+    let orderSeq = rowData.pkOrderSeq;
+    getOrderSingleList(orderSeq);
+});
 
 
 // 기타
@@ -255,6 +267,14 @@ function addCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function removeCommas(str) {
-    return parseInt(str.replace(/,/g, ''), 10);
-}
+$("#cbx_chkAll").click(function(e) {
+    e.stopPropagation();
+    $("input.order-checked").prop("checked", this.checked);
+});
+
+$("input.order-checked").click(function() {
+    let total = $("input.order-checked").length;
+    let checked = $("input.order-checked:checked").length;
+
+    $("#cbx_chkAll").prop("checked", total == checked);
+});

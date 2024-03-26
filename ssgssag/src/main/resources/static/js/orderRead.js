@@ -137,7 +137,7 @@ function readOrder() {
                 }
 
                 tableBody.append(
-                    `<tr id="order-single-tr-${currentIndex}">
+                    `<tr id="order-single-tr-${currentIndex}" role="row">
                         <th>${currentIndex}</th>
                         <td>${order.dtOrderCreatedDate}</td>
                         <td>${order.pkOrderSeq}</td>
