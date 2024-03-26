@@ -88,8 +88,11 @@ document.addEventListener('DOMContentLoaded', function () {
   .then(data => {
     console.log('Success:', data);
     // 응답 데이터를 HTML에 바인딩
-    document.getElementById('best-category-analysis-text').innerText = data.analysis;
-    document.getElementById('best-category-suggestion-text').innerText = data.suggestion;
+    const formattedAnalysis = data.analysis.replace(/(\d+\.\s)/g, '\n$1');
+    const formattedSuggestion = data.suggestion.replace(/(\d+\.\s)/g, '\n$1');
+    // 응답 데이터를 HTML에 바인딩
+    document.getElementById('best-category-analysis-text').innerText = formattedAnalysis.trim();
+    document.getElementById('best-category-suggestion-text').innerText = formattedSuggestion.trim();
   })
   .catch((error) => {
     console.error('Error:', error);
@@ -106,8 +109,11 @@ document.addEventListener('DOMContentLoaded', function () {
   .then(data => {
     console.log('Success:', data);
     // 응답 데이터를 HTML에 바인딩
-    document.getElementById('worst-category-analysis-text').innerText = data.analysis;
-    document.getElementById('worst-category-suggestion-text').innerText = data.suggestion;
+    const formattedAnalysis = data.analysis.replace(/(\d+\.\s)/g, '\n$1');
+    const formattedSuggestion = data.suggestion.replace(/(\d+\.\s)/g, '\n$1');
+    // 응답 데이터를 HTML에 바인딩
+    document.getElementById('worst-category-analysis-text').innerText = formattedAnalysis.trim();
+    document.getElementById('worst-category-suggestion-text').innerText = formattedSuggestion.trim();
   })
   .catch((error) => {
     console.error('Error:', error);
