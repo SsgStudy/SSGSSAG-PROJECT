@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -37,18 +38,50 @@ public class PasswordFindController {
         return ResponseEntity.ok(email);
     }
 
+//    @PostMapping("/reset-password")
+//    @Operation(summary = "비밀번호 리셋 호출", description = "비밀번호 리셋 페이지 호출")
+//    public String showResetPasswordPage() {
+//        return "passwordfind/reset-password";
+//    }
+
+//    @GetMapping("/issue-password")
+//    @Operation(summary = "임시 비밀번호 발금 페이지 호출", description = "임시 비밀번호 발급 링크 클릭시 완료")
+//    public String showIssuePasswordPage(@RequestParam("email") String email, Model model) {
+//
+//        log.info("email" + email);
+//        String tempPassword = passwordFindService.getRandomPassword();
+////        String tempPassword = passwordFindService.updateTempPassword(email);
+//        model.addAttribute("tempPassword", tempPassword);
+//        passwordFindService.updateTempPassword(email);
+//        return "passwordfind/issue-password";
+//    }
+
     @PostMapping("/reset-password")
-    @Operation(summary = "비밀번호 리셋 호출", description = "비밀번호 리셋 페이지 호출")
-    public String showResetPasswordPage() {
-        return "passwordfind/reset-password";
+    public ModelAndView resetPassword(@RequestParam String memberId, Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            // memberId를 통해 임시 비밀번호를 재설정하고 이메일로 전송하는 로직을 수행
+            passwordFindService.resetPassword(memberId);
+
+            // 성공 메시지를 모델에 추가하고 성공 뷰로 리다이렉트
+            modelAndView.addObject("message", "임시 비밀번호가 생성되어 이메일로 전송되었습니다.");
+            modelAndView.setViewName("passwordResetSuccess"); // 성공 시 보여줄 뷰의 이름
+        } catch (Exception e) {
+            log.error("비밀번호 재설정 중 에러 발생", e);
+            // 실패 메시지를 모델에 추가하고 실패 뷰로 리다이렉트
+            modelAndView.addObject("error", "비밀번호 재설정 중 문제가 발생했습니다.");
+            modelAndView.setViewName("passwordResetError"); // 실패 시 보여줄 뷰의 이름
+        }
+
+        return modelAndView;
     }
 
-    @GetMapping("/issue-password")
-    @Operation(summary = "임시 비밀번호 발금 페이지 호출", description = "임시 비밀번호 발급 링크 클릭시 완료")
-    public String showIssuePasswordPage(Model model) {
-        String tempPassword = passwordFindService.getRandomPassword();
+    @GetMapping("/reset-password")
+    public String showTempPassword(Model model, @RequestParam String tempPassword) {
         model.addAttribute("tempPassword", tempPassword);
-        return "passwordfind/issue-password";
+        log.info("aaaaaa"+tempPassword);
+        return "passwordfind/reset-password"; // 임시 비밀번호를 보여주는 HTML 페이지
+
     }
 
 
