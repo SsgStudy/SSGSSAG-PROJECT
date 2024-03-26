@@ -84,11 +84,11 @@ public class DashboardController {
 
         // 라인 차트 데이터 준비
         List<String> purchaseDates = dailyPurchaseCountDTOList.stream()
-            .map(dto -> new SimpleDateFormat("yyyy-MM-dd").format(dto.getPurchaseDate()))
-            .collect(Collectors.toList());
+                .map(dto -> new SimpleDateFormat("yyyy-MM-dd").format(dto.getPurchaseDate()))
+                .collect(Collectors.toList());
         List<Integer> dailyPurchases = dailyPurchaseCountDTOList.stream()
-            .map(DailyPurchaseCountDTO::getDailyPurchaseCount)
-            .collect(Collectors.toList());
+                .map(DailyPurchaseCountDTO::getDailyPurchaseCount)
+                .collect(Collectors.toList());
 
         model.addAttribute("purchaseDates", purchaseDates);
         model.addAttribute("dailyPurchases", dailyPurchases);
@@ -96,22 +96,22 @@ public class DashboardController {
 
         //인기 카테고리 파이 차트 데이터 준비
         List<String> categoryNames = bestCategoryDTOList.stream()
-            .map(BestCategoryDTO::getCategoryName)
-            .collect(Collectors.toList());
+                .map(BestCategoryDTO::getCategoryName)
+                .collect(Collectors.toList());
         List<Integer> categoryCounts = bestCategoryDTOList.stream()
-            .map(BestCategoryDTO::getCategoryCnt)
-            .collect(Collectors.toList());
+                .map(BestCategoryDTO::getCategoryCnt)
+                .collect(Collectors.toList());
 
         model.addAttribute("categoryNames", categoryNames);
         model.addAttribute("categoryCounts", categoryCounts);
 
         //비인기 카테고리 파이 차트 데이터 준비
         List<String> worstCategoryNames = worstCategoryDTOList.stream()
-            .map(BestCategoryDTO::getCategoryName)
-            .toList();
+                .map(BestCategoryDTO::getCategoryName)
+                .toList();
         List<Integer> worstCategoryCounts = worstCategoryDTOList.stream()
-            .map(BestCategoryDTO::getCategoryCnt)
-            .toList();
+                .map(BestCategoryDTO::getCategoryCnt)
+                .toList();
 
         model.addAttribute("worstCategoryNames", worstCategoryNames);
         model.addAttribute("worstCategoryCounts", worstCategoryCounts);
@@ -122,7 +122,7 @@ public class DashboardController {
         return "main/main";
     }
 
-//    @PostMapping("/question")
+    //    @PostMapping("/question")
 //    @ResponseBody
 //    public ChatGptResponseDto sendQuestion(@RequestBody QuestionRequestDto requestDto,
 //        Model model) {
@@ -140,27 +140,27 @@ public class DashboardController {
 //
 //        return response;
 //    }
-@PostMapping("/question")
-@ResponseBody
-public ResponseEntity<?> sendQuestion(@RequestBody QuestionRequestDto requestDto) {
-    log.info("GPT 요청값: " + requestDto.toString());
-    ChatGptResponseDto response = chatGptService.askQuestion(requestDto);
+    @PostMapping("/question")
+    @ResponseBody
+    public ResponseEntity<?> sendQuestion(@RequestBody QuestionRequestDto requestDto) {
+        log.info("GPT 요청값: " + requestDto.toString());
+        ChatGptResponseDto response = chatGptService.askQuestion(requestDto);
 
-    List<AnalysisAndSuggestionDTO> analysisAndSuggestions = response.getChoices().stream()
-        .map(choice -> parseContentToJson(choice.getMessage().getContent()))
-        .toList();
+        List<AnalysisAndSuggestionDTO> analysisAndSuggestions = response.getChoices().stream()
+                .map(choice -> parseContentToJson(choice.getMessage().getContent()))
+                .toList();
 
-    if (!analysisAndSuggestions.isEmpty()) {
-        AnalysisAndSuggestionDTO analysisAndSuggestion = analysisAndSuggestions.get(0);
-        Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("analysis", analysisAndSuggestion.getAnalysis());
-        responseBody.put("suggestion", analysisAndSuggestion.getSuggestion());
+        if (!analysisAndSuggestions.isEmpty()) {
+            AnalysisAndSuggestionDTO analysisAndSuggestion = analysisAndSuggestions.get(0);
+            Map<String, Object> responseBody = new HashMap<>();
+            responseBody.put("analysis", analysisAndSuggestion.getAnalysis());
+            responseBody.put("suggestion", analysisAndSuggestion.getSuggestion());
 
-        return ResponseEntity.ok(responseBody);
-    } else {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No analysis and suggestion available.");
+            return ResponseEntity.ok(responseBody);
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No analysis and suggestion available.");
+        }
     }
-}
 
 
     public AnalysisAndSuggestionDTO parseContentToJson(String contentJson) {
@@ -216,6 +216,11 @@ public ResponseEntity<?> sendQuestion(@RequestBody QuestionRequestDto requestDto
         double intercept = (sumY - slope * sumX) / n;
 
         return new double[]{slope, intercept};
+    }
+
+    @GetMapping("/about")
+    public String showAboutPage() {
+        return "main/about";
     }
 
 }
