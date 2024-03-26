@@ -198,8 +198,6 @@ function getMasterOrderList() {
 }
 
 // 발주 상세
-
-
 function getOrderSingleList(orderSeq) {
 
     $.ajax({
@@ -215,8 +213,8 @@ function getOrderSingleList(orderSeq) {
                         <td>${orderSingle.vProductNm}</td>
                         <td>${orderSingle.nInventoryCnt}</td>
                         <td>${orderSingle.nOrderCnt}</td>
-                        <td>${orderSingle.nProductPrice}</td>
-                        <td>${orderSingle.orderTotalPrice}</td>
+                        <td>${addCommas(orderSingle.nProductPrice)}</td>
+                        <td>${addCommas(orderSingle.orderTotalPrice)}</td>
                     </tr>`
                 );
             })
@@ -253,3 +251,10 @@ function formatDate(date) {
     return [month, day, year].join('/');
 }
 
+function addCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function removeCommas(str) {
+    return parseInt(str.replace(/,/g, ''), 10);
+}
