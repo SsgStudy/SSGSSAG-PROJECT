@@ -46,9 +46,9 @@ body::-webkit-scrollbar {
   user-select:none;
 }
 
-.card a:link{text-decoration: none; color:#fff !important}
-.card a:visited{text-decoration: none; color:#fff !important}
-.card a:hover{text-decoration: none; color:#fff !important}
+.card a:link{text-decoration: none; color:#fff}
+.card a:visited{text-decoration: none; color:#fff}
+.card a:hover{text-decoration: none; color:#fff}
 
 /* 카드 컨테이너 스타일 */
 #flip-card {
