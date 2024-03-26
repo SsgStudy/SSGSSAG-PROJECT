@@ -90,13 +90,27 @@ public class MemberServiceTest {
 
 
     @Test
-    public void testModify() {
+    public void testModifyMember() {
         MemberDTO memberDTO = MemberDTO.builder()
             .vMemberId("w").vMemberNm("안녕").vMemberPw("12345").vEmail("sowon901@naver.com")
             .vMemberAuth("ADMIN").build();
 
 
-       memberService.modifyMembers(memberDTO);
+//       memberService.modifyMembers(memberDTO);
+    }
+
+    @Test
+    public void testModifyMemberByMember() {
+        String pw = "$2a$10$sk7k38u0RJgLGqcySwotg.OT5iy8Rvu4oCPVu2mHNKNYETCqzvkN2";
+
+
+        MemberDTO memberDTO = MemberDTO.builder()
+            .vMemberId("test03252")
+            .vMemberPw(pw)
+            .vEmail("modify@naver.com")
+            .build();
+
+       memberService.modifyMemberInfo(memberDTO);
     }
 
     @Test

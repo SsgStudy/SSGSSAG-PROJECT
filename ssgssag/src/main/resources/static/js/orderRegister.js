@@ -1,8 +1,5 @@
 $(document).ready(function() {
     allDeactivateForm();
-    $('.alert').hide();
-
-    console.log("container", orderRegisterContainer);
 });
 
 // 전역 변수
@@ -51,7 +48,7 @@ function createOrderSeq() {
             $("#order-status").val("미확정");
         },
         error: function (error) {
-            console.log('Error:', error);
+            toastr.error("발주 번호 불러오기 실패")
         }
     });
 }
@@ -98,7 +95,7 @@ $(".input-supplier").click(function() {
             });
         },
         error: function(xhr, status, error) {
-            alert("An error occurred: " + error);
+            toastr.error("추가 실패 했습니다.");
         }
     });
 });
@@ -135,7 +132,7 @@ $('.input-whsearch').click(function() {
             });
         },
         error: function(error) {
-            console.error("Error: ", error);
+            toastr.error("창고 데이터 불러오기 실패")
         }
     });
 });
@@ -151,10 +148,7 @@ $('#warehouseSearchInputBox .table-responsive tbody').on('click', 'tr', function
 function clickOrderMasterSave() {
     if (!checkInputFields()) {
         $('#order-master-save-btn').removeAttr('data-target');
-        $('.alert-danger a').text('입력되지 않은 값이 있습니다.');
-        $('.alert-danger').show();
-        $('.alert-danger').delay(2000).fadeOut();
-        // $('.alert-danger a').text('');
+        toastr.info('입력되지 않은 값이 있습니다.');
     }
     else {
         $('#order-master-save-btn').attr('data-target','#exampleModalCenter');
@@ -162,10 +156,7 @@ function clickOrderMasterSave() {
     }
 }
 function orderRegisterSave() {
-    $('.alert-success a').text('발주 마스터가 저장되었습니다.');
-    $('.alert-success').show();
-    $('.alert-success').delay(2000).fadeOut();
-
+    toastr.success("발주 마스터가 저장되었습니다.");
     orderRegisterContainer.find('.input-supplier').prop('disabled', true);
     saveOrderForm();
     activateOrderSingleForm();
@@ -199,8 +190,6 @@ function saveOrderForm() {
     order.vOrderStatus = $("#order-status").val();
     order.vWarehouseCd = $("#warehouse-cd").val();
     order.vOrderType = $("#order-type").val();
-
-    console.log(order);
 }
 
 // 발주 - 삭제
@@ -209,13 +198,13 @@ function deleteOrder() {
         url: `/order/register/${order.pkOrderSeq}`,
         type: 'DELETE',
         success: function (resp) {
-            showAlertSuccess("성공적으로 삭제되었습니다.");
+            toastr.success("성공적으로 삭제되었습니다.");
             setTimeout(() => {
                 window.location.href = "/order/register";
             }, 1500);
         },
         error: function (error) {
-            showAlertDanger("삭제 실패했습니다.");
+            toastr.error("삭제 실패했습니다.");
         }
     });
 }
@@ -258,7 +247,6 @@ function orderObjectDelete() {
 // 발주 상세 - 저장
 function insertOrderAndOrderDetail() {
     let orderDetails = saveOrderDetailForm();
-    console.log("상태 ", saveStatus);
 
     if (orderDetails.length === 0)
         return;
@@ -274,15 +262,15 @@ function insertOrderAndOrderDetail() {
                     .not('#order-register-new-btn, .modal button')
                     .prop('disabled', true);
                 $('#order-register-delete-btn').prop('disabled', false);
-
+                toastr.success("발주가 등록되었습니다.");
             },
             error: function (error) {
-                console.log('Error:', error);
+                toastr.error('발주 등록 실패했습니다. 다시 시도해주세요.');
             }
         });
     }
     else {
-        showAlertDanger("발주 or 발주 상세 값이 비었습니다.");
+        toastr.info("입력되지 않은 값이 있습니다.");
     }
 }
 
@@ -291,7 +279,7 @@ function saveOrderDetailForm() {
     let isValid = true;
 
     if ($('.order-detail-tbody input[type="checkbox"]:checked').length === 0) {
-        showAlertDanger("단품을 입력하세요.").
+        toastr.info("단품을 입력하세요.").
         return;
     }
 
@@ -304,7 +292,7 @@ function saveOrderDetailForm() {
         let orderCnt = +$tr.find('.order-cnt').val();
 
         if (!orderCnt) {
-            showAlertDanger("단품 수량을 입력하세요.");
+            toastr.info("단품 수량을 입력하세요.");
             isValid = false;
             return;
         }
@@ -369,7 +357,7 @@ function createOrderDetailForm() {
         },
         error: function (xhr, status, error) {
             if (xhr.status === 422) {
-                showAlertDanger(xhr.responseText);
+                toastr.warning(xhr.responseText);
             }
         }
     });
@@ -377,7 +365,7 @@ function createOrderDetailForm() {
 
 function checkDuplicateProductRegistration(productCd) {
     if (productCd in addProducts) {
-        showAlertDanger("이미 추가된 상품입니다.");
+        toastr.warning("이미 추가된 상품입니다.");
         return false;
     }
 
@@ -451,18 +439,6 @@ function getCurrentDateFormatted() {
     return mm + '/' + dd + '/' + yyyy;
 }
 
-function showAlertDanger(text) {
-    $('.alert-danger a').text(text);
-    $('.alert-danger').show();
-    $('.alert-danger').delay(2000).fadeOut();
-}
-
-function showAlertSuccess(text) {
-    $('.alert-success a').text(text);
-    $('.alert-success').show();
-    $('.alert-success').delay(2000).fadeOut();
-}
-
 function addCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -470,3 +446,16 @@ function addCommas(number) {
 function removeCommas(str) {
     return parseInt(str.replace(/,/g, ''), 10);
 }
+
+$("#cbx_chkAll").click(function() {
+    if($("#cbx_chkAll").is(":checked")) $("input[class=order-checked]").prop("checked", true);
+    else $("input[class=order-checked]").prop("checked", false);
+});
+
+$("input[class=order-checked]").click(function() {
+    let total = $("input[class=order-checked]").length;
+    let checked = $("input[class=order-checked]:checked").length;
+
+    if(total != checked) $("#cbx_chkAll").prop("checked", false);
+    else $("#cbx_chkAll").prop("checked", true);
+});

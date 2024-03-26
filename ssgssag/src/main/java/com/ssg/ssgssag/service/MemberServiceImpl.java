@@ -83,9 +83,16 @@ public class MemberServiceImpl implements MemberService{
         return memberMapper.getOneMemberInfo(memberId);
     }
 
+//    @Override
+//    public void modifyMembers(MemberDTO dto) {
+//        memberMapper.modifyMemberInfo(dto);
+//    }
+
+
     @Override
-    public void modifyMembers(MemberDTO dto) {
-        memberMapper.modifyMemberInfo(dto);
+    public void modifyMemberInfo(MemberDTO memberDTO) {
+        MemberVO vo = modelMapper.map(memberDTO, MemberVO.class);
+        memberMapper.updateMemberInfo(vo);
     }
 
     @Override
