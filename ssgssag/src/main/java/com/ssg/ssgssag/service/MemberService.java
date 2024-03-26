@@ -18,9 +18,10 @@ public interface MemberService {
 
     MemberVO getOneMemberInModal(String getMemberId);
 
-//    void modifyMembers(MemberDTO dto);
+    void modifyMembersByAdmin(MemberDTO memberDTO);
 
     void modifyMemberInfo(MemberDTO memberDTO);
+
     //중복 아이디
     boolean checkIdInfo(String vMemberId);
 

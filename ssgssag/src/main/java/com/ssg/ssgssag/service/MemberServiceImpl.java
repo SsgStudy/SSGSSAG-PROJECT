@@ -83,10 +83,12 @@ public class MemberServiceImpl implements MemberService{
         return memberMapper.getOneMemberInfo(memberId);
     }
 
-//    @Override
-//    public void modifyMembers(MemberDTO dto) {
-//        memberMapper.modifyMemberInfo(dto);
-//    }
+    //총관리자가 회원 수정
+    @Override
+    public void modifyMembersByAdmin(MemberDTO memberDTO) {
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+        memberMapper.updateMembersByMemberId(memberVO);
+    }
 
 
     @Override
