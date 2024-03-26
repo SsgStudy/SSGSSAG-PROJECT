@@ -254,14 +254,14 @@
                   </div>
                   <hr>
                   <div class="text-left" style="margin-bottom: 3rem;">
-                    <h4 id="best-category-analysis-text" style="line-height: 1.8!important;">판매 건수가 가장 높은 카테고리는 화웨이 시리즈로, 17건이 판매되었습니다. 그 다음으로는 런닝화 카테고리가 6건, 자켓 카테고리가 4건으로 나타났습니다. 갤럭시 시리즈, 맥북 시리즈, 갤럭시 탭 시리즈는 각각 1건씩 판매되었습니다.</h4>
+                    <h4 id="best-category-analysis-text" style="line-height: 1.8!important;">AI 보고서 생성 과정에서 문제가 발생했어요...</h4>
                   </div>
                   <div class="text-left mb-4">
                     <h2>판매 전략 제안 💡</h2>
                   </div>
                   <hr>
                   <div class="text-left">
-                    <h4 id="best-category-suggestion-text" style="line-height: 1.8!important;">화웨이 시리즈와 런닝화 카테고리는 판매 건수가 높으므로 해당 제품들의 마케팅을 강화하고 재고를 확보하는 것이 좋을 것입니다. 또한 자켓 카테고리의 경우에는 인기가 있으므로 다양한 스타일과 색상의 제품을 추가로 준비하여 고객들에게 다양한 선택지를 제공하는 것이 좋습니다.</h4>
+                    <h4 id="best-category-suggestion-text" style="line-height: 1.8!important;">관리자에게 문의해주세요</h4>
                   </div>
               </div>
           </div>
@@ -318,41 +318,20 @@
               <div class="text-right mb-4">
                 <button type="button" class="btn btn-dark mb-1 btn-outline-primary" id="back-to-worst-category-chart">차트 보기</button>
               </div>
-              <canvas id="categoryPieChart"></canvas>
-              <script th:inline="javascript">
-                /*<![CDATA[*/
-                let ctx2 = document.getElementById('categoryPieChart').getContext('2d');
-                let categoryPieChart = new Chart(ctx2, {
-                  type: 'pie',
-                  data: {
-                    labels: /*[[${categoryNames}]]*/[],
-                    datasets: [{
-                      data: /*[[${categoryCounts}]]*/[],
-                      backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                      ],
-                      borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                      ],
-                      borderWidth: 1
-                    }]
-                  },
-                  options: {
-                    maintainAspectRatio: true,
-                  }
-                });
-                /*]]>*/
-              </script>
+              <div class="text-left mb-4" style="margin-top: 3rem">
+                <h2>비인기 카테고리 분석 🔍</h2>
+              </div>
+              <hr>
+              <div class="text-left" style="margin-bottom: 3rem;">
+                <h4 id="worst-category-analysis-text" style="line-height: 1.8!important;">AI 보고서 생성 과정에서 문제가 발생했어요...</h4>
+              </div>
+              <div class="text-left mb-4">
+                <h2>재고 처리 전략 제안 💡</h2>
+              </div>
+              <hr>
+              <div class="text-left">
+                <h4 id="worst-category-suggestion-text" style="line-height: 1.8!important;">관리자에게 문의해주세요</h4>
+              </div>
             </div>
           </div>
           </div>
@@ -373,6 +352,7 @@
   <script th:src="@{/js/Main.js}"></script>
 </div>
 <div id="bestCategoryData" style="display:none" th:attr="data-best-category=${bestCategoryJson}"></div>
+<div id="worstCategoryData" style="display:none" th:attr="data-worst-category=${worstCategoryJson}"></div>
 
 </body>
 

@@ -65,8 +65,13 @@ public class DashboardController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+        String worstCategoryJson;
+        try {
+            worstCategoryJson = objectMapper.writeValueAsString(worstCategoryDTOList);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
-        log.info(worstCategoryDTOList);
 
         model.addAttribute("incoming", statusCountDTOList.get(0).getCnt());
         model.addAttribute("outgoing", statusCountDTOList.get(1).getCnt());
@@ -143,10 +148,9 @@ public ResponseEntity<?> sendQuestion(@RequestBody QuestionRequestDto requestDto
 
     List<AnalysisAndSuggestionDTO> analysisAndSuggestions = response.getChoices().stream()
         .map(choice -> parseContentToJson(choice.getMessage().getContent()))
-        .collect(Collectors.toList());
+        .toList();
 
     if (!analysisAndSuggestions.isEmpty()) {
-        // 여기서는 단순화를 위해 첫 번째 응답만 사용
         AnalysisAndSuggestionDTO analysisAndSuggestion = analysisAndSuggestions.get(0);
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("analysis", analysisAndSuggestion.getAnalysis());
