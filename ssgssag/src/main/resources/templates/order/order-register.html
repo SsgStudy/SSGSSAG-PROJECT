@@ -77,15 +77,6 @@
             </div>
 
             <div class="col-12">
-                <div class="alert-wrap">
-                    <div class="alert alert-danger">
-                        <a href="#" class="alert-link"></a>
-                    </div>
-                    <div class="alert alert-success">
-                        <a href="#" class="alert-link"></a>
-                    </div>
-                </div>
-
                 <div class="card">
                     <div class="card-body" id="order-register-form">
                         <h3 class="card-title">발주</h3>
@@ -222,7 +213,7 @@
                         <div class="row d-flex justify-content-center">
                             <div class="bootstrap-modal">
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-info" id="order-master-save-btn" data-toggle="modal"
+                                <button type="button" class="btn btn-primary" id="order-master-save-btn" data-toggle="modal"
                                         onclick="clickOrderMasterSave()">저장</button>
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModalCenter" style="display: none;" aria-hidden="true">
@@ -236,7 +227,7 @@
                                             <div class="modal-body">저장하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
                                                 <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                <button type="button" id="order-register-save-ok-btn" class="btn btn-info" onclick="orderRegisterSave()" data-dismiss="modal">확인</button>
+                                                <button type="button" id="order-register-save-ok-btn" class="btn btn-primary" onclick="orderRegisterSave()" data-dismiss="modal">확인</button>
                                             </div>
                                         </div>
                                     </div>
@@ -256,8 +247,8 @@
                                             </div>
                                             <div class="modal-body">삭제하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
-                                                <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                <button type="button" class="btn btn-info" onclick="deleteOrder()" data-dismiss="modal">확인</button>
+                                                <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+                                                <button type="button" class="btn btn-primary" onclick="deleteOrder()" data-dismiss="modal">확인</button>
                                             </div>
                                         </div>
                                     </div>
@@ -327,7 +318,7 @@
                         <div class="row d-flex justify-content-center" id="order-register-order-single-btn-wrap">
                             <div class="bootstrap-modal">
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#order-detail-pre-save-btn">저장</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order-detail-pre-save-btn">저장</button>
                                 <!-- Modal -->
                                 <div class="modal fade" id="order-detail-pre-save-btn" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -339,8 +330,8 @@
                                             </div>
                                             <div class="modal-body">저장하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
-                                                <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                <button type="button" class="btn btn-info" id="order-detail-save-btn" data-dismiss="modal"
+                                                <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+                                                <button type="button" class="btn btn-primary" id="order-detail-save-btn" data-dismiss="modal"
                                                         onclick="insertOrderAndOrderDetail()">확인</button>
                                             </div>
                                         </div>
@@ -365,8 +356,8 @@
                                             </div>
                                             <div class="modal-body">삭제하시겠습니까?</div>
                                             <div class="modal-footer d-flex justify-content-center">
-                                                <button type="button" class="btn" data-dismiss="modal">취소</button>
-                                                <button type="button" class="btn btn-info" onclick="deleteOrderSingle()" data-dismiss="modal">확인</button>
+                                                <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+                                                <button type="button" class="btn btn-primary" onclick="deleteOrderSingle()" data-dismiss="modal">확인</button>
                                             </div>
                                         </div>
                                     </div>
