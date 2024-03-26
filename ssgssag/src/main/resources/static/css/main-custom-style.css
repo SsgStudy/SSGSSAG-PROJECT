@@ -1,3 +1,7 @@
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .scrollable-row-wrapper {
   flex-wrap: nowrap !important;
   overflow-x: hidden;
@@ -111,3 +115,4 @@
 #flip-card-inner-worst.flip {
   transform: rotateY(180deg);
 }
+

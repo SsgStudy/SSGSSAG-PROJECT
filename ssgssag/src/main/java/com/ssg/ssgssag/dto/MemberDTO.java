@@ -51,4 +51,32 @@ public class MemberDTO {
     public String getvSocialLoginToken() {
         return vSocialLoginToken;
     }
+
+    public void setvMemberId(String vMemberId) {
+        this.vMemberId = vMemberId;
+    }
+
+    public void setvMemberPw(String vMemberPw) {
+        this.vMemberPw = vMemberPw;
+    }
+
+    public void setvMemberNm(String vMemberNm) {
+        this.vMemberNm = vMemberNm;
+    }
+
+    public void setvMemberAuth(String vMemberAuth) {
+        this.vMemberAuth = vMemberAuth;
+    }
+
+    public void setvEmail(String vEmail) {
+        this.vEmail = vEmail;
+    }
+
+    public void setbProfilePic(Blob bProfilePic) {
+        this.bProfilePic = bProfilePic;
+    }
+
+    public void setvSocialLoginToken(String vSocialLoginToken) {
+        this.vSocialLoginToken = vSocialLoginToken;
+    }
 }

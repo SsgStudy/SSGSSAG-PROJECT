@@ -1,6 +1,7 @@
 let ready = $(document).ready(function() {
 
   $('#searchForm').submit(function (event) {
+
     event.preventDefault();
 
     var formData = {
@@ -47,10 +48,52 @@ let ready = $(document).ready(function() {
   $(document).on('click', '.open-modal', function() {
     let button = $(this);
     let warehouseCd = button.data('warehouse-cd');
+
     openWarehouseModal(button[0], warehouseCd);
   });
-});
 
+
+  $('#sWarehouseTypeSelect').change(function() {
+
+    if ($(this).val() == 'custom') {
+      $('#sWarehouseTypeInput').show();
+    } else {
+
+      $('#sWarehouseTypeInput').hide().val('');
+    }
+  }).change();
+
+
+  $('#warehouseAdd form').submit(function(event) {
+    event.preventDefault();
+
+
+    let isCustomType = $('#sWarehouseTypeSelect').val() === 'custom';
+    let warehouseType = isCustomType ? $('#sWarehouseTypeInput').val() : $('#sWarehouseTypeSelect').val();
+    let formData = $(this).serializeArray();
+
+    formData = formData.filter(item => item.name !== 'sWarehouseType');
+    formData.push({ name: 'sWarehouseType', value: warehouseType });
+
+    $.ajax({
+      type: $(this).attr('method'),
+      url: $(this).attr('action'),
+      data: $.param(formData),
+      contentType: 'application/x-www-form-urlencoded',
+      success: function(response) {
+
+        console.log("창고 추가 완료");
+        toastr.success('창고 등록 성공!');
+        $('#warehouseAdd').modal('hide');
+      },
+      error: function(xhr, status, error) {
+        toastr.error('창고 등록 실패');
+        console.error("Error: ", error);
+      }
+    });
+  });
+
+});
 
 function openWarehouseModal(button,warehouseCd) {
   let warehouseNm = button.dataset.warehouseNm;
@@ -114,20 +157,21 @@ function addZone() {
     url: "/warehouse/addZone",
     data: data,
     success: function(response) {
+
       console.log("Zone added successfully");
+      toastr.success('창고 구역 등록 성공!');
       $('#warehouseDetail').modal('hide');
     },
     error: function(error) {
+      toastr.error('창고 구역 등록 실패!');
       console.log("Error adding zone", error);
     }
   });
 }
 
-// 주소 검색
 
 let element_wrap = document.getElementById('wrap');
 let element_modal_wrap = document.getElementById('modal-wrap');
-// let element_address_modal = document.getElementById('address-modal');
 
 function foldDaumPostcode() {
 
@@ -237,3 +281,20 @@ $("#address-apply-button").click(function() {
   // element_address_modal.style.display ='none';
   updateUserAddress();
 });
+
+$('#warehouseAdd').on('hidden.bs.modal', function () {
+
+  $(this).find('form')[0].reset();
+
+  $('#sWarehouseTypeInput').hide().val('');
+
+  $(this).find('select').val('');
+
+});
+
+$('#warehouseDetail').on('hidden.bs.modal', function () {
+  // 직접적으로 특정 필드 값 설정
+  $('#zoneCode', this).val('');
+  $('#zoneName', this).val('');
+});
+

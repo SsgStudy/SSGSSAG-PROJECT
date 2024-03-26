@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
   <th:block th:replace="/layout/head :: headFragment"></th:block>
-  <title>발주 확정</title>
+
+    <title>발주 확정</title>
+
+
 </head>
 <body>
 <!--*******************
@@ -46,6 +49,7 @@
                 </ol>
             </div>
         </div>
+
         <!-- row -->
 
         <div class="container-fluid">
@@ -66,7 +70,7 @@
                                     </div>
                                     <div class="modal-body center">확정하시겠습니까?</div>
                                     <div class="modal-footer d-flex justify-content-center">
-                                        <button type="button" class="btn" data-dismiss="modal">취소</button>
+                                        <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
                                         <button type="button" class="btn btn-primary" onclick="orderConfirm()" data-dismiss="modal">확인</button>
                                     </div>
                                 </div>
@@ -291,6 +295,8 @@
     Main wrapper end
 ***********************************-->
     <script th:src="@{/js/orderConfirm.js}"></script>
+
+
   <!--**********************************
       Scripts
   ***********************************-->

@@ -4,6 +4,7 @@ import com.ssg.ssgssag.domain.InventoryHistoryVO;
 import com.ssg.ssgssag.domain.InventoryVO;
 import com.ssg.ssgssag.dto.*;
 import com.ssg.ssgssag.service.InventoryService;
+import com.ssg.ssgssag.service.UtilService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 @Log4j2
 @Controller
@@ -20,6 +22,7 @@ import java.util.*;
 public class InventoryController {
 
     private final InventoryService inventoryService;
+    private final UtilService utilService;
 
     @GetMapping("/list")
     @Operation(summary = "재고 목록 출력", description = "재고 조회 리스트 모두 출력")
@@ -83,6 +86,9 @@ public class InventoryController {
     @ResponseBody
     public void selectedInventory(@RequestBody InventoryAdjustmentDTO dto) {
         inventoryService.updateInventoryWithHistoryCnt(dto);
+        // 비동기 처리
+        CompletableFuture.runAsync(() -> utilService.sendShortageNotificationEmails());
+
     }
 
     // 3. 재고 이동
@@ -99,6 +105,8 @@ public class InventoryController {
     @ResponseBody
     public void selectedInventoryMovement(@RequestBody InventoryMovementDTO dto) {
         inventoryService.updateInventoryWithHistoryMove(dto);
+        // 비동기 처리
+        CompletableFuture.runAsync(() -> utilService.sendShortageNotificationEmails());
     }
 
 }

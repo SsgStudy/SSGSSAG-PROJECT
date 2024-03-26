@@ -5,9 +5,12 @@ import com.ssg.ssgssag.dto.IncomingDetailDTO;
 import com.ssg.ssgssag.dto.IncomingProductUpdateRequestDTO;
 import com.ssg.ssgssag.dto.OrderSupplierDTO;
 import com.ssg.ssgssag.service.IncomingService;
+import com.ssg.ssgssag.service.UtilService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class IncomingController {
 
     private final IncomingService incomingService;
+    private final UtilService utilService;
     
     //입고 현황 리스트 조회
     @GetMapping("/list")
@@ -120,6 +124,8 @@ public class IncomingController {
     @ResponseBody
     public ResponseEntity<?> confirmIncomingProducts(@RequestBody List<String> pkIncomingProductSeqs) {
         incomingService.confirmIncomingProducts(pkIncomingProductSeqs);
+        // 비동기 처리
+        CompletableFuture.runAsync(() -> utilService.sendShortageNotificationEmails());
         return ResponseEntity.ok().build();
     }
 

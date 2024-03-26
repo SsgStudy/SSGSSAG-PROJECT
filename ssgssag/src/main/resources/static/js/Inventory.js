@@ -36,7 +36,7 @@ function handleInventoryDetailLinkClick(key) {
             let cnt = 1;
             data.forEach(function (item) {
                 let formattedDate = formatDate(item.dtInventoryChangeDate); // 날짜 처리
-                let shippingCnt =  item.ninventoryShippingCnt; // 수량 처리
+                let shippingCnt = item.ninventoryShippingCnt; // 수량 처리
 
                 let changeType;
                 switch (item.vinventoryChanegeType) {
@@ -291,11 +291,18 @@ function handleOutputQuantityChange() {
     let currentValue = parseInt($('#adjustment-cnt').val());
     let minValue = 1;
     let maxValue = selectCnt;
+    console.log(selectCnt)
 
-    if (currentValue < minValue || currentValue > maxValue) {
-        $('#warningMessage').text('조건에 맞는 수량을 입력해주세요').show();
+    if ($("#out-bound").prop("checked")) {
+        if (currentValue > maxValue) {
+            toastr.warning('기존 수량보다 많이 입력할 수 없습니다.');
+        } else if (currentValue < minValue) {
+            toastr.warning('1 이상의 수량을 입력해야 합니다.');
+        }
     } else {
-        $('#warningMessage').hide();
+        if (currentValue < minValue) {
+            toastr.warning('1 이상의 수량을 입력해야 합니다.');
+        }
     }
 }
 
@@ -306,54 +313,49 @@ $('#adjustment-cnt').on('input', function () {
 
 // 재고 조정 버튼 클릭 시 반영
 $('#submitButton').on('click', function () {
-    let quantity = parseFloat($('#adjustment-cnt').val());
-    let type = $('#in-bound').prop('checked') ? 'CHANGE_CNT_INBOUND' : 'CHANGE_CNT_OUTBOUND';
 
-    let data = {
-        pkInventorySeq: selectedNumber,
-        vInventoryChangeType: type,
-        nInventoryShippingCnt: quantity
-    };
+    let inBoundChecked = $("#in-bound").prop("checked");
+    let outBoundChecked = $("#out-bound").prop("checked");
 
-    console.log(data)
+    if (!inBoundChecked && !outBoundChecked) {
+        toastr.warning('조정 구분을 선택하세요.')
+    } else if (isNaN(parseFloat($('#adjustment-cnt').val()))) {
+        toastr.warning('수량을 입력하세요.')
+    } else if (isNaN(selectCnt)) {
+        toastr.warning('재고목록을 선택해주세요.')
+    } else {
+        let quantity = parseFloat($('#adjustment-cnt').val());
+        let type = $('#in-bound').prop('checked') ? 'CHANGE_CNT_INBOUND' : 'CHANGE_CNT_OUTBOUND';
 
-    $.ajax({
-        url: '/inventory/adjustment',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: function (response) {
-            console.log('서버 응답:' + JSON.stringify(data));
+        let data = {
+            pkInventorySeq: selectedNumber,
+            vInventoryChangeType: type,
+            nInventoryShippingCnt: quantity
+        };
 
-            showSuccessAlert();
-            window.scrollTo(0, 0);
-            reloadPageAfterDelay(1000);
-        },
-        error: function (xhr, status, error) {
-            console.error('에러 발생:', error);
+        console.log(data);
 
-            showDangerAlert();
-            window.scrollTo(0, 0);
-            reloadPageAfterDelay(1000);
-        }
-    });
+        $.ajax({
+            url: '/inventory/adjustment',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (response) {
+                console.log('서버 응답:' + JSON.stringify(data));
+                toastr.success('재고 수량 조정 완료');
+                window.scrollTo(0, 0);
+                reloadPageAfterDelay(1500);
+            },
+            error: function (xhr, status, error) {
+                console.error('에러 발생:', error);
+                toastr.error('재고 수량 조정 실패');
+                window.scrollTo(0, 0);
+                reloadPageAfterDelay(1500);
+            }
+        });
+    }
 });
 
-
-// alert
-function showSuccessAlert() {
-    $("#successAlert").fadeIn();
-    setTimeout(function () {
-        $("#successAlert").fadeOut();
-    }, 3000);
-}
-
-function showDangerAlert() {
-    $("#dangerAlert").fadeIn();
-    setTimeout(function () {
-        $("#dangerAlert").fadeOut();
-    }, 3000);
-}
 
 function reloadPageAfterDelay(delay) {
     setTimeout(function () {
@@ -382,17 +384,16 @@ $('#submitMovementButton').on('click', function () {
         data: JSON.stringify(data),
         success: function (response) {
             console.log('서버 응답:' + JSON.stringify(data));
-
-            showSuccessAlert();
+            toastr.success('창고 및 구역 이동 완료')
             window.scrollTo(0, 0);
             reloadPageAfterDelay(1000);
         },
         error: function (xhr, status, error) {
             console.error('에러 발생:', error);
-
-            showDangerAlert();
+            toastr.error('창고 및 구역 이동 실패')
             window.scrollTo(0, 0);
             reloadPageAfterDelay(1000);
         }
-     });
-});
+    });
+})
+;
