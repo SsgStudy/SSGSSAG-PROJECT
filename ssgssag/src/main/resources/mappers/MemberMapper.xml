@@ -37,8 +37,20 @@
       </if>
   </select>
 
-  <update id="modifyMemberInfo" parameterType="com.ssg.ssgssag.dto.MemberDTO">
-    update TB_MEMBER set V_MEMBER_NM = #{vMemberNm}, V_MEMBER_PW = #{vMemberPw}, V_MEMBER_AUTH = #{vMemberAuth}, V_EMAIL = #{vEmail} where V_MEMBER_ID = #{vMemberId}
+<!-- 관리자 -->
+<!--  <update id="modifyMemberInfo" parameterType="com.ssg.ssgssag.dto.MemberDTO">-->
+<!--    update TB_MEMBER -->
+<!--    set V_MEMBER_NM = #{vMemberNm}, V_MEMBER_PW = #{vMemberPw}, V_MEMBER_AUTH = #{vMemberAuth}, V_EMAIL = #{vEmail} -->
+<!--    where V_MEMBER_ID = #{vMemberId}-->
+<!--  </update>-->
+
+  <update id="updateMemberInfo" parameterType="MemberVO">
+    UPDATE TB_MEMBER
+    SET
+      V_MEMBER_PW = COALESCE(NULLIF(#{vMemberPw}, V_MEMBER_PW), V_MEMBER_PW),
+      V_EMAIL = COALESCE(NULLIF(#{vEmail}, V_EMAIL), V_EMAIL)
+    WHERE V_MEMBER_ID = #{vMemberId};
+
   </update>
 
   <select id="checkId" resultType="boolean">

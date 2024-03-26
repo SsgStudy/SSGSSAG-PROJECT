@@ -17,7 +17,10 @@ public interface MemberMapper {
 
     List<MemberDTO> selectMemberByString(MemberDTO member);
 
-    void modifyMemberInfo(MemberDTO memberDTO);
+//    관리자
+//    void modifyMemberInfo(MemberDTO memberDTO);
+
+    void updateMemberInfo(MemberVO memberVO);
 
     MemberVO getOneMemberInfo(String memberId);
 

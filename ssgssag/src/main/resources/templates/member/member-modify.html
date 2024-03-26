@@ -14,6 +14,7 @@
     Preloader end
 ********************-->
 
+
 <div class="login-form-bg h-100">
   <div class="container h-100">
     <div class="row justify-content-center h-100">
@@ -25,7 +26,7 @@
               <form class="mt-5 mb-5 login-input">
                 <div class="d-flex justify-content-center">
                   <div class="text-center">
-                    <img src="${pageContext.request.contextPath}/../../theme/images/imgs/user.png" class="profile" width="100" height="100">
+                    <img src="/images/user/1.gif" class="profile" width="100" height="100">
                     <p class="text-center">
                       <input type="file" id="file" accept="image/gif, image/png, image/jpeg">
                     </p>
@@ -33,27 +34,27 @@
                 </div>
 
                 <div class="form-group d-flex justify-content-between">
-                  <input type="text" class="form-control w-75" placeholder="이름" required>
+                  <input type="text" class="form-control w-75" th:value="${member.vMemberNm}" placeholder="이름" readonly>
                 </div>
                 <div class="form-group d-flex justify-content-between">
-                  <input type="text" class="form-control w-75" placeholder="아이디" required readonly>
+                  <input type="text" class="form-control w-75" id="vMemberId" th:value="${member.vMemberId}" placeholder="아이디" readonly>
                 </div>
 
                 <div class="passwordEye">
                   <div class="form-group d-flex justify-content-between w-75">
-                    <input type="password" name="pwd" class="form-control" placeholder="비밀번호" required>
+                    <input type="password" name="pwd" class="form-control" placeholder="비밀번호">
                     <i class="fa fa-eye-slash fa-lg"></i>
                   </div>
                   <div class="form-group d-flex justify-content-between w-75">
-                    <input type="password" name="pwdCheck" class="form-control" placeholder="비밀번호 확인" required>
+                    <input type="password" name="pwdCheck" class="form-control" placeholder="비밀번호 확인">
                     <i class="fa fa-eye-slash fa-lg"></i>
                   </div>
                 </div>
                 <div class="form-group d-flex justify-content-between">
-                  <input type="email" name="email" class="form-control w-75" placeholder="이메일" required>
+                  <input type="email" name="email" class="form-control w-75" th:value="${member.vEmail}" placeholder="이메일">
                 </div>
                 <form class="mt-5 mb-5 login-input">
-                  <button class="btn login-form__btn submit w-100">수정하기</button>
+                  <button class="btn login-form__btn submit w-100" onclick="modifyMemberInfo()">수정하기</button>
                 </form>
 
                 <div class="text-right" data-toggle="modal" data-target="#customs" id="alertButton">회원 탈퇴</div>
@@ -86,27 +87,11 @@
   </div>
 </div>
 
-
 <!--**********************************
     Scripts
 ***********************************-->
 <th:block th:replace="/layout/script :: scriptFragment"></th:block>
-
-<script>
-  $(function() {
-    $('.passwordEye i').on('click', function() {
-      $('input').toggleClass('active');
-
-      if ($('input').hasClass('active')) {
-        $(this).attr('class', "fa fa-eye fa-lg")
-        .prev('input').attr('type', "text");
-      } else {
-        $(this).attr('class', "fa fa-eye-slash fa-lg")
-        .prev('input').attr('type', 'password');
-      }
-    });
-  });
-</script>
+<script th:src="@{/js/Member.js}"></script>
 
 </body>
 
