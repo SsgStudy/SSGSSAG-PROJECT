@@ -66,11 +66,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const worstCategoryDTOList = JSON.parse(worstCategoryData);
 
   // 문자열을 JSON 객체로 변환합니다.
-  const data = {
-    question: "인기 카테고리 별 판매 건수를 제공할거야. 자세한 분석 포인트와 해당 근거, 판매 건수를 늘리거나 재고 관련 최대한 자세한 제안을 Json 형태로 전달해줘. 'analysis'과 'suggestion' 단 두 개의 키 값만 사용하도록 해줘. 단순한 키-밸류 구조를 유지해줘. "+ JSON.stringify(bestCategoryDTOList)
+  const databest = {
+    question: "인기 카테고리 별 판매 건수를 제공할거야. 자세한 분석 포인트와 해당 근거, 판매를 높이기 위한 최대한 자세한 제안을 \"analysis\"과 \"suggestion\" 단 두 개의 키 값 존재하는 1차원 JSON 형태로 답변해줘. 분석할 데이터는 다음과 같아."+ JSON.stringify(bestCategoryDTOList)
   };
   const dataWorst = {
-    question: "비인기 카테고리 별 판매 건수를 제공할거야. 자세한 분석 포인트와 해당 근거, 판매 건수를 늘리거나 재고 관련 최대한 자세한 제안을 Json 형태로 전달해줘. 'analysis'과 'suggestion' 단 두 개의 키 값만 사용하도록 해줘. 단순한 키-밸류 구조를 유지해줘. "+ JSON.stringify(bestCategoryDTOList)
+    question: "비인기 카테고리 별 판매 건수를 제공할거야. 자세한 분석 포인트와 해당 근거, 판매를 높이기 위한 최대한 자세한 제안을 \"analysis\"과 \"suggestion\" 단 두 개의 키 값 존재하는 1차원 JSON 형태로 답변해줘. 분석할 데이터는 다음과 같아."+ JSON.stringify(worstCategoryDTOList)
   };
   document.getElementById('best-category-analysis-text').innerText = "AI가 인기 카테고리 요인을 열심히 분석하고 있어요~~   (｡ì _ í｡)";
   document.getElementById('best-category-suggestion-text').innerText = "판매율을 높이기 위한 방법을 생각 중이에요!!  (￣◇￣;)";
@@ -82,14 +82,14 @@ document.addEventListener('DOMContentLoaded', function () {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(databest)
   })
   .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
+  .then(responsebestdata => {
+    console.log('Success:', responsebestdata);
     // 응답 데이터를 HTML에 바인딩
-    const formattedAnalysis = data.analysis.replace(/(\d+\.\s)/g, '\n$1');
-    const formattedSuggestion = data.suggestion.replace(/(\d+\.\s)/g, '\n$1');
+    const formattedAnalysis = responsebestdata.analysis.replace(/(\d+\.\s)/g, '\n$1');
+    const formattedSuggestion = responsebestdata.suggestion.replace(/(\d+\.\s)/g, '\n$1');
     // 응답 데이터를 HTML에 바인딩
     document.getElementById('best-category-analysis-text').innerText = formattedAnalysis.trim();
     document.getElementById('best-category-suggestion-text').innerText = formattedSuggestion.trim();
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.error('Error:', error);
   });
 
-  fetch('/question', {
+  fetch('/question2', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -106,11 +106,11 @@ document.addEventListener('DOMContentLoaded', function () {
     body: JSON.stringify(dataWorst)
   })
   .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
+  .then(responseworstdata => {
+    console.log('Success:', responseworstdata);
     // 응답 데이터를 HTML에 바인딩
-    const formattedAnalysis = data.analysis.replace(/(\d+\.\s)/g, '\n$1');
-    const formattedSuggestion = data.suggestion.replace(/(\d+\.\s)/g, '\n$1');
+    const formattedAnalysis = responseworstdata.analysis.replace(/(\d+\.\s)/g, '\n$1');
+    const formattedSuggestion = responseworstdata.suggestion.replace(/(\d+\.\s)/g, '\n$1');
     // 응답 데이터를 HTML에 바인딩
     document.getElementById('worst-category-analysis-text').innerText = formattedAnalysis.trim();
     document.getElementById('worst-category-suggestion-text').innerText = formattedSuggestion.trim();
