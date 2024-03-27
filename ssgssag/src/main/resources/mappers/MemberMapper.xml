@@ -50,8 +50,8 @@
   <update id="updateMemberInfo" parameterType="MemberVO">
     UPDATE TB_MEMBER
     SET
-      V_MEMBER_PW = COALESCE(NULLIF(#{vMemberPw}, V_MEMBER_PW), V_MEMBER_PW),
-      V_EMAIL = COALESCE(NULLIF(#{vEmail}, V_EMAIL), V_EMAIL)
+      V_EMAIL = COALESCE(NULLIF(#{vEmail}, V_EMAIL), V_EMAIL),
+      B_PROFILE_PIC = #{bProfilePic}
     WHERE V_MEMBER_ID = #{vMemberId}
   </update>
 

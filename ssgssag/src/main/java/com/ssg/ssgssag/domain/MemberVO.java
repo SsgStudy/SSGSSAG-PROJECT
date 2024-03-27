@@ -16,8 +16,9 @@ public class MemberVO {
     private String vMemberNm;
     private String vMemberAuth;
     private String vEmail;
-    private Blob bProfilePic;
+    private byte[] bProfilePic;
     private String vSocialLoginToken;
+
 
     public String getvMemberId() {
         return vMemberId;
@@ -39,11 +40,13 @@ public class MemberVO {
         return vEmail;
     }
 
-    public Blob getbProfilePic() {
+    public byte[] getbProfilePic() {
         return bProfilePic;
     }
 
     public String getvSocialLoginToken() {
         return vSocialLoginToken;
     }
+
+
 }
