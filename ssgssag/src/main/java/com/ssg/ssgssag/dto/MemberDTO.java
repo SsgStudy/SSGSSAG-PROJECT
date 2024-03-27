@@ -23,6 +23,11 @@ public class MemberDTO {
     private String vEmail;
     private Blob bProfilePic;
     private String vSocialLoginToken;
+    private String vMemberNewPw;
+
+    public String getvMemberNewPw() {
+        return vMemberNewPw;
+    }
 
     public String getvMemberId() {
         return vMemberId;

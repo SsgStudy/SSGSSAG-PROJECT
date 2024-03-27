@@ -3,6 +3,8 @@ package com.ssg.ssgssag.service;
 import com.ssg.ssgssag.domain.MemberVO;
 import com.ssg.ssgssag.dto.MemberDTO;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -30,5 +32,7 @@ public interface MemberService {
     MemberVO getMemberByMemberId(String memberId);
 
     MemberVO login(MemberDTO memberDTO);
+
+    int modifyPassword(MemberDTO member);
 
 }

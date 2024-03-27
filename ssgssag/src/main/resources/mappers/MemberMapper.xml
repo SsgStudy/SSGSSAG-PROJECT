@@ -63,4 +63,14 @@
     select * from TB_MEMBER where V_MEMBER_ID = #{vMemberId} and V_MEMBER_PW = #{vMemberPw}
   </select>
 
+  <select id="selectOneMemberByMemberIdAndMemberPw" parameterType="com.ssg.ssgssag.dto.MemberDTO" resultType="int">
+    select count(*) from TB_MEMBER WHERE V_MEMBER_ID = #{vMemberId} AND V_MEMBER_PW = #{vMemberPw}
+  </select>
+
+  <update id="updateMemberPassword" parameterType="map">
+    UPDATE TB_MEMBER
+    SET
+        V_MEMBER_PW = #{vMemberNewPw}
+    WHERE V_MEMBER_ID = #{vMemberId}
+  </update>
 </mapper>

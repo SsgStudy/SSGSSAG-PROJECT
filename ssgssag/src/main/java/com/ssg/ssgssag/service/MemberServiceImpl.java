@@ -5,9 +5,9 @@ import com.ssg.ssgssag.dto.MemberDTO;
 import com.ssg.ssgssag.mapper.MemberMapper;
 import com.ssg.ssgssag.security.DataNotFoundException;
 import com.ssg.ssgssag.security.MemberRole;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -128,5 +128,16 @@ public class MemberServiceImpl implements MemberService{
        return memberMapper.login(memberDTO.getvMemberId(),
             passwordEncoder.encode(memberDTO.getvMemberPw()));
 
+    }
+
+    @Override
+    public int modifyPassword(MemberDTO member) {
+        int result = memberMapper.selectOneMemberByMemberIdAndMemberPw(member);
+        if (result == 1) {
+            memberMapper.updateMemberPassword(member);
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }
