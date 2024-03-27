@@ -6668,7 +6668,7 @@ button.bg-dark:focus {
   color: #fff !important; }
 
 .text-primary {
-  color: #7571f9 !important; }
+  color: #0575E6 !important; }
 
 a.text-primary:hover, a.text-primary:focus {
   color: #4540f7 !important; }
@@ -9055,7 +9055,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     z-index: 9;
     top: 3.75rem;
     right: 100%;
-    background-color: #7571f9;
+    background-color: #0575E6;
     color: #fff;
     display: inline-block;
     height: 3.125rem;
@@ -9125,11 +9125,11 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
       content: "✓";
       color: #fff; }
     .sidebar-right .tab-content .tab-pane .admin-settings [type="radio"]#nav_header_bg_1:not(:checked) + label::after {
-      background-color: #7571f9;
-      border: 2px solid #7571f9; }
+      background-color: #0575E6;
+      border: 2px solid #0575E6; }
     .sidebar-right .tab-content .tab-pane .admin-settings [type="radio"]#nav_header_bg_1:checked + label::after {
-      background-color: #7571f9;
-      border: 2px solid #7571f9; }
+      background-color: #0575E6;
+      border: 2px solid #0575E6; }
     .sidebar-right .tab-content .tab-pane .admin-settings [type="radio"]#header_bg_1:not(:checked) + label::after, .sidebar-right .tab-content .tab-pane .admin-settings [type="radio"]#sidebar_bg_1:not(:checked) + label::after {
       background-color: #fff;
       border: 2px solid #464a53; }
@@ -10012,7 +10012,7 @@ input[type="checkbox"]:checked:after {
   display: block;
   content: "\f00c";
   font-family: 'FontAwesome';
-  color: #7571f9;
+  color: #0575E6;
   font-weight: 100;
   text-align: center; }
 
@@ -10766,7 +10766,7 @@ table.dataTable thead .sorting::after {
   height: 50px; }
 
 #slider-toggle.off .noUi-handle {
-  border-color: #7571f9; }
+  border-color: #0575E6; }
 
 .colorpicker-slider .sliders.noUi-target#red, .colorpicker-slider .sliders.noUi-target#green, .colorpicker-slider .sliders.noUi-target#blue {
   margin: 10px;
@@ -14725,3 +14725,9 @@ canvas {
   /*position: absolute;*/
   width: 100%;
 }
+
+
+.page-item.active .page-link {
+  background-color: #0575E6 !important;
+}
+

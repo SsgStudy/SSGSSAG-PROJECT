@@ -110,8 +110,6 @@
                 <table class="table table-hover zero-configuration">
                   <thead>
                   <tr>
-                    <!-- <th>#</th> -->
-<!--                    <th>No</th>-->
                     <th>재고 번호</th>
                     <th>전표 일자</th>
                     <th>상품 코드</th>
@@ -126,7 +124,7 @@
                     <tr th:each="inventory : ${inventoryList}">
                       <td data-toggle="modal" data-target="#inventory-history-modal" th:onclick="'handleInventoryDetailLinkClick(' + ${inventory.pkInventorySeq} + ')'">
                         <a class="inventory-detail-link" th:attr="data-inventory-id=${inventory.pkInventorySeq}">
-                          <span th:text="${inventory.pkInventorySeq}"></span>
+                          <span th:text="${inventory.pkInventorySeq}" class="text-primary"></span>
                         </a>
 
                       </td>
