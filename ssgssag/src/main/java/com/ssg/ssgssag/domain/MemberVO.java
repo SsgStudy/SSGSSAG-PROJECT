@@ -18,9 +18,9 @@ public class MemberVO {
     private String vEmail;
     private Blob bProfilePic;
     private String vSocialLoginToken;
-    private Boolean bIsActive;
+    private int bIsActive;
 
-    public Boolean getbIsActive() {
+    public int getbIsActive() {
         return bIsActive;
     }
 
