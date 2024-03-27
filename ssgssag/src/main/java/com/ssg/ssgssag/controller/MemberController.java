@@ -37,7 +37,6 @@ public class MemberController {
 
     @PostMapping("/signup")
     public String signup(@RequestBody MemberDTO newMember) {
-        log.info("member signup {}", newMember);
         memberService.registerMember(newMember);
 
         return "redirect:/";
@@ -58,9 +57,8 @@ public class MemberController {
         return ResponseEntity.ok(check);
     }
 
-//    @PreAuthorize("isAuthenticated()")
-
     @GetMapping("/info")
+    @ResponseStatus(HttpStatus.SEE_OTHER)
     public String showModifyPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         MemberVO memberVO = memberService.getOneMemberInModal(userDetails.getUsername());
         model.addAttribute("member", memberVO);
@@ -82,13 +80,24 @@ public class MemberController {
             .vEmail(memberEmail)
             .build();
 
-        log.info("회원 아이디 : {}", dto.getvMemberId());
-
         memberService.modifyMemberInfo(dto);
 
         return "redirect:/";
     }
 
 
+    @PatchMapping("/leave")
+    @ResponseStatus(HttpStatus.SEE_OTHER)
+    @Operation(summary = "회원 탈퇴", description = "회원이 계정을 탈퇴합니다.")
+    public String deleteAccount(@RequestParam String memberId) {
+
+        MemberDTO memberDTO = MemberDTO.builder()
+            .vMemberId(memberId).build();
+
+        memberService.deleteMember(memberDTO);
+
+        return "redirect:/";
+
+    }
 
 }

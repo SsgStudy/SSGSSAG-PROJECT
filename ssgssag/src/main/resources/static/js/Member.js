@@ -13,7 +13,6 @@ $(document).ready(function() {
 
 
   $("#checkButton").click(function() {
-    console.log("체크버튼 눌림");
     checkId();
   });
 
@@ -64,8 +63,6 @@ let validForm = {
 //회원 중복 불러오기
 function checkId() {
   let memberId = $('#vMemberId').val().trim();
-  console.log("vMemberId" , memberId);
-
   if(memberId === '') {
     toastr.warning("아이디를 입력해주세요");
     return
@@ -94,29 +91,18 @@ function checkId() {
   })
 }
 
-
-
-
-
-
-
-
-
-
 function checkBlank() {
 
-    let memberNm = $('#vMemberNm').val().trim();
-    let memberId = $('#vMemberId').val().trim();
-    let memberPw = $('#vMemberPw').val().trim();
-    let memberEmail = $('#vEmail').val();
+  let memberNm = $('#vMemberNm').val().trim();
+  let memberId = $('#vMemberId').val().trim();
+  let memberPw = $('#vMemberPw').val().trim();
+  let memberEmail = $('#vEmail').val();
 
-    if (memberNm === '' || memberId === '' || memberPw === '' || memberEmail === '') {
-      return false;
-    }
-
-    return true;
+  if (memberNm === '' || memberId === '' || memberPw === '' || memberEmail === '') {
+    return false;
+  }
+  return true;
 }
-
 
 function signupRequest() {
 
@@ -137,8 +123,8 @@ function signupRequest() {
     contentType:'application/json',
     data: JSON.stringify(member),
     success: function (response) {
-       window.location.href='/';
-       toastr.success('회원가입이 완료되었습니다.');
+      window.location.href='/';
+      toastr.success('회원가입이 완료되었습니다.');
     },
     error: function (xhr, status, error) {
       toastr.error('회원가입에 실패하였습니다. 다시 시도해주세요.');
@@ -147,38 +133,28 @@ function signupRequest() {
 }
 
 function modifyMemberInfo() {
-    let memberId = $('#vMemberId').val();
-    let pwd = $('input[name="pwd"]').val();
-    let pwdCheck = $('input[name="pwdCheck"]').val();
-    let memberEmail = $('input[name="email"]').val();
+  let memberId = $('#vMemberId').val();
+  let pwd = $('input[name="pwd"]').val();
+  let memberEmail = $('input[name="email"]').val();
 
-    $.ajax({
-      url: '/member/info',
-      type: 'PATCH',
-      data: {
-        memberId: memberId,
-        memberPw: pwd,
-        memberEmail: memberEmail,
-      },
-      success: function (response) {
-        // 성공 시 처리 로직 작성
-        if(!password()) {
+  $.ajax({
+    url: '/member/info',
+    type: 'PATCH',
+    data: {
+      memberId: memberId,
+      memberPw: pwd,
+      memberEmail: memberEmail,
+    },
+    success: function (response) {
+      window.location.href='/'
+      toastr.success("수정 완료")
 
-        }else {
-          window.location.href='/'
-          alert('수정 완료');
-        }
-
-      },
-      error: function (xhr, status, error) {
-        // 에러 처리 로직 작성
-        console.log(memberAuth)
-        console.error('Error:', error);
-        alert('수정에 실패하였습니다. 다시 시도해주세요.');
-      }
-    });
+    },
+    error: function (xhr, status, error) {
+      toastr.error('수정에 실패하였습니다. 다시 시도해주세요.')
+    }
+  });
 }
-
 
 function checkEmpty() {
   let isValid = true;
@@ -216,6 +192,41 @@ function checkEmpty() {
 
 
 
+function checkModifyEmpty() {
+  let isValid = true;
+  let $modifyForm = $("#modify-form");
+
+  $modifyForm.find('input').each(function() {
+    let value = $(this).val().trim();
+
+    if ($(this).attr('id') === 'email') {
+      validateEmail(value);
+    }
+
+    if (value === '') {
+      isValid = false;
+    }
+  });
+
+  if (!isValid) {
+    toastr.info('입력하지 않은 값이 있습니다.');
+    return false;
+  } else if (!validForm.pw) {
+    toastr.warning('비밀번호가 다릅니다');
+    return false;
+  } else if (!validForm.email) {
+    toastr.warning('유효하지 않은 이메일 형식입니다.');
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+
+
+
+
 function validateEmail(email) {
   let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -225,9 +236,7 @@ function validateEmail(email) {
   else {
     validForm.email = true;
   }
-
 }
-
 
 function password() {
   let pwd = $('#vMemberPw').val();
@@ -242,4 +251,24 @@ function password() {
     validForm.pw = true;
     return true;
   }
+}
+
+function deleteAccount() {
+
+  let memberId = $('#vMemberId').val();
+
+  $.ajax({
+    url: `/member/leave`,
+    type: 'PATCH',
+    data: {memberId: memberId},
+    success: function (resp) {
+      toastr.success("성공적으로 삭제되었습니다.");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
+    },
+    error: function (error) {
+      toastr.error("삭제 실패했습니다.");
+    }
+  });
 }

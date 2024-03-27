@@ -17,7 +17,7 @@ public interface MemberMapper {
 
     List<MemberDTO> selectMemberByString(MemberDTO member);
 
-//    관리자
+    //    관리자
     void updateMembersByMemberId(MemberVO memberVO);
 
     void updateMemberInfo(MemberVO memberVO);
@@ -26,4 +26,9 @@ public interface MemberMapper {
 
     boolean checkId(String vMemberId);
     MemberVO login(@Param("vMemberId") String memberId, @Param("vMemberPw") String memberPw);
+
+
+    void deleteMemberInfo(MemberVO memberVO);
+
+
 }

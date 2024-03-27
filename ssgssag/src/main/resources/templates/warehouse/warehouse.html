@@ -3,7 +3,7 @@
 <head>
   <th:block th:replace="/layout/head :: headFragment"></th:block>
   <script th:src="@{//dapi.kakao.com/v2/maps/sdk.js?appkey=77943d8a8f8b653c1f0843d4b37047e9&libraries=services}"></script>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/warehouse.css}">
+
   <title>창고 관리</title>
 </head>
 
@@ -51,11 +51,11 @@
     </div>
 
     <div class="container-fluid mt-3">
+      <h1>창고 조회</h1>
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">창고 조회 및 등록</h4>
-
             <div class="d-flex justify-content-end">
               <button type="button" class="btn mb-3 btn-primary btn-warehouse" data-toggle="modal"
                       data-target="#warehouseAdd">창고 등록
@@ -72,59 +72,59 @@
                     </button>
                   </div>
                   <form action="/warehouse/add" method="post">
-                  <div class="modal-body">
-                    <div class="col-lg-12 mb-4 text-right">
-                      <div class="row mb-1">
+                    <div class="modal-body">
+                      <div class="col-lg-12 mb-4 text-right">
+                        <div class="row mb-1">
 
-                        <div class="col-sm-9">
-                          <input type="hidden" class="form-control input-flat" name="vWarehouseCd">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <label class="col-sm-3 col-form-label text-left">이름</label>
-                        <div class="col-sm-9 mb-1">
-                          <input type="text" class="form-control input-flat"  name="vWarehouseNm"
-                                 placeholder="창고 이름을 입력해주세요" required>
-                        </div>
-                      </div>
-                      <div class="row" style="justify-content: flex-end">
-                        <label class="col-sm-3 col-form-label text-left">소재지</label>
-                        <div class="col-sm-9 mb-1">
-                          <input type="text" class="form-control input-flat" name="vWarehouseLoc" data-aos="zoom-in-up"
-                                 placeholder="창고 소재지를 입력해주세요" onclick="sample3_execDaumPostcode()" id="sample3_search" required>
-                        </div>
-
-                        <div id="modal-wrap" class="col-sm-9">
-                          <div id="wrap" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
-                            <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+                          <div class="col-sm-9">
+                            <input type="hidden" class="form-control input-flat" name="vWarehouseCd">
                           </div>
                         </div>
+                        <div class="row">
+                          <label class="col-sm-3 col-form-label text-left">이름</label>
+                          <div class="col-sm-9 mb-1">
+                            <input type="text" class="form-control input-flat"  name="vWarehouseNm"
+                                   placeholder="창고 이름을 입력해주세요" required>
+                          </div>
+                        </div>
+                        <div class="row" style="justify-content: flex-end">
+                          <label class="col-sm-3 col-form-label text-left">소재지</label>
+                          <div class="col-sm-9 mb-1">
+                            <input type="text" class="form-control input-flat" name="vWarehouseLoc" data-aos="zoom-in-up"
+                                   placeholder="창고 소재지를 입력해주세요" onclick="sample3_execDaumPostcode()" id="sample3_search" required>
+                          </div>
 
-                      </div>
-                      <div class="row">
-                        <label class="col-sm-3 col-form-label text-left">종류</label>
-                        <div class="col-sm-9 mb-1">
+                          <div id="modal-wrap" class="col-sm-9">
+                            <div id="wrap" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
+                              <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="row">
+                          <label class="col-sm-3 col-form-label text-left">종류</label>
+                          <div class="col-sm-9 mb-1">
                             <select class="custom-select mb-1" id="sWarehouseTypeSelect" name="sWarehouseTypeSelect" style="height: 45px;" required>
                               <option value="">창고종류를 선택하세요</option>
                               <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
                               <option value="custom">직접입력</option>
                             </select>
-                          <input type="text" class="form-control input-flat" id="sWarehouseTypeInput" name="sWarehouseType"
-                                 placeholder="창고 종류를 입력해주세요" style="display:none">
+                            <input type="text" class="form-control input-flat" id="sWarehouseTypeInput" name="sWarehouseType"
+                                   placeholder="창고 종류를 입력해주세요" style="display:none">
+                          </div>
                         </div>
-                      </div>
-                      <div class="row">
-                        <label class="col-sm-3 col-form-label text-left">관리자코드</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control input-flat" name="pkMemberSeq"
-                                 placeholder="창고 관리자 코드를 입력해주세요" required>
+                        <div class="row">
+                          <label class="col-sm-3 col-form-label text-left">관리자코드</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control input-flat" name="pkMemberSeq"
+                                   placeholder="창고 관리자 코드를 입력해주세요" required>
+                          </div>
                         </div>
-                      </div>
-                      <div class="general-button text-center">
-                        <button type="submit" name="warehouseregister"class="btn btn-dark mt-3 btn-primary">등록</button>
+                        <div class="general-button text-center">
+                          <button type="submit" name="warehouseregister"class="btn btn-dark mt-3 btn-primary">등록</button>
+                        </div>
                       </div>
                     </div>
-                  </div>
                   </form>
                 </div>
               </div>
@@ -202,7 +202,7 @@
                 </tbody>
               </table>
 
-              <div id="map-in-list"></div>
+              <div id="map-in-list" style="width:100%;height:350px;"></div>
 
               <!-- Modal -->
               <div class="modal fade" id="warehouseDetail" tabindex="-1" role="dialog" aria-labelledby="warehouseDetailLabel" >
@@ -259,18 +259,18 @@
                           </div>
                         </div>
                         <input type="hidden" id="hiddenWarehouseCd">
-                          <div class="row">
-                            <label class="col-sm-3 col-form-label text-left">구역 이름</label>
-                            <div class="col-sm-7 mb-2">
+                        <div class="row">
+                          <label class="col-sm-3 col-form-label text-left">구역 이름</label>
+                          <div class="col-sm-7 mb-2">
 
-                              <input type="text" class="form-control input-flat" id="zoneName"
-                                     placeholder="창고구역이름을 입력해주세요.">
-                            </div>
-                          </div>
-                          <div class="col-sm-12 general-button text-center">
-                            <button type="button" class="btn btn-dark mb-2 btn-primary" onclick="addZone()">추가</button>
+                            <input type="text" class="form-control input-flat" id="zoneName"
+                                   placeholder="창고구역이름을 입력해주세요.">
                           </div>
                         </div>
+                        <div class="col-sm-12 general-button text-center">
+                          <button type="button" class="btn btn-dark mb-2 btn-primary" onclick="addZone()">추가</button>
+                        </div>
+                      </div>
 
                       <div class="table-responsive">
                         <table class="table table-hover">

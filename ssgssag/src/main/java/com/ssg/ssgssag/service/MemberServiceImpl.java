@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -70,10 +71,6 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public List<MemberDTO> getMembersByName(String name) {
-        return memberMapper.selectMemberByName(name);
-    }
-    @Override
     public List<MemberDTO> getMemberList(MemberDTO memberDTO) {
         return memberMapper.selectMemberByString(memberDTO);
     }
@@ -125,8 +122,22 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public MemberVO login(MemberDTO memberDTO) {
-       return memberMapper.login(memberDTO.getvMemberId(),
+        return memberMapper.login(memberDTO.getvMemberId(),
             passwordEncoder.encode(memberDTO.getvMemberPw()));
 
+    }
+
+    @Override
+    public Boolean deleteMember(MemberDTO memberDTO) {
+        try {
+            MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+            memberMapper.deleteMemberInfo(memberVO);
+            SecurityContextHolder.clearContext();
+            return true;
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return false;
+        }
     }
 }

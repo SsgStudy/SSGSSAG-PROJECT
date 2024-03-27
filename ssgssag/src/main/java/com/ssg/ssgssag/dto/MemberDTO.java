@@ -23,6 +23,11 @@ public class MemberDTO {
     private String vEmail;
     private Blob bProfilePic;
     private String vSocialLoginToken;
+    private int bIsActive;
+
+    public int getbIsActive() {
+        return bIsActive;
+    }
 
     public String getvMemberId() {
         return vMemberId;
