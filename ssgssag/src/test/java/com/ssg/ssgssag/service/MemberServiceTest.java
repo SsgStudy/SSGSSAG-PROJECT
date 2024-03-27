@@ -122,13 +122,13 @@ public class MemberServiceTest {
     @Test
     public void testId() {
 
-        if(memberService.checkIdInfo("admin001")) {
+        if(memberService.checkIdInfo("test03252")) {
             log.info("회원존재");
         }
         else
             log.info("회원 존재하지 않음");
 
-        log.info("조민수 id 정보" + memberService.checkIdInfo("admin001"));
+        log.info("id 정보" , memberService.checkIdInfo(""));
 
     }
 
@@ -141,6 +141,7 @@ public class MemberServiceTest {
                      .build();
 
         memberService.login(memberDTO);
+
         log.info(memberService.login(memberDTO));
     }
 
@@ -154,4 +155,18 @@ public class MemberServiceTest {
         memberService.getMemberByMemberId(memberDTO.getvMemberId());
     }
 
+    @Test
+    public void testAdminModify() {
+
+        MemberDTO memberDTO = MemberDTO.builder()
+            .vMemberId("ventis")
+            .vMemberPw("111")
+            .vMemberNm("더벤티")
+            .vMemberAuth("ADMIN")
+                .vEmail("ventis@google.com").build();
+        memberService.modifyMembersByAdmin(memberDTO);
+
+        log.info(memberDTO);
+
+    }
 }

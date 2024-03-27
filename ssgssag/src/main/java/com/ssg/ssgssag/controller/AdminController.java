@@ -7,16 +7,22 @@ import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -50,41 +56,33 @@ public class AdminController {
 
 	//모달창에 개인 회원 정보 출력
     @PreAuthorize("isAuthenticated()")
-	@GetMapping("/get-one-member")
+	@GetMapping("/members/{memberId}/profile")
 	@ResponseBody
-	public MemberVO getMembersInModal(@RequestParam("memberId") String memberId) {
+	public MemberVO getMembersInModal(@PathVariable("memberId") String memberId) {
 		log.info("member id = {}", memberId);
 
 		return memberService.getOneMemberInModal(memberId);
 	}
 
-
+	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("isAuthenticated()")
-	@PostMapping("/modify-member-info")
+	@PatchMapping("/member")
 	@Operation(summary = "회원 정보 수정", description = "총관리자가 회원들의 정보를 수정합니다.")
-	public String modifyMembers(
+	public String modifyMembersByAdmin(
 		@RequestParam String memberId,
-		@RequestParam String memberName,
 		@RequestParam String memberPw,
+		@RequestParam String memberName,
 		@RequestParam String memberEmail,
 		@RequestParam String memberAuth
 	) {
-
-		log.info("emails {}", memberEmail);
-
-		MemberDTO dto = MemberDTO.builder()
+		MemberDTO memberDTO = MemberDTO.builder()
 			.vMemberId(memberId)
 			.vMemberNm(memberName)
 			.vMemberPw(memberPw)
 			.vEmail(memberEmail)
 			.vMemberAuth(memberAuth).build();
 
-
-		log.info("회원 아이디 : "+dto.getvMemberId());
-
-
-//		memberService.modifyMembers(dto);
-
-		return "redirect:/admin/member-list";
+		memberService.modifyMembersByAdmin(memberDTO);
+		return "redirect:/admin/list";
 	}
 }

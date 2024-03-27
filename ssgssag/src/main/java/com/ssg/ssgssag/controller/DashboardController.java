@@ -122,24 +122,7 @@ public class DashboardController {
         return "main/main";
     }
 
-    //    @PostMapping("/question")
-//    @ResponseBody
-//    public ChatGptResponseDto sendQuestion(@RequestBody QuestionRequestDto requestDto,
-//        Model model) {
-//        log.info("gpt 요청값 : "+requestDto.toString());
-//        ChatGptResponseDto response = chatGptService.askQuestion(requestDto);
-//        response.getChoices().forEach(choice -> {
-//            String contentJson = choice.getMessage().getContent();
-//            AnalysisAndSuggestionDTO analysisAndSuggestion = parseContentToJson(contentJson);
-//            model.addAttribute("analysis", analysisAndSuggestion.getAnalysis());
-//            model.addAttribute("suggestion", analysisAndSuggestion.getSuggestion());
-//        });
-//        log.info("gpt 호출함.");
-//        log.info(model.getAttribute("analysis"));
-//        log.info(model.getAttribute("suggestion"));
-//
-//        return response;
-//    }
+
     @PostMapping("/question")
     @ResponseBody
     public ResponseEntity<?> sendQuestion(@RequestBody QuestionRequestDto requestDto) {
@@ -147,8 +130,8 @@ public class DashboardController {
         ChatGptResponseDto response = chatGptService.askQuestion(requestDto);
 
         List<AnalysisAndSuggestionDTO> analysisAndSuggestions = response.getChoices().stream()
-                .map(choice -> parseContentToJson(choice.getMessage().getContent()))
-                .toList();
+            .map(choice -> parseContentToJson(choice.getMessage().getContent()))
+            .toList();
 
         if (!analysisAndSuggestions.isEmpty()) {
             AnalysisAndSuggestionDTO analysisAndSuggestion = analysisAndSuggestions.get(0);
@@ -158,10 +141,33 @@ public class DashboardController {
 
             return ResponseEntity.ok(responseBody);
         } else {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No analysis and suggestion available.");
+
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body("No analysis and suggestion available.");
         }
     }
+    @PostMapping("/question2")
+    @ResponseBody
+    public ResponseEntity<?> sendQuestion2(@RequestBody QuestionRequestDto requestDto) {
+        log.info("GPT 요청값: " + requestDto.toString());
+        ChatGptResponseDto response = chatGptService.askQuestion(requestDto);
 
+        List<AnalysisAndSuggestionDTO> analysisAndSuggestions = response.getChoices().stream()
+            .map(choice -> parseContentToJson(choice.getMessage().getContent()))
+            .toList();
+
+        if (!analysisAndSuggestions.isEmpty()) {
+            AnalysisAndSuggestionDTO analysisAndSuggestion = analysisAndSuggestions.get(0);
+            Map<String, Object> responseBody = new HashMap<>();
+            responseBody.put("analysis", analysisAndSuggestion.getAnalysis());
+            responseBody.put("suggestion", analysisAndSuggestion.getSuggestion());
+
+            return ResponseEntity.ok(responseBody);
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body("No analysis and suggestion available.");
+        }
+    }
 
     public AnalysisAndSuggestionDTO parseContentToJson(String contentJson) {
         ObjectMapper objectMapper = new ObjectMapper();
