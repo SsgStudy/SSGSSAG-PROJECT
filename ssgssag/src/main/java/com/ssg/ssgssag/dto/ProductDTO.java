@@ -18,4 +18,5 @@ public class ProductDTO {
     private String vProductStatus;
     private Date dProductManufactorDate;
     private String vCategoryCd;
+    private String vProductImg;
 }

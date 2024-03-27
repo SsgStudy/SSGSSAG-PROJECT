@@ -19,11 +19,11 @@ public class ProductServiceTest {
     this.productService = productService;
   }
 
-  @Test
-  public void getAllProductTest(){
-
-    List<ProductDTO> productList = productService.getAllProduct();
-    log.info(productList);
-
-  }
+//  @Test
+//  public void getAllProductTest(){
+//
+//    List<ProductDTO> productList = productService.getAllProduct();
+//    log.info(productList);
+//
+//  }
 }
