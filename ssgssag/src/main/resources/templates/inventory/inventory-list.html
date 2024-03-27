@@ -57,6 +57,12 @@
       <!-- page1. 재고 현황 조회 -->
       <h2>재고 현황 조회</h2>
 
+      <div class="col-lg-12 mb-4 text-right">
+        <div class="general-button">
+          <button type="button" class="btn btn-dark mb-1 btn-primary" onclick="printPage()">인쇄</button>
+        </div>
+      </div>
+
       <!-- 필터링  -->
       <div class="row">
         <div class="col-lg-12">
@@ -138,6 +144,10 @@
                     </tr>
                   </tbody>
                 </table>
+                <div class="general-button col-lg-12 text-center">
+                  <button type="button" class="btn btn-dark mb-1 btn-primary" onclick="exportTableToExcel('현재 재고 현황')">엑셀로 내보내기</button>
+                </div>
+
                 <!-- Modal -->
                 <div class="modal fade" id="inventory-history-modal" tabindex="-1" role="dialog" aria-labelledby="inventory-history-modal-label">
                   <div class="modal-dialog modal-lg" role="document">
@@ -162,7 +172,6 @@
                             <thead>
                             <tr>
                               <th>No</th>
-<!--                              <th>이력 일련 번호</th>-->
                               <th>재고 수량</th>
                               <th>변경 날짜</th>
                               <th>변경 구분</th>
