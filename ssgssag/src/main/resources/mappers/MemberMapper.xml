@@ -8,42 +8,43 @@
   </insert>
 
   <select id="selectAllMembers" resultType="com.ssg.ssgssag.dto.MemberDTO">
-    select * from TB_MEMBER;
+    select * from TB_MEMBER WHERE B_IS_ACTIVE=TRUE;
   </select>
 
   <select id="getOneMemberInfo" resultType="MemberVO">
-    select * from TB_MEMBER where V_MEMBER_ID = #{vMemberId}
+    select * from TB_MEMBER where V_MEMBER_ID = #{vMemberId} and B_IS_ACTIVE=TRUE
   </select>
 
 
   <select id="selectMemberByName" resultType="com.ssg.ssgssag.dto.MemberDTO">
-    select * from TB_MEMBER where V_MEMBER_NM = #{name};
+    select * from TB_MEMBER where V_MEMBER_NM = #{name} and B_IS_ACTIVE=TRUE;
   </select>
 
   <select id="selectMemberByString" resultType="com.ssg.ssgssag.dto.MemberDTO">
     select * from TB_MEMBER
     where 1=1
-      <if test="vMemberAuth != null and vMemberAuth != 'ALL'">
-        and V_MEMBER_AUTH = #{vMemberAuth}
-      </if>
-      <if test="vMemberNm != null">
-        and V_MEMBER_NM = #{vMemberNm}
-      </if>
-      <if test="vMemberId != null">
-        and V_MEMBER_ID= #{vMemberId}
-      </if>
-      <if test="vEmail != null">
-        and V_EMAIL = #{vEmail}
-      </if>
+    <if test="vMemberAuth != null and vMemberAuth != 'ALL'">
+      and V_MEMBER_AUTH = #{vMemberAuth}
+    </if>
+    <if test="vMemberNm != null">
+      and V_MEMBER_NM = #{vMemberNm}
+    </if>
+    <if test="vMemberId != null">
+      and V_MEMBER_ID= #{vMemberId}
+    </if>
+    <if test="vEmail != null">
+      and V_EMAIL = #{vEmail}
+    </if>
+    and B_IS_ACTIVE=TRUE
   </select>
 
   <update id="updateMembersByMemberId" parameterType="MemberVo">
     UPDATE TB_MEMBER
     SET
-        V_MEMBER_NM = COALESCE(NULLIF(#{vMemberNm}, V_MEMBER_NM), V_MEMBER_NM),
-        V_MEMBER_PW = COALESCE(NULLIF(#{vMemberPw}, V_MEMBER_PW), V_MEMBER_PW),
-        V_MEMBER_AUTH = COALESCE(NULLIF(#{vMemberAuth}, V_MEMBER_AUTH), V_MEMBER_AUTH),
-        V_EMAIL = COALESCE(NULLIF(#{vEmail}, V_EMAIL), V_EMAIL)
+      V_MEMBER_NM = COALESCE(NULLIF(#{vMemberNm}, V_MEMBER_NM), V_MEMBER_NM),
+      V_MEMBER_PW = COALESCE(NULLIF(#{vMemberPw}, V_MEMBER_PW), V_MEMBER_PW),
+      V_MEMBER_AUTH = COALESCE(NULLIF(#{vMemberAuth}, V_MEMBER_AUTH), V_MEMBER_AUTH),
+      V_EMAIL = COALESCE(NULLIF(#{vEmail}, V_EMAIL), V_EMAIL)
     WHERE V_MEMBER_ID = #{vMemberId}
   </update>
 
@@ -62,5 +63,12 @@
   <select id="login" parameterType="string" resultType="MemberVO">
     select * from TB_MEMBER where V_MEMBER_ID = #{vMemberId} and V_MEMBER_PW = #{vMemberPw}
   </select>
+
+  <update id="deleteMemberInfo" parameterType="MemberVO">
+    UPDATE TB_MEMBER
+    SET
+      B_IS_ACTIVE = FALSE
+    WHERE V_MEMBER_ID = #{vMemberId}
+  </update>
 
 </mapper>

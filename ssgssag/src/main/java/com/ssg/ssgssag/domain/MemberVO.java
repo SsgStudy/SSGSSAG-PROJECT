@@ -18,6 +18,11 @@ public class MemberVO {
     private String vEmail;
     private Blob bProfilePic;
     private String vSocialLoginToken;
+    private Boolean bIsActive;
+
+    public Boolean getbIsActive() {
+        return bIsActive;
+    }
 
     public String getvMemberId() {
         return vMemberId;

@@ -22,42 +22,77 @@
         <div class="form-input-content">
           <div class="card login-form mb-0">
             <div class="card-body pt-5">
-              <a class="text-center" href="index.html"> <h4><b>회원 정보 수정</b></h4></a>
-              <form class="mt-5 mb-5 login-input">
+              <a class="text-center">
+                <h4>
+                  <b>회원 정보 수정</b>
+                </h4>
+              </a>
+              <form class="mt-5 mb-5">
                 <div class="d-flex justify-content-center">
                   <div class="text-center">
                     <img src="/images/user/1.gif" class="profile" width="100" height="100">
                     <p class="text-center">
-                      <input type="file" id="file" accept="image/gif, image/png, image/jpeg">
+                      <input type="file" id="file" accept="image/gif, image/png, image/jpeg"/>
                     </p>
                   </div>
                 </div>
 
-                <div class="form-group d-flex justify-content-between">
-                  <input type="text" class="form-control w-75" th:value="${member.vMemberNm}" placeholder="이름" readonly>
-                </div>
-                <div class="form-group d-flex justify-content-between">
-                  <input type="text" class="form-control w-75" id="vMemberId" th:value="${member.vMemberId}" placeholder="아이디" readonly>
-                </div>
-
-                <div class="passwordEye">
-                  <div class="form-group d-flex justify-content-between w-75">
-                    <input type="password" name="pwd" class="form-control" placeholder="비밀번호">
-                    <i class="fa fa-eye-slash fa-lg"></i>
+                <form id="modify-form" class="mt-5 mb-5">
+                  <div class="form-group d-flex justify-content-between">
+                    <input type="text" class="form-control w-75" th:value="${member.vMemberNm}"
+                           placeholder="이름" readonly/>
                   </div>
-                  <div class="form-group d-flex justify-content-between w-75">
-                    <input type="password" name="pwdCheck" class="form-control" placeholder="비밀번호 확인">
-                    <i class="fa fa-eye-slash fa-lg"></i>
+                  <div class="form-group d-flex justify-content-between">
+                    <input type="text" class="form-control w-75" id="vMemberId"
+                           th:value="${member.vMemberId}" placeholder="아이디" readonly>
                   </div>
-                </div>
-                <div class="form-group d-flex justify-content-between">
-                  <input type="email" name="email" class="form-control w-75" th:value="${member.vEmail}" placeholder="이메일">
-                </div>
-                <form class="mt-5 mb-5 login-input">
-                  <button class="btn login-form__btn submit w-100" onclick="modifyMemberInfo()">수정하기</button>
+                  <div class="passwordEye">
+                    <div class="form-group d-flex justify-content-between w-75">
+                      <input type="password" name="vMemberPw" class="form-control"
+                             placeholder="비밀번호"/>
+                      <i class="fa fa-eye-slash fa-lg"></i>
+                    </div>
+                    <div class="form-group d-flex justify-content-between w-75">
+                      <input type="password" name="pwd" class="form-control"
+                             placeholder="비밀번호 확인"/>
+                      <i class="fa fa-eye-slash fa-lg"></i>
+                    </div>
+                  </div>
+                  <div class="form-group d-flex justify-content-between">
+                    <input type="email" name="email" class="form-control w-75"
+                           th:value="${member.vEmail}" placeholder="이메일"/>
+                  </div>
+                </form>
+                <form class="mt-5 mb-5">
+                  <input class="btn btn-primary submit w-100" type="button" onclick="modifyMemberInfo()" value="수정하기"/>
                 </form>
 
-                <div class="text-right" data-toggle="modal" data-target="#customs" id="alertButton">회원 탈퇴</div>
+                <div class="text-right" id="delete-personal-account" data-toggle="modal"
+                     data-target="#delete-account">
+                  회원 탈퇴
+                </div>
+
+                <div class="modal fade" id="delete-account" style="display: none;"
+                     aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content  d-flex justify-content-center">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Confirm</h5>
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">삭제하시겠습니까?</div>
+                      <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" onclick="deleteAccount()"
+                                data-dismiss="modal">확인
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
               </form>
             </div>
           </div>
@@ -66,7 +101,8 @@
     </div>
   </div>
 
-  <div class="modal fade" id="customs" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal fade" id="customs" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+       aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -80,7 +116,8 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-          <button type="button" class="btn btn-primary" onclick="location.href='index.html'">확인</button>
+          <button type="button" class="btn btn-primary" onclick="location.href='index.html'">확인
+          </button>
         </div>
       </div>
     </div>

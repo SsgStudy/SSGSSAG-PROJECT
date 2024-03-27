@@ -37,7 +37,6 @@ public class AdminController {
 	@GetMapping("/list")
 	@Operation(summary = "회원 목록 조회", description = "모든 회원의 목록을 조회합니다.")
 	public String showAllMemberListPage(Model model) {
-		log.info("AdminController list");
 		model.addAttribute("memberList", memberService.getAllMembers());
 		return "admin/member-list";
 	}
@@ -47,7 +46,6 @@ public class AdminController {
 	@Operation(summary = "이름을 검색하여 회원 조회", description = "검색한 이름에 해당하는 회원의 정보를 조회합니다.")
 	@ResponseBody
 	public ResponseEntity<List<MemberDTO>> showMemberListPageByName(@RequestBody MemberDTO member, Model model) {
-		log.info("member search {}", member);
 		List<MemberDTO> memberList = memberService.getMemberList(member);
 
 		model.addAttribute("memberList", memberList);
@@ -59,7 +57,6 @@ public class AdminController {
 	@GetMapping("/members/{memberId}/profile")
 	@ResponseBody
 	public MemberVO getMembersInModal(@PathVariable("memberId") String memberId) {
-		log.info("member id = {}", memberId);
 
 		return memberService.getOneMemberInModal(memberId);
 	}
@@ -93,7 +90,6 @@ public class AdminController {
 	@ResponseBody
 	public String deleteMemberAccount(@RequestParam String memberId) {
 
-		log.info("총관리자 회원탈퇴처리:{}", memberId);
 		MemberDTO memberDTO = MemberDTO.builder()
 			.vMemberId(memberId).build();
 

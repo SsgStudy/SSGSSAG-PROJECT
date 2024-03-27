@@ -12,8 +12,6 @@ public interface MemberService {
 
     List<MemberDTO> getAllMembers();
 
-    List<MemberDTO> getMembersByName(String name);
-
     List<MemberDTO> getMemberList(MemberDTO memberDTO);
 
     MemberVO getOneMemberInModal(String getMemberId);
@@ -30,5 +28,7 @@ public interface MemberService {
     MemberVO getMemberByMemberId(String memberId);
 
     MemberVO login(MemberDTO memberDTO);
+
+    Boolean deleteMember(MemberDTO memberDTO);
 
 }
