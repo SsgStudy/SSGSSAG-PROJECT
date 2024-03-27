@@ -171,25 +171,33 @@ function modalButton(memberId) {
 
 
 
-function deleteMember(memberId) {
-  console.log("memberId", memberId)
+$('.delete-btn').on('click', function(event) {
+    event.stopPropagation();
+    let memberId = $(this).data('member-id');
+    deleteMember(memberId);
+});
 
-  $.ajax({
-    url: `/admin/withdraw`,
-    type: 'PATCH',
-    data: {
-      memberId: memberId
-    },
-    success: function (resp) {
-      toastr.success("성공적으로 삭제되었습니다.");
-      setTimeout(() => {
-        window.location.href = "/admin/list";
-      }, 1500);
-    },
-    error: function (error) {
-      toastr.error("삭제 실패했습니다.");
-    }
-  });
+function deleteMember(memberId) {
+    console.log("Deleting memberId:", memberId);
+
+    $.ajax({
+        url: `/admin/withdraw`,
+        type: 'PATCH',
+        data: {
+            memberId: memberId
+        },
+        success: function (resp) {
+            toastr.success("성공적으로 삭제되었습니다.");
+            setTimeout(() => {
+                window.location.href = "/admin/list";
+            }, 1500);
+        },
+        error: function (error) {
+            toastr.error("삭제 실패했습니다.");
+        }
+    });
 }
+
+
 
 
