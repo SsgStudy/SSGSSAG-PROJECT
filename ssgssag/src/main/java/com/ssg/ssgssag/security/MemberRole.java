@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum MemberRole {
     ADMIN("ADMIN"),
     WAREHOUSE_MANAGER("WAREHOUSE_MANAGER"),
-    OPERATOR("OPERATOR");
+    OPERATOR("OPERATOR"),
+    DEACTIVE("DEACTIVE");
 
     MemberRole(String value) {
         this.value = value;
