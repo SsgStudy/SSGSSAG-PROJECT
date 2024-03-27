@@ -55,7 +55,7 @@ public class AdminController {
 	}
 
 	//모달창에 개인 회원 정보 출력
-    @PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/members/{memberId}/profile")
 	@ResponseBody
 	public MemberVO getMembersInModal(@PathVariable("memberId") String memberId) {
@@ -84,5 +84,25 @@ public class AdminController {
 
 		memberService.modifyMembersByAdmin(memberDTO);
 		return "redirect:/admin/list";
+	}
+
+
+	@PreAuthorize("isAuthenticated()")
+	@PatchMapping("/withdraw")
+	@Operation(summary = "회원 정보 삭제", description = "총관리자가 회원들의 정보를 삭제합니다.")
+	@ResponseBody
+	public String deleteMemberAccount(@RequestParam String memberId) {
+
+		log.info("총관리자 회원탈퇴처리:{}", memberId);
+		MemberDTO memberDTO = MemberDTO.builder()
+			.vMemberId(memberId).build();
+
+		Boolean result = memberService.deleteMember(memberDTO);
+
+		if (result) {
+			return "success";
+		} else {
+			return "fail";
+		}
 	}
 }
