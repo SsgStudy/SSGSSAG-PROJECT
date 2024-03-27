@@ -3,7 +3,7 @@
 <head>
   <th:block th:replace="/layout/head :: headFragment"></th:block>
   <script th:src="@{//dapi.kakao.com/v2/maps/sdk.js?appkey=77943d8a8f8b653c1f0843d4b37047e9&libraries=services}"></script>
-
+  <link rel="stylesheet" type="text/css" th:href="@{/css/warehouse.css}">
   <title>창고 관리</title>
 </head>
 
@@ -194,7 +194,7 @@
                 </tbody>
               </table>
 
-              <div id="map-in-list" style="width:100%;height:350px;"></div>
+              <div id="map-in-list"></div>
 
               <!-- Modal -->
               <div class="modal fade" id="warehouseDetail" tabindex="-1" role="dialog" aria-labelledby="warehouseDetailLabel" >

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.querySelectorAll('.btn-warehouse-modal').forEach(button => {
     button.addEventListener('click', function() {
-      const address = this.getAttribute('data-warehouse-loc'); // 'this'는 클릭된 버튼을 가리킵니다.
+      const address = this.getAttribute('data-warehouse-loc');
       initializeModalMap(address);
     });
   });
@@ -20,20 +20,47 @@ function initializeListMap() {
   const map = new kakao.maps.Map(mapContainer, mapOption);
   const geocoder = new kakao.maps.services.Geocoder();
 
-  const addresses = Array.from(document.querySelectorAll('.warehouseTable tbody tr')).map(row => row.cells[3].innerText);
 
-  addresses.forEach(function(address) {
-    geocoder.addressSearch(address, function(result, status) {
+  // 창고 정보(주소 및 이름)를 포함하는 객체 배열 생성
+  const warehouses = Array.from(document.querySelectorAll('.warehouseTable tbody tr')).map(row => ({
+    address: row.cells[3].innerText,
+    name: row.cells[1].innerText
+  }));
+
+  warehouses.forEach(function(warehouse) {
+    geocoder.addressSearch(warehouse.address, function(result, status) {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        new kakao.maps.Marker({
-          map: map,
-          position: coords
-        });
-        map.setCenter(coords);
+          const marker = new kakao.maps.Marker({
+            map: map,
+            position: coords,
+            clickable: true
+          });
+
+          const infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="padding:5px;">' + warehouse.name + '</div>',
+            removable: true
+          });
+
+          kakao.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map, marker);
+          });
+
+        let x = parseFloat(result[0].x);
+        let y = parseFloat(result[0].y);
+
+        let adjustedX = x - 0.009;
+        let adjustedY = y + 0.016;
+
+        let adjustedCenter = new kakao.maps.LatLng(adjustedY, adjustedX);
+
+
+
+        map.setCenter(adjustedCenter);
       }
     });
   });
+
 }
 
 function initializeModalMap(address) {
@@ -60,15 +87,8 @@ function initializeModalMap(address) {
       let x = parseFloat(result[0].x);
       let y = parseFloat(result[0].y);
 
-      console.log(x)
-      console.log(y)
-
-      // 변환된 숫자에 0.001을 더함
       let adjustedX = x - 0.005;
       let adjustedY = y + 0.002;
-
-      console.log(adjustedX);
-      console.log(adjustedY);
 
       let adjustedCenter = new kakao.maps.LatLng(adjustedY, adjustedX);
 
@@ -79,4 +99,5 @@ function initializeModalMap(address) {
       console.error('Failed to search address:', address);
     }
   });
+
 }
