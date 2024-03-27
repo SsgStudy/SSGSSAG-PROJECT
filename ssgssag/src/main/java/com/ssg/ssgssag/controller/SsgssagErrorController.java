@@ -24,19 +24,21 @@ public class SsgssagErrorController implements ErrorController {
       int statusCode = Integer.parseInt(status.toString());
 
       switch (statusCode) {
+        case 400:
+          return "error/page-error-400";
         case 403:
-          return "error/page-error-403"; // 403 에러 페이지 경로
+          return "error/page-error-403";
         case 404:
-          return "error/page-error-404"; // 404 에러 페이지 경로, 기존 '400'을 '404'로 정정
+          return "error/page-error-404";
         case 500:
-          return "error/page-error-500"; // 500 에러 페이지 경로
+          return "error/page-error-500";
         case 503:
-          return "error/page-error-503"; // 503 에러 페이지 경로
+          return "error/page-error-503";
         default:
-          return "error/page-error"; // 기본 에러 페이지
+          return "error/page-error";
       }
     }
-    return "error/error"; // 상태 코드가 null인 경우 기본 에러 페이지 반환
+    return "error/error";
   }
 
 }
