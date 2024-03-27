@@ -67,7 +67,7 @@ public class AdminController {
 	@Operation(summary = "회원 정보 수정", description = "총관리자가 회원들의 정보를 수정합니다.")
 	public String modifyMembersByAdmin(
 		@RequestParam String memberId,
-		@RequestParam String memberPw,
+//		@RequestParam String memberPw,
 		@RequestParam String memberName,
 		@RequestParam String memberEmail,
 		@RequestParam String memberAuth
@@ -75,7 +75,7 @@ public class AdminController {
 		MemberDTO memberDTO = MemberDTO.builder()
 			.vMemberId(memberId)
 			.vMemberNm(memberName)
-			.vMemberPw(memberPw)
+//			.vMemberPw(memberPw)
 			.vEmail(memberEmail)
 			.vMemberAuth(memberAuth).build();
 

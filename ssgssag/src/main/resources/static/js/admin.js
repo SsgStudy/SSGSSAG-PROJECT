@@ -22,7 +22,7 @@ $("#save-modifier").submit(function (e) {
   e.preventDefault();
 
   let memberId = $('#memberId').val();
-  let memberPw = $('#memberPw').val();
+  // let memberPw = $('#memberPw').val();
   let memberName = $('#memberName').val();
   let memberEmail = $('#memberEmail').val();
   let role = $('#memberRole').val();
@@ -33,7 +33,7 @@ $("#save-modifier").submit(function (e) {
     type: 'PATCH',
     data: {
       memberId: memberId,
-      memberPw: memberPw,
+      // memberPw: memberPw,
       memberName: memberName,
       memberEmail: memberEmail,
       memberAuth: memberAuth
@@ -90,12 +90,9 @@ function filterMembers() {
                                  th:onclick="'modalButton(' + ${members.vMemberId} + ')'" />
                           </td>
                         <td>
-                            <input type="button" class="btn btn-primary ssgssag-blue" 
-                                value="삭제" 
-                                data-toggle="modal"  
-                                data-target="#member-delete"
-                                th:vMemberId="${members.vMemberId}"
-                                th:onclick="deleteMember(' + ${members.vMemberId} + ')'"/>
+                          <form>
+                            <input type="button" class="btn btn-primary ssgssag-blue" value="삭제"/>
+                          </form>
                         </td>
                         </tr>`;
         tableBody.append(row);
@@ -108,7 +105,74 @@ function filterMembers() {
   });
 }
 
+
+//총관리자 회원 조회 시 개인정보 수정 모달 창
+function modalButton(memberId) {
+  $("#editModal").modal('show');
+
+  $.ajax({
+    url: `/admin/members/${memberId}/profile`,
+    type: 'GET',
+    contentType: 'application/json',
+    success: function (getone) {
+      $('#memberId').val(getone.vMemberId);
+      $('#memberName').val(getone.vMemberNm);
+      // $('#memberPw').val(getone.vMemberPw);
+      $('#memberEmail').val(getone.vEmail);
+      $('#memberRole').val(getone.vMemberAuth);
+
+      let memberAuth = null;
+      switch(getone.vMemberAuth) {
+        case 'OPERATOR':
+          memberAuth = 'operator';
+          break;
+        case 'WAREHOUSE_MANAGER':
+          memberAuth = 'warehouse';
+          break;
+        default:
+          memberAuth = 'admin';
+      }
+
+      $('#memberRole').find('option[value="' + memberAuth + '"]')
+      .prop('selected', true);
+      $("#modalForm").modal('show');
+    },
+    error: function (xhr, status, error) {
+      console.error('AJAX 요청 에러:', error);
+      toastr.error("회원 정보 불러오기 실패");
+    }
+  });
+}
+
+// function deleteMember(memberId) {
+//
+//   let memberIds = $('#vMemberId').val();
+//
+//
+//   console.log("memberId", memberId)
+//   console.log("memberIds", memberIds)
+//
+//   member.vMemberId = memberId;
+//   $.ajax({
+//      url: `/admin/withdraw/${memberId}`,
+//      type: 'PATCH',
+//      data: {memberId: memberId},
+//     success: function (resp) {
+//       toastr.success("성공적으로 삭제되었습니다.");
+//       setTimeout(() => {
+//         window.location.href = "/admin/list";
+//       }, 1500);
+//     },
+//     error: function (error) {
+//       toastr.error("삭제 실패했습니다.");
+//     }
+//   });
+// }
+
+
+
 function deleteMember(memberId) {
+  console.log("memberId", memberId)
 
   $.ajax({
     url: `/admin/withdraw`,
@@ -117,17 +181,10 @@ function deleteMember(memberId) {
       memberId: memberId
     },
     success: function (resp) {
-
-      if (resp==="success") {
-        toastr.success("성공적으로 삭제되었습니다.");
-        setTimeout(() => {
-          window.location.href = "/admin/list";
-        }, 1500);
-      }
-
-      else if (resp==="fail") {
-        toastr.error("삭제 실패했습니다.");
-      }
+      toastr.success("성공적으로 삭제되었습니다.");
+      setTimeout(() => {
+        window.location.href = "/admin/list";
+      }, 1500);
     },
     error: function (error) {
       toastr.error("삭제 실패했습니다.");
