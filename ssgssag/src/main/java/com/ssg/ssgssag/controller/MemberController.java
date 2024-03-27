@@ -57,8 +57,6 @@ public class MemberController {
         return ResponseEntity.ok(check);
     }
 
-//    @PreAuthorize("isAuthenticated()")
-
     @GetMapping("/info")
     @ResponseStatus(HttpStatus.SEE_OTHER)
     public String showModifyPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
