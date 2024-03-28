@@ -93,6 +93,7 @@ public class DashboardController {
         model.addAttribute("purchaseDates", purchaseDates);
         model.addAttribute("dailyPurchases", dailyPurchases);
         model.addAttribute("bestCategoryJson", bestCategoryJson);
+        model.addAttribute("worstCategoryJson", worstCategoryJson);
 
         //인기 카테고리 파이 차트 데이터 준비
         List<String> categoryNames = bestCategoryDTOList.stream()
