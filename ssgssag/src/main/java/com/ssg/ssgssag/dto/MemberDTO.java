@@ -21,9 +21,11 @@ public class MemberDTO {
     private String vMemberNm;
     private String vMemberAuth;
     private String vEmail;
-    private Blob bProfilePic;
+    private byte[] bProfilePic;
     private String vSocialLoginToken;
     private int bIsActive;
+    private String vMemberNewPw;
+
 
     public int getbIsActive() {
         return bIsActive;
@@ -49,7 +51,7 @@ public class MemberDTO {
         return vEmail;
     }
 
-    public Blob getbProfilePic() {
+    public byte[] getbProfilePic() {
         return bProfilePic;
     }
 
@@ -77,8 +79,12 @@ public class MemberDTO {
         this.vEmail = vEmail;
     }
 
-    public void setbProfilePic(Blob bProfilePic) {
+    public void setbProfilePic(byte[] bProfilePic) {
         this.bProfilePic = bProfilePic;
+    }
+
+    public void setbIsActive(int bIsActive) {
+        this.bIsActive = bIsActive;
     }
 
     public void setvSocialLoginToken(String vSocialLoginToken) {
