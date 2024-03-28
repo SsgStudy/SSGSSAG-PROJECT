@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class AccountController {
     private final MemberService memberService;
 
-    @Operation(summary = "회원 등록", description = "회원을 등록합니다.")
+    @Operation(summary = "회원 등록", description = "회원 가입 페이지 로딩")
     @GetMapping("/signup")
     public String signup(Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
@@ -28,6 +28,7 @@ public class AccountController {
         return "member/signup";
     }
 
+    @Operation(summary = "회원 등록", description = "회원 정보 동록하기")
     @PostMapping("/signup")
     public String signup(@RequestBody MemberDTO newMember) {
         memberService.registerMember(newMember);
@@ -35,6 +36,7 @@ public class AccountController {
         return "redirect:/";
     }
 
+    @Operation(summary = "로그인", description = "로그인 페이지 로딩")
     @GetMapping("/login")
     public String login(Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
@@ -44,6 +46,7 @@ public class AccountController {
         return "member/login-form";
     }
 
+    @Operation(summary = "로그아웃", description = "로그아웃")
     @GetMapping("/logout")
     public String logout() {
         log.info("로그아웃");
