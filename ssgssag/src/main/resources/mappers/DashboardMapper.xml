@@ -23,20 +23,16 @@
   <select id="selectBestProducts" resultType="com.ssg.ssgssag.dto.BestProductDTO">
     SELECT
       TP.V_PRODUCT_NM AS 'name',
-      COUNT(*) AS 'purchase',
-      SUM(PD.N_PRODUCT_CNT) AS 'conut',
-      SUM(TI.N_INVENTORY_CNT) AS 'inventory'
+      COUNT(PD.PK_SHOP_PURCHASE_DETAIL_SEQ) AS 'purchase',
+      (SELECT SUM(N_INVENTORY_CNT) FROM TB_INVENTORY TI WHERE TI.V_PRODUCT_CD = TP.V_PRODUCT_CD) AS 'inventory'
     FROM
       TB_SHOP_PURCHASE_DETAIL PD
         INNER JOIN
       TB_PRODUCT TP
       ON PD.V_PRODUCT_CD = TP.V_PRODUCT_CD
-        INNER JOIN
-      TB_INVENTORY TI
-      ON PD.V_PRODUCT_CD = TI.V_PRODUCT_CD
-    GROUP BY V_PRODUCT_NM
-    ORDER BY 2 desc, 3 desc, 1 asc
-    LIMIT 7
+    GROUP BY TP.V_PRODUCT_CD, TP.V_PRODUCT_NM
+    ORDER BY 'purchase' DESC, 'name' ASC
+    LIMIT 7;
   </select>
   
   <select id="selectDailyPurchaseStatistics" resultType="com.ssg.ssgssag.dto.DailyPurchaseCountDTO">

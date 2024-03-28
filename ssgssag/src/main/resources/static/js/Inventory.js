@@ -8,6 +8,9 @@ $(document).ready(function () {
     $('#out-bound').change(function () {
         $('.inventory-checkbox').change(handleCheckboxChange);
     });
+    $('#in-bound').change(function () {
+        $('.inventory-checkbox').change(handleCheckboxChange);
+    });
 
     // 체크박스 조절
     $('.inventory-checkbox').change(function () {
@@ -279,7 +282,7 @@ $('.inventory-checkbox').on('change', function () {
 });
 
 
-// input box 수량 조
+// input box 수량 조정
 let selectCnt;
 
 function handleCheckboxChange() {
@@ -289,6 +292,7 @@ function handleCheckboxChange() {
 
 function handleOutputQuantityChange() {
     let currentValue = parseInt($('#adjustment-cnt').val());
+    console.log("currentValue" + currentValue);
     let minValue = 1;
     let maxValue = selectCnt;
     console.log(selectCnt)

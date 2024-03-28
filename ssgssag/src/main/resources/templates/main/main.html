@@ -71,7 +71,7 @@
         </div>
         <div class="col-lg-3 col-sm-6 scrollable-row-item">
           <div class="card gradient-3">
-            <a href="/outgoing/list" class="card-body hover-card-body">
+            <a href="/" class="card-body hover-card-body">
               <h3 class="card-title text-white">신규 주문</h3>
               <div class="d-inline-block">
                 <h2 class="text-white" th:text="${purchase}">3</h2>
@@ -183,7 +183,11 @@
                   <tbody>
                   <tr th:each="product, iterStat : ${bestProducts}">
                     <td th:text="${iterStat.count}">1</td>
-                    <td th:text="${product.name}">상품명</td>
+                    <td>
+                    <span
+                            data-toggle="tooltip" th:title="${product.name}" th:text="${#strings.length(product.name) &gt; 10} ? ${#strings.substring(product.name, 0, 10)} + '...' : ${product.name}">
+                    </span>
+                    </td>
                     <td th:text="${product.purchase}">주문건수</td>
                     <td th:text="${product.inventory}">보유재고</td>
                   </tr>
