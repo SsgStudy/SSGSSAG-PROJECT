@@ -4,9 +4,10 @@ import com.ssg.ssgssag.domain.MemberVO;
 import com.ssg.ssgssag.mapper.MemberMapper;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -25,7 +26,6 @@ public class UserSecurityService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		MemberVO member = memberMapper.getOneMemberInfo(username);
-		log.info("security test {} {}", username, member);
 
 		if (member.getvMemberId() == null) {
 			throw new UsernameNotFoundException("사용자를 찾을수 없습니다.");
@@ -46,6 +46,8 @@ public class UserSecurityService implements UserDetailsService {
 		} else {
 			authorities.add(new SimpleGrantedAuthority(MemberRole.OPERATOR.getValue()));
 		}
+
 		return new User(member.getvMemberId(), member.getvMemberPw(), authorities);
 	}
+
 }

@@ -12,8 +12,12 @@
     color: gray;
   }
 </style>
+
+
 <th:block th:fragment="navFragment">
   <div class="nav-header" style="background-color: #ffffff;">
+    <script th:src="@{/js/dashboard/profile.js}"></script>
+
     <div class="brand-logo">
       <a href="/" style="padding: 0;">
         <b class="logo-abbr"><img th:src="@{/images/logo.png}"
@@ -67,7 +71,7 @@
           <li class="icons dropdown">
             <div class="user-img c-pointer position-relative" data-toggle="dropdown">
               <span class="activity active"></span>
-              <img th:src="@{/images/user/1.gif}" height="40" width="40" alt="">
+              <img class="user-profile-img" th:src="@{/images/profile/default-img.png}" height="40" width="40" alt="">
             </div>
             <div class="drop-down dropdown-profile   dropdown-menu">
               <div class="dropdown-content-body">

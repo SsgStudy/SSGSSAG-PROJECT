@@ -3,6 +3,8 @@ package com.ssg.ssgssag.mapper;
 import com.ssg.ssgssag.domain.MemberVO;
 import com.ssg.ssgssag.dto.MemberDTO;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,7 +19,6 @@ public interface MemberMapper {
 
     List<MemberDTO> selectMemberByString(MemberDTO member);
 
-    //    관리자
     void updateMembersByMemberId(MemberVO memberVO);
 
     void updateMemberInfo(MemberVO memberVO);
@@ -27,8 +28,11 @@ public interface MemberMapper {
     boolean checkId(String vMemberId);
     MemberVO login(@Param("vMemberId") String memberId, @Param("vMemberPw") String memberPw);
 
+    int selectOneMemberByMemberIdAndMemberPw(MemberDTO member);
+
+    void updateMemberPassword(MemberDTO member);
+
+    MemberVO selectMemberProfileImgByMemberId(String vMemberId);
 
     void deleteMemberInfo(MemberVO memberVO);
-
-
 }

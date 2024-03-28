@@ -47,6 +47,10 @@
     Scripts
 ***********************************-->
 <th:block th:replace="/layout/script :: scriptFragment"></th:block>
-
+<div th:if="${param.error}">
+  <script th:inline="javascript">
+    toastr.warning('아이디 또는 비밀번호가 일치하지 않습니다.');
+  </script>
+</div>
 </body>
 </html>

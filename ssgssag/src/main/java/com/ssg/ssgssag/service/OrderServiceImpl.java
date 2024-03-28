@@ -60,10 +60,8 @@ public class OrderServiceImpl implements OrderService {
         try {
             orderMapper.insertOrder(order); // 주문 정보
             orderMapper.insertOrderDetail(orderDetails); // 주문 상세 정보
-            log.info("발주 등록 성공");
             return 1;
         } catch (RuntimeException e) {
-            log.info("발주 등록 실패");
             return 0;
         }
     }

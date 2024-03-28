@@ -2,6 +2,8 @@
 <html class="h-100" lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/member.css}">
+
   <title>회원 관리</title>
 </head>
 
@@ -22,77 +24,89 @@
         <div class="form-input-content">
           <div class="card login-form mb-0">
             <div class="card-body pt-5">
-              <a class="text-center">
-                <h4>
-                  <b>회원 정보 수정</b>
-                </h4>
-              </a>
-              <form class="mt-5 mb-5">
-                <div class="d-flex justify-content-center">
+              <a class="text-center" href="index.html"> <h4><b>마이페이지</b></h4></a>
+              <form class="mt-5 mb-5 login-input">
+                <div class="d-flex justify-content-center" style="margin-bottom: 3rem">
                   <div class="text-center">
-                    <img src="/images/user/1.gif" class="profile" width="100" height="100">
-                    <p class="text-center">
-                      <input type="file" id="file" accept="image/gif, image/png, image/jpeg"/>
-                    </p>
+                    <div th:if="${bProfilePic != null}" class="user-img">
+                      <img th:src="'data:image/jpeg;base64,'+ ${bProfilePic}" alt="Profile Picture"
+                           class="profile profile-image-preview"
+                           style="cursor: pointer;" data-toggle="modal"
+                           data-target="#modify-profile-img-modal"/>
+                    </div>
+                    <div th:if="${bProfilePic == null}" class="default-img">
+                      <img src="/images/profile/default-img.png" alt="Default Profile Picture"
+                           class="profile profile-image-preview"
+                           style="cursor: pointer;" data-toggle="modal"
+                           data-target="#modify-profile-img-modal"/>
+                    </div>
+                   <input type="file" id="file" accept="image/*" style="display: none;">
                   </div>
                 </div>
-
-                <form id="modify-form" class="mt-5 mb-5">
-                  <div class="form-group d-flex justify-content-between">
-                    <input type="text" class="form-control w-75" th:value="${member.vMemberNm}"
-                           placeholder="이름" readonly/>
-                  </div>
-                  <div class="form-group d-flex justify-content-between">
-                    <input type="text" class="form-control w-75" id="vMemberId"
-                           th:value="${member.vMemberId}" placeholder="아이디" readonly>
-                  </div>
-                  <div class="passwordEye">
-                    <div class="form-group d-flex justify-content-between w-75">
-                      <input type="password" name="vMemberPw" class="form-control"
-                             placeholder="비밀번호"/>
-                      <i class="fa fa-eye-slash fa-lg"></i>
-                    </div>
-                    <div class="form-group d-flex justify-content-between w-75">
-                      <input type="password" name="pwd" class="form-control"
-                             placeholder="비밀번호 확인"/>
-                      <i class="fa fa-eye-slash fa-lg"></i>
-                    </div>
-                  </div>
-                  <div class="form-group d-flex justify-content-between">
-                    <input type="email" name="email" class="form-control w-75"
-                           th:value="${member.vEmail}" placeholder="이메일"/>
-                  </div>
-                </form>
-                <form class="mt-5 mb-5">
-                  <input class="btn btn-primary submit w-100" type="button" onclick="modifyMemberInfo()" value="수정하기"/>
-                </form>
-
-                <div class="text-right" id="delete-personal-account" data-toggle="modal"
-                     data-target="#delete-account">
-                  회원 탈퇴
-                </div>
-
-                <div class="modal fade" id="delete-account" style="display: none;"
-                     aria-hidden="true">
+                <div class="modal fade" id="modify-profile-img-modal" style="display: none;" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content  d-flex justify-content-center">
+                    <div class="modal-content  d-flex justify-content-center" id="modify-modal">
                       <div class="modal-header">
-                        <h5 class="modal-title">Confirm</h5>
+                        <h4 class="card-title">프로필 사진</h4>
                         <button type="button" class="close" data-dismiss="modal"><span>×</span>
                         </button>
                       </div>
-                      <div class="modal-body">삭제하시겠습니까?</div>
-                      <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-primary" onclick="deleteAccount()"
-                                data-dismiss="modal">확인
-                        </button>
+                      <div class="modify-button-group">
+                        <div class="modify-btn-group-vertical">
+                          <button class="btn modify-btn" id="new-img" type="button" data-dismiss="modal">사진 선택</button>
+                          <button class="btn modify-btn" id="default-img" type="button" data-dismiss="modal" onclick="changeDefaultImg()">기본 이미지로 변경</button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
-
+                 <div class="form-group row">
+                    <label class="col-lg-4 col-form-label" for="vMemberNm">이름</label>
+                    <div class="col-lg-6">
+                      <input type="text" class="form-control" id="vMemberNm" th:value="${member.vMemberNm}" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-4 col-form-label" for="vMemberId">아이디</label>
+                    <div class="col-lg-6">
+                      <input type="text" class="form-control" id="vMemberId" th:value="${member.vMemberId}" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-4 col-form-label" for="vEmail">이메일</label>
+                    <div class="col-lg-6">
+                      <input type="text" class="form-control" id="vEmail" name="val-email" th:value="${member.vEmail}">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-4 col-form-label" for="current-pw">현재 비밀번호</label>
+                    <div class="col-lg-6">
+                      <input type="password" class="form-control" id="current-pw" name="val-password" placeholder="Choose a safe one..">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-4 col-form-label" for="modify-pw-1">변경할 비밀번호 <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-lg-6">
+                      <input type="password" class="form-control" id="modify-pw-1" name="modify-pw-1" placeholder="..and confirm it!">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-4 col-form-label" for="modify-pw-2">비밀번호 확인 <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-lg-6">
+                      <input type="password" class="form-control" id="modify-pw-2" name="val-confirm-password" placeholder="..and confirm it!">
+                    </div>
+                  </div>
+                  <div class="form-group row" style="margin-top: 3rem">
+                    <div class="col-lg-8 ml-auto">
+                      <input type="button" class="btn btn-primary" onclick="modifyPassword()" value="비밀번호 변경"/>                   </div>
+                  </div>
+                <div class="form-group row" style="margin-top: 3rem">
+                  <div class="col-lg-8 ml-auto">
+                    <input type="button" class="btn btn-primary" onclick="modifyMemberInfo()" value="정보 수정"/>                  </div>
+                </div>
+                <div class="text-right" data-toggle="modal" data-target="#customs" id="alertButton">회원 탈퇴</div>
               </form>
             </div>
           </div>
@@ -101,8 +115,7 @@
     </div>
   </div>
 
-  <div class="modal fade" id="customs" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-       aria-hidden="true">
+  <div class="modal fade" id="customs" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -116,8 +129,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-          <button type="button" class="btn btn-primary" onclick="location.href='index.html'">확인
-          </button>
+          <button type="button" class="btn btn-primary" onclick="location.href='index.html'">확인</button>
         </div>
       </div>
     </div>
@@ -129,6 +141,9 @@
 ***********************************-->
 <th:block th:replace="/layout/script :: scriptFragment"></th:block>
 <script th:src="@{/js/Member.js}"></script>
+<script th:src="@{https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js}"
+        type="text/javascript">
+</script>
 
 </body>
 

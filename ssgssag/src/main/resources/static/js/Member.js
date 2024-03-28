@@ -28,10 +28,10 @@ $('.passwordEye').on('input', '#vMemberPw, #pwd', function() {
   }
 
   if (pw1 !== pw2) {
-    $("#pwdCheck").css("display", "block");
+    $("#modify-pw-2").css("display", "block");
     validForm.pw = false;
   } else {
-    $("#pwdCheck").hide();
+    $("#modify-pw-2").hide();
     validForm.pw = true;
   }
 });
@@ -50,6 +50,8 @@ let member = {
   vEmail:null,
   bProfilePic:null,
   vSocialLoginToken:null,
+  profileImg: null,
+  imgStatus: null
 }
 
 let validForm = {
@@ -132,26 +134,34 @@ function signupRequest() {
   });
 }
 
+// 회원 프로필 변경
 function modifyMemberInfo() {
-  let memberId = $('#vMemberId').val();
-  let pwd = $('input[name="pwd"]').val();
-  let memberEmail = $('input[name="email"]').val();
+  let memberEmail = $('#vEmail').val();
+  const formData = new FormData();
+
+  if (member.imgStatus === 'user') {
+    let fileInput = $('#file')[0];
+    formData.append("bProfilePic", fileInput.files[0], fileInput.name);
+  }
+  else {
+    formData.append("bProfilePic", new Blob(), "empty.jpg");
+  }
+  formData.append("vEmail", memberEmail);
 
   $.ajax({
     url: '/member/info',
     type: 'PATCH',
-    data: {
-      memberId: memberId,
-      memberPw: pwd,
-      memberEmail: memberEmail,
-    },
-    success: function (response) {
-      window.location.href='/'
-      toastr.success("수정 완료")
-
+    processData: false,
+    contentType: false,
+    data: formData,
+    success: function (resp) {
+      toastr.success(resp);
+      setTimeout(() => {
+        window.location.href='/'
+      }, 1500);
     },
     error: function (xhr, status, error) {
-      toastr.error('수정에 실패하였습니다. 다시 시도해주세요.')
+      toastr.error(xhr.responseText);
     }
   });
 }
@@ -238,19 +248,117 @@ function validateEmail(email) {
   }
 }
 
-function password() {
-  let pwd = $('#vMemberPw').val();
-  let pwdCheck = $('#pwd').val();
+// 프로필 이미지 변경
+$('#new-img').click(function() {
+  $('#file').click();
+});
 
-  if(pwd !==pwdCheck) {
-    $('#pwdCheck').show();
-    validForm.pw = false;
-    return false;
-  }else {
-    $('#pwdCheck').hide();
-    validForm.pw = true;
-    return true;
+// 이미지 업로드
+$('#file').change(function(event) {
+  let input = this;
+
+  if (input.files && input.files[0]) {
+    if (!input.files[0].type.match("image/*")) {
+      toastr.warning("이미지 파일만 업로드할 수 있습니다.");
+      return;
+    }
+
+    // 파일 압축
+    compressImage(input.files[0]).then(compressedFile => {
+      if (compressedFile) {
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          $('.profile-image-preview').removeAttr('src').attr('src', e.target.result);
+        };
+        reader.readAsDataURL(compressedFile);
+
+        if (member.imgStatus !== 'user')
+          member.imgStatus = 'user';
+
+      }
+    }).catch(error => {
+      console.error("An error occurred:", error);
+    });
   }
+});
+
+// 기본 이미지 변경
+function changeDefaultImg() {
+  $('.profile-image-preview').attr('src', '/images/profile/default-img.png');
+  $('.user-img img').removeClass('default-img');
+  member.imgStatus = 'default';
+}
+
+// 이미지 압축
+async function compressImage(inputFile) {
+  try {
+    const options = {
+      maxSizeMB: 0.5,
+      maxWidthOrHeight: 1000,
+    };
+    return await imageCompression(inputFile, options);
+
+  } catch (error) {
+    console.error("이미지 압축 오류", error);
+    return null;
+  }
+}
+
+// 비밀번호 수정
+function modifyPassword() {
+  let oldPw = $('#current-pw').val();
+  let newPw = $('#modify-pw-1').val();
+
+  let form = {
+    "oldPw": oldPw,
+    "newPw": newPw
+  }
+
+  $.ajax({
+    url: '/member/password',
+    method : 'PATCH',
+    contentType:'application/json',
+    data : JSON.stringify(form),
+    success: function (resp){
+      toastr.success('비밀번호가 성공적으로 변경되었습니다.');
+    },
+    error: function (e) {
+      toastr.error('비밀번호 변경 실패! 다시 시도하세요');
+    }
+  })
+}
+
+// 회원 프로필 변경
+function modifyMemberInfo() {
+  let memberEmail = $('#vEmail').val();
+  const formData = new FormData();
+
+  if (member.imgStatus === 'user') {
+    let fileInput = $('#file')[0];
+    formData.append("bProfilePic", fileInput.files[0], fileInput.name);
+  }
+  else {
+    formData.append("bProfilePic", new Blob(), "empty.jpg");
+  }
+  formData.append("vEmail", memberEmail);
+
+  $.ajax({
+    url: '/member/info',
+    type: 'PATCH',
+    processData: false,
+    contentType: false,
+    data: formData,
+    success: function (resp) {
+      toastr.success(resp);
+      setTimeout(() => {
+        window.location.href='/'
+      }, 1500);
+    },
+    error: function (xhr, status, error) {
+      toastr.error(xhr.responseText);
+    }
+  });
 }
 
 function deleteAccount() {
