@@ -3,27 +3,22 @@ package com.ssg.ssgssag.service;
 import com.ssg.ssgssag.domain.MemberVO;
 import com.ssg.ssgssag.dto.MemberDTO;
 import java.util.List;
-
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @Log4j2
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+
 public class MemberServiceTest {
 
     @Autowired(required = false)
     private MemberService memberService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
     @Test
     public void testRegisterMember() {
         MemberDTO memberDTO= MemberDTO.builder()
@@ -170,15 +165,6 @@ public class MemberServiceTest {
     }
 
     @Test
-    public void modifyMemberPasswordTest() {
-        MemberDTO memberDTO = MemberDTO.builder().vMemberId("test0327")
-                .vMemberPw("12345")
-                .vMemberNewPw("123456")
-                .build();
-
-        memberService.modifyPassword(memberDTO);
-
-
     public void testDeleteMember() {
         MemberDTO memberDTO = MemberDTO.builder().
             vMemberId("sowon9017").build();

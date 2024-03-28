@@ -50,8 +50,8 @@
   <update id="updateMemberInfo" parameterType="MemberVO">
     UPDATE TB_MEMBER
     SET
-      V_EMAIL = COALESCE(NULLIF(#{vEmail}, V_EMAIL), V_EMAIL),
-      B_PROFILE_PIC = #{bProfilePic}
+      V_MEMBER_PW = COALESCE(NULLIF(#{vMemberPw}, V_MEMBER_PW), V_MEMBER_PW),
+      V_EMAIL = COALESCE(NULLIF(#{vEmail}, V_EMAIL), V_EMAIL)
     WHERE V_MEMBER_ID = #{vMemberId}
   </update>
 
@@ -63,25 +63,11 @@
     select * from TB_MEMBER where V_MEMBER_ID = #{vMemberId} and V_MEMBER_PW = #{vMemberPw}
   </select>
 
-  <select id="selectOneMemberByMemberIdAndMemberPw" parameterType="com.ssg.ssgssag.dto.MemberDTO" resultType="int">
-    select count(*) from TB_MEMBER WHERE V_MEMBER_ID = #{vMemberId} AND V_MEMBER_PW = #{vMemberPw}
-  </select>
-
-  <update id="updateMemberPassword" parameterType="map">
-    UPDATE TB_MEMBER
-    SET
-        V_MEMBER_PW = #{vMemberNewPw}
-    WHERE V_MEMBER_ID = #{vMemberId}
-  </update>
-
-  <select id="selectMemberProfileImgByMemberId" parameterType="string" resultType="MemberVO">
-    select B_PROFILE_PIC FROM TB_MEMBER WHERE V_MEMBER_ID = #{vMemberId}
-  </select>
-
   <update id="deleteMemberInfo" parameterType="MemberVO">
     UPDATE TB_MEMBER
     SET
       B_IS_ACTIVE = FALSE
     WHERE V_MEMBER_ID = #{vMemberId}
   </update>
+
 </mapper>

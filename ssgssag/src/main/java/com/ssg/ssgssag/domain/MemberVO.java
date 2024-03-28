@@ -16,14 +16,13 @@ public class MemberVO {
     private String vMemberNm;
     private String vMemberAuth;
     private String vEmail;
-    private byte[] bProfilePic;
+    private Blob bProfilePic;
     private String vSocialLoginToken;
     private int bIsActive;
 
     public int getbIsActive() {
         return bIsActive;
     }
-
 
     public String getvMemberId() {
         return vMemberId;
@@ -45,13 +44,11 @@ public class MemberVO {
         return vEmail;
     }
 
-    public byte[] getbProfilePic() {
+    public Blob getbProfilePic() {
         return bProfilePic;
     }
 
     public String getvSocialLoginToken() {
         return vSocialLoginToken;
     }
-
-
 }

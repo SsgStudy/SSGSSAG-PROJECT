@@ -5,9 +5,9 @@ import com.ssg.ssgssag.dto.MemberDTO;
 import com.ssg.ssgssag.mapper.MemberMapper;
 import com.ssg.ssgssag.security.DataNotFoundException;
 import com.ssg.ssgssag.security.MemberRole;
-
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -128,21 +128,6 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int modifyPassword(MemberDTO member) {
-        int result = memberMapper.selectOneMemberByMemberIdAndMemberPw(member);
-        if (result == 1) {
-            memberMapper.updateMemberPassword(member);
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    @Override
-    public byte[] getMemberProfileImg(String vMemberId) {
-        MemberVO member = memberMapper.selectMemberProfileImgByMemberId(vMemberId);
-        return member.getbProfilePic();
-
     public Boolean deleteMember(MemberDTO memberDTO) {
         try {
             MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
