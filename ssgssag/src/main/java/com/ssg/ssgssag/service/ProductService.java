@@ -5,6 +5,7 @@ import java.util.List;
 
 public interface ProductService {
 
-  List<ProductDTO> getAllProduct();
+  List<ProductDTO> getProductList(int page, int size);
 
+  public int getProductCount();
 }

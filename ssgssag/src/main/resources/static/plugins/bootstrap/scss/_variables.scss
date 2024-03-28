@@ -234,7 +234,8 @@ $box-shadow:                  0 .5rem 1rem rgba($black, .15) !default;
 $box-shadow-lg:               0 1rem 3rem rgba($black, .175) !default;
 
 $component-active-color:      $white !default;
-$component-active-bg:         theme-color("primary") !default;
+//$component-active-bg:         theme-color("primary") !default;
+$component-active-bg:         #0575E6;
 
 $caret-width:                 .3em !default;
 

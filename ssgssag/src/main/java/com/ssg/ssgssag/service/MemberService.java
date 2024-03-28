@@ -14,8 +14,6 @@ public interface MemberService {
 
     List<MemberDTO> getAllMembers();
 
-    List<MemberDTO> getMembersByName(String name);
-
     List<MemberDTO> getMemberList(MemberDTO memberDTO);
 
     MemberVO getOneMemberInModal(String getMemberId);
@@ -36,5 +34,7 @@ public interface MemberService {
     int modifyPassword(MemberDTO member);
 
     byte[] getMemberProfileImg(String vMemberId);
+  
+    Boolean deleteMember(MemberDTO memberDTO);
 
 }

@@ -38,15 +38,9 @@ public class MemberServiceTest {
 
     @Test
     public void testListMember() {
-            List<MemberDTO> memberDTOList = memberService.getAllMembers();
+        List<MemberDTO> memberDTOList = memberService.getAllMembers();
 
-            log.info(memberDTOList);
-    }
-
-    @Test
-    public void testListByName() {
-        String name = "한예슬";
-        log.info(memberService.getMembersByName(name));
+        memberDTOList.forEach(System.out::println);
     }
 
     @Test
@@ -115,7 +109,7 @@ public class MemberServiceTest {
             .vEmail("modify@naver.com")
             .build();
 
-       memberService.modifyMemberInfo(memberDTO);
+        memberService.modifyMemberInfo(memberDTO);
     }
 
     @Test
@@ -141,9 +135,9 @@ public class MemberServiceTest {
     public void loginTest() {
 
         MemberDTO memberDTO = MemberDTO.builder()
-                .vMemberId("test0325")
-                    .vMemberPw("12345")
-                     .build();
+            .vMemberId("test0325")
+            .vMemberPw("12345")
+            .build();
 
         memberService.login(memberDTO);
 
@@ -168,7 +162,7 @@ public class MemberServiceTest {
             .vMemberPw("111")
             .vMemberNm("더벤티")
             .vMemberAuth("ADMIN")
-                .vEmail("ventis@google.com").build();
+            .vEmail("ventis@google.com").build();
         memberService.modifyMembersByAdmin(memberDTO);
 
         log.info(memberDTO);
@@ -185,5 +179,14 @@ public class MemberServiceTest {
         memberService.modifyPassword(memberDTO);
 
 
+    public void testDeleteMember() {
+        MemberDTO memberDTO = MemberDTO.builder().
+            vMemberId("sowon9017").build();
+
+        memberService.deleteMember(memberDTO);
+
+        log.info("memberDTO!!: {}" ,memberDTO);
     }
 }
+
+

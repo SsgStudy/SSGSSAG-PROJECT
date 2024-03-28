@@ -45,7 +45,6 @@ public class MemberController {
 
     @PostMapping("/signup")
     public String signup(@RequestBody MemberDTO newMember) {
-        log.info("member signup {}", newMember);
         memberService.registerMember(newMember);
 
         return "redirect:/";
@@ -67,6 +66,7 @@ public class MemberController {
     }
 
     @GetMapping("/info")
+    @ResponseStatus(HttpStatus.SEE_OTHER)
     public String showModifyPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         MemberVO memberVO = memberService.getOneMemberInModal(userDetails.getUsername());
         byte[] profilePic = memberVO.getbProfilePic();
@@ -125,12 +125,12 @@ public class MemberController {
 
         String newPw = param.get("newPw");
         String oldPw = param.get("oldPw");
-
+      
         MemberDTO member = MemberDTO.builder()
-                            .vMemberId(userDetails.getUsername())
-                            .vMemberPw(passwordEncoder.encode(param.get("oldPW")))
-                            .vMemberNewPw(passwordEncoder.encode(param.get("newPw")))
-                            .build();
+                      .vMemberId(userDetails.getUsername())
+                      .vMemberPw(passwordEncoder.encode(param.get("oldPW")))
+                      .vMemberNewPw(passwordEncoder.encode(param.get("newPw")))
+                      .build();
 
         if (memberService.modifyPassword(member)==1) {
             return ResponseEntity.status(HttpStatus.OK).body("비밀번호가 성공적으로 변경되었습니다.");
@@ -139,4 +139,18 @@ public class MemberController {
 
         }
     }
+
+    @PatchMapping("/leave")
+    @ResponseStatus(HttpStatus.SEE_OTHER)
+    @Operation(summary = "회원 탈퇴", description = "회원이 계정을 탈퇴합니다.")
+    public String deleteAccount(@RequestParam String memberId) {
+
+        MemberDTO memberDTO = MemberDTO.builder()
+            .vMemberId(memberId).build();
+
+        memberService.deleteMember(memberDTO);
+
+        return "redirect:/";
+    }
+
 }

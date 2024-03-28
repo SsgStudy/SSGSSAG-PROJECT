@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="/layout/head :: headFragment"></th:block>
+  <title>ssgssag</title>
+</head>
+
+
+<body>
+
+<!--*******************
+    Preloader start
+********************-->
+<th:block th:replace="/layout/preloader :: preloaderFragment"></th:block>
+<!--*******************
+    Preloader end
+********************-->
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+  <!--**********************************
+      Nav header start
+  ***********************************-->
+  <th:block th:replace="/layout/nav :: navFragment"></th:block>
+  <!--**********************************
+      Header end ti-comment-alt
+  ***********************************-->
+
+  <!--**********************************
+      Sidebar start
+  ***********************************-->
+  <th:block th:replace="/layout/sidebar :: sidebarFragment"></th:block>
+  <!--**********************************
+      Sidebar end
+  ***********************************-->
+
+  <!--**********************************
+      Content body start
+  ***********************************-->
+  <div class="content-body">
+
+    <div class="row page-titles mx-0">
+      <div class="col p-md-0">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active"><a href="javascript:void(0)">About</a></li>
+        </ol>
+      </div>
+    </div>
+    <!-- row -->
+
+    <!-- 여기에 각자 맡은 페이지를 넣어서 작업하면 됩니다.-->
+    <div class="container-fluid">
+
+      <!-- page1. 재고 현황 조회 -->
+      <h2>SSGSSAG</h2>
+
+        <div class="row">
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                  <div class="card-body">
+                      한 줄 소개
+    <pre><code class="java" style="white-space: pre-wrap;">
+public class WMSImplementation {
+    public static void main(String[] args) {
+        System.out.println("상품, 입고, 출고, 발주, 창고, 재고, 회원 등의 기능을 포함한 WMS 시스템을 구현했습니다.");
+    }
+}
+
+</code></pre>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <p><img src="/images/logo-text.png" class="card-img"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>로고 의미</h5>
+                        <p>사용자가 모든 작업을 '쓱싹' 한 번에 처리할 수 있도록 하는 의미를 담고 있습니다.</p>
+                        <br>
+                        <h5>색상</h5>
+                        <span class="color-code">#0575E6</span> 심리학적으로 신뢰감을 주는 색상입니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>TEAM</h2>
+        <div class="row mb-5">
+            <div class="col-md-2">
+                <div class="card h-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <img src="/images/user/철수.jpeg" class="rounded-circle mb-3" alt="">
+                        <h5 class="mt-0 mb-1">홍진욱</h5>
+                        <p class="m-0">대시보드<br>입고관리</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card h-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <img src="images/user/짱구.jpg" class="rounded-circle mb-3" alt="">
+                        <h5 class="mt-0 mb-1">장서윤</h5>
+                        <p class="m-0">발주관리</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card h-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <img src="images/user/훈이.jpg" class="rounded-circle mb-3" alt="">
+                        <h5 class="mt-0 mb-1">손혜지</h5>
+                        <p class="m-0">창고관리<br>상품관리<br>출고관리</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card h-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <img src="images/user/유리.jpeg" class="rounded-circle mb-3" alt="">
+                        <h5 class="mt-0 mb-1">김소진</h5>
+                        <p class="m-0">재고관리<br>About</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card h-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <img src="images/user/맹구.jpeg" class="rounded-circle mb-3" alt="">
+                        <h5 class="mt-0 mb-1">최소원</h5>
+                        <p class="m-0">회원관리</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card h-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <img src="images/user/마스코트.png" class="rounded-circle mb-3" alt="">
+                        <h5 class="mt-0 mb-1">싹사우루스</h5>
+                        <p class="m-0">마우스 커서</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      <!-- #/ container -->
+      <!--**********************************
+        Content body end
+    ***********************************-->
+
+    </div>
+    <!--**********************************
+      Main wrapper end
+  ***********************************-->
+    <!--**********************************
+    Scripts
+***********************************-->
+    <th:block th:replace="/layout/script :: scriptFragment"></th:block>
+
+  </div>
+
+</div>
+</body>
+</html>
+
+

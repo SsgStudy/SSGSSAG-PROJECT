@@ -37,7 +37,6 @@ public class AdminController {
 	@GetMapping("/list")
 	@Operation(summary = "회원 목록 조회", description = "모든 회원의 목록을 조회합니다.")
 	public String showAllMemberListPage(Model model) {
-		log.info("AdminController list");
 		model.addAttribute("memberList", memberService.getAllMembers());
 		return "admin/member-list";
 	}
@@ -47,7 +46,6 @@ public class AdminController {
 	@Operation(summary = "이름을 검색하여 회원 조회", description = "검색한 이름에 해당하는 회원의 정보를 조회합니다.")
 	@ResponseBody
 	public ResponseEntity<List<MemberDTO>> showMemberListPageByName(@RequestBody MemberDTO member, Model model) {
-		log.info("member search {}", member);
 		List<MemberDTO> memberList = memberService.getMemberList(member);
 
 		model.addAttribute("memberList", memberList);
@@ -55,11 +53,10 @@ public class AdminController {
 	}
 
 	//모달창에 개인 회원 정보 출력
-    @PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/members/{memberId}/profile")
 	@ResponseBody
 	public MemberVO getMembersInModal(@PathVariable("memberId") String memberId) {
-		log.info("member id = {}", memberId);
 
 		return memberService.getOneMemberInModal(memberId);
 	}
@@ -70,7 +67,7 @@ public class AdminController {
 	@Operation(summary = "회원 정보 수정", description = "총관리자가 회원들의 정보를 수정합니다.")
 	public String modifyMembersByAdmin(
 		@RequestParam String memberId,
-		@RequestParam String memberPw,
+//		@RequestParam String memberPw,
 		@RequestParam String memberName,
 		@RequestParam String memberEmail,
 		@RequestParam String memberAuth
@@ -78,11 +75,30 @@ public class AdminController {
 		MemberDTO memberDTO = MemberDTO.builder()
 			.vMemberId(memberId)
 			.vMemberNm(memberName)
-			.vMemberPw(memberPw)
+//			.vMemberPw(memberPw)
 			.vEmail(memberEmail)
 			.vMemberAuth(memberAuth).build();
 
 		memberService.modifyMembersByAdmin(memberDTO);
 		return "redirect:/admin/list";
+	}
+
+
+	@PreAuthorize("isAuthenticated()")
+	@PatchMapping("/withdraw")
+	@Operation(summary = "회원 정보 삭제", description = "총관리자가 회원들의 정보를 삭제합니다.")
+	@ResponseBody
+	public String deleteMemberAccount(@RequestParam String memberId) {
+
+		MemberDTO memberDTO = MemberDTO.builder()
+			.vMemberId(memberId).build();
+
+		Boolean result = memberService.deleteMember(memberDTO);
+
+		if (result) {
+			return "success";
+		} else {
+			return "fail";
+		}
 	}
 }

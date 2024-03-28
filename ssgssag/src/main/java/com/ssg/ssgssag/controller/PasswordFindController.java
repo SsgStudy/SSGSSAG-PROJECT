@@ -24,13 +24,13 @@ public class PasswordFindController {
 
 
     @GetMapping("/find-password")
-    @Operation(summary = "비밀번호 찾기 호출", description = "비밀번호 찾기 페이지 호출")
+    @Operation(summary = "비밀번호 찾기", description = "비밀번호 찾기 페이지")
     public String showFindPasswordPage() {
         return "passwordfind/find-password";
     }
 
     @PostMapping("/reset-password")
-    @Operation(summary = "비밀번호 리셋 호출", description = "비밀번호 리셋 페이지 호출")
+    @Operation(summary = "임시 비밀번호 발급", description = "비밀번호 초기화 및 임시 비밀번호 발급과 암호화")
     public String showResetPasswordPage(@RequestParam("inputId") String inputId) {
 
 

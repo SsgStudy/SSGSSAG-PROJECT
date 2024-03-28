@@ -22,7 +22,7 @@ $("#save-modifier").submit(function (e) {
   e.preventDefault();
 
   let memberId = $('#memberId').val();
-  let memberPw = $('#memberPw').val();
+  // let memberPw = $('#memberPw').val();
   let memberName = $('#memberName').val();
   let memberEmail = $('#memberEmail').val();
   let role = $('#memberRole').val();
@@ -33,7 +33,7 @@ $("#save-modifier").submit(function (e) {
     type: 'PATCH',
     data: {
       memberId: memberId,
-      memberPw: memberPw,
+      // memberPw: memberPw,
       memberName: memberName,
       memberEmail: memberEmail,
       memberAuth: memberAuth
@@ -117,7 +117,7 @@ function modalButton(memberId) {
     success: function (getone) {
       $('#memberId').val(getone.vMemberId);
       $('#memberName').val(getone.vMemberNm);
-      $('#memberPw').val(getone.vMemberPw);
+      // $('#memberPw').val(getone.vMemberPw);
       $('#memberEmail').val(getone.vEmail);
       $('#memberRole').val(getone.vMemberAuth);
 
@@ -134,7 +134,7 @@ function modalButton(memberId) {
       }
 
       $('#memberRole').find('option[value="' + memberAuth + '"]')
-                      .prop('selected', true);
+      .prop('selected', true);
       $("#modalForm").modal('show');
     },
     error: function (xhr, status, error) {
@@ -143,3 +143,61 @@ function modalButton(memberId) {
     }
   });
 }
+
+// function deleteMember(memberId) {
+//
+//   let memberIds = $('#vMemberId').val();
+//
+//
+//   console.log("memberId", memberId)
+//   console.log("memberIds", memberIds)
+//
+//   member.vMemberId = memberId;
+//   $.ajax({
+//      url: `/admin/withdraw/${memberId}`,
+//      type: 'PATCH',
+//      data: {memberId: memberId},
+//     success: function (resp) {
+//       toastr.success("성공적으로 삭제되었습니다.");
+//       setTimeout(() => {
+//         window.location.href = "/admin/list";
+//       }, 1500);
+//     },
+//     error: function (error) {
+//       toastr.error("삭제 실패했습니다.");
+//     }
+//   });
+// }
+
+
+
+$('.delete-btn').on('click', function(event) {
+    event.stopPropagation();
+    let memberId = $(this).data('member-id');
+    deleteMember(memberId);
+});
+
+function deleteMember(memberId) {
+    console.log("Deleting memberId:", memberId);
+
+    $.ajax({
+        url: `/admin/withdraw`,
+        type: 'PATCH',
+        data: {
+            memberId: memberId
+        },
+        success: function (resp) {
+            toastr.success("성공적으로 삭제되었습니다.");
+            setTimeout(() => {
+                window.location.href = "/admin/list";
+            }, 1500);
+        },
+        error: function (error) {
+            toastr.error("삭제 실패했습니다.");
+        }
+    });
+}
+
+
+
+

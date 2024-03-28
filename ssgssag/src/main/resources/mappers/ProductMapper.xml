@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-
 <mapper namespace="com.ssg.ssgssag.mapper.ProductMapper">
-
-  <select id="selectAllProduct" resultType="com.ssg.ssgssag.dto.ProductDTO">
+  <select id="selectProductList" resultType="com.ssg.ssgssag.dto.ProductDTO">
     SELECT * FROM TB_PRODUCT
+    LIMIT #{offset}, #{size}
   </select>
 
+  <select id="selectProductCount" resultType="int">
+    SELECT COUNT(*) FROM TB_PRODUCT
+  </select>
 </mapper>

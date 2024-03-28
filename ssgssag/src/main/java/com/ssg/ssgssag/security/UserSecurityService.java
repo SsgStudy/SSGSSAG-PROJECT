@@ -30,8 +30,15 @@ public class UserSecurityService implements UserDetailsService {
 		if (member.getvMemberId() == null) {
 			throw new UsernameNotFoundException("사용자를 찾을수 없습니다.");
 		}
+
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		String memberAuth = member.getvMemberAuth();
+
+		if (member.getbIsActive() == 0) {
+			authorities.add(new SimpleGrantedAuthority(MemberRole.DEACTIVE.getValue()));
+			return new User(member.getvMemberId(), member.getvMemberPw(), authorities);
+		}
+
 		if ("ADMIN".equals(memberAuth)) {
 			authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getValue()));
 		} else if ("WAREHOUSE_MANAGER".equals(memberAuth)) {

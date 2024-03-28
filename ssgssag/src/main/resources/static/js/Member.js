@@ -65,8 +65,6 @@ let validForm = {
 //회원 중복 불러오기
 function checkId() {
   let memberId = $('#vMemberId').val().trim();
-  console.log("vMemberId" , memberId);
-
   if(memberId === '') {
     toastr.warning("아이디를 입력해주세요");
     return
@@ -95,29 +93,18 @@ function checkId() {
   })
 }
 
-
-
-
-
-
-
-
-
-
 function checkBlank() {
 
-    let memberNm = $('#vMemberNm').val().trim();
-    let memberId = $('#vMemberId').val().trim();
-    let memberPw = $('#vMemberPw').val().trim();
-    let memberEmail = $('#vEmail').val();
+  let memberNm = $('#vMemberNm').val().trim();
+  let memberId = $('#vMemberId').val().trim();
+  let memberPw = $('#vMemberPw').val().trim();
+  let memberEmail = $('#vEmail').val();
 
-    if (memberNm === '' || memberId === '' || memberPw === '' || memberEmail === '') {
-      return false;
-    }
-
-    return true;
+  if (memberNm === '' || memberId === '' || memberPw === '' || memberEmail === '') {
+    return false;
+  }
+  return true;
 }
-
 
 function signupRequest() {
 
@@ -138,8 +125,8 @@ function signupRequest() {
     contentType:'application/json',
     data: JSON.stringify(member),
     success: function (response) {
-       window.location.href='/';
-       toastr.success('회원가입이 완료되었습니다.');
+      window.location.href='/';
+      toastr.success('회원가입이 완료되었습니다.');
     },
     error: function (xhr, status, error) {
       toastr.error('회원가입에 실패하였습니다. 다시 시도해주세요.');
@@ -147,7 +134,37 @@ function signupRequest() {
   });
 }
 
+// 회원 프로필 변경
+function modifyMemberInfo() {
+  let memberEmail = $('#vEmail').val();
+  const formData = new FormData();
 
+  if (member.imgStatus === 'user') {
+    let fileInput = $('#file')[0];
+    formData.append("bProfilePic", fileInput.files[0], fileInput.name);
+  }
+  else {
+    formData.append("bProfilePic", new Blob(), "empty.jpg");
+  }
+  formData.append("vEmail", memberEmail);
+
+  $.ajax({
+    url: '/member/info',
+    type: 'PATCH',
+    processData: false,
+    contentType: false,
+    data: formData,
+    success: function (resp) {
+      toastr.success(resp);
+      setTimeout(() => {
+        window.location.href='/'
+      }, 1500);
+    },
+    error: function (xhr, status, error) {
+      toastr.error(xhr.responseText);
+    }
+  });
+}
 
 function checkEmpty() {
   let isValid = true;
@@ -182,6 +199,41 @@ function checkEmpty() {
     return true;
   }
 }
+
+
+
+function checkModifyEmpty() {
+  let isValid = true;
+  let $modifyForm = $("#modify-form");
+
+  $modifyForm.find('input').each(function() {
+    let value = $(this).val().trim();
+
+    if ($(this).attr('id') === 'email') {
+      validateEmail(value);
+    }
+
+    if (value === '') {
+      isValid = false;
+    }
+  });
+
+  if (!isValid) {
+    toastr.info('입력하지 않은 값이 있습니다.');
+    return false;
+  } else if (!validForm.pw) {
+    toastr.warning('비밀번호가 다릅니다');
+    return false;
+  } else if (!validForm.email) {
+    toastr.warning('유효하지 않은 이메일 형식입니다.');
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+
 
 
 
@@ -309,5 +361,22 @@ function modifyMemberInfo() {
   });
 }
 
+function deleteAccount() {
 
+  let memberId = $('#vMemberId').val();
 
+  $.ajax({
+    url: `/member/leave`,
+    type: 'PATCH',
+    data: {memberId: memberId},
+    success: function (resp) {
+      toastr.success("성공적으로 삭제되었습니다.");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
+    },
+    error: function (error) {
+      toastr.error("삭제 실패했습니다.");
+    }
+  });
+}

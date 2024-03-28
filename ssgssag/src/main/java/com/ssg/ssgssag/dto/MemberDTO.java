@@ -22,17 +22,19 @@ public class MemberDTO {
     private String vMemberAuth;
     private String vEmail;
     private byte[] bProfilePic;
+    private int bIsActive;
+    private String vSocialLoginToken;
+    private String vMemberNewPw;
 
     public byte[] getbProfilePic() {
         return bProfilePic;
     }
 
-    private Blob blobProfilePic;
-    private String vSocialLoginToken;
-    private String vMemberNewPw;
-
     public String getvMemberNewPw() {
         return vMemberNewPw;
+
+    public int getbIsActive() {
+        return bIsActive;
     }
 
     public String getvMemberId() {

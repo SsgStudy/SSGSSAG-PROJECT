@@ -17,6 +17,7 @@ let ready = $(document).ready(function() {
       contentType: 'application/x-www-form-urlencoded',
       success: function (data) {
         let tableBody = $('.zero-configuration tbody');
+
         tableBody.empty();
 
         $.each(data, function (i, warehouse) {
