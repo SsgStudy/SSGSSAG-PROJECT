@@ -102,8 +102,6 @@ public class InventoryController {
     @ResponseBody
     public void selectedInventoryMovement(@RequestBody InventoryMovementDTO dto) {
         inventoryService.updateInventoryWithHistoryMove(dto);
-        // 비동기 처리
-        CompletableFuture.runAsync(() -> utilService.sendShortageNotificationEmails());
     }
 
 }
