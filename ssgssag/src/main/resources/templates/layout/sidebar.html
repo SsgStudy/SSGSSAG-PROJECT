@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <th:block th:fragment="sidebarFragment">
   <div class="nk-sidebar">
     <div class="nk-nav-scroll">
@@ -67,13 +67,13 @@
             <li><a href="/inventory/movement">재고 이동</a></li>
           </ul>
         </li>
-        <li>
+
+        <li sec:authorize="hasAuthority('ADMIN')">
           <a class="has-arrow" href="javascript:void()" aria-expanded="false">
             <i class="icon-graph menu-icon"></i> <span class="nav-text">회원 관리</span>
           </a>
           <ul aria-expanded="false">
             <li><a href="/admin/list">회원 정보 수정</a></li>
-            <li><a href="/member/withdraw">회원 탈퇴</a></li>
           </ul>
         </li>
         <li>
@@ -87,5 +87,4 @@
       </ul>
     </div>
   </div>
-
 </th:block>
