@@ -39,7 +39,6 @@ public class InventoryController {
     @Operation(summary = "재고 조회 : 모달 출력", description = "재고 번호에 따른 재고 이력 모달 출력")
     @ResponseBody
     public List<InventoryHistoryVO> getInventoryHistoryBySeq(@PathVariable Integer pkInventorySeq) {
-        log.info("호출");
         List<InventoryHistoryVO> inventoryHistoryList = inventoryService.getInventoryHistoryBySeq(pkInventorySeq);
         return inventoryHistoryList;
     }
@@ -65,8 +64,6 @@ public class InventoryController {
     @Operation(summary = "재고 조회 결과 반환", description = "카테고리 대분류 중분류 소분류, 창고, 구역")
     @ResponseBody
     public List<InventoryListDTO> getInventoryByCategoryAndWarehouse(@RequestBody InventorySearchDTO inventorySearchDTO) {
-        log.info("검색 {}", inventorySearchDTO);
-
         List<InventoryListDTO> inventoryList = inventoryService.getInventoryByCategoryAndWarehouse(inventorySearchDTO);
         return inventoryList;
     }

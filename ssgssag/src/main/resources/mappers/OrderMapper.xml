@@ -5,20 +5,19 @@
 
 <!-- 발주 등록   -->
     <select id="selectLastOrderSeq" resultType="Long">
-        select max(pk_order_seq) from TB_ORDER;
+        select COALESCE(max(pk_order_seq), 0) as seq from TB_ORDER;
     </select>
 
     <select id="selectProductSupplier" parameterType="com.ssg.ssgssag.dto.OrderProductDTO" resultType="string">
         SELECT CASE
-                   WHEN NOT EXISTS (SELECT 1 FROM TB_PRODUCT WHERE V_PRODUCT_CD = #{vProductCd}) THEN 'INVALID'
-                   WHEN EXISTS (
-                       SELECT 1
-                       FROM TB_PRODUCT
-                       WHERE V_PRODUCT_CD = #{vProductCd} AND V_PRODUCT_MANUFACTOR = #{vIncomingProductSupplierNm}
-                   ) THEN 'VALID'
-                   ELSE 'UNLISTED'
-                   END AS result;
-
+           WHEN NOT EXISTS (SELECT 1 FROM TB_PRODUCT WHERE V_PRODUCT_CD = #{vProductCd}) THEN 'INVALID'
+           WHEN EXISTS (
+               SELECT 1
+               FROM TB_PRODUCT
+               WHERE V_PRODUCT_CD = #{vProductCd} AND V_PRODUCT_MANUFACTOR = #{vIncomingProductSupplierNm}
+           ) THEN 'VALID'
+           ELSE 'UNLISTED'
+           END AS result;
     </select>
 
     <select id="selectProductInventory" parameterType="hashmap" resultType="OrderProductVO">

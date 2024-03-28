@@ -116,3 +116,24 @@ body::-webkit-scrollbar {
   transform: rotateY(180deg);
 }
 
+/* 프로필 이미지 등록 */
+#file {
+  display: none;
+}
+
+/*사용자 정의 업로드 버튼 스타일 */
+.custom-file-upload {
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  color: #495057;
+}
+
+/* 호버 효과 */
+.custom-file-upload:hover {
+  background-color: #e2e6ea;
+}

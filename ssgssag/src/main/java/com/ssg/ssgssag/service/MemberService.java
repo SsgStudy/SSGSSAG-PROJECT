@@ -29,6 +29,9 @@ public interface MemberService {
 
     MemberVO login(MemberDTO memberDTO);
 
+    int modifyPassword(MemberDTO member);
+
+    byte[] getMemberProfileImg(String vMemberId);
     Boolean deleteMember(MemberDTO memberDTO);
 
 }

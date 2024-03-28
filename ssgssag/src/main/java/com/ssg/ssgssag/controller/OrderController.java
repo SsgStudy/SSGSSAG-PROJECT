@@ -70,9 +70,9 @@ public class OrderController {
 
         String result = createdOrderProduct.getResult();
         if (result.equals("INVALID")) {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("유효하지 않은 상품입니다.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효하지 않은 상품입니다.");
         } else if (result.equals("UNLISTED")) {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("해당 회사에서 제공하지 않는 상품입니다.");
         }
         return ResponseEntity.ok(createdOrderProduct);
@@ -86,7 +86,6 @@ public class OrderController {
         log.info("orderDTO {}", orderRequest.getOrder());
         orderService.registerOrder(orderRequest.getOrder(), orderRequest.getOrderDetails());
         return "ok";
-//        return "order/orderRegister";
     }
 
     @Operation(summary = "발주 조회 : 마스터 발주", description = "기간, 창고, 매입처, 발주 상태 조건으로 등록된 발주 조회")

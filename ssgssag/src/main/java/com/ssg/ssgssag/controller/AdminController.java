@@ -27,13 +27,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Log4j2
 @RequiredArgsConstructor
 @Controller
+@PreAuthorize("hasAuthority(MemberRole.ADMIN.getValue())")
 @RequestMapping("/admin")
 public class AdminController {
 
 	// 모든 회원 조회, 모든 회원 정보 수정
 	private final MemberService memberService;
 
-	@PreAuthorize("hasAuthority(MemberRole.ADMIN.getValue())")
 	@GetMapping("/list")
 	@Operation(summary = "회원 목록 조회", description = "모든 회원의 목록을 조회합니다.")
 	public String showAllMemberListPage(Model model) {
@@ -41,7 +41,6 @@ public class AdminController {
 		return "admin/member-list";
 	}
 
-	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/namefilter")
 	@Operation(summary = "이름을 검색하여 회원 조회", description = "검색한 이름에 해당하는 회원의 정보를 조회합니다.")
 	@ResponseBody
@@ -53,21 +52,17 @@ public class AdminController {
 	}
 
 	//모달창에 개인 회원 정보 출력
-	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/members/{memberId}/profile")
 	@ResponseBody
 	public MemberVO getMembersInModal(@PathVariable("memberId") String memberId) {
-
 		return memberService.getOneMemberInModal(memberId);
 	}
 
 	@ResponseStatus(HttpStatus.OK)
-	@PreAuthorize("isAuthenticated()")
 	@PatchMapping("/member")
 	@Operation(summary = "회원 정보 수정", description = "총관리자가 회원들의 정보를 수정합니다.")
 	public String modifyMembersByAdmin(
 		@RequestParam String memberId,
-//		@RequestParam String memberPw,
 		@RequestParam String memberName,
 		@RequestParam String memberEmail,
 		@RequestParam String memberAuth
@@ -75,7 +70,6 @@ public class AdminController {
 		MemberDTO memberDTO = MemberDTO.builder()
 			.vMemberId(memberId)
 			.vMemberNm(memberName)
-//			.vMemberPw(memberPw)
 			.vEmail(memberEmail)
 			.vMemberAuth(memberAuth).build();
 
@@ -84,7 +78,6 @@ public class AdminController {
 	}
 
 
-	@PreAuthorize("isAuthenticated()")
 	@PatchMapping("/withdraw")
 	@Operation(summary = "회원 정보 삭제", description = "총관리자가 회원들의 정보를 삭제합니다.")
 	@ResponseBody

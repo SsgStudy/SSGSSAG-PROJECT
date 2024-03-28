@@ -27,6 +27,10 @@ public interface MemberMapper {
     boolean checkId(String vMemberId);
     MemberVO login(@Param("vMemberId") String memberId, @Param("vMemberPw") String memberPw);
 
+    int selectOneMemberByMemberIdAndMemberPw(MemberDTO member);
+
+    void updateMemberPassword(MemberDTO member);
+    MemberVO selectMemberProfileImgByMemberId(String vMemberId);
 
     void deleteMemberInfo(MemberVO memberVO);
 
