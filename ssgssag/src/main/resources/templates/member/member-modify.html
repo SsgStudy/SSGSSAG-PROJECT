@@ -97,14 +97,14 @@
                     <input type="password" class="form-control" id="modify-pw-2" name="val-confirm-password" placeholder="..and confirm it!">
                   </div>
                 </div>
-                <div class="form-group row" style="margin-top: 3rem">
-                  <div class="col-lg-8 ml-auto">
-                    <input type="button" class="btn btn-primary" onclick="modifyPassword()" value="비밀번호 변경"/>                   </div>
+                <div class="form-group" style="margin-top: 3rem">
+                  <div class="col-lg-8 ml-auto row d-flex justify-content-center">
+                    <input type="button" class="btn btn-primary" onclick="modifyMemberInfo()" value="정보 수정"/>
+
+                    <input type="button" class="btn btn-primary" onclick="modifyPassword()" value="비밀번호 변경"/>
+                  </div>
                 </div>
-                <div class="form-group row" style="margin-top: 3rem">
-                  <div class="col-lg-8 ml-auto">
-                    <input type="button" class="btn btn-primary" onclick="modifyMemberInfo()" value="정보 수정"/>                  </div>
-                </div>
+
                 <div class="text-right" data-toggle="modal" data-target="#customs" id="alertButton">회원 탈퇴</div>
               </form>
             </div>

@@ -10,15 +10,12 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,27 +32,6 @@ public class MemberController {
     // 로그인, 로그아웃, 본인 정보 수정, 본인 정보 조회
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
-
-    @Operation(summary = "회원 등록", description = "회원을 등록합니다.")
-    @GetMapping("/signup")
-    public String signup() {
-        return "member/signup";
-    }
-
-    @PostMapping("/signup")
-    public String signup(@RequestBody MemberDTO newMember) {
-        memberService.registerMember(newMember);
-
-        return "redirect:/";
-    }
-
-    @GetMapping("/login")
-    public String login() {
-        return "member/login-form";
-    }
-
-    @GetMapping("/logout")
-    public String logout() { return "redirect:/";}
 
     @GetMapping("check/id")
     @Operation(summary = "회원 중복 확인", description = "회원가입 시 중복된 아이디인지 검사합니다.")

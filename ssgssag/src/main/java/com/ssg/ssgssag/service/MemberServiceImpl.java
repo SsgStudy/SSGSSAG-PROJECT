@@ -50,8 +50,6 @@ public class MemberServiceImpl implements MemberService{
     public void registerMember(MemberDTO member) {
         member.setvMemberPw(passwordEncoder.encode(member.getvMemberPw()));
         MemberVO memberVO = modelMapper.map(member, MemberVO.class);
-        log.info("registerMember {}", memberVO);
-
         memberMapper.insertMembers(memberVO);
     }
 
@@ -141,7 +139,12 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public byte[] getMemberProfileImg(String vMemberId) {
         MemberVO member = memberMapper.selectMemberProfileImgByMemberId(vMemberId);
-        return member.getbProfilePic();
+        if (member != null) {
+            return member.getbProfilePic();
+        } else {
+            return null;
+        }
+
     }
 
     @Override

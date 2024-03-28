@@ -356,8 +356,11 @@ function createOrderDetailForm() {
             );
         },
         error: function (xhr, status, error) {
-            if (xhr.status === 422) {
+            if (xhr.status === 404 || xhr.status === 400) {
                 toastr.warning(xhr.responseText);
+            }
+            else {
+                toastr.error(xhr.responseText);
             }
         }
     });

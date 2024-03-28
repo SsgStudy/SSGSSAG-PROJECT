@@ -119,8 +119,7 @@ function signupRequest() {
   }
 
   $.ajax({
-    // url: '/member/signup',
-    url: '/member/signup',
+    url: '/signup',
     type: 'POST',
     contentType:'application/json',
     data: JSON.stringify(member),
@@ -313,10 +312,6 @@ function checkModifyEmpty() {
     return true;
   }
 }
-
-
-
-
 
 function validateEmail(email) {
   let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
