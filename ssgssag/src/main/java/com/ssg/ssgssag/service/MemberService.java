@@ -35,4 +35,6 @@ public interface MemberService {
 
     int modifyPassword(MemberDTO member);
 
+    byte[] getMemberProfileImg(String vMemberId);
+
 }

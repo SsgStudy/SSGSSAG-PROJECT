@@ -73,4 +73,8 @@
         V_MEMBER_PW = #{vMemberNewPw}
     WHERE V_MEMBER_ID = #{vMemberId}
   </update>
+
+  <select id="selectMemberProfileImgByMemberId" parameterType="string" resultType="MemberVO">
+    select B_PROFILE_PIC FROM TB_MEMBER WHERE V_MEMBER_ID = #{vMemberId}
+  </select>
 </mapper>

@@ -32,4 +32,6 @@ public interface MemberMapper {
     int selectOneMemberByMemberIdAndMemberPw(MemberDTO member);
 
     void updateMemberPassword(MemberDTO member);
+
+    MemberVO selectMemberProfileImgByMemberId(String vMemberId);
 }

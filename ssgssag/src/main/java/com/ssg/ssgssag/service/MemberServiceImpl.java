@@ -140,4 +140,10 @@ public class MemberServiceImpl implements MemberService{
             return 0;
         }
     }
+
+    @Override
+    public byte[] getMemberProfileImg(String vMemberId) {
+        MemberVO member = memberMapper.selectMemberProfileImgByMemberId(vMemberId);
+        return member.getbProfilePic();
+    }
 }
