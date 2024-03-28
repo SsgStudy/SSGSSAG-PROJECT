@@ -28,7 +28,7 @@ public class SecurityConfig {
                 authorizeRequests.requestMatchers("/css/**", "/js/**", "/images/**").permitAll();
 
                 authorizeRequests
-                        .requestMatchers("/login", "/signup").permitAll();
+                        .requestMatchers("/login", "/signup", "/find-password", "/reset-password").permitAll();
 
                 authorizeRequests.requestMatchers("/admin/**")
                     .hasAuthority(MemberRole.ADMIN.getValue());
